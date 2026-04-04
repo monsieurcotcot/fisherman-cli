@@ -42,7 +42,7 @@ impl Repository {
     }
 
     pub async fn get_leaderboard(&self) -> Result<Vec<Player>, sqlx::Error> {
-        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players ORDER BY level DESC, xp DESC LIMIT 10")
+        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players WHERE total_attempts > 0 ORDER BY level DESC, xp DESC LIMIT 10")
             .fetch_all(&self.pool)
             .await?;
 
