@@ -37,8 +37,57 @@ impl AuthManager {
             .append_pair("client_id", &self.client_id)
             .append_pair("redirect_uri", &self.redirect_uri)
             .append_pair("response_type", "code")
-            .append_pair("scope", "chat:read chat:edit");
+            .append_pair("scope", "chat:read chat:edit channel:manage:vips");
         url.to_string()
+    }
+
+    pub async fn add_vip(&self, broadcaster_id: &str, user_id: &str, access_token: &str) -> bool {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/channels/vips?broadcaster_id={}&user_id={}", broadcaster_id, user_id);
+        
+        let res = client.post(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await;
+
+        match res {
+            Ok(r) => r.status().is_success() || r.status().as_u16() == 422, // 422 = deja VIP
+            Err(_) => false,
+        }
+    }
+
+    pub async fn remove_vip(&self, broadcaster_id: &str, user_id: &str, access_token: &str) -> bool {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/channels/vips?broadcaster_id={}&user_id={}", broadcaster_id, user_id);
+        
+        let res = client.delete(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await;
+
+        match res {
+            Ok(r) => r.status().is_success(),
+            Err(_) => false,
+        }
+    }
+
+    pub async fn get_user_id(&self, username: &str, access_token: &str) -> Option<String> {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/users?login={}", username);
+        
+        let res = client.get(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await
+            .ok()?
+            .json::<serde_json::Value>()
+            .await
+            .ok()?;
+
+        res["data"][0]["id"].as_str().map(|s| s.to_string())
     }
 
     pub async fn exchange_code(&self, code: &str) -> Result<TwitchTokens, MyError> {

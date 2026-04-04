@@ -31,13 +31,15 @@ impl Repository {
                 vip_until: row.get("vip_until"),
             }),
             None => {
-                let _id = sqlx::query("INSERT INTO players (username) VALUES (?)")
+                let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
                     .bind(&username_lower)
                     .execute(&self.pool)
                     .await?
                     .last_insert_rowid();
 
-                Ok(Player::new(username_lower))
+                let mut new_player = Player::new(username_lower);
+                new_player.id = Some(id);
+                Ok(new_player)
             }
         }
     }

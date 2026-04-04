@@ -46,6 +46,7 @@ struct AppState {
     twitch_client: RwLock<Option<TwitchClient>>,
     channel: String,
     pending_resets: RwLock<HashMap<String, DateTime<Utc>>>,
+    bot_abort_handle: RwLock<Option<tokio::task::JoinHandle<()>>>,
 }
 
 #[tokio::main]
@@ -55,39 +56,13 @@ async fn main() -> Result<(), MyError> {
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = SqlitePoolOptions::new()
-        .max_connections(5)
+        .max_connections(10)
+        .acquire_timeout(std::time::Duration::from_secs(30))
         .connect(&database_url)
         .await?;
 
-    // Create tables
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS players (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            total_attempts INTEGER DEFAULT 0,
-            successful_attempts INTEGER DEFAULT 0,
-            failed_attempts INTEGER DEFAULT 0,
-            last_fishing_time DATETIME,
-            level INTEGER DEFAULT 1,
-            xp INTEGER DEFAULT 0,
-            vip_until DATETIME
-        )"
-    ).execute(&pool).await?;
-
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS catches (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER REFERENCES players(id),
-            fish_name TEXT NOT NULL,
-            rarity TEXT NOT NULL,
-            size REAL NOT NULL,
-            weight REAL DEFAULT 0,
-            state TEXT NOT NULL,
-            description TEXT,
-            stream_title TEXT,
-            caught_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )"
-    ).execute(&pool).await?;
+    let _ = sqlx::query("PRAGMA journal_mode=WAL;").execute(&pool).await;
+    let _ = sqlx::query("PRAGMA busy_timeout=5000;").execute(&pool).await;
 
     let repo = Arc::new(Repository::new(pool.clone()));
     
@@ -104,43 +79,39 @@ async fn main() -> Result<(), MyError> {
         twitch_client: RwLock::new(None),
         channel: channel.clone(),
         pending_resets: RwLock::new(HashMap::new()),
+        bot_abort_handle: RwLock::new(None),
     });
 
-    // Tentative de chargement des tokens existants
     if let Some(tokens) = auth_manager.load_tokens() {
-        tracing::info!("Tokens trouves, tentative de connexion...");
-        start_bot(Arc::clone(&state), tokens.access_token).await;
-    } else {
-        let auth_url = format!("{}/auth", env::var("REDIRECT_URI").unwrap_or_default().replace("/auth/callback", ""));
-        tracing::warn!("Aucun token trouve. Veuillez vous authentifier sur {}", auth_url);
+        start_bot(state.clone(), tokens.access_token).await;
     }
 
-    // --- WEB SERVER SETUP ---
     let app = Router::new()
+        .route("/", get(|| async { Html(include_str!("../static/index.html")) }))
+        .route("/player/{username}", get(|| async { Html(include_str!("../static/index.html")) }))
+        .route("/auth/login", get(login_redirect))
+        .route("/auth/callback", get(auth_callback))
         .route("/api/stats/{username}", get(get_player_stats))
         .route("/api/leaderboard", get(get_leaderboard))
-        .route("/auth", get(login_redirect))
-        .route("/auth/callback", get(auth_callback))
         .fallback_service(ServeFile::new("static/index.html"))
-        // EN-TÊTES DE SÉCURITÉ
-        .layer(SetResponseHeaderLayer::overriding(X_FRAME_OPTIONS, HeaderValue::from_static("SAMEORIGIN")))
-        .layer(SetResponseHeaderLayer::overriding(X_CONTENT_TYPE_OPTIONS, HeaderValue::from_static("nosniff")))
-        .layer(SetResponseHeaderLayer::overriding(STRICT_TRANSPORT_SECURITY, HeaderValue::from_static("max-age=31536000; includeSubDomains")))
-        .layer(SetResponseHeaderLayer::overriding(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';")))
         .layer(CorsLayer::permissive())
-        .with_state(Arc::clone(&state));
+        .layer(SetResponseHeaderLayer::if_not_present(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';")))
+        .layer(SetResponseHeaderLayer::if_not_present(X_FRAME_OPTIONS, HeaderValue::from_static("DENY")))
+        .layer(SetResponseHeaderLayer::if_not_present(STRICT_TRANSPORT_SECURITY, HeaderValue::from_static("max-age=31536000; includeSubDomains")))
+        .layer(SetResponseHeaderLayer::if_not_present(X_CONTENT_TYPE_OPTIONS, HeaderValue::from_static("nosniff")))
+        .with_state(state);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
-    tracing::info!("[Web] Serveur API en ligne sur {}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await?;
-    
-    // On utilise into_make_service_with_connect_info pour capturer les adresses IP des clients
     axum::serve(listener, app.into_make_service_with_connect_info::<SocketAddr>()).await?;
 
     Ok(())
 }
 
 async fn start_bot(state: Arc<AppState>, access_token: String) {
+    let mut abort_lock = state.bot_abort_handle.write().await;
+    if let Some(handle) = abort_lock.take() { handle.abort(); }
+
     let credentials = StaticLoginCredentials::new("bot".to_string(), Some(access_token));
     let config = ClientConfig::new_simple(credentials);
     let (mut incoming_messages, client) = TwitchIRCClient::<SecureTCPTransport, StaticLoginCredentials>::new(config);
@@ -152,36 +123,25 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     let state_clone = Arc::clone(&state);
     let channel_name = state.channel.clone();
 
-    tokio::spawn(async move {
-        let channel_lower = channel_name.to_lowercase();
-        match client.join(channel_lower.clone()) {
-            Ok(_) => tracing::info!("[Twitch] Bot connecte a #{}", channel_lower),
-            Err(e) => tracing::error!("[Twitch] Impossible de rejoindre la chaine : {}", e),
-        }
-
+    let handle = tokio::spawn(async move {
+        let _ = client.join(channel_name.to_lowercase());
+        
         while let Some(message) = incoming_messages.recv().await {
             if let ServerMessage::Privmsg(msg) = message {
-                let text = msg.message_text.trim();
+                let text = msg.message_text.trim().to_string();
                 let username = msg.sender.name.clone();
-                tracing::info!("[Chat] {} : {}", username, text);
-
+                
                 if text == "!fish help" {
-                    let response = "📖 Commandes Fisherman : !fish (pêcher) | !fish stats (tes scores) | !fish top (classement) | !fish help (aide)".to_string();
-                    let _ = client.say(msg.channel_login.clone(), response).await;
+                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !fish stats | !fish top".to_string()).await;
                 } else if text == "!fish stats" || text == "!fish stat" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
-                    let redirect_uri = env::var("REDIRECT_URI").unwrap_or_default();
-                    let base_url = redirect_uri.replace("/auth/callback", "");
-                    
+                    let base_url = env::var("REDIRECT_URI").unwrap_or_default().replace("/auth/callback", "");
                     tokio::spawn(async move {
-                        let player = state_task.repo.get_or_create_player(&username).await.unwrap();
-                        let response = format!(
-                            "📊 @{} : Niveau {} (XP: {}/{}) | Stats : {}/player/{}", 
-                            username, player.level, player.xp, player.xp_for_next_level(), base_url, username
-                        );
-                        let _ = client_msg.say(channel_login, response).await;
+                        if let Ok(p) = state_task.repo.get_or_create_player(&username).await {
+                            let _ = client_msg.say(channel_login, format!("📊 @{} : Niv. {} (XP: {}/{}) | Stats : {}/player/{}", username, p.level, p.xp, p.xp_for_next_level(), base_url, username)).await;
+                        }
                     });
                 } else if text == "!fish top" {
                     let state_task = Arc::clone(&state_clone);
@@ -189,185 +149,133 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let channel_login = msg.channel_login.clone();
                     tokio::spawn(async move {
                         if let Ok(players) = state_task.repo.get_leaderboard().await {
-                            let mut response = "🏆 Top Pêcheurs : ".to_string();
-                            let top_list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
-                            response.push_str(&top_list.join(" | "));
-                            let _ = client_msg.say(channel_login, response).await;
+                            let list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
+                            let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
                         }
                     });
                 } else if text == "!fish reset" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
-                    
                     tokio::spawn(async move {
                         state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
-                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, es-tu sûr de vouloir recommencer à zéro ? (Cela supprimera tous tes poissons et ton XP). Tape !fish yes pour confirmer.", username)).await;
+                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour confirmer le reset.", username)).await;
                     });
                 } else if text == "!fish yes" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
-                    
                     tokio::spawn(async move {
                         let mut pending = state_task.pending_resets.write().await;
                         if let Some(time) = pending.get(&username) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
-                                match state_task.repo.reset_player(&username).await {
-                                    Ok(_) => {
-                                        let _ = client_msg.say(channel_login, format!("♻️ @{}, ta progression a été réinitialisée. Bonne chance pour cette nouvelle aventure !", username)).await;
-                                    }
-                                    Err(_) => {
-                                        let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors de la réinitialisation.", username)).await;
-                                    }
+                                if let Ok(_) = state_task.repo.reset_player(&username).await {
+                                    let _ = client_msg.say(channel_login, format!("♻️ @{}, reset réussi !", username)).await;
                                 }
                                 pending.remove(&username);
                             }
                         }
                     });
-                } else if text == "!fish" {
+                } else if text == "!fish" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "leviewerdelanuit")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
+                    let is_test = text == "!fish testvip";
                     
                     tokio::spawn(async move {
-                        let mut player = state_task.repo.get_or_create_player(&username).await.unwrap();
-                        if player.can_fish() {
-                            // Taux de réussite progressif avec paliers (35% au Niv 1 -> 60% au Niv 200)
-                            let success_rate = match player.level {
-                                1..=25 => 0.35,
-                                26..=50 => 0.40,
-                                51..=75 => 0.45,
-                                76..=100 => 0.50,
-                                101..=125 => 0.53,
-                                126..=150 => 0.55,
-                                151..=175 => 0.57,
-                                176..=199 => 0.59,
-                                200 => 0.60,
-                                _ => 0.35,
-                            };
-                            
-                            let success = rand::random::<f64>() < success_rate;
-                            
-                            if success {
-                                if let Some(mut fish) = generate_fish() {
+                        if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
+                            if player.can_fish() || is_test {
+                                let rate = if is_test { 1.0 } else { match player.level { 1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50, 101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35 } };
+                                if rand::random::<f64>() < rate {
+                                    let mut fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
+                                                   else { match generate_fish() { Some(f) => f, None => return } };
+                                    
                                     let leveled_up = player.add_xp(25);
+                                    if fish.name == "Gemme VIP" || is_test {
+                                        let mins = if is_test { 1 } else { match fish.state.as_str() { "badly damaged" => 10, "damaged" => 20, "worn" => 30, "good" => 40, "pristine" => 120, _ => 10 } };
+                                        player.vip_until = Some(Utc::now() + chrono::Duration::minutes(mins));
+                                        let auth_vip = Arc::clone(&state_task.auth);
+                                        let ch_vip = channel_login.clone();
+                                        let u_vip = username.clone();
+                                        let cl_vip = client_msg.clone();
+                                        tokio::spawn(async move {
+                                            if let Some(t) = auth_vip.load_tokens() {
+                                                if let (Some(b), Some(u)) = (auth_vip.get_user_id(&ch_vip, &t.access_token).await, auth_vip.get_user_id(&u_vip, &t.access_token).await) {
+                                                    let _ = auth_vip.add_vip(&b, &u, &t.access_token).await;
+                                                    tokio::time::sleep(tokio::time::Duration::from_secs(mins as u64 * 60)).await;
+                                                    if auth_vip.remove_vip(&b, &u, &t.access_token).await {
+                                                        let _ = cl_vip.say(ch_vip, format!("🔔 @{}, ton grade VIP a expiré. Merci !", u_vip)).await;
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    let mut resp = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
+                                    if fish.name == "Gemme VIP" || is_test { 
+                                        let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "2H", "good" => "40 MIN", "worn" => "30 MIN", "damaged" => "20 MIN", _ => "10 MIN" } };
+                                        resp.push_str(&format!(" 🌟 TU ES VIP PENDANT {} ! 🌟", d)); 
+                                    }
+                                    if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                    let _ = client_msg.say(channel_login.clone(), resp).await;
                                     
-                                    // Système VIP (Grade 30 min) si on pêche une banane
-                                    if fish.name.contains("Banana") && fish.state == "pristine" {
-                                        let duration = chrono::Duration::minutes(30);
-                                        let new_vip_time = Utc::now() + duration;
-                                        player.vip_until = Some(new_vip_time);
-                                    }
-
-                                    let tokens = state_task.auth.load_tokens();
-                                    if let Some(t) = tokens {
-                                        fish.stream_title = state_task.auth.get_stream_info(&channel_login, &t.access_token).await;
-                                    }
-                                    let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
-                                    
-                                    if fish.name.contains("Banana") && fish.state == "pristine" {
-                                        response.push_str(" 🌟 TU AS GAGNÉ LE GRADE VIP (Cooldown /2) PENDANT 30 MIN ! 🌟");
-                                    }
-
-                                    if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
-                                    let _ = client_msg.say(channel_login, response).await;
-                                    state_task.repo.save_attempt(&player, true, Some(fish)).await.unwrap();
+                                    let state_bg = state_task.clone();
+                                    let ch_bg = channel_login.clone();
+                                    tokio::spawn(async move {
+                                        if let Some(t) = state_bg.auth.load_tokens() { fish.stream_title = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await; }
+                                        let _ = state_bg.repo.save_attempt(&player, true, Some(fish)).await;
+                                    });
+                                } else {
+                                    let reasons = get_fail_attempt_reasons();
+                                    let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !").replace("#viewer_name#", &username);
+                                    let leveled_up = player.add_xp(5);
+                                    let mut resp = reason;
+                                    if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                    let _ = client_msg.say(channel_login, resp).await;
+                                    let _ = state_task.repo.save_attempt(&player, false, None).await;
                                 }
                             } else {
-                                let reasons = get_fail_attempt_reasons();
-                                let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !");
-                                let leveled_up = player.add_xp(5);
-                                let mut response = reason.replace("#viewer_name#", &username);
-                                if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
-                                let _ = client_msg.say(channel_login, response).await;
-                                state_task.repo.save_attempt(&player, false, None).await.unwrap();
+                                let rem = player.get_remaining_cooldown();
+                                if let Some(id) = player.id { let _ = state_task.repo.add_cooldown_penalty(id).await; }
+                                let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (+5s penalty) ⚠️", username, rem + 5)).await;
                             }
-                        } else {
-                            let _ = state_task.repo.add_cooldown_penalty(player.id.unwrap()).await;
-                            let remaining = player.get_remaining_cooldown() + 5;
-                            let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée) ⚠️", username, remaining)).await;
                         }
                     });
                 }
             }
         }
     });
+    *abort_lock = Some(handle);
 }
 
-// --- HANDLERS WEB ---
-
-async fn login_redirect(State(state): State<Arc<AppState>>) -> impl IntoResponse {
-    Redirect::temporary(&state.auth.get_auth_url())
-}
+async fn login_redirect(State(state): State<Arc<AppState>>) -> impl IntoResponse { Redirect::temporary(&state.auth.get_auth_url()) }
 
 #[derive(serde::Deserialize)]
 struct AuthQuery { code: String }
 
-async fn auth_callback(
-    State(state): State<Arc<AppState>>,
-    Query(query): Query<AuthQuery>,
-) -> impl IntoResponse {
+async fn auth_callback(State(state): State<Arc<AppState>>, Query(query): Query<AuthQuery>) -> impl IntoResponse {
     let code = query.code.clone();
     let state_clone = Arc::clone(&state);
-    
     match state.auth.exchange_code(&code).await {
-        Ok(tokens) => {
-            start_bot(state_clone, tokens.access_token).await;
-            Html("<h1>Authentification reussie !</h1><p>Le bot est maintenant connecte au chat. Vous pouvez fermer cette page.</p>").into_response()
-        }
-        Err(e) => Html(format!("<h1>Erreur d'authentification</h1><p>{}</p>", e)).into_response(),
+        Ok(t) => { start_bot(state_clone, t.access_token).await; Html("<h1>Authentification reussie !</h1>").into_response() }
+        Err(e) => Html(format!("<h1>Erreur</h1><p>{}</p>", e)).into_response(),
     }
 }
 
-async fn get_player_stats(
-    headers: HeaderMap,
-    ConnectInfo(addr): ConnectInfo<SocketAddr>,
-    Path(username): Path<String>,
-    State(state): State<Arc<AppState>>,
-) -> impl IntoResponse {
-    let client_ip = headers
-        .get("CF-Connecting-IP")
-        .and_then(|v: &HeaderValue| v.to_str().ok())
-        .map(|s: &str| s.to_string())
-        .unwrap_or_else(|| addr.ip().to_string());
-
-    tracing::info!("[Web] {} : {}", username, client_ip);
-    let username_lower = username.to_lowercase();
-    match state.repo.get_or_create_player(&username_lower).await {
-        Ok(player) => {
-            let catches = state.repo.get_player_catches(player.id.unwrap()).await.unwrap_or_default();
-            Json(serde_json::json!({
-                "username": player.username,
-                "total": player.total_attempts,
-                "success": player.successful_attempts,
-                "failed": player.failed_attempts,
-                "can_fish": player.can_fish(),
-                "level": player.level,
-                "xp": player.xp,
-                "xp_next": player.xp_for_next_level(),
-                "is_vip": player.is_vip(),
-                "catches": catches,
-            })).into_response()
+async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo<SocketAddr>, Path(username): Path<String>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    let ip = headers.get("CF-Connecting-IP").and_then(|v| v.to_str().ok()).map(|s| s.to_string()).unwrap_or_else(|| addr.ip().to_string());
+    let u_low = username.to_lowercase();
+    match state.repo.get_or_create_player(&u_low).await {
+        Ok(p) => {
+            let catches = state.repo.get_player_catches(p.id.unwrap()).await.unwrap_or_default();
+            Json(serde_json::json!({ "username": p.username, "total": p.total_attempts, "success": p.successful_attempts, "failed": p.failed_attempts, "can_fish": p.can_fish(), "level": p.level, "xp": p.xp, "xp_next": p.xp_for_next_level(), "is_vip": p.is_vip(), "catches": catches })).into_response()
         },
-        Err(_) => Json(serde_json::json!({"error": "Player not found"})).into_response(),
+        Err(_) => Json(serde_json::json!({"error": "Not found"})).into_response(),
     }
 }
 
-async fn get_leaderboard(
-    State(state): State<Arc<AppState>>,
-) -> impl IntoResponse {
+async fn get_leaderboard(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     match state.repo.get_leaderboard().await {
-        Ok(players) => Json(serde_json::json!({
-            "top": players.iter().map(|p| serde_json::json!({
-                "username": p.username,
-                "success": p.successful_attempts,
-                "level": p.level,
-            })).collect::<Vec<_>>()
-        })).into_response(),
-        Err(e) => {
-            tracing::error!("[API Error] Impossible de recuperer le leaderboard : {}", e);
-            Json(serde_json::json!({"error": "Failed to load leaderboard"})).into_response()
-        }
+        Ok(players) => Json(serde_json::json!({"top": players.iter().map(|p| serde_json::json!({"username": p.username, "success": p.successful_attempts, "level": p.level})).collect::<Vec<_>>()})).into_response(),
+        Err(_) => Json(serde_json::json!({"error": "Error"})).into_response()
     }
 }
