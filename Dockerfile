@@ -1,10 +1,12 @@
 # Image de compilation
-FROM rust:latest as builder
+FROM rust:latest AS builder
 
 WORKDIR /app
 
-# Copie des fichiers de configuration
-COPY Cargo.toml Cargo.lock ./
+# Copie uniquement le Cargo.toml d'abord
+COPY Cargo.toml ./
+# Copie le Cargo.lock seulement s'il existe
+COPY Cargo.lock* ./
 
 # Création d'un projet vide pour compiler les dépendances (cache Docker)
 RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release && rm -rf src
@@ -25,5 +27,4 @@ WORKDIR /app
 # Copie de l'exécutable
 COPY --from=builder /app/target/release/fisherman-rust /usr/local/bin/fisherman-rust
 
-# Copie du .env (si présent, mais docker-compose gérera ça)
 CMD ["fisherman-rust"]
