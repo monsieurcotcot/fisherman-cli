@@ -44,6 +44,17 @@ impl Player {
         leveled_up
     }
 
+    pub fn get_remaining_cooldown(&self, cooldown_seconds: i64) -> i64 {
+        match self.last_fishing_time {
+            Some(last_time) => {
+                let now = Utc::now();
+                let diff = now.signed_duration_since(last_time).num_seconds();
+                if diff >= cooldown_seconds { 0 } else { cooldown_seconds - diff }
+            }
+            None => 0,
+        }
+    }
+
     pub fn can_fish(&self, cooldown_seconds: i64) -> bool {
         match self.last_fishing_time {
             Some(last_time) => {

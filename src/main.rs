@@ -208,10 +208,10 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 repo.save_attempt(&player, false, None).await.unwrap();
                             }
                         } else {
-                            // PUNITION : On réinitialise le temps de pêche à "maintenant" 
-                            // ce qui redémarre un cooldown complet de 60s
-                            let _ = client_msg.say(channel_login, format!("⏳ @{}, tu as tenté de pêcher trop tôt ! Ton cooldown est réinitialisé à 60s. 😡", username)).await;
-                            repo.save_attempt(&player, false, None).await.unwrap(); // Cela met à jour last_fishing_time
+                            // PÉNALITÉ : On ajoute 5 secondes au cooldown actuel
+                            let _ = repo.add_cooldown_penalty(player.id.unwrap()).await;
+                            let remaining = player.get_remaining_cooldown(60) + 5;
+                            let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée pour spam  penalty) ⚠️", username, remaining)).await;
                         }
                     });
                 }

@@ -59,6 +59,15 @@ impl Repository {
         Ok(players)
     }
 
+    pub async fn add_cooldown_penalty(&self, player_id: i64) -> Result<(), sqlx::Error> {
+        // On décale last_fishing_time de 5 secondes vers le futur (ou on l'initialise si inexistant)
+        sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+5 seconds') WHERE id = ?")
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
     pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
