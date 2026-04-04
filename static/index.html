@@ -137,7 +137,15 @@
                 data.top.forEach((p, i) => {
                     const item = document.createElement('div');
                     item.className = 'stat-item';
-                    item.innerHTML = `<span>#${i+1} ${p.username}</span> <strong>${p.success} 🐟</strong>`;
+                    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = `#${i+1} ${p.username}`;
+                    
+                    const scoreStrong = document.createElement('strong');
+                    scoreStrong.textContent = `${p.success} 🐟`;
+                    
+                    item.appendChild(nameSpan);
+                    item.appendChild(scoreStrong);
                     list.appendChild(item);
                 });
             } catch (err) { console.error(err); }
