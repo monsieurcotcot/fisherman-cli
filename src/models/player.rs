@@ -11,6 +11,7 @@ pub struct Player {
     pub last_fishing_time: Option<DateTime<Utc>>,
     pub level: i32,
     pub xp: i64,
+    pub vip_until: Option<DateTime<Utc>>,
 }
 
 impl Player {
@@ -24,6 +25,14 @@ impl Player {
             last_fishing_time: None,
             level: 1,
             xp: 0,
+            vip_until: None,
+        }
+    }
+
+    pub fn is_vip(&self) -> bool {
+        match self.vip_until {
+            Some(until) => until > Utc::now(),
+            None => false,
         }
     }
 
@@ -44,7 +53,22 @@ impl Player {
         leveled_up
     }
 
-    pub fn get_remaining_cooldown(&self, cooldown_seconds: i64) -> i64 {
+    /// Calcule le cooldown dynamique basé sur le niveau (30s au niv 1 vers 15s au niv 200)
+    /// Si le joueur est VIP, le cooldown est divisé par 2.
+    pub fn get_current_cooldown(&self) -> i64 {
+        let base = 30.0;
+        let reduction = (self.level as f64 - 1.0) * (15.0 / 199.0);
+        let mut cooldown = (base - reduction).round() as i64;
+        
+        if self.is_vip() {
+            cooldown /= 2;
+        }
+        
+        cooldown
+    }
+
+    pub fn get_remaining_cooldown(&self) -> i64 {
+        let cooldown_seconds = self.get_current_cooldown();
         match self.last_fishing_time {
             Some(last_time) => {
                 let now = Utc::now();
@@ -55,7 +79,8 @@ impl Player {
         }
     }
 
-    pub fn can_fish(&self, cooldown_seconds: i64) -> bool {
+    pub fn can_fish(&self) -> bool {
+        let cooldown_seconds = self.get_current_cooldown();
         match self.last_fishing_time {
             Some(last_time) => {
                 let now = Utc::now();

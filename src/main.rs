@@ -34,6 +34,10 @@ use crate::game::generate_fish;
 use crate::auth::{AuthManager, MyError};
 use crate::config::get_fail_attempt_reasons;
 
+use std::collections::HashMap;
+use chrono::DateTime;
+use chrono::Utc;
+
 type TwitchClient = TwitchIRCClient<SecureTCPTransport, StaticLoginCredentials>;
 
 struct AppState {
@@ -41,6 +45,7 @@ struct AppState {
     auth: Arc<AuthManager>,
     twitch_client: RwLock<Option<TwitchClient>>,
     channel: String,
+    pending_resets: RwLock<HashMap<String, DateTime<Utc>>>,
 }
 
 #[tokio::main]
@@ -64,7 +69,8 @@ async fn main() -> Result<(), MyError> {
             failed_attempts INTEGER DEFAULT 0,
             last_fishing_time DATETIME,
             level INTEGER DEFAULT 1,
-            xp INTEGER DEFAULT 0
+            xp INTEGER DEFAULT 0,
+            vip_until DATETIME
         )"
     ).execute(&pool).await?;
 
@@ -97,6 +103,7 @@ async fn main() -> Result<(), MyError> {
         auth: Arc::clone(&auth_manager),
         twitch_client: RwLock::new(None),
         channel: channel.clone(),
+        pending_resets: RwLock::new(HashMap::new()),
     });
 
     // Tentative de chargement des tokens existants
@@ -188,6 +195,36 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, response).await;
                         }
                     });
+                } else if text == "!fish reset" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    
+                    tokio::spawn(async move {
+                        state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
+                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, es-tu sûr de vouloir recommencer à zéro ? (Cela supprimera tous tes poissons et ton XP). Tape !fish yes pour confirmer.", username)).await;
+                    });
+                } else if text == "!fish yes" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    
+                    tokio::spawn(async move {
+                        let mut pending = state_task.pending_resets.write().await;
+                        if let Some(time) = pending.get(&username) {
+                            if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
+                                match state_task.repo.reset_player(&username).await {
+                                    Ok(_) => {
+                                        let _ = client_msg.say(channel_login, format!("♻️ @{}, ta progression a été réinitialisée. Bonne chance pour cette nouvelle aventure !", username)).await;
+                                    }
+                                    Err(_) => {
+                                        let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors de la réinitialisation.", username)).await;
+                                    }
+                                }
+                                pending.remove(&username);
+                            }
+                        }
+                    });
                 } else if text == "!fish" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -195,18 +232,44 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     
                     tokio::spawn(async move {
                         let mut player = state_task.repo.get_or_create_player(&username).await.unwrap();
-                        if player.can_fish(20) {
-                            let success_rate = 0.60 - (player.level as f64 * 0.001);
+                        if player.can_fish() {
+                            // Taux de réussite progressif avec paliers (35% au Niv 1 -> 60% au Niv 200)
+                            let success_rate = match player.level {
+                                1..=25 => 0.35,
+                                26..=50 => 0.40,
+                                51..=75 => 0.45,
+                                76..=100 => 0.50,
+                                101..=125 => 0.53,
+                                126..=150 => 0.55,
+                                151..=175 => 0.57,
+                                176..=199 => 0.59,
+                                200 => 0.60,
+                                _ => 0.35,
+                            };
+                            
                             let success = rand::random::<f64>() < success_rate;
                             
                             if success {
                                 if let Some(mut fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
+                                    
+                                    // Système VIP (Grade 30 min) si on pêche une banane
+                                    if fish.name.contains("Banana") && fish.state == "pristine" {
+                                        let duration = chrono::Duration::minutes(30);
+                                        let new_vip_time = Utc::now() + duration;
+                                        player.vip_until = Some(new_vip_time);
+                                    }
+
                                     let tokens = state_task.auth.load_tokens();
                                     if let Some(t) = tokens {
                                         fish.stream_title = state_task.auth.get_stream_info(&channel_login, &t.access_token).await;
                                     }
                                     let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
+                                    
+                                    if fish.name.contains("Banana") && fish.state == "pristine" {
+                                        response.push_str(" 🌟 TU AS GAGNÉ LE GRADE VIP (Cooldown /2) PENDANT 30 MIN ! 🌟");
+                                    }
+
                                     if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
                                     let _ = client_msg.say(channel_login, response).await;
                                     state_task.repo.save_attempt(&player, true, Some(fish)).await.unwrap();
@@ -222,7 +285,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         } else {
                             let _ = state_task.repo.add_cooldown_penalty(player.id.unwrap()).await;
-                            let remaining = player.get_remaining_cooldown(20) + 5;
+                            let remaining = player.get_remaining_cooldown() + 5;
                             let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée) ⚠️", username, remaining)).await;
                         }
                     });
@@ -279,10 +342,11 @@ async fn get_player_stats(
                 "total": player.total_attempts,
                 "success": player.successful_attempts,
                 "failed": player.failed_attempts,
-                "can_fish": player.can_fish(20),
+                "can_fish": player.can_fish(),
                 "level": player.level,
                 "xp": player.xp,
                 "xp_next": player.xp_for_next_level(),
+                "is_vip": player.is_vip(),
                 "catches": catches,
             })).into_response()
         },

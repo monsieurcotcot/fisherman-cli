@@ -13,7 +13,7 @@ impl Repository {
 
     pub async fn get_or_create_player(&self, username: &str) -> Result<Player, sqlx::Error> {
         let username_lower = username.to_lowercase();
-        let row = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players WHERE username = ?")
+        let row = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp, vip_until FROM players WHERE username = ?")
             .bind(&username_lower)
             .fetch_optional(&self.pool)
             .await?;
@@ -28,6 +28,7 @@ impl Repository {
                 last_fishing_time: row.get("last_fishing_time"),
                 level: row.get("level"),
                 xp: row.get("xp"),
+                vip_until: row.get("vip_until"),
             }),
             None => {
                 let _id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -42,7 +43,7 @@ impl Repository {
     }
 
     pub async fn get_leaderboard(&self) -> Result<Vec<Player>, sqlx::Error> {
-        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players WHERE total_attempts > 0 ORDER BY level DESC, xp DESC LIMIT 10")
+        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp, vip_until FROM players WHERE total_attempts > 0 ORDER BY level DESC, xp DESC LIMIT 10")
             .fetch_all(&self.pool)
             .await?;
 
@@ -55,6 +56,7 @@ impl Repository {
             last_fishing_time: row.get("last_fishing_time"),
             level: row.get("level"),
             xp: row.get("xp"),
+            vip_until: row.get("vip_until"),
         }).collect();
 
         Ok(players)
@@ -99,15 +101,36 @@ impl Repository {
         Ok(())
     }
 
+    pub async fn reset_player(&self, username: &str) -> Result<(), sqlx::Error> {
+        let username_lower = username.to_lowercase();
+        let mut tx = self.pool.begin().await?;
+
+        // Supprimer les poissons capturés
+        sqlx::query("DELETE FROM catches WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        // Réinitialiser les stats du joueur
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL WHERE username = ?")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
     pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
-        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ? WHERE id = ?")
+        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ?, vip_until = ? WHERE id = ?")
             .bind(if success { 1 } else { 0 })
             .bind(if success { 0 } else { 1 })
             .bind(Utc::now())
             .bind(player.level)
             .bind(player.xp)
+            .bind(player.vip_until)
             .bind(player.id)
             .execute(&mut *tx)
             .await?;

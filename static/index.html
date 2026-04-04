@@ -208,7 +208,10 @@
             <div class="stats-box">
                 <div class="stat-item">
                     <span>Pseudo: <strong id="res-username"></strong></span>
-                    <span class="level-badge">Niv. <span id="res-level"></span></span>
+                    <div>
+                        <span id="res-vip" class="level-badge" style="background: #ffb444; color: #18181b; display: none; margin-right: 5px;">VIP</span>
+                        <span class="level-badge">Niv. <span id="res-level"></span></span>
+                    </div>
                 </div>
                 <div class="stat-item"><span>XP: <span id="res-xp-text"></span></span></div>
                 <div class="xp-bar-container">
@@ -343,6 +346,7 @@
                     document.getElementById('statsDisplay').style.display = 'block';
                     document.getElementById('res-username').innerText = data.username;
                     document.getElementById('res-level').innerText = data.level;
+                    document.getElementById('res-vip').style.display = data.is_vip ? 'inline' : 'none';
                     document.getElementById('res-xp-text').innerText = `${data.xp} / ${data.xp_next}`;
                     const percent = (data.xp / data.xp_next) * 100;
                     document.getElementById('res-xp-fill').style.width = `${percent}%`;
