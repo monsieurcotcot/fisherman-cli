@@ -12,6 +12,7 @@
 /data
 *.db
 *.db-journal
+tokens.json
 
 # Logs
 *.log

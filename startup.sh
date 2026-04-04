@@ -11,34 +11,25 @@ echo -e "${BLUE}==========================================${NC}"
 echo -e "${BLUE}   🎣 ASSISTANT D'INSTALLATION FISHERMAN   ${NC}"
 echo -e "${BLUE}==========================================${NC}"
 
-# Fonction pour configurer le .env
 configure_env() {
-    echo -e "\n${YELLOW}Configuration de vos accès Twitch :${NC}"
+    echo -e "\n${YELLOW}Configuration de votre application Twitch Dev :${NC}"
+    echo -e "${BLUE}ℹ️  Créez une application sur : https://dev.twitch.tv/console${NC}"
+    echo -e "${BLUE}ℹ️  OAuth Redirect URL : http://localhost:3000/auth/callback${NC}"
     
-    # 1. Pseudo du Bot
-    read -p "👉 Entrez le pseudo Twitch du compte BOT : " username
-    while [[ -z "$username" ]]; do
-        read -p "⚠️ Le pseudo ne peut pas être vide : " username
+    # 1. Client ID
+    read -p "👉 Entrez votre Client ID : " client_id
+    while [[ -z "$client_id" ]]; do
+        read -p "⚠️ Le Client ID ne peut pas être vide : " client_id
     done
 
-    # 2. Token OAuth
-    echo -e "\n${YELLOW}⚠️  IMPORTANT : SÉCURITÉ DU TOKEN${NC}"
-    echo -e "${BLUE}Pour le développement/test rapide :${NC}"
-    echo -e "👉 https://twitchtokengenerator.com/"
-    
-    echo -e "\n${RED}Pour une utilisation réelle (Production) :${NC}"
-    echo -e "Il est fortement recommandé de créer votre propre application sur :"
-    echo -e "👉 https://dev.twitch.tv/console"
-    echo -e "Cela vous garantit un contrôle total sur vos accès."
-
-    read -p "👉 Entrez votre Access Token (commençant par oauth:) : " oauth
-    while [[ ! $oauth == oauth:* ]]; do
-        echo -e "${RED}⚠️ Le token doit commencer par 'oauth:'${NC}"
-        read -p "👉 Réessayez : " oauth
+    # 2. Client Secret
+    read -p "👉 Entrez votre Client Secret : " client_secret
+    while [[ -z "$client_secret" ]]; do
+        read -p "⚠️ Le Client Secret ne peut pas être vide : " client_secret
     done
 
     # 3. Chaîne Twitch
-    read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? (pseudo de la chaine) : " channel
+    read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? : " channel
     while [[ -z "$channel" ]]; do
         read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel
     done
@@ -46,44 +37,34 @@ configure_env() {
     # Création du fichier .env
     cat <<EOF > .env
 # Twitch Configuration
-TWITCH_USERNAME=$username
-TWITCH_OAUTH_TOKEN=$oauth
+TWITCH_CLIENT_ID=$client_id
+TWITCH_CLIENT_SECRET=$client_secret
 TWITCH_CHANNEL=$channel
+REDIRECT_URI=http://localhost:3000/auth/callback
 
-# Database (URL used inside Docker)
+# Database
 DATABASE_URL=sqlite:///app/data/fisherman.db
 
 # Logging
 RUST_LOG=info
 EOF
 
-    echo -e "\n${GREEN}✅ Fichier .env créé avec succès !${NC}"
+    echo -e "\n${GREEN}✅ Configuration enregistrée !${NC}"
 }
 
-# Vérification de l'existence du .env ou des valeurs par défaut
-if [ ! -f .env ]; then
-    echo -e "${YELLOW}ℹ️  Premier lancement détecté.${NC}"
+if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env; then
     configure_env
-else
-    # Vérifier si le .env contient encore les placeholders du template
-    if grep -q "ton_pseudo_bot" .env; then
-        echo -e "${YELLOW}⚠️  Votre fichier .env n'est pas encore configuré.${NC}"
-        configure_env
-    fi
 fi
 
 # Création du dossier data
-if [ ! -d data ]; then
-    echo -e "\n📂 Création du dossier 'data' pour la base de données..."
-    mkdir data
-    chmod 777 data
-fi
+mkdir -p data
+chmod 777 data
 
-echo -e "\n${BLUE}🚀 Lancement du bot via Docker Compose...${NC}"
+echo -e "\n${BLUE}🚀 Lancement du conteneur...${NC}"
 docker compose up --build -d
 
 echo -e "${BLUE}------------------------------------------${NC}"
-echo -e "${GREEN}✅ INSTALLATION RÉUSSIE !${NC}"
-echo -e "🌐 Votre interface web est disponible sur : ${BLUE}http://localhost:3000${NC}"
-echo -e "📜 Pour voir ce que fait le bot : ${YELLOW}docker compose logs -f bot${NC}"
+echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE :${NC}"
+echo -e "Pour connecter le bot à Twitch, ouvrez ce lien dans votre navigateur :"
+echo -e "${GREEN}👉 http://localhost:3000/auth${NC}"
 echo -e "${BLUE}------------------------------------------${NC}"
