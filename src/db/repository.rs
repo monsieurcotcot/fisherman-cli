@@ -60,8 +60,28 @@ impl Repository {
         Ok(players)
     }
 
+    pub async fn get_player_catches(&self, player_id: i64) -> Result<Vec<Fish>, sqlx::Error> {
+        let rows = sqlx::query("SELECT fish_name, rarity, size, state, description FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
+            .bind(player_id)
+            .fetch_all(&self.pool)
+            .await?;
+
+        let catches = rows.into_iter().map(|row| {
+            let rarity_str: String = row.get("rarity");
+            let rarity = serde_json::from_str(&rarity_str).unwrap_or(crate::config::Rarity::Common);
+            Fish::new(
+                row.get("fish_name"),
+                rarity,
+                row.get("size"),
+                row.get("state"),
+                row.get("description"),
+            )
+        }).collect();
+
+        Ok(catches)
+    }
+
     pub async fn add_cooldown_penalty(&self, player_id: i64) -> Result<(), sqlx::Error> {
-        // On décale last_fishing_time de 5 secondes vers le futur (ou on l'initialise si inexistant)
         sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+5 seconds') WHERE id = ?")
             .bind(player_id)
             .execute(&self.pool)
@@ -72,7 +92,6 @@ impl Repository {
     pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
-        // Update player stats
         sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ? WHERE id = ?")
             .bind(if success { 1 } else { 0 })
             .bind(if success { 0 } else { 1 })
@@ -83,7 +102,6 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
-        // Save catch if success
         if let Some(f) = fish {
             sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, state, description) VALUES (?, ?, ?, ?, ?, ?)")
                 .bind(player.id)

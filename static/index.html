@@ -107,6 +107,11 @@
                     <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
                     <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
                 </div>
+
+                <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
+                <div id="res-inventory" style="max-height: 300px; overflow-y: auto; margin-top: 10px;">
+                    <!-- Les poissons apparaîtront ici -->
+                </div>
             </div>
         </div>
         
@@ -194,6 +199,33 @@
                     document.getElementById('res-total').textContent = data.total;
                     document.getElementById('res-success').textContent = data.success;
                     document.getElementById('res-failed').textContent = data.failed;
+
+                    // Remplir l'inventaire
+                    const inv = document.getElementById('res-inventory');
+                    inv.innerHTML = '';
+                    if (data.catches && data.catches.length > 0) {
+                        data.catches.forEach(f => {
+                            const item = document.createElement('div');
+                            item.className = 'stat-item';
+                            item.style.fontSize = '0.9rem';
+                            
+                            const rarityColors = {
+                                'common': '#efeff1',
+                                'uncommon': '#1fa363',
+                                'rare': '#00e6ff',
+                                'veryrare': '#9146ff',
+                                'epic': '#ff4ce2',
+                                'legendary': '#ffb444',
+                                'mythical': '#ff4f4f'
+                            };
+                            const color = rarityColors[f.rarity.toLowerCase()] || '#efeff1';
+                            
+                            item.innerHTML = `<span style="color: ${color};">● ${f.name}</span> <span>${f.size} cm</span>`;
+                            inv.appendChild(item);
+                        });
+                    } else {
+                        inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8;">Aucun poisson pour le moment...</p>';
+                    }
                 }
             } catch (err) {
                 console.error(err);

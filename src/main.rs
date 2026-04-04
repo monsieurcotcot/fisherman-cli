@@ -255,16 +255,20 @@ async fn get_player_stats(
     // Force minuscules pour que /player/MonsieurCotCot fonctionne
     let username_lower = username.to_lowercase();
     match state.repo.get_or_create_player(&username_lower).await {
-        Ok(player) => Json(serde_json::json!({
-            "username": player.username,
-            "total": player.total_attempts,
-            "success": player.successful_attempts,
-            "failed": player.failed_attempts,
-            "can_fish": player.can_fish(20),
-            "level": player.level,
-            "xp": player.xp,
-            "xp_next": player.xp_for_next_level(),
-        })).into_response(),
+        Ok(player) => {
+            let catches = state.repo.get_player_catches(player.id.unwrap()).await.unwrap_or_default();
+            Json(serde_json::json!({
+                "username": player.username,
+                "total": player.total_attempts,
+                "success": player.successful_attempts,
+                "failed": player.failed_attempts,
+                "can_fish": player.can_fish(20),
+                "level": player.level,
+                "xp": player.xp,
+                "xp_next": player.xp_for_next_level(),
+                "catches": catches,
+            })).into_response()
+        },
         Err(_) => Json(serde_json::json!({"error": "Player not found"})).into_response(),
     }
 }
