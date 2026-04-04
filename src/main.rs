@@ -137,8 +137,11 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     let channel_name = state.channel.clone();
 
     tokio::spawn(async move {
-        client.join(channel_name.clone()).unwrap();
-        tracing::info!("[Twitch] Bot connecte a #{}", channel_name);
+        let channel_lower = channel_name.to_lowercase();
+        match client.join(channel_lower.clone()) {
+            Ok(_) => tracing::info!("[Twitch] Bot connecte a #{}", channel_lower),
+            Err(e) => tracing::error!("[Twitch] Impossible de rejoindre la chaine : {}", e),
+        }
 
         while let Some(message) = incoming_messages.recv().await {
             if let ServerMessage::Privmsg(msg) = message {
