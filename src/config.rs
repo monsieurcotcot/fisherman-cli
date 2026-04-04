@@ -864,6 +864,20 @@ pub fn get_fish_data() -> HashMap<Rarity, Vec<FishData>> {
         fish_forced("Pristine Banana 2", 5.0, 10.0, 2.0, vec![
             ("pristine", "✨😱 Wow !! It is the ✨Pristine✨ Banana 2 🍌 !! A rare treasure for the Banana Lovers !!")
         ]),
+        FishData {
+            name: "Gemme VIP".to_string(),
+            size_min: 1.0,
+            size_mean: 5.0,
+            size_sigma: 2.0,
+            force_pristine: None,
+            descriptions: [
+                ("badly damaged", vec!["Une Gemme VIP très abîmée... Elle brille encore un peu. (10 min VIP)".to_string()]),
+                ("damaged", vec!["Une Gemme VIP rayée, mais son pouvoir est intact. (20 min VIP)".to_string()]),
+                ("worn", vec!["Une Gemme VIP usée par le temps. (30 min VIP)".to_string()]),
+                ("good", vec!["Une Gemme VIP en bon état, elle rayonne ! (40 min VIP)".to_string()]),
+                ("pristine", vec!["✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (50 min VIP)".to_string()]),
+            ].into_iter().map(|(k, v)| (k.to_string(), v)).collect(),
+        },
     ]);
 
     // MYTHICAL
