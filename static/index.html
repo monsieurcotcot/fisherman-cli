@@ -60,37 +60,61 @@
         }
         .inventory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 5px;
             margin-top: 10px;
         }
         .fish-slot {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             background: #26262c;
-            border: 2px solid #3a3a3d;
-            border-radius: 8px;
+            border: 1px solid #3a3a3d;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: transform 0.1s, border-color 0.2s;
-            font-size: 1.5rem;
+            font-size: 1rem;
             position: relative;
         }
+        .inventory-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background: #1f1f23;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #3a3a3d;
+        }
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .filter-btn {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            background: #26262c;
+            border: 1px solid #3a3a3d;
+            color: #efeff1;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .filter-btn.active { background: #9146ff; border-color: #bf94ff; }
+        
         .fish-slot:hover {
-            transform: scale(1.1);
+            transform: scale(1.2);
             border-color: #9146ff;
             z-index: 10;
         }
         .fish-slot .badge {
             position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 12px;
-            height: 12px;
+            bottom: 2px;
+            right: 2px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            border: 2px solid #18181b;
         }
         
         /* Modal pour les détails */
@@ -167,8 +191,22 @@
                 </div>
 
                 <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
-                <div id="res-inventory" class="inventory-grid">
-                    <!-- Grille de cases -->
+                
+                <div class="filter-bar" id="filterBar">
+                    <button class="filter-btn active" onclick="filterCatches('all')">Tous</button>
+                    <button class="filter-btn" onclick="filterCatches('common')">Commun</button>
+                    <button class="filter-btn" onclick="filterCatches('uncommon')">Peu commun</button>
+                    <button class="filter-btn" onclick="filterCatches('rare')">Rare</button>
+                    <button class="filter-btn" onclick="filterCatches('veryrare')">Très rare</button>
+                    <button class="filter-btn" onclick="filterCatches('epic')">Épique</button>
+                    <button class="filter-btn" onclick="filterCatches('legendary')">Légendaire</button>
+                    <button class="filter-btn" onclick="filterCatches('mythical')">Mythique</button>
+                </div>
+
+                <div class="inventory-container">
+                    <div id="res-inventory" class="inventory-grid">
+                        <!-- Grille de cases -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -248,6 +286,8 @@
             } catch (err) { console.error(err); }
         }
 
+        let allCatches = [];
+
         async function fetchStats(u) {
             const username = u || document.getElementById('usernameInput').value;
             if (!username) return;
@@ -272,41 +312,60 @@
                     document.getElementById('res-success').textContent = data.success;
                     document.getElementById('res-failed').textContent = data.failed;
 
-                    // Remplir l'inventaire (Grille)
-                    const inv = document.getElementById('res-inventory');
-                    inv.innerHTML = '';
-                    if (data.catches && data.catches.length > 0) {
-                        data.catches.forEach(f => {
-                            const slot = document.createElement('div');
-                            slot.className = 'fish-slot';
-                            slot.textContent = '🐟';
-                            
-                            const rarityColors = {
-                                'common': '#efeff1',
-                                'uncommon': '#1fa363',
-                                'rare': '#00e6ff',
-                                'veryrare': '#9146ff',
-                                'epic': '#ff4ce2',
-                                'legendary': '#ffb444',
-                                'mythical': '#ff4f4f'
-                            };
-                            const color = rarityColors[f.rarity.toLowerCase()] || '#efeff1';
-                            slot.style.borderColor = color;
-
-                            const badge = document.createElement('div');
-                            badge.className = 'badge';
-                            badge.style.backgroundColor = color;
-                            slot.appendChild(badge);
-
-                            slot.onclick = () => showFishDetails(f, color);
-                            inv.appendChild(slot);
-                        });
-                    } else {
-                        inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; grid-column: span 4;">Aucun poisson pour le moment...</p>';
-                    }
+                    // Stocker pour le filtrage
+                    allCatches = data.catches || [];
+                    filterCatches('all');
                 }
             } catch (err) {
                 console.error(err);
+            }
+        }
+
+        function filterCatches(rarity) {
+            // Update buttons UI
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                b.classList.remove('active');
+                if (b.innerText.toLowerCase().replace(' ', '') === rarity || (rarity === 'all' && b.innerText === 'Tous')) {
+                    b.classList.add('active');
+                }
+            });
+
+            const inv = document.getElementById('res-inventory');
+            inv.innerHTML = '';
+            
+            const filtered = rarity === 'all' 
+                ? allCatches 
+                : allCatches.filter(f => f.rarity.toLowerCase().replace(' ', '') === rarity);
+
+            if (filtered.length > 0) {
+                filtered.forEach(f => {
+                    const slot = document.createElement('div');
+                    slot.className = 'fish-slot';
+                    slot.textContent = '🐟';
+                    
+                    const rarityColors = {
+                        'common': '#efeff1',
+                        'uncommon': '#1fa363',
+                        'rare': '#00e6ff',
+                        'veryrare': '#9146ff',
+                        'epic': '#ff4ce2',
+                        'legendary': '#ffb444',
+                        'mythical': '#ff4f4f'
+                    };
+                    const color = rarityColors[f.rarity.toLowerCase().replace(' ', '')] || '#efeff1';
+                    slot.style.borderColor = color;
+
+                    const badge = document.createElement('div');
+                    badge.className = 'badge';
+                    badge.style.backgroundColor = color;
+                    slot.appendChild(badge);
+
+                    slot.onclick = () => showFishDetails(f, color);
+                    inv.appendChild(slot);
+                });
+            } else {
+                inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; grid-column: span 4; text-align: center; padding: 20px;">Aucun poisson dans cette catégorie.</p>';
             }
         }
 
