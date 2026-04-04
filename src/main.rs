@@ -109,7 +109,7 @@ async fn main() -> Result<(), MyError> {
 
     // --- WEB SERVER SETUP ---
     let app = Router::new()
-        .route("/api/stats/:username", get(get_player_stats))
+        .route("/api/stats/{username}", get(get_player_stats))
         .route("/api/leaderboard", get(get_leaderboard))
         .route("/auth", get(login_redirect))
         .route("/auth/callback", get(auth_callback))
