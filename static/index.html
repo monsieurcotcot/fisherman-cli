@@ -58,6 +58,64 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .fish-slot {
+            width: 60px;
+            height: 60px;
+            background: #26262c;
+            border: 2px solid #3a3a3d;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s, border-color 0.2s;
+            font-size: 1.5rem;
+            position: relative;
+        }
+        .fish-slot:hover {
+            transform: scale(1.1);
+            border-color: #9146ff;
+            z-index: 10;
+        }
+        .fish-slot .badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #18181b;
+        }
+        
+        /* Modal pour les détails */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1f1f23;
+            border: 2px solid #9146ff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            z-index: 100;
+            width: 300px;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 99;
+        }
+
         .search-box {
             margin-bottom: 1rem;
             display: flex;
@@ -109,10 +167,24 @@
                 </div>
 
                 <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
-                <div id="res-inventory" style="max-height: 300px; overflow-y: auto; margin-top: 10px;">
-                    <!-- Les poissons apparaîtront ici -->
+                <div id="res-inventory" class="inventory-grid">
+                    <!-- Grille de cases -->
                 </div>
             </div>
+        </div>
+
+        <!-- Modal pour les détails du poisson -->
+        <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
+        <div id="fishModal" class="modal">
+            <h2 id="modal-name" style="margin-top: 0; color: #9146ff;"></h2>
+            <div style="border-top: 1px solid #3a3a3d; margin: 10px 0; padding-top: 10px;">
+                <p><strong>Rareté:</strong> <span id="modal-rarity"></span></p>
+                <p><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
+                <p><strong>Poids:</strong> <span id="modal-weight"></span> g</p>
+                <p><strong>État:</strong> <span id="modal-state"></span></p>
+                <p style="font-style: italic; color: #adadb8; margin-top: 15px;" id="modal-desc"></p>
+            </div>
+            <button onclick="closeModal()" style="width: 100%; margin-top: 10px;">Fermer</button>
         </div>
         
         <div class="stats-box">
@@ -200,14 +272,14 @@
                     document.getElementById('res-success').textContent = data.success;
                     document.getElementById('res-failed').textContent = data.failed;
 
-                    // Remplir l'inventaire
+                    // Remplir l'inventaire (Grille)
                     const inv = document.getElementById('res-inventory');
                     inv.innerHTML = '';
                     if (data.catches && data.catches.length > 0) {
                         data.catches.forEach(f => {
-                            const item = document.createElement('div');
-                            item.className = 'stat-item';
-                            item.style.fontSize = '0.9rem';
+                            const slot = document.createElement('div');
+                            slot.className = 'fish-slot';
+                            slot.textContent = '🐟';
                             
                             const rarityColors = {
                                 'common': '#efeff1',
@@ -219,17 +291,42 @@
                                 'mythical': '#ff4f4f'
                             };
                             const color = rarityColors[f.rarity.toLowerCase()] || '#efeff1';
-                            
-                            item.innerHTML = `<span style="color: ${color};">● ${f.name}</span> <span>${f.size} cm</span>`;
-                            inv.appendChild(item);
+                            slot.style.borderColor = color;
+
+                            const badge = document.createElement('div');
+                            badge.className = 'badge';
+                            badge.style.backgroundColor = color;
+                            slot.appendChild(badge);
+
+                            slot.onclick = () => showFishDetails(f, color);
+                            inv.appendChild(slot);
                         });
                     } else {
-                        inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8;">Aucun poisson pour le moment...</p>';
+                        inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; grid-column: span 4;">Aucun poisson pour le moment...</p>';
                     }
                 }
             } catch (err) {
                 console.error(err);
             }
+        }
+
+        function showFishDetails(fish, color) {
+            document.getElementById('modal-name').textContent = fish.name;
+            document.getElementById('modal-name').style.color = color;
+            document.getElementById('modal-rarity').textContent = fish.rarity;
+            document.getElementById('modal-rarity').style.color = color;
+            document.getElementById('modal-size').textContent = fish.size;
+            document.getElementById('modal-weight').textContent = fish.weight;
+            document.getElementById('modal-state').textContent = fish.state;
+            document.getElementById('modal-desc').textContent = fish.description;
+
+            document.getElementById('fishModal').style.display = 'block';
+            document.getElementById('modalOverlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('fishModal').style.display = 'none';
+            document.getElementById('modalOverlay').style.display = 'none';
         }
     </script>
 </body>

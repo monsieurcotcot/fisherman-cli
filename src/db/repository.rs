@@ -61,7 +61,7 @@ impl Repository {
     }
 
     pub async fn get_player_catches(&self, player_id: i64) -> Result<Vec<Fish>, sqlx::Error> {
-        let rows = sqlx::query("SELECT fish_name, rarity, size, state, description FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
+        let rows = sqlx::query("SELECT fish_name, rarity, size, weight, state, description FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
             .bind(player_id)
             .fetch_all(&self.pool)
             .await?;
@@ -73,6 +73,7 @@ impl Repository {
                 row.get("fish_name"),
                 rarity,
                 row.get("size"),
+                row.get("weight"),
                 row.get("state"),
                 row.get("description"),
             )
@@ -103,11 +104,12 @@ impl Repository {
             .await?;
 
         if let Some(f) = fish {
-            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, state, description) VALUES (?, ?, ?, ?, ?, ?)")
+            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
                 .bind(player.id)
                 .bind(f.name)
                 .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
                 .bind(f.size)
+                .bind(f.weight)
                 .bind(f.state)
                 .bind(f.description)
                 .execute(&mut *tx)

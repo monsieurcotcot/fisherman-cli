@@ -32,6 +32,12 @@ pub fn generate_fish() -> Option<Fish> {
         size = fish_data.size_min;
     }
     size = (size * 100.0).round() / 100.0; // Round to 2 decimals
+
+    // Generate weight based on size (cubic relationship: mass ~ volume)
+    // Formula: weight (g) = factor * size(cm)^3
+    // We use a base factor of 0.01 (average for many fish)
+    let mut weight = 0.01 * size.powi(3);
+    weight = (weight * 100.0).round() / 100.0; // Round to 2 decimals
     
     // Generate state
     let states = vec!["badly damaged", "damaged", "worn", "good", "pristine"];
@@ -66,6 +72,7 @@ pub fn generate_fish() -> Option<Fish> {
         fish_data.name.clone(),
         selected_rarity,
         size,
+        weight,
         state,
         description,
     ))

@@ -76,6 +76,7 @@ async fn main() -> Result<(), MyError> {
             fish_name TEXT NOT NULL,
             rarity TEXT NOT NULL,
             size REAL NOT NULL,
+            weight REAL DEFAULT 0,
             state TEXT NOT NULL,
             description TEXT,
             caught_at DATETIME DEFAULT CURRENT_TIMESTAMP
