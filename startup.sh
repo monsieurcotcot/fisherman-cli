@@ -15,10 +15,10 @@ configure_env() {
     echo -e "\n${YELLOW}1. Configuration de l'accès réseau :${NC}"
     
     # 1. Adresse IP / Hostname
-    default_ip=$(hostname -I | awk '{print $1}')
-    echo -e "${BLUE}ℹ️  Utilisez votre domaine Cloudflare (ex: fisherman-cli.cotcotuniverse.com)${NC}"
-    read -p "👉 Adresse IP ou Domaine (Défaut: $default_ip) : " host_addr
-    host_addr=${host_addr:-$default_ip}
+    default_host="fisherman-cli.cotcotuniverse.com"
+    echo -e "${BLUE}ℹ️  Configuration du domaine public${NC}"
+    read -p "👉 Adresse IP ou Domaine (Défaut: $default_host) : " host_addr
+    host_addr=${host_addr:-$default_host}
 
     # NETTOYAGE de l'entrée utilisateur
     # Retirer http:// ou https:// si présent
