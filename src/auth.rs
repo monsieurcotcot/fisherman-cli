@@ -5,6 +5,8 @@ use chrono::{DateTime, Utc, Duration};
 use reqwest::Client;
 use url::Url;
 
+pub type MyError = Box<dyn std::error::Error + Send + Sync>;
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TwitchTokens {
     pub access_token: String,
@@ -39,7 +41,7 @@ impl AuthManager {
         url.to_string()
     }
 
-    pub async fn exchange_code(&self, code: &str) -> Result<TwitchTokens, Box<dyn std::error::Error>> {
+    pub async fn exchange_code(&self, code: &str) -> Result<TwitchTokens, MyError> {
         let client = Client::new();
         let params = [
             ("client_id", self.client_id.as_str()),
@@ -66,7 +68,7 @@ impl AuthManager {
         Ok(tokens)
     }
 
-    pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, Box<dyn std::error::Error>> {
+    pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, MyError> {
         let client = Client::new();
         let params = [
             ("client_id", self.client_id.as_str()),
@@ -100,7 +102,7 @@ impl AuthManager {
         serde_json::from_str(&data).ok()
     }
 
-    fn save_tokens(&self, tokens: &TwitchTokens) -> Result<(), Box<dyn std::error::Error>> {
+    fn save_tokens(&self, tokens: &TwitchTokens) -> Result<(), MyError> {
         let data = serde_json::to_string_pretty(tokens)?;
         fs::write(&self.token_path, data)?;
         Ok(())

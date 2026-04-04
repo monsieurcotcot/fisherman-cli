@@ -3,18 +3,10 @@ FROM rust:latest AS builder
 
 WORKDIR /app
 
-# Copie uniquement le Cargo.toml d'abord
-COPY Cargo.toml ./
-# Copie le Cargo.lock seulement s'il existe
-COPY Cargo.lock* ./
+# Copie de tout le projet
+COPY . .
 
-# Création d'un projet vide pour compiler les dépendances (cache Docker)
-RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release && rm -rf src
-
-# Copie du code source
-COPY src ./src
-
-# Compilation finale
+# Compilation
 RUN cargo build --release
 
 # Image finale légère

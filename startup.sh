@@ -34,13 +34,18 @@ configure_env() {
         read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel
     done
 
+    # 4. Adresse IP / Hostname pour le réseau
+    default_ip=$(hostname -I | awk '{print $1}')
+    read -p "👉 Adresse IP ou Domaine de cette VM (Défaut: $default_ip) : " host_addr
+    host_addr=${host_addr:-$default_ip}
+
     # Création du fichier .env
     cat <<EOF > .env
 # Twitch Configuration
 TWITCH_CLIENT_ID=$client_id
 TWITCH_CLIENT_SECRET=$client_secret
 TWITCH_CHANNEL=$channel
-REDIRECT_URI=http://localhost:3000/auth/callback
+REDIRECT_URI=http://$host_addr:3000/auth/callback
 
 # Database
 DATABASE_URL=sqlite:///app/data/fisherman.db
@@ -50,6 +55,8 @@ RUST_LOG=info
 EOF
 
     echo -e "\n${GREEN}✅ Configuration enregistrée !${NC}"
+    echo -e "${YELLOW}⚠️  IMPORTANT : Dans la console Twitch Dev, vous DEVEZ ajouter cette URL de redirection :${NC}"
+    echo -e "${BLUE}👉 http://$host_addr:3000/auth/callback${NC}"
 }
 
 if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env; then
