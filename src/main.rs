@@ -189,6 +189,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if player.can_fish(60) {
                             let success_rate = 0.45 - (player.level as f64 * 0.001);
                             if rand::random::<f64>() < success_rate {
+                                // ... (succès)
                                 if let Some(fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
                                     let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
@@ -197,6 +198,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     repo.save_attempt(&player, true, Some(fish)).await.unwrap();
                                 }
                             } else {
+                                // ... (échec)
                                 let reasons = get_fail_attempt_reasons();
                                 let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !");
                                 let leveled_up = player.add_xp(5);
@@ -206,7 +208,10 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 repo.save_attempt(&player, false, None).await.unwrap();
                             }
                         } else {
-                            let _ = client_msg.say(channel_login, format!("⏳ @{}, attends un peu ! (Cooldown: 60s)", username)).await;
+                            // PUNITION : On réinitialise le temps de pêche à "maintenant" 
+                            // ce qui redémarre un cooldown complet de 60s
+                            let _ = client_msg.say(channel_login, format!("⏳ @{}, tu as tenté de pêcher trop tôt ! Ton cooldown est réinitialisé à 60s. 😡", username)).await;
+                            repo.save_attempt(&player, false, None).await.unwrap(); // Cela met à jour last_fishing_time
                         }
                     });
                 }
