@@ -180,9 +180,15 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let repo = Arc::clone(&state_clone.repo);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
+                    let redirect_uri = env::var("REDIRECT_URI").unwrap_or_default();
+                    let base_url = redirect_uri.replace("/auth/callback", "");
+                    
                     tokio::spawn(async move {
                         let player = repo.get_or_create_player(&username).await.unwrap();
-                        let response = format!("📊 @{} : Niveau {} (XP: {}/{}) | Stats : http://localhost:3000/player/{}", username, player.level, player.xp, player.xp_for_next_level(), username);
+                        let response = format!(
+                            "📊 @{} : Niveau {} (XP: {}/{}) | Stats : {}/player/{}", 
+                            username, player.level, player.xp, player.xp_for_next_level(), base_url, username
+                        );
                         let _ = client_msg.say(channel_login, response).await;
                     });
                 } else if text.starts_with("!top") {
