@@ -26,7 +26,7 @@ use axum::{
 };
 use std::net::SocketAddr;
 use tower_http::cors::CorsLayer;
-use tower_http::services::ServeDir;
+use tower_http::services::{ServeDir, ServeFile};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use std::collections::HashMap;
@@ -111,7 +111,7 @@ async fn main() -> Result<(), MyError> {
         .route("/api/leaderboard", get(get_leaderboard))
         .route("/auth", get(login_redirect))
         .route("/auth/callback", get(auth_callback))
-        .nest_service("/", ServeDir::new("static"))
+        .fallback_service(ServeFile::new("static/index.html"))
         .layer(CorsLayer::permissive())
         .with_state(Arc::clone(&state));
 
