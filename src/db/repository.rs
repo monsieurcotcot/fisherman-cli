@@ -68,7 +68,17 @@ impl Repository {
 
         let catches = rows.into_iter().map(|row| {
             let rarity_str: String = row.get("rarity");
-            let rarity = serde_json::from_str(&rarity_str).unwrap_or(crate::config::Rarity::Common);
+            // On nettoie les guillemets superflus si présents
+            let cleaned_rarity = rarity_str.trim_matches('"');
+            let rarity = match cleaned_rarity {
+                "uncommon" => crate::config::Rarity::Uncommon,
+                "rare" => crate::config::Rarity::Rare,
+                "veryrare" => crate::config::Rarity::VeryRare,
+                "epic" => crate::config::Rarity::Epic,
+                "legendary" => crate::config::Rarity::Legendary,
+                "mythical" => crate::config::Rarity::Mythical,
+                _ => crate::config::Rarity::Common,
+            };
             let mut fish = Fish::new(
                 row.get("fish_name"),
                 rarity,
