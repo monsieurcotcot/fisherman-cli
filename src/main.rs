@@ -8,31 +8,32 @@ use twitch_irc::login::StaticLoginCredentials;
 use twitch_irc::ClientConfig;
 use twitch_irc::TwitchIRCClient;
 use twitch_irc::message::ServerMessage;
+use twitch_irc::SecureTCPTransport;
 use sqlx::sqlite::SqlitePoolOptions;
 use dotenvy::dotenv;
 use std::env;
-use crate::db::Repository;
-use crate::game::generate_fish;
-use crate::auth::{AuthManager, MyError};
+use std::sync::Arc;
+use tokio::sync::RwLock;
+use std::net::SocketAddr;
 use rand::seq::SliceRandom;
-use crate::config::get_fail_attempt_reasons;
 
 use axum::{
     routing::get,
     extract::{Path, State, Query},
     Json,
     Router,
-    response::{Redirect, IntoResponse, Html, Response},
+    response::{Redirect, IntoResponse, Html},
+    http::header::{CONTENT_SECURITY_POLICY, X_FRAME_OPTIONS, STRICT_TRANSPORT_SECURITY, X_CONTENT_TYPE_OPTIONS},
+    http::HeaderValue,
 };
-use std::net::SocketAddr;
 use tower_http::cors::CorsLayer;
-use tower_http::services::{ServeDir, ServeFile};
-use std::sync::Arc;
-use tokio::sync::RwLock;
-use std::collections::HashMap;
+use tower_http::set_header::SetResponseHeaderLayer;
+use tower_http::services::ServeFile;
 
-// On utilise SecureTCPTransport qui est fourni par la librairie
-use twitch_irc::SecureTCPTransport;
+use crate::db::Repository;
+use crate::game::generate_fish;
+use crate::auth::{AuthManager, MyError};
+use crate::config::get_fail_attempt_reasons;
 
 type TwitchClient = TwitchIRCClient<SecureTCPTransport, StaticLoginCredentials>;
 
@@ -86,7 +87,7 @@ async fn main() -> Result<(), MyError> {
     let client_id = env::var("TWITCH_CLIENT_ID").expect("TWITCH_CLIENT_ID must be set");
     let client_secret = env::var("TWITCH_CLIENT_SECRET").expect("TWITCH_CLIENT_SECRET must be set");
     let channel = env::var("TWITCH_CHANNEL").expect("TWITCH_CHANNEL must be set");
-    let redirect_uri = env::var("REDIRECT_URI").unwrap_or_else(|_| "http://localhost:3000/auth/callback".to_string());
+    let redirect_uri = env::var("REDIRECT_URI").expect("REDIRECT_URI must be set");
 
     let auth_manager = Arc::new(AuthManager::new(client_id, client_secret, redirect_uri));
     
@@ -102,15 +103,9 @@ async fn main() -> Result<(), MyError> {
         tracing::info!("Tokens trouves, tentative de connexion...");
         start_bot(Arc::clone(&state), tokens.access_token).await;
     } else {
-        tracing::warn!("Aucun token trouve. Veuillez vous authentifier sur http://localhost:3000/auth");
+        let auth_url = format!("{}/auth", env::var("REDIRECT_URI").unwrap_or_default().replace("/auth/callback", ""));
+        tracing::warn!("Aucun token trouve. Veuillez vous authentifier sur {}", auth_url);
     }
-
-use tower_http::cors::CorsLayer;
-use tower_http::set_header::SetResponseHeaderLayer;
-use axum::http::header::{CONTENT_SECURITY_POLICY, X_FRAME_OPTIONS, STRICT_TRANSPORT_SECURITY, X_CONTENT_TYPE_OPTIONS};
-use axum::http::HeaderValue;
-
-// ... (dans main)
 
     // --- WEB SERVER SETUP ---
     let app = Router::new()
@@ -163,7 +158,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                 if text == "!fish help" {
                     let response = "📖 Commandes Fisherman : !fish (pêcher) | !fish stats (tes scores) | !fish top (classement) | !fish help (aide)".to_string();
-                    client.say(msg.channel_login.clone(), response).await.unwrap();
+                    let _ = client.say(msg.channel_login.clone(), response).await;
                 } else if text == "!fish stats" || text == "!fish stat" {
                     let repo = Arc::clone(&state_clone.repo);
                     let client_msg = client.clone();
@@ -199,12 +194,8 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         let mut player = repo.get_or_create_player(&username).await.unwrap();
                         if player.can_fish(20) {
-                            // Taux de réussite de base augmenté à 60%
                             let success_rate = 0.60 - (player.level as f64 * 0.001);
-                            let success = rand::random::<f64>() < success_rate;
-                            
-                            if success {
-                                // ... (succès)
+                            if rand::random::<f64>() < success_rate {
                                 if let Some(fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
                                     let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
@@ -213,7 +204,6 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     repo.save_attempt(&player, true, Some(fish)).await.unwrap();
                                 }
                             } else {
-                                // ... (échec)
                                 let reasons = get_fail_attempt_reasons();
                                 let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !");
                                 let leveled_up = player.add_xp(5);
@@ -223,7 +213,6 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 repo.save_attempt(&player, false, None).await.unwrap();
                             }
                         } else {
-                            // PÉNALITÉ : On ajoute 5 secondes au cooldown actuel
                             let _ = repo.add_cooldown_penalty(player.id.unwrap()).await;
                             let remaining = player.get_remaining_cooldown(20) + 5;
                             let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée) ⚠️", username, remaining)).await;
@@ -245,10 +234,10 @@ async fn login_redirect(State(state): State<Arc<AppState>>) -> impl IntoResponse
 struct AuthQuery { code: String }
 
 async fn auth_callback(
+    Query(query): Query<AuthQuery>,
     State(state): State<Arc<AppState>>,
-    Query(params): Query<AuthQuery>,
 ) -> impl IntoResponse {
-    let code = params.code.clone();
+    let code = query.code.clone();
     let state_clone = Arc::clone(&state);
     
     match state.auth.exchange_code(&code).await {
@@ -263,8 +252,7 @@ async fn auth_callback(
 async fn get_player_stats(
     Path(username): Path<String>,
     State(state): State<Arc<AppState>>,
-) -> Response {
-    // Force minuscules pour que /player/MonsieurCotCot fonctionne
+) -> impl IntoResponse {
     let username_lower = username.to_lowercase();
     match state.repo.get_or_create_player(&username_lower).await {
         Ok(player) => {

@@ -9,7 +9,7 @@ tokio = { version = "1.36", features = ["full"] }
 
 # Web server
 axum = { version = "0.7", features = ["macros"] }
-tower-http = { version = "0.5", features = ["fs", "cors"] }
+tower-http = { version = "0.5", features = ["fs", "cors", "set-header"] }
 
 # API & Auth
 reqwest = { version = "0.11", features = ["json"] }

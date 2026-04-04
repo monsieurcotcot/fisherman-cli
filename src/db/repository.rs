@@ -30,7 +30,7 @@ impl Repository {
                 xp: row.get("xp"),
             }),
             None => {
-                let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
+                let _id = sqlx::query("INSERT INTO players (username) VALUES (?)")
                     .bind(&username_lower)
                     .execute(&self.pool)
                     .await?
