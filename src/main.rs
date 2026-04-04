@@ -187,8 +187,11 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         let mut player = repo.get_or_create_player(&username).await.unwrap();
                         if player.can_fish(20) {
-                            let success_rate = 0.45 - (player.level as f64 * 0.001);
-                            if rand::random::<f64>() < success_rate {
+                            // Taux de réussite de base augmenté à 60%
+                            let success_rate = 0.60 - (player.level as f64 * 0.001);
+                            let success = rand::random::<f64>() < success_rate;
+                            
+                            if success {
                                 // ... (succès)
                                 if let Some(fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
@@ -249,7 +252,9 @@ async fn get_player_stats(
     Path(username): Path<String>,
     State(state): State<Arc<AppState>>,
 ) -> Response {
-    match state.repo.get_or_create_player(&username).await {
+    // Force minuscules pour que /player/MonsieurCotCot fonctionne
+    let username_lower = username.to_lowercase();
+    match state.repo.get_or_create_player(&username_lower).await {
         Ok(player) => Json(serde_json::json!({
             "username": player.username,
             "total": player.total_attempts,
