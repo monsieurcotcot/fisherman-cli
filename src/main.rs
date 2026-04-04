@@ -162,14 +162,14 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let response = "📖 Commandes Fisherman : !fish (pêcher) | !fish stats (tes scores) | !fish top (classement) | !fish help (aide)".to_string();
                     let _ = client.say(msg.channel_login.clone(), response).await;
                 } else if text == "!fish stats" || text == "!fish stat" {
-                    let repo = Arc::clone(&state_clone.repo);
+                    let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     let redirect_uri = env::var("REDIRECT_URI").unwrap_or_default();
                     let base_url = redirect_uri.replace("/auth/callback", "");
                     
                     tokio::spawn(async move {
-                        let player = repo.get_or_create_player(&username).await.unwrap();
+                        let player = state_task.repo.get_or_create_player(&username).await.unwrap();
                         let response = format!(
                             "📊 @{} : Niveau {} (XP: {}/{}) | Stats : {}/player/{}", 
                             username, player.level, player.xp, player.xp_for_next_level(), base_url, username
@@ -177,11 +177,11 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         let _ = client_msg.say(channel_login, response).await;
                     });
                 } else if text == "!fish top" {
-                    let repo = Arc::clone(&state_clone.repo);
+                    let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     tokio::spawn(async move {
-                        if let Ok(players) = repo.get_leaderboard().await {
+                        if let Ok(players) = state_task.repo.get_leaderboard().await {
                             let mut response = "🏆 Top Pêcheurs : ".to_string();
                             let top_list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
                             response.push_str(&top_list.join(" | "));
@@ -189,28 +189,27 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         }
                     });
                 } else if text == "!fish" {
-                    let repo = Arc::clone(&state_clone.repo);
+                    let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     
                     tokio::spawn(async move {
-                        let mut player = repo.get_or_create_player(&username).await.unwrap();
+                        let mut player = state_task.repo.get_or_create_player(&username).await.unwrap();
                         if player.can_fish(20) {
                             let success_rate = 0.60 - (player.level as f64 * 0.001);
-                            if rand::random::<f64>() < success_rate {
+                            let success = rand::random::<f64>() < success_rate;
+                            
+                            if success {
                                 if let Some(mut fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
-                                    
-                                    // Récupération du titre du stream
-                                    let tokens = state_clone.auth.load_tokens();
+                                    let tokens = state_task.auth.load_tokens();
                                     if let Some(t) = tokens {
-                                        fish.stream_title = state_clone.auth.get_stream_info(&channel_login, &t.access_token).await;
+                                        fish.stream_title = state_task.auth.get_stream_info(&channel_login, &t.access_token).await;
                                     }
-
                                     let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
                                     if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
                                     let _ = client_msg.say(channel_login, response).await;
-                                    repo.save_attempt(&player, true, Some(fish)).await.unwrap();
+                                    state_task.repo.save_attempt(&player, true, Some(fish)).await.unwrap();
                                 }
                             } else {
                                 let reasons = get_fail_attempt_reasons();
@@ -219,10 +218,10 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 let mut response = reason.replace("#viewer_name#", &username);
                                 if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
                                 let _ = client_msg.say(channel_login, response).await;
-                                repo.save_attempt(&player, false, None).await.unwrap();
+                                state_task.repo.save_attempt(&player, false, None).await.unwrap();
                             }
                         } else {
-                            let _ = repo.add_cooldown_penalty(player.id.unwrap()).await;
+                            let _ = state_task.repo.add_cooldown_penalty(player.id.unwrap()).await;
                             let remaining = player.get_remaining_cooldown(20) + 5;
                             let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée) ⚠️", username, remaining)).await;
                         }
@@ -243,8 +242,8 @@ async fn login_redirect(State(state): State<Arc<AppState>>) -> impl IntoResponse
 struct AuthQuery { code: String }
 
 async fn auth_callback(
-    Query(query): Query<AuthQuery>,
     State(state): State<Arc<AppState>>,
+    Query(query): Query<AuthQuery>,
 ) -> impl IntoResponse {
     let code = query.code.clone();
     let state_clone = Arc::clone(&state);
