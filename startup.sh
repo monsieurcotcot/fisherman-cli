@@ -36,8 +36,18 @@ configure_env() {
 
     # 4. Adresse IP / Hostname pour le réseau
     default_ip=$(hostname -I | awk '{print $1}')
-    read -p "👉 Adresse IP ou Domaine de cette VM (Défaut: $default_ip) : " host_addr
-    host_addr=${host_addr:-$default_ip}
+    echo -e "\n${YELLOW}ℹ️  NOTE SUR LA SÉCURITÉ (OAuth) :${NC}"
+    echo -e "Twitch exige HTTPS pour les redirections, sauf pour 'localhost'."
+    echo -e "Si vous êtes sur une VM, nous conseillons d'utiliser 'localhost' et un tunnel SSH."
+    
+    read -p "👉 Adresse IP ou Domaine (Recommandé: localhost) : " host_addr
+    host_addr=${host_addr:-"localhost"}
+
+    # Déterminer le protocole (https pour les domaines, http pour localhost/IP)
+    protocol="http"
+    if [[ "$host_addr" == *"."* && "$host_addr" != *"192.168."* ]]; then
+        protocol="https"
+    fi
 
     # Création du fichier .env
     cat <<EOF > .env
@@ -45,7 +55,7 @@ configure_env() {
 TWITCH_CLIENT_ID=$client_id
 TWITCH_CLIENT_SECRET=$client_secret
 TWITCH_CHANNEL=$channel
-REDIRECT_URI=http://$host_addr:3000/auth/callback
+REDIRECT_URI=$protocol://$host_addr/auth/callback
 
 # Database
 DATABASE_URL=sqlite:///app/data/fisherman.db
@@ -55,8 +65,14 @@ RUST_LOG=info
 EOF
 
     echo -e "\n${GREEN}✅ Configuration enregistrée !${NC}"
-    echo -e "${YELLOW}⚠️  IMPORTANT : Dans la console Twitch Dev, vous DEVEZ ajouter cette URL de redirection :${NC}"
-    echo -e "${BLUE}👉 http://$host_addr:3000/auth/callback${NC}"
+    echo -e "${YELLOW}⚠️  IMPORTANT : Dans la console Twitch Dev, vous DEVEZ ajouter cette URL :${NC}"
+    echo -e "${BLUE}👉 $protocol://$host_addr/auth/callback${NC}"
+    
+    if [ "$host_addr" != "localhost" ]; then
+        echo -e "\n${RED}Hé ho ! Twitch risque de refuser le HTTP sur une IP privée.${NC}"
+        echo -e "Si ça échoue, utilisez 'localhost' et faites un tunnel SSH :"
+        echo -e "${YELLOW}ssh -L 3000:localhost:3000 user@$default_ip${NC}"
+    fi
 }
 
 if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env; then
