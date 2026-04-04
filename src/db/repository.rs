@@ -12,8 +12,9 @@ impl Repository {
     }
 
     pub async fn get_or_create_player(&self, username: &str) -> Result<Player, sqlx::Error> {
+        let username_lower = username.to_lowercase();
         let row = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players WHERE username = ?")
-            .bind(username)
+            .bind(&username_lower)
             .fetch_optional(&self.pool)
             .await?;
 
@@ -30,12 +31,12 @@ impl Repository {
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
-                    .bind(username)
+                    .bind(&username_lower)
                     .execute(&self.pool)
                     .await?
                     .last_insert_rowid();
 
-                Ok(Player::new(username.to_string()))
+                Ok(Player::new(username_lower))
             }
         }
     }
