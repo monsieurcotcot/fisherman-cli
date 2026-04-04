@@ -86,8 +86,11 @@ chmod 777 data
 echo -e "\n${BLUE}🚀 Lancement du conteneur...${NC}"
 docker compose up --build -d
 
+# Récupérer l'URL d'auth depuis le .env pour l'affichage final
+auth_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback/\/auth/')
+
 echo -e "${BLUE}------------------------------------------${NC}"
 echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE :${NC}"
 echo -e "Pour connecter le bot à Twitch, ouvrez ce lien dans votre navigateur :"
-echo -e "${GREEN}👉 http://localhost:3000/auth${NC}"
+echo -e "${GREEN}👉 $auth_url${NC}"
 echo -e "${BLUE}------------------------------------------${NC}"
