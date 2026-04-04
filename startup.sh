@@ -12,42 +12,43 @@ echo -e "${BLUE}   🎣 ASSISTANT D'INSTALLATION FISHERMAN   ${NC}"
 echo -e "${BLUE}==========================================${NC}"
 
 configure_env() {
-    echo -e "\n${YELLOW}Configuration de votre application Twitch Dev :${NC}"
-    echo -e "${BLUE}ℹ️  Créez une application sur : https://dev.twitch.tv/console${NC}"
-    echo -e "${BLUE}ℹ️  OAuth Redirect URL : http://localhost:3000/auth/callback${NC}"
+    echo -e "\n${YELLOW}Configuration de l'accès réseau :${NC}"
     
-    # 1. Client ID
-    read -p "👉 Entrez votre Client ID : " client_id
-    while [[ -z "$client_id" ]]; do
-        read -p "⚠️ Le Client ID ne peut pas être vide : " client_id
-    done
-
-    # 2. Client Secret
-    read -p "👉 Entrez votre Client Secret : " client_secret
-    while [[ -z "$client_secret" ]]; do
-        read -p "⚠️ Le Client Secret ne peut pas être vide : " client_secret
-    done
-
-    # 3. Chaîne Twitch
-    read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? : " channel
-    while [[ -z "$channel" ]]; do
-        read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel
-    done
-
-    # 4. Adresse IP / Hostname pour le réseau
+    # 1. Adresse IP / Hostname pour le réseau
     default_ip=$(hostname -I | awk '{print $1}')
-    echo -e "\n${YELLOW}ℹ️  NOTE SUR LA SÉCURITÉ (OAuth) :${NC}"
-    echo -e "Twitch exige HTTPS pour les redirections, sauf pour 'localhost'."
-    echo -e "Si vous êtes sur une VM, nous conseillons d'utiliser 'localhost' et un tunnel SSH."
-    
-    read -p "👉 Adresse IP ou Domaine (Recommandé: localhost) : " host_addr
-    host_addr=${host_addr:-"localhost"}
+    echo -e "${BLUE}ℹ️  Twitch exige HTTPS pour les redirections, sauf pour 'localhost'.${NC}"
+    read -p "👉 Adresse IP ou Domaine de ce serveur (Défaut: $default_ip) : " host_addr
+    host_addr=${host_addr:-$default_ip}
 
     # Déterminer le protocole (https pour les domaines, http pour localhost/IP)
     protocol="http"
     if [[ "$host_addr" == *"."* && "$host_addr" != *"192.168."* ]]; then
         protocol="https"
     fi
+
+    echo -e "\n${YELLOW}Configuration de votre application Twitch Dev :${NC}"
+    echo -e "${BLUE}ℹ️  Créez une application sur : https://dev.twitch.tv/console${NC}"
+    echo -e "${GREEN}✅ OAuth Redirect URL à configurer dans Twitch :${NC}"
+    echo -e "${BLUE}👉 $protocol://$host_addr/auth/callback${NC}"
+    echo -e "------------------------------------------"
+    
+    # 2. Client ID
+    read -p "👉 Entrez votre Client ID : " client_id
+    while [[ -z "$client_id" ]]; do
+        read -p "⚠️ Le Client ID ne peut pas être vide : " client_id
+    done
+
+    # 3. Client Secret
+    read -p "👉 Entrez votre Client Secret : " client_secret
+    while [[ -z "$client_secret" ]]; do
+        read -p "⚠️ Le Client Secret ne peut pas être vide : " client_secret
+    done
+
+    # 4. Chaîne Twitch
+    read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? : " channel
+    while [[ -z "$channel" ]]; do
+        read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel
+    done
 
     # Création du fichier .env
     cat <<EOF > .env
@@ -65,13 +66,10 @@ RUST_LOG=info
 EOF
 
     echo -e "\n${GREEN}✅ Configuration enregistrée !${NC}"
-    echo -e "${YELLOW}⚠️  IMPORTANT : Dans la console Twitch Dev, vous DEVEZ ajouter cette URL :${NC}"
-    echo -e "${BLUE}👉 $protocol://$host_addr/auth/callback${NC}"
     
-    if [ "$host_addr" != "localhost" ]; then
-        echo -e "\n${RED}Hé ho ! Twitch risque de refuser le HTTP sur une IP privée.${NC}"
-        echo -e "Si ça échoue, utilisez 'localhost' et faites un tunnel SSH :"
-        echo -e "${YELLOW}ssh -L 3000:localhost:3000 user@$default_ip${NC}"
+    if [ "$host_addr" != "localhost" ] && [ "$protocol" == "http" ]; then
+        echo -e "\n${RED}⚠️  Note : Twitch risque de refuser le HTTP sur une IP privée.${NC}"
+        echo -e "Si l'auth échoue, utilisez un tunnel SSH ou un domaine HTTPS (Cloudflare)."
     fi
 }
 
