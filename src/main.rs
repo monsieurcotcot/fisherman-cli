@@ -152,7 +152,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                 if text == "!fish help" {
                     let response = "📖 Commandes Fisherman : !fish (pêcher) | !fish stats (tes scores) | !fish top (classement) | !fish help (aide)".to_string();
                     client.say(msg.channel_login.clone(), response).await.unwrap();
-                } else if text == "!fish stats" {
+                } else if text == "!fish stats" || text == "!fish stat" {
                     let repo = Arc::clone(&state_clone.repo);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
