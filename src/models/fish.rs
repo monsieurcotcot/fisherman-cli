@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use crate::config::Rarity;
 
+use chrono::{DateTime, Utc};
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Fish {
     pub name: String,
@@ -9,6 +11,8 @@ pub struct Fish {
     pub weight: f64,
     pub state: String,
     pub description: String,
+    pub stream_title: Option<String>,
+    pub caught_at: Option<DateTime<Utc>>,
 }
 
 impl Fish {
@@ -20,6 +24,8 @@ impl Fish {
             weight,
             state,
             description,
+            stream_title: None,
+            caught_at: None,
         }
     }
 }

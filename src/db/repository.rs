@@ -61,7 +61,7 @@ impl Repository {
     }
 
     pub async fn get_player_catches(&self, player_id: i64) -> Result<Vec<Fish>, sqlx::Error> {
-        let rows = sqlx::query("SELECT fish_name, rarity, size, weight, state, description FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
+        let rows = sqlx::query("SELECT fish_name, rarity, size, weight, state, description, stream_title, caught_at FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
             .bind(player_id)
             .fetch_all(&self.pool)
             .await?;
@@ -69,14 +69,17 @@ impl Repository {
         let catches = rows.into_iter().map(|row| {
             let rarity_str: String = row.get("rarity");
             let rarity = serde_json::from_str(&rarity_str).unwrap_or(crate::config::Rarity::Common);
-            Fish::new(
+            let mut fish = Fish::new(
                 row.get("fish_name"),
                 rarity,
                 row.get("size"),
                 row.get("weight"),
                 row.get("state"),
                 row.get("description"),
-            )
+            );
+            fish.stream_title = row.get("stream_title");
+            fish.caught_at = row.get("caught_at");
+            fish
         }).collect();
 
         Ok(catches)
@@ -104,7 +107,7 @@ impl Repository {
             .await?;
 
         if let Some(f) = fish {
-            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description) VALUES (?, ?, ?, ?, ?, ?, ?)")
+            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
                 .bind(player.id)
                 .bind(f.name)
                 .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
@@ -112,6 +115,7 @@ impl Repository {
                 .bind(f.weight)
                 .bind(f.state)
                 .bind(f.description)
+                .bind(f.stream_title)
                 .execute(&mut *tx)
                 .await?;
         }

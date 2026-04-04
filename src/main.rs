@@ -79,6 +79,7 @@ async fn main() -> Result<(), MyError> {
             weight REAL DEFAULT 0,
             state TEXT NOT NULL,
             description TEXT,
+            stream_title TEXT,
             caught_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )"
     ).execute(&pool).await?;
@@ -197,8 +198,15 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if player.can_fish(20) {
                             let success_rate = 0.60 - (player.level as f64 * 0.001);
                             if rand::random::<f64>() < success_rate {
-                                if let Some(fish) = generate_fish() {
+                                if let Some(mut fish) = generate_fish() {
                                     let leveled_up = player.add_xp(25);
+                                    
+                                    // Récupération du titre du stream
+                                    let tokens = state_clone.auth.load_tokens();
+                                    if let Some(t) = tokens {
+                                        fish.stream_title = state_clone.auth.get_stream_info(&channel_login, &t.access_token).await;
+                                    }
+
                                     let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
                                     if leveled_up { response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level)); }
                                     let _ = client_msg.say(channel_login, response).await;

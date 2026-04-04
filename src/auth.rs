@@ -94,6 +94,24 @@ impl AuthManager {
         Ok(tokens)
     }
 
+    pub async fn get_stream_info(&self, channel: &str, access_token: &str) -> Option<String> {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/streams?user_login={}", channel);
+        
+        let res = client.get(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await
+            .ok()?
+            .json::<serde_json::Value>()
+            .await
+            .ok()?;
+
+        // On extrait le titre du premier stream trouvé (si en ligne)
+        res["data"][0]["title"].as_str().map(|s| s.to_string())
+    }
+
     pub fn load_tokens(&self) -> Option<TwitchTokens> {
         if !Path::new(&self.token_path).exists() {
             return None;

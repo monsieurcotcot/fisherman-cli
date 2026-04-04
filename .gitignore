@@ -14,5 +14,8 @@
 *.db-journal
 tokens.json
 
+# Context
+GEMINI.md
+
 # Logs
 *.log
