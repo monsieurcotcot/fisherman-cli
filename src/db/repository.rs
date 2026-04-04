@@ -61,35 +61,31 @@ impl Repository {
     }
 
     pub async fn get_player_catches(&self, player_id: i64) -> Result<Vec<Fish>, sqlx::Error> {
-        let rows = sqlx::query("SELECT fish_name, rarity, size, weight, state, description, stream_title, caught_at FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
+        let rows = sqlx::query("SELECT fish_name, rarity, size, weight, state, description FROM catches WHERE player_id = ?")
             .bind(player_id)
             .fetch_all(&self.pool)
             .await?;
 
         let catches = rows.into_iter().map(|row| {
             let rarity_str: String = row.get("rarity");
-            // On nettoie les guillemets superflus si présents
             let cleaned_rarity = rarity_str.trim_matches('"');
-            let rarity = match cleaned_rarity {
+            let rarity = match cleaned_rarity.to_lowercase().as_str() {
                 "uncommon" => crate::config::Rarity::Uncommon,
                 "rare" => crate::config::Rarity::Rare,
-                "veryrare" => crate::config::Rarity::VeryRare,
+                "veryrare" | "very rare" => crate::config::Rarity::VeryRare,
                 "epic" => crate::config::Rarity::Epic,
                 "legendary" => crate::config::Rarity::Legendary,
                 "mythical" => crate::config::Rarity::Mythical,
                 _ => crate::config::Rarity::Common,
             };
-            let mut fish = Fish::new(
+            Fish::new(
                 row.get("fish_name"),
                 rarity,
                 row.get("size"),
                 row.get("weight"),
                 row.get("state"),
                 row.get("description"),
-            );
-            fish.stream_title = row.get("stream_title");
-            fish.caught_at = row.get("caught_at");
-            fish
+            )
         }).collect();
 
         Ok(catches)
