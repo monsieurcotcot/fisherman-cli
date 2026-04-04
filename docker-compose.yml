@@ -2,6 +2,7 @@ services:
   fisherman:
     build: .
     container_name: fisherman-bot
+    user: "${FIX_UID:-1000}:${FIX_GID:-1000}"
     restart: always
     ports:
       - "3000:3000"

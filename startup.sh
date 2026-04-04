@@ -76,17 +76,17 @@ if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env || [ -z "$(grep REDIRECT_URI 
     configure_env
 fi
 
-# Préparation de l'environnement de données
+# Préparation de l'environnement de données (Sécurisé)
 mkdir -p data
-chmod 777 data
+chmod 755 data
 if [ ! -f data/fisherman.db ]; then
     touch data/fisherman.db
-    chmod 666 data/fisherman.db
+    chmod 644 data/fisherman.db
 fi
 
 echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
 docker compose down --remove-orphans
-docker compose up --build -d
+FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
 
 # Récupérer l'URL d'auth finale pour affichage
 auth_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback/\/auth/')
