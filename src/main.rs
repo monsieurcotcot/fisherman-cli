@@ -186,7 +186,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     
                     tokio::spawn(async move {
                         let mut player = repo.get_or_create_player(&username).await.unwrap();
-                        if player.can_fish(60) {
+                        if player.can_fish(20) {
                             let success_rate = 0.45 - (player.level as f64 * 0.001);
                             if rand::random::<f64>() < success_rate {
                                 // ... (succès)
@@ -210,8 +210,8 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         } else {
                             // PÉNALITÉ : On ajoute 5 secondes au cooldown actuel
                             let _ = repo.add_cooldown_penalty(player.id.unwrap()).await;
-                            let remaining = player.get_remaining_cooldown(60) + 5;
-                            let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée pour spam  penalty) ⚠️", username, remaining)).await;
+                            let remaining = player.get_remaining_cooldown(20) + 5;
+                            let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (Pénalité de +5s appliquée) ⚠️", username, remaining)).await;
                         }
                     });
                 }
@@ -248,14 +248,14 @@ async fn auth_callback(
 async fn get_player_stats(
     Path(username): Path<String>,
     State(state): State<Arc<AppState>>,
-) -> impl IntoResponse {
+) -> Response {
     match state.repo.get_or_create_player(&username).await {
         Ok(player) => Json(serde_json::json!({
             "username": player.username,
             "total": player.total_attempts,
             "success": player.successful_attempts,
             "failed": player.failed_attempts,
-            "can_fish": player.can_fish(60),
+            "can_fish": player.can_fish(20),
             "level": player.level,
             "xp": player.xp,
             "xp_next": player.xp_for_next_level(),
