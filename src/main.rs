@@ -220,7 +220,10 @@ async fn get_player_stats(
             "total": player.total_attempts,
             "success": player.successful_attempts,
             "failed": player.failed_attempts,
-            "can_fish": player.can_fish(30),
+            "can_fish": player.can_fish(60),
+            "level": player.level,
+            "xp": player.xp,
+            "xp_next": player.xp_for_next_level(),
         })),
         Err(_) => Json(serde_json::json!({"error": "Player not found"})),
     }
