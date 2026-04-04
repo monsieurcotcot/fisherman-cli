@@ -1,29 +1,82 @@
 #!/bin/bash
 
-echo "🎣 Fisherman Twitch Bot - Startup Script"
-echo "----------------------------------------"
+# Couleurs pour le terminal
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
-# 1. Vérifier si le fichier .env existe
+echo -e "${BLUE}==========================================${NC}"
+echo -e "${BLUE}   🎣 ASSISTANT D'INSTALLATION FISHERMAN   ${NC}"
+echo -e "${BLUE}==========================================${NC}"
+
+# Fonction pour configurer le .env
+configure_env() {
+    echo -e "\n${YELLOW}Configuration de vos accès Twitch :${NC}"
+    
+    # 1. Pseudo du Bot
+    read -p "👉 Entrez le pseudo Twitch du compte BOT : " username
+    while [[ -z "$username" ]]; do
+        read -p "⚠️ Le pseudo ne peut pas être vide : " username
+    done
+
+    # 2. Token OAuth
+    echo -e "\n${BLUE}ℹ️  Pour obtenir votre token, connectez-vous avec le compte du BOT sur :${NC}"
+    echo -e "${BLUE}👉 https://twitchapps.com/tmi/${NC}"
+    read -p "👉 Entrez le token OAuth (ex: oauth:xxxx...) : " oauth
+    while [[ ! $oauth == oauth:* ]]; do
+        echo -e "${RED}⚠️ Le token doit commencer par 'oauth:'${NC}"
+        read -p "👉 Réessayez : " oauth
+    done
+
+    # 3. Chaîne Twitch
+    read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? (pseudo de la chaine) : " channel
+    while [[ -z "$channel" ]]; do
+        read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel
+    done
+
+    # Création du fichier .env
+    cat <<EOF > .env
+# Twitch Configuration
+TWITCH_USERNAME=$username
+TWITCH_OAUTH_TOKEN=$oauth
+TWITCH_CHANNEL=$channel
+
+# Database (URL used inside Docker)
+DATABASE_URL=sqlite:///app/data/fisherman.db
+
+# Logging
+RUST_LOG=info
+EOF
+
+    echo -e "\n${GREEN}✅ Fichier .env créé avec succès !${NC}"
+}
+
+# Vérification de l'existence du .env ou des valeurs par défaut
 if [ ! -f .env ]; then
-    echo "❌ Le fichier .env est manquant !"
-    echo "👉 Création d'un fichier .env à partir du template..."
-    cp .env.template .env
-    echo "⚠️  Veuillez remplir vos accès Twitch dans le fichier .env avant de relancer ce script."
-    exit 1
+    echo -e "${YELLOW}ℹ️  Premier lancement détecté.${NC}"
+    configure_env
+else
+    # Vérifier si le .env contient encore les placeholders du template
+    if grep -q "ton_pseudo_bot" .env; then
+        echo -e "${YELLOW}⚠️  Votre fichier .env n'est pas encore configuré.${NC}"
+        configure_env
+    fi
 fi
 
-# 2. Créer le dossier data s'il n'existe pas (pour la DB)
+# Création du dossier data
 if [ ! -d data ]; then
-    echo "📂 Création du dossier 'data' pour la base de données..."
+    echo -e "\n📂 Création du dossier 'data' pour la base de données..."
     mkdir data
-    chmod 777 data # S'assurer que Docker peut écrire dedans
+    chmod 777 data
 fi
 
-# 3. Lancer Docker Compose
-echo "🚀 Lancement du bot via Docker Compose..."
+echo -e "\n${BLUE}🚀 Lancement du bot via Docker Compose...${NC}"
 docker compose up --build -d
 
-echo "----------------------------------------"
-echo "✅ Le bot est en cours de lancement en arrière-plan !"
-echo "🌐 Interface web : http://localhost:3000"
-echo "📜 Pour voir les logs en temps réel : docker compose logs -f bot"
+echo -e "${BLUE}------------------------------------------${NC}"
+echo -e "${GREEN}✅ INSTALLATION RÉUSSIE !${NC}"
+echo -e "🌐 Votre interface web est disponible sur : ${BLUE}http://localhost:3000${NC}"
+echo -e "📜 Pour voir ce que fait le bot : ${YELLOW}docker compose logs -f bot${NC}"
+echo -e "${BLUE}------------------------------------------${NC}"
