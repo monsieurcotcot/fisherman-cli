@@ -42,11 +42,11 @@ impl AuthManager {
     pub async fn exchange_code(&self, code: &str) -> Result<TwitchTokens, Box<dyn std::error::Error>> {
         let client = Client::new();
         let params = [
-            ("client_id", &self.client_id),
-            ("client_secret", &self.client_secret),
-            ("code", &code.to_string()),
-            ("grant_type", "authorization_code".to_string()),
-            ("redirect_uri", &self.redirect_uri),
+            ("client_id", self.client_id.as_str()),
+            ("client_secret", self.client_secret.as_str()),
+            ("code", code),
+            ("grant_type", "authorization_code"),
+            ("redirect_uri", self.redirect_uri.as_str()),
         ];
 
         let res = client.post("https://id.twitch.tv/oauth2/token")
@@ -69,10 +69,10 @@ impl AuthManager {
     pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, Box<dyn std::error::Error>> {
         let client = Client::new();
         let params = [
-            ("client_id", &self.client_id),
-            ("client_secret", &self.client_secret),
-            ("grant_type", "refresh_token".to_string()),
-            ("refresh_token", &refresh_token.to_string()),
+            ("client_id", self.client_id.as_str()),
+            ("client_secret", self.client_secret.as_str()),
+            ("grant_type", "refresh_token"),
+            ("refresh_token", refresh_token),
         ];
 
         let res = client.post("https://id.twitch.tv/oauth2/token")

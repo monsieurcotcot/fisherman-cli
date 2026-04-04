@@ -6,7 +6,7 @@ mod auth;
 
 use twitch_irc::login::StaticLoginCredentials;
 use twitch_irc::ClientConfig;
-use twitch_irc::TCPTransport;
+use twitch_irc::transport::tcp::TCPTransport;
 use twitch_irc::TwitchIRCClient;
 use twitch_irc::message::ServerMessage;
 use sqlx::sqlite::SqlitePoolOptions;
@@ -31,10 +31,12 @@ use tower_http::services::ServeDir;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
+type TwitchClient = TwitchIRCClient<TCPTransport, StaticLoginCredentials>;
+
 struct AppState {
     repo: Arc<Repository>,
     auth: Arc<AuthManager>,
-    twitch_client: RwLock<Option<TwitchIRCClient<TCPTransport, StaticLoginCredentials>>>,
+    twitch_client: RwLock<Option<TwitchClient>>,
     channel: String,
 }
 
@@ -121,7 +123,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 async fn start_bot(state: Arc<AppState>, access_token: String) {
     let credentials = StaticLoginCredentials::new("bot".to_string(), Some(access_token));
-    let config = ClientConfig::new_simple(credentials);
+    let config = ClientConfig::default();
     let (mut incoming_messages, client) = TwitchIRCClient::<TCPTransport, StaticLoginCredentials>::new(config);
 
     let mut client_lock = state.twitch_client.write().await;
