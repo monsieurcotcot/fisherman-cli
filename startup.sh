@@ -78,10 +78,11 @@ fi
 
 # Préparation de l'environnement de données (Sécurisé)
 mkdir -p data
-chmod 755 data
+# On donne les droits d'écriture au groupe pour que Docker puisse écrire les tokens
+chmod 777 data
 if [ ! -f data/fisherman.db ]; then
     touch data/fisherman.db
-    chmod 644 data/fisherman.db
+    chmod 666 data/fisherman.db
 fi
 
 echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
