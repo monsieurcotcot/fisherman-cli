@@ -150,9 +150,36 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                 tracing::info!("[Chat] {} : {}", username, text);
 
                 if text == "!fish help" {
-                    let response = "📖 Commandes Fisherman : !fish (pêcher) | !stats (tes scores) | !top (classement) | !fish help (aide)".to_string();
+                    let response = "📖 Commandes Fisherman : !fish (pêcher) | !fish stats (tes scores) | !fish top (classement) | !fish help (aide)".to_string();
                     client.say(msg.channel_login.clone(), response).await.unwrap();
-                } else if text.starts_with("!fish") {
+                } else if text == "!fish stats" {
+                    let repo = Arc::clone(&state_clone.repo);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let redirect_uri = env::var("REDIRECT_URI").unwrap_or_default();
+                    let base_url = redirect_uri.replace("/auth/callback", "");
+                    
+                    tokio::spawn(async move {
+                        let player = repo.get_or_create_player(&username).await.unwrap();
+                        let response = format!(
+                            "📊 @{} : Niveau {} (XP: {}/{}) | Stats : {}/player/{}", 
+                            username, player.level, player.xp, player.xp_for_next_level(), base_url, username
+                        );
+                        let _ = client_msg.say(channel_login, response).await;
+                    });
+                } else if text == "!fish top" {
+                    let repo = Arc::clone(&state_clone.repo);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(players) = repo.get_leaderboard().await {
+                            let mut response = "🏆 Top Pêcheurs : ".to_string();
+                            let top_list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
+                            response.push_str(&top_list.join(" | "));
+                            let _ = client_msg.say(channel_login, response).await;
+                        }
+                    });
+                } else if text == "!fish" {
                     let repo = Arc::clone(&state_clone.repo);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -180,33 +207,6 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         } else {
                             let _ = client_msg.say(channel_login, format!("⏳ @{}, attends un peu ! (Cooldown: 60s)", username)).await;
-                        }
-                    });
-                } else if text.starts_with("!stats") {
-                    let repo = Arc::clone(&state_clone.repo);
-                    let client_msg = client.clone();
-                    let channel_login = msg.channel_login.clone();
-                    let redirect_uri = env::var("REDIRECT_URI").unwrap_or_default();
-                    let base_url = redirect_uri.replace("/auth/callback", "");
-                    
-                    tokio::spawn(async move {
-                        let player = repo.get_or_create_player(&username).await.unwrap();
-                        let response = format!(
-                            "📊 @{} : Niveau {} (XP: {}/{}) | Stats : {}/player/{}", 
-                            username, player.level, player.xp, player.xp_for_next_level(), base_url, username
-                        );
-                        let _ = client_msg.say(channel_login, response).await;
-                    });
-                } else if text.starts_with("!top") {
-                    let repo = Arc::clone(&state_clone.repo);
-                    let client_msg = client.clone();
-                    let channel_login = msg.channel_login.clone();
-                    tokio::spawn(async move {
-                        if let Ok(players) = repo.get_leaderboard().await {
-                            let mut response = "🏆 Top Pêcheurs : ".to_string();
-                            let top_list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
-                            response.push_str(&top_list.join(" | "));
-                            let _ = client_msg.say(channel_login, response).await;
                         }
                     });
                 }
