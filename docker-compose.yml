@@ -1,0 +1,10 @@
+services:
+  bot:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - .env:/app/.env
+    environment:
+      - DATABASE_URL=sqlite:///app/data/fisherman.db
+      - RUST_LOG=info
+    restart: always

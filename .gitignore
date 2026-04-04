@@ -1,0 +1,17 @@
+# Rust
+/target
+/Cargo.lock
+
+# Docker
+.docker/
+
+# Environment
+.env
+
+# Database
+/data
+*.db
+*.db-journal
+
+# Logs
+*.log

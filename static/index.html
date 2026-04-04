@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisherman Game - Stats</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0e0e10;
+            color: #efeff1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #18181b;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 400px;
+        }
+        h1 { color: #9146ff; }
+        .stats-box {
+            margin-top: 1.5rem;
+            background: #26262c;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            border-bottom: 1px solid #3a3a3d;
+            padding-bottom: 0.3rem;
+        }
+        .search-box {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            background: #3a3a3d;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            flex-grow: 1;
+        }
+        button {
+            background: #9146ff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #772ce8; }
+        #error { color: #ff4f4f; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎣 Fisherman Stats</h1>
+        
+        <div class="search-box">
+            <input type="text" id="usernameInput" placeholder="Ton pseudo Twitch...">
+            <button onclick="fetchStats()">Voir</button>
+        </div>
+
+        <div id="statsDisplay" style="display: none;">
+            <div class="stats-box">
+                <div class="stat-item"><span>Pseudo:</span> <strong id="res-username"></strong></div>
+                <div class="stat-item"><span>Tentatives:</span> <strong id="res-total"></strong></div>
+                <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
+                <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
+            </div>
+        </div>
+        
+        <div class="stats-box">
+            <h3>🏆 Top 10 Pêcheurs</h3>
+            <div id="leaderboardList">Chargement...</div>
+        </div>
+        <div id="error">Joueur non trouvé ou erreur.</div>
+    </div>
+
+    <script>
+        // Charger le leaderboard au démarrage
+        fetchLeaderboard();
+
+        const path = window.location.pathname;
+        if (path.startsWith('/player/')) {
+            const username = path.split('/').pop();
+            document.getElementById('usernameInput').value = username;
+            fetchStats(username);
+        }
+
+        async function fetchLeaderboard() {
+            try {
+                const response = await fetch('/api/leaderboard');
+                const data = await response.json();
+                const list = document.getElementById('leaderboardList');
+                list.innerHTML = '';
+                data.top.forEach((p, i) => {
+                    const item = document.createElement('div');
+                    item.className = 'stat-item';
+                    item.innerHTML = `<span>#${i+1} ${p.username}</span> <strong>${p.success} 🐟</strong>`;
+                    list.appendChild(item);
+                });
+            } catch (err) { console.error(err); }
+        }
+
+        async function fetchStats(u) {
+            const username = u || document.getElementById('usernameInput').value;
+            if (!username) return;
+
+            try {
+                const response = await fetch(`/api/stats/${username}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('statsDisplay').style.display = 'none';
+                } else {
+                    document.getElementById('error').style.display = 'none';
+                    document.getElementById('statsDisplay').style.display = 'block';
+                    document.getElementById('res-username').innerText = data.username;
+                    document.getElementById('res-total').innerText = data.total;
+                    document.getElementById('res-success').innerText = data.success;
+                    document.getElementById('res-failed').innerText = data.failed;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    </script>
+</body>
+</html>
