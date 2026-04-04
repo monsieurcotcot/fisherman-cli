@@ -149,7 +149,10 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                 let username = msg.sender.name.clone();
                 tracing::info!("[Chat] {} : {}", username, text);
 
-                if text.starts_with("!fish") {
+                if text == "!fish help" {
+                    let response = "📖 Commandes Fisherman : !fish (pêcher) | !stats (tes scores) | !top (classement) | !fish help (aide)".to_string();
+                    client.say(msg.channel_login.clone(), response).await.unwrap();
+                } else if text.starts_with("!fish") {
                     let repo = Arc::clone(&state_clone.repo);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
