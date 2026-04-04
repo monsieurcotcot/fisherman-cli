@@ -89,7 +89,7 @@ docker compose down --remove-orphans
 FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
 
 # Récupérer l'URL d'auth finale pour affichage
-auth_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback/\/auth/')
+auth_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/callback/\/login/')
 
 echo -e "${BLUE}------------------------------------------${NC}"
 echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE :${NC}"
