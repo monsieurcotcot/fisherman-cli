@@ -12,7 +12,7 @@ impl Repository {
     }
 
     pub async fn get_or_create_player(&self, username: &str) -> Result<Player, sqlx::Error> {
-        let row = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time FROM players WHERE username = ?")
+        let row = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players WHERE username = ?")
             .bind(username)
             .fetch_optional(&self.pool)
             .await?;
@@ -25,6 +25,8 @@ impl Repository {
                 successful_attempts: row.get("successful_attempts"),
                 failed_attempts: row.get("failed_attempts"),
                 last_fishing_time: row.get("last_fishing_time"),
+                level: row.get("level"),
+                xp: row.get("xp"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -33,20 +35,13 @@ impl Repository {
                     .await?
                     .last_insert_rowid();
 
-                Ok(Player {
-                    id: Some(id),
-                    username: username.to_string(),
-                    total_attempts: 0,
-                    successful_attempts: 0,
-                    failed_attempts: 0,
-                    last_fishing_time: None,
-                })
+                Ok(Player::new(username.to_string()))
             }
         }
     }
 
     pub async fn get_leaderboard(&self) -> Result<Vec<Player>, sqlx::Error> {
-        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time FROM players ORDER BY successful_attempts DESC LIMIT 10")
+        let rows = sqlx::query("SELECT id, username, total_attempts, successful_attempts, failed_attempts, last_fishing_time, level, xp FROM players ORDER BY level DESC, xp DESC LIMIT 10")
             .fetch_all(&self.pool)
             .await?;
 
@@ -57,6 +52,8 @@ impl Repository {
             successful_attempts: row.get("successful_attempts"),
             failed_attempts: row.get("failed_attempts"),
             last_fishing_time: row.get("last_fishing_time"),
+            level: row.get("level"),
+            xp: row.get("xp"),
         }).collect();
 
         Ok(players)
@@ -66,10 +63,12 @@ impl Repository {
         let mut tx = self.pool.begin().await?;
 
         // Update player stats
-        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ? WHERE id = ?")
+        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ? WHERE id = ?")
             .bind(if success { 1 } else { 0 })
             .bind(if success { 0 } else { 1 })
             .bind(Utc::now())
+            .bind(player.level)
+            .bind(player.xp)
             .bind(player.id)
             .execute(&mut *tx)
             .await?;

@@ -46,7 +46,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             total_attempts INTEGER DEFAULT 0,
             successful_attempts INTEGER DEFAULT 0,
             failed_attempts INTEGER DEFAULT 0,
-            last_fishing_time DATETIME
+            last_fishing_time DATETIME,
+            level INTEGER DEFAULT 1,
+            xp INTEGER DEFAULT 0
         )"
     ).execute(&pool).await?;
 
@@ -87,12 +89,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                     if text.starts_with("!fish") {
                         match repo_bot.get_or_create_player(&username).await {
-                            Ok(player) => {
-                                if player.can_fish(30) {
-                                    if rand::random::<f64>() < 0.45 {
+                            Ok(mut player) => {
+                                if player.can_fish(60) {
+                                    // Difficulté croissante : le taux de réussite baisse légèrement avec le niveau
+                                    let success_rate = 0.45 - (player.level as f64 * 0.001);
+                                    let success = rand::random::<f64>() < success_rate;
+                                    
+                                    if success {
                                         if let Some(fish) = generate_fish() {
                                             tracing::info!("[Peche] @{} a attrape un {} ({} cm)", username, fish.name, fish.size);
-                                            let response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
+                                            
+                                            // Gain d'XP en cas de succès (+25 XP)
+                                            let leveled_up = player.add_xp(25);
+                                            
+                                            let mut response = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
+                                            if leveled_up {
+                                                response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level));
+                                            }
+                                            
                                             client_clone.say(msg.channel_login.clone(), response).await.unwrap();
                                             if let Err(e) = repo_bot.save_attempt(&player, true, Some(fish)).await {
                                                 tracing::error!("[Erreur DB] Impossible de sauvegarder la capture : {}", e);
@@ -102,22 +116,39 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                         let reasons = get_fail_attempt_reasons();
                                         let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !");
                                         tracing::info!("[Peche] @{} a echoue sa prise.", username);
-                                        client_clone.say(msg.channel_login.clone(), reason.replace("#viewer_name#", &username)).await.unwrap();
+                                        
+                                        // Gain d'XP minimal en cas d'échec (+5 XP)
+                                        let leveled_up = player.add_xp(5);
+                                        
+                                        let mut response = reason.replace("#viewer_name#", &username);
+                                        if leveled_up {
+                                            response.push_str(&format!(" ✨ LEVEL UP ! Tu es maintenant niveau {} !", player.level));
+                                        }
+                                        
+                                        client_clone.say(msg.channel_login.clone(), response).await.unwrap();
                                         if let Err(e) = repo_bot.save_attempt(&player, false, None).await {
                                             tracing::error!("[Erreur DB] Impossible de sauvegarder l'echec : {}", e);
                                         }
                                     }
                                 } else {
                                     tracing::debug!("[Cooldown] @{} a tente de pecher trop tot.", username);
-                                    client_clone.say(msg.channel_login.clone(), format!("⏳ @{}, attends un peu !", username)).await.unwrap();
+                                    client_clone.say(msg.channel_login.clone(), format!("⏳ @{}, attends un peu ! (Cooldown: 60s)", username)).await.unwrap();
                                 }
                             }
                             Err(e) => tracing::error!("[Erreur DB] Impossible de recuperer le joueur {} : {}", username, e),
                         }
                     } else if text.starts_with("!stats") {
                         tracing::info!("[Stats] Demande pour @{}", username);
-                        let response = format!("📊 @{} : Voir tes stats ici : http://localhost:3000/player/{}", username, username);
-                        client_clone.say(msg.channel_login.clone(), response).await.unwrap();
+                        match repo_bot.get_or_create_player(&username).await {
+                            Ok(player) => {
+                                let response = format!(
+                                    "📊 @{} : Niveau {} (XP: {}/{}) | Succès: {} | Stats complètes : http://localhost:3000/player/{}",
+                                    username, player.level, player.xp, player.xp_for_next_level(), player.successful_attempts, username
+                                );
+                                client_clone.say(msg.channel_login.clone(), response).await.unwrap();
+                            }
+                            Err(e) => tracing::error!("[Erreur DB] {}", e),
+                        }
                     } else if text.starts_with("!top") {
                         tracing::info!("[Top] Demande de leaderboard dans le chat");
                         match repo_bot.get_leaderboard().await {
