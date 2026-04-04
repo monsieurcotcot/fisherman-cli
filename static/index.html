@@ -118,6 +118,34 @@
             border: 1px solid #3a3a3d;
             margin-top: 10px;
         }
+
+        /* Styles pour le filtrage */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .filter-btn {
+            background: #26262c;
+            border: 1px solid #3a3a3d;
+            color: #adadb8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            border-color: #9146ff;
+            color: #efeff1;
+        }
+        .filter-btn.active {
+            background: #9146ff;
+            color: white;
+            border-color: #9146ff;
+        }
         
         /* Modal pour les détails */
         .modal {
@@ -195,14 +223,14 @@
                 <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
                 
                 <div class="filter-bar" id="filterBar">
-                    <button class="filter-btn active" onclick="filterCatches('all')">Tous</button>
-                    <button class="filter-btn" onclick="filterCatches('common')">Commun</button>
-                    <button class="filter-btn" onclick="filterCatches('uncommon')">Peu commun</button>
-                    <button class="filter-btn" onclick="filterCatches('rare')">Rare</button>
-                    <button class="filter-btn" onclick="filterCatches('veryrare')">Très rare</button>
-                    <button class="filter-btn" onclick="filterCatches('epic')">Épique</button>
-                    <button class="filter-btn" onclick="filterCatches('legendary')">Légendaire</button>
-                    <button class="filter-btn" onclick="filterCatches('mythical')">Mythique</button>
+                    <button class="filter-btn active" data-rarity="all" onclick="filterCatches('all')">Tous</button>
+                    <button class="filter-btn" data-rarity="common" onclick="filterCatches('common')">Commun</button>
+                    <button class="filter-btn" data-rarity="uncommon" onclick="filterCatches('uncommon')">Peu commun</button>
+                    <button class="filter-btn" data-rarity="rare" onclick="filterCatches('rare')">Rare</button>
+                    <button class="filter-btn" data-rarity="veryrare" onclick="filterCatches('veryrare')">Très rare</button>
+                    <button class="filter-btn" data-rarity="epic" onclick="filterCatches('epic')">Épique</button>
+                    <button class="filter-btn" data-rarity="legendary" onclick="filterCatches('legendary')">Légendaire</button>
+                    <button class="filter-btn" data-rarity="mythical" onclick="filterCatches('mythical')">Mythique</button>
                 </div>
 
                 <div class="inventory-container">
@@ -241,6 +269,7 @@
             <p>© 2026 MonsieurCotCot. Tous droits réservés.</p>
             <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
                 <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
+                <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
                 <a href="https://twitter.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitter</a>
                 <a href="https://youtube.com/@MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">YouTube</a>
                 <a href="https://instagram.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Instagram</a>
@@ -335,12 +364,7 @@
             // Update buttons UI
             const btns = document.querySelectorAll('.filter-btn');
             btns.forEach(b => {
-                b.classList.remove('active');
-                // Nettoyage pour comparaison : minuscule et sans espaces
-                const btnRarity = b.innerText.toLowerCase().replace(/\s/g, '');
-                if (btnRarity === rarity || (rarity === 'all' && b.innerText === 'Tous')) {
-                    b.classList.add('active');
-                }
+                b.classList.toggle('active', b.getAttribute('data-rarity') === rarity);
             });
 
             const inv = document.getElementById('res-inventory');
@@ -348,7 +372,7 @@
             
             const filtered = rarity === 'all' 
                 ? allCatches 
-                : allCatches.filter(f => f.rarity.toLowerCase().replace(/\s/g, '') === rarity);
+                : allCatches.filter(f => f.rarity.toLowerCase() === rarity);
 
             if (filtered.length > 0) {
                 filtered.forEach(f => {

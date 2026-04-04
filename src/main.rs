@@ -19,12 +19,11 @@ use rand::seq::SliceRandom;
 
 use axum::{
     routing::get,
-    extract::{Path, State, Query},
+    extract::{Path, State, Query, ConnectInfo},
     Json,
     Router,
     response::{Redirect, IntoResponse, Html},
-    http::header::{CONTENT_SECURITY_POLICY, X_FRAME_OPTIONS, STRICT_TRANSPORT_SECURITY, X_CONTENT_TYPE_OPTIONS},
-    http::HeaderValue,
+    http::{HeaderValue, HeaderMap, header::{CONTENT_SECURITY_POLICY, X_FRAME_OPTIONS, STRICT_TRANSPORT_SECURITY, X_CONTENT_TYPE_OPTIONS}},
 };
 use tower_http::cors::CorsLayer;
 use tower_http::set_header::SetResponseHeaderLayer;
@@ -128,7 +127,8 @@ async fn main() -> Result<(), MyError> {
     tracing::info!("[Web] Serveur API en ligne sur {}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await?;
     
-    axum::serve(listener, app).await?;
+    // On utilise into_make_service_with_connect_info pour capturer les adresses IP des clients
+    axum::serve(listener, app.into_make_service_with_connect_info::<SocketAddr>()).await?;
 
     Ok(())
 }
@@ -258,9 +258,18 @@ async fn auth_callback(
 }
 
 async fn get_player_stats(
+    headers: HeaderMap,
+    ConnectInfo(addr): ConnectInfo<SocketAddr>,
     Path(username): Path<String>,
     State(state): State<Arc<AppState>>,
 ) -> impl IntoResponse {
+    let client_ip = headers
+        .get("CF-Connecting-IP")
+        .and_then(|v: &HeaderValue| v.to_str().ok())
+        .map(|s: &str| s.to_string())
+        .unwrap_or_else(|| addr.ip().to_string());
+
+    tracing::info!("[Web] {} : {}", username, client_ip);
     let username_lower = username.to_lowercase();
     match state.repo.get_or_create_player(&username_lower).await {
         Ok(player) => {

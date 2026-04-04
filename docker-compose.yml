@@ -1,12 +1,14 @@
 services:
-  bot:
+  fisherman:
     build: .
+    container_name: fisherman-bot
+    restart: always
     ports:
       - "3000:3000"
     volumes:
       - ./data:/app/data
-      - .env:/app/.env
+    env_file:
+      - .env
     environment:
       - DATABASE_URL=sqlite:///app/data/fisherman.db
       - RUST_LOG=info
-    restart: always
