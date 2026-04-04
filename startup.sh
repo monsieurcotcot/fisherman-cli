@@ -23,8 +23,8 @@ configure_env() {
 
     # 2. Token OAuth
     echo -e "\n${BLUE}ℹ️  Pour obtenir votre token, connectez-vous avec le compte du BOT sur :${NC}"
-    echo -e "${BLUE}👉 https://twitchapps.com/tmi/${NC}"
-    read -p "👉 Entrez le token OAuth (ex: oauth:xxxx...) : " oauth
+    echo -e "${BLUE}👉 https://twitchtokengenerator.com/${NC}"
+    read -p "👉 Entrez le token Access Token (ex: oauth:xxxx...) : " oauth
     while [[ ! $oauth == oauth:* ]]; do
         echo -e "${RED}⚠️ Le token doit commencer par 'oauth:'${NC}"
         read -p "👉 Réessayez : " oauth
