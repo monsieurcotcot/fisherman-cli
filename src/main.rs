@@ -105,6 +105,13 @@ async fn main() -> Result<(), MyError> {
         tracing::warn!("Aucun token trouve. Veuillez vous authentifier sur http://localhost:3000/auth");
     }
 
+use tower_http::cors::CorsLayer;
+use tower_http::set_header::SetResponseHeaderLayer;
+use axum::http::header::{CONTENT_SECURITY_POLICY, X_FRAME_OPTIONS, STRICT_TRANSPORT_SECURITY, X_CONTENT_TYPE_OPTIONS};
+use axum::http::HeaderValue;
+
+// ... (dans main)
+
     // --- WEB SERVER SETUP ---
     let app = Router::new()
         .route("/api/stats/:username", get(get_player_stats))
@@ -112,6 +119,11 @@ async fn main() -> Result<(), MyError> {
         .route("/auth", get(login_redirect))
         .route("/auth/callback", get(auth_callback))
         .fallback_service(ServeFile::new("static/index.html"))
+        // EN-TÊTES DE SÉCURITÉ
+        .layer(SetResponseHeaderLayer::overriding(X_FRAME_OPTIONS, HeaderValue::from_static("SAMEORIGIN")))
+        .layer(SetResponseHeaderLayer::overriding(X_CONTENT_TYPE_OPTIONS, HeaderValue::from_static("nosniff")))
+        .layer(SetResponseHeaderLayer::overriding(STRICT_TRANSPORT_SECURITY, HeaderValue::from_static("max-age=31536000; includeSubDomains")))
+        .layer(SetResponseHeaderLayer::overriding(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';")))
         .layer(CorsLayer::permissive())
         .with_state(Arc::clone(&state));
 
