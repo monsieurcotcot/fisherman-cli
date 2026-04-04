@@ -76,11 +76,16 @@ if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env || [ -z "$(grep REDIRECT_URI 
     configure_env
 fi
 
-# Création du dossier data
+# Préparation de l'environnement de données
 mkdir -p data
 chmod 777 data
+if [ ! -f data/fisherman.db ]; then
+    touch data/fisherman.db
+    chmod 666 data/fisherman.db
+fi
 
 echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
+docker compose down --remove-orphans
 docker compose up --build -d
 
 # Récupérer l'URL d'auth finale pour affichage
