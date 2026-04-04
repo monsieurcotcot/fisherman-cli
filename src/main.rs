@@ -118,6 +118,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         tracing::info!("[Stats] Demande pour @{}", username);
                         let response = format!("📊 @{} : Voir tes stats ici : http://localhost:3000/player/{}", username, username);
                         client_clone.say(msg.channel_login.clone(), response).await.unwrap();
+                    } else if text.starts_with("!top") {
+                        tracing::info!("[Top] Demande de leaderboard dans le chat");
+                        match repo_bot.get_leaderboard().await {
+                            Ok(players) => {
+                                let mut response = "🏆 Classement des pêcheurs : ".to_string();
+                                let top_list: Vec<String> = players.iter().take(5).enumerate()
+                                    .map(|(i, p)| format!("#{}. {} ({} 🐟)", i + 1, p.username, p.successful_attempts))
+                                    .collect();
+                                response.push_str(&top_list.join(" | "));
+                                client_clone.say(msg.channel_login.clone(), response).await.unwrap();
+                            }
+                            Err(e) => tracing::error!("[Erreur DB] Impossible de charger le top : {}", e),
+                        }
                     }
                 }
                 _ => {}
