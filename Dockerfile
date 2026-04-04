@@ -19,4 +19,7 @@ WORKDIR /app
 # Copie de l'exécutable
 COPY --from=builder /app/target/release/fisherman-rust /usr/local/bin/fisherman-rust
 
+# COPIE DU DOSSIER STATIC (Indispensable pour l'interface web)
+COPY --from=builder /app/static ./static
+
 CMD ["fisherman-rust"]
