@@ -217,6 +217,44 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         }
                     });
+                } else if text.starts_with("!fish simulate ") && username == "monsieurcotcot" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let args: Vec<String> = text.split_whitespace().map(|s| s.to_string()).collect();
+                    
+                    if args.len() >= 4 {
+                        let target_user = args[2].to_lowercase();
+                        let count = args[3].parse::<u32>().unwrap_or(0);
+                        
+                        tokio::spawn(async move {
+                            tracing::info!("[Admin] Simulation de {} lancers pour {}", count, target_user);
+                            if let Ok(mut player) = state_task.repo.get_or_create_player(&target_user).await {
+                                let mut success_count = 0;
+                                let mut fail_count = 0;
+                                
+                                for _ in 0..count {
+                                    let success_rate = match player.level {
+                                        1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50,
+                                        101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35
+                                    };
+                                    
+                                    if rand::random::<f64>() < success_rate {
+                                        if let Some(fish) = generate_fish() {
+                                            success_count += 1;
+                                            player.add_xp(25);
+                                            let _ = state_task.repo.save_attempt(&player, true, Some(fish)).await;
+                                        }
+                                    } else {
+                                        fail_count += 1;
+                                        player.add_xp(5);
+                                        let _ = state_task.repo.save_attempt(&player, false, None).await;
+                                    }
+                                }
+                                let _ = client_msg.say(channel_login, format!("✅ Simulation terminee pour @{} : {} succes, {} echecs. Niv. {}", target_user, success_count, fail_count, player.level)).await;
+                            }
+                        });
+                    }
                 } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
