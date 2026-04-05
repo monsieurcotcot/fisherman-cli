@@ -47,6 +47,8 @@ struct AppState {
     channel: String,
     pending_resets: RwLock<HashMap<String, DateTime<Utc>>>,
     bot_abort_handle: RwLock<Option<tokio::task::JoinHandle<()>>>,
+    // IP -> (Nombre de tentatives, Moment du dernier ban)
+    rate_limiter: RwLock<HashMap<String, (u32, Option<DateTime<Utc>>)>>,
 }
 
 #[tokio::main]
@@ -109,6 +111,7 @@ async fn main() -> Result<(), MyError> {
         channel: channel.clone(),
         pending_resets: RwLock::new(HashMap::new()),
         bot_abort_handle: RwLock::new(None),
+        rate_limiter: RwLock::new(HashMap::new()),
     });
 
     if let Some(tokens) = auth_manager.load_tokens() {
@@ -285,13 +288,75 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     *abort_lock = Some(handle);
 }
 
-async fn admin_panel(Query(params): Query<HashMap<String, String>>) -> impl IntoResponse {
-    let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
-    if params.get("token") == Some(&secret) { Html(include_str!("../static/admin.html")).into_response() }
-    else { (axum::http::StatusCode::FORBIDDEN, "Acces refuse").into_response() }
+async fn check_rate_limit(state: &AppState, ip: &str) -> bool {
+    let mut limiter = state.rate_limiter.write().await;
+    let now = Utc::now();
+    
+    let entry = limiter.entry(ip.to_string()).or_insert((0, None));
+    
+    // 1. Verifier si l'IP est actuellement bannie
+    if let Some(ban_time) = entry.1 {
+        if now.signed_duration_since(ban_time).num_minutes() < 15 {
+            return false; // Toujours banni
+        } else {
+            entry.1 = None; // Fin du ban
+            entry.0 = 0;
+        }
+    }
+    
+    // 2. Incremeter les tentatives
+    entry.0 += 1;
+    
+    // 3. Bannir si trop de tentatives (ex: 5 essais infructueux)
+    if entry.0 > 10 {
+        entry.1 = Some(now);
+        tracing::warn!("[SECURITY] IP BANNIE (15 min) suite a un spam/bruteforce : {}", ip);
+        return false;
+    }
+    
+    true
 }
 
-async fn login_redirect(Query(params): Query<HashMap<String, String>>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+async fn admin_panel(
+    ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    headers: HeaderMap,
+    Query(params): Query<HashMap<String, String>>,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let client_ip = headers
+        .get("CF-Connecting-IP")
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.to_string())
+        .unwrap_or_else(|| addr.ip().to_string());
+    
+    if !check_rate_limit(&state, &client_ip).await {
+        return (axum::http::StatusCode::TOO_MANY_REQUESTS, "Accès temporairement bloqué pour spam").into_response();
+    }
+
+    let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
+    if params.get("token") == Some(&secret) {
+        Html(include_str!("../static/admin.html")).into_response()
+    } else {
+        (axum::http::StatusCode::FORBIDDEN, "Accès refusé").into_response()
+    }
+}
+
+async fn login_redirect(
+    ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    headers: HeaderMap,
+    Query(params): Query<HashMap<String, String>>,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let client_ip = headers
+        .get("CF-Connecting-IP")
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.to_string())
+        .unwrap_or_else(|| addr.ip().to_string());
+
+    if !check_rate_limit(&state, &client_ip).await {
+        return (axum::http::StatusCode::TOO_MANY_REQUESTS, "Accès temporairement bloqué pour spam").into_response();
+    }
+
     let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
     if params.get("token") != Some(&secret) { return (axum::http::StatusCode::FORBIDDEN, "Acces refuse").into_response(); }
     let is_streamer = params.get("type").map(|t| t == "streamer").unwrap_or(false);
@@ -315,7 +380,8 @@ async fn auth_callback(State(app_state): State<Arc<AppState>>, Query(query): Que
 }
 
 async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo<SocketAddr>, Path(username): Path<String>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
-    let _ip = headers.get("CF-Connecting-IP").and_then(|v| v.to_str().ok()).map(|s| s.to_string()).unwrap_or_else(|| addr.ip().to_string());
+    let client_ip = headers.get("CF-Connecting-IP").and_then(|v| v.to_str().ok()).map(|s| s.to_string()).unwrap_or_else(|| addr.ip().to_string());
+    tracing::info!("[Web] Recherche de {} par l'IP : {}", username, client_ip);
     let u_low = username.to_lowercase();
     match state.repo.get_or_create_player(&u_low).await {
         Ok(p) => {
