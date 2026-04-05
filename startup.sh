@@ -20,19 +20,9 @@ configure_env() {
     read -p "👉 Adresse IP ou Domaine (Défaut: $default_host) : " host_addr
     host_addr=${host_addr:-$default_host}
 
-    # NETTOYAGE de l'entrée utilisateur
-    # Retirer http:// ou https:// si présent
-    host_addr=$(echo "$host_addr" | sed -e 's|^[^/]*//||')
-    # Retirer les slashes à la fin
-    host_addr=$(echo "$host_addr" | sed -e 's|/*$||')
-
-    # Déterminer le protocole (https pour les domaines, http pour localhost/IP)
+    host_addr=$(echo "$host_addr" | sed -e 's|^[^/]*//||' -e 's|/*$||')
     protocol="http"
-    if [[ "$host_addr" == *"."* && "$host_addr" != *"192.168."* ]]; then
-        protocol="https"
-    fi
-
-    # Construction de l'URL propre
+    if [[ "$host_addr" == *"."* && "$host_addr" != *"192.168."* ]]; then protocol="https"; fi
     redirect_uri="$protocol://$host_addr/auth/callback"
 
     echo -e "\n${YELLOW}2. Configuration de votre application Twitch Dev :${NC}"
@@ -41,25 +31,27 @@ configure_env() {
     echo -e "${BLUE}👉 $redirect_uri${NC}"
     echo -e "------------------------------------------"
     
-    # 2. Client ID
     read -p "👉 Entrez votre Client ID : " client_id
     while [[ -z "$client_id" ]]; do read -p "⚠️ Le Client ID ne peut pas être vide : " client_id; done
 
-    # 3. Client Secret
     read -p "👉 Entrez votre Client Secret : " client_secret
     while [[ -z "$client_secret" ]]; do read -p "⚠️ Le Client Secret ne peut pas être vide : " client_secret; done
 
-    # 4. Chaîne Twitch
     read -p "👉 Sur quelle chaîne le bot doit-il pêcher ? : " channel
     while [[ -z "$channel" ]]; do read -p "⚠️ Le nom de la chaîne ne peut pas être vide : " channel; done
 
-    # Création du fichier .env propre
+    # 5. Admin Token (Sécurité)
+    admin_token=$(openssl rand -hex 12)
+
     cat <<EOF > .env
 # Twitch Configuration
 TWITCH_CLIENT_ID=$client_id
 TWITCH_CLIENT_SECRET=$client_secret
 TWITCH_CHANNEL=$channel
 REDIRECT_URI=$redirect_uri
+
+# Security
+ADMIN_TOKEN=$admin_token
 
 # Database
 DATABASE_URL=sqlite:///app/data/fisherman.db
@@ -71,14 +63,16 @@ EOF
     echo -e "\n${GREEN}✅ Configuration enregistrée dans le fichier .env !${NC}"
 }
 
-# On force la reconfiguration si le .env est partiel ou ancien
-if [ ! -f .env ] || grep -q "TWITCH_USERNAME" .env || [ -z "$(grep REDIRECT_URI .env)" ]; then
+if [ ! -f .env ] || ! grep -q "ADMIN_TOKEN" .env; then
     configure_env
 fi
 
+# Récupérer les infos pour l'affichage final
+admin_token=$(grep ADMIN_TOKEN .env | cut -d '=' -f2)
+base_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback//')
+
 # Préparation de l'environnement de données (Sécurisé)
 mkdir -p data
-# Permissions normales : propriétaire (vous) a tous les droits, les autres lisent
 chmod 755 data
 if [ ! -f data/fisherman.db ]; then
     touch data/fisherman.db
@@ -89,12 +83,10 @@ echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
 docker compose down --remove-orphans
 FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
 
-# Récupérer l'URL de base
-base_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback//')
-
 echo -e "${BLUE}------------------------------------------${NC}"
 echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE (ADMINISTRATION) :${NC}"
 echo -e "Pour connecter le Bot et le Streameur, rendez-vous sur :"
-echo -e "\n${BLUE}🔐 Panel Secret :${NC}"
-echo -e "${GREEN}👉 $base_url/admin-cotcot${NC}"
+echo -e "\n${BLUE}🔐 Panel Secret (Lien unique) :${NC}"
+echo -e "${GREEN}👉 $base_url/admin-cotcot?token=$admin_token${NC}"
+echo -e "\n${RED}🔴 NE PARTAGEZ JAMAIS CE LIEN !${NC}"
 echo -e "${BLUE}------------------------------------------${NC}"

@@ -118,7 +118,7 @@ async fn main() -> Result<(), MyError> {
     let app = Router::new()
         .route("/", get(|| async { Html(include_str!("../static/index.html")) }))
         .route("/player/{username}", get(|| async { Html(include_str!("../static/index.html")) }))
-        .route("/admin-cotcot", get(|| async { Html(include_str!("../static/admin.html")) }))
+        .route("/admin-cotcot", get(admin_panel))
         .route("/auth/login", get(login_redirect))
         .route("/auth/callback", get(auth_callback))
         .route("/api/stats/{username}", get(get_player_stats))
@@ -140,10 +140,7 @@ async fn main() -> Result<(), MyError> {
 
 async fn start_bot(state: Arc<AppState>, access_token: String) {
     let mut abort_lock = state.bot_abort_handle.write().await;
-    if let Some(handle) = abort_lock.take() { 
-        tracing::info!("[Twitch] Arret de l'ancienne instance...");
-        handle.abort(); 
-    }
+    if let Some(handle) = abort_lock.take() { handle.abort(); }
 
     let credentials = StaticLoginCredentials::new("bot".to_string(), Some(access_token));
     let config = ClientConfig::new_simple(credentials);
@@ -158,8 +155,6 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
 
     let handle = tokio::spawn(async move {
         let _ = client.join(channel_name.to_lowercase());
-        
-        // Pulse task
         let channel_pulse = channel_name.to_lowercase();
         tokio::spawn(async move {
             loop {
@@ -226,7 +221,6 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let is_test = text == "!fish testvip";
                     
                     tokio::spawn(async move {
-                        tracing::info!("[Fish] Tentative pour {}", username);
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             if player.can_fish() || is_test {
                                 let rate = if is_test { 1.0 } else { match player.level { 1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50, 101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35 } };
@@ -291,9 +285,17 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     *abort_lock = Some(handle);
 }
 
+async fn admin_panel(Query(params): Query<HashMap<String, String>>) -> impl IntoResponse {
+    let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
+    if params.get("token") == Some(&secret) { Html(include_str!("../static/admin.html")).into_response() }
+    else { (axum::http::StatusCode::FORBIDDEN, "Acces refuse").into_response() }
+}
+
 async fn login_redirect(Query(params): Query<HashMap<String, String>>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
+    if params.get("token") != Some(&secret) { return (axum::http::StatusCode::FORBIDDEN, "Acces refuse").into_response(); }
     let is_streamer = params.get("type").map(|t| t == "streamer").unwrap_or(false);
-    Redirect::temporary(&state.auth.get_auth_url(is_streamer))
+    Redirect::temporary(&state.auth.get_auth_url(is_streamer)).into_response()
 }
 
 #[derive(serde::Deserialize)]
