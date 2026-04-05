@@ -12,16 +12,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            overflow-x: hidden;
+        }
+        /* Matrix Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
         }
         .container {
-            background-color: #18181b;
+            background-color: rgba(24, 24, 27, 0.9);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             text-align: center;
             width: 400px;
+            position: relative;
+            z-index: 1;
+            margin: 20px;
         }
         h1 { color: #9146ff; }
         .stats-box {
@@ -220,8 +234,9 @@
     </style>
 </head>
 <body>
+    <canvas id="matrix-bg"></canvas>
     <div class="container">
-        <a href="/" style="text-decoration: none; color: inherit;"><h1>🎣 Fisherman Stats</h1></a>
+        <a href="/" style="text-decoration: none; color: inherit;"><h1>🎣 Ze_Fisherman Stats</h1></a>
         
         <div class="search-box">
             <input type="text" id="usernameInput" placeholder="Ton pseudo Twitch...">
@@ -467,6 +482,47 @@
             document.getElementById('fishModal').style.display = 'none';
             document.getElementById('modalOverlay').style.display = 'none';
         }
+
+        // Matrix Effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789🐟🌊🎣⚓🦀🐡🦑🐙";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(14, 14, 16, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#9146ff"; // Couleur violette Twitch
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
