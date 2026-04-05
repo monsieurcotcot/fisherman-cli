@@ -119,8 +119,8 @@ async fn main() -> Result<(), MyError> {
     }
 
     let app = Router::new()
-        .route("/", get(|| async { Html(include_str!("../static/index.html")) }))
-        .route("/player/{username}", get(|| async { Html(include_str!("../static/index.html")) }))
+        .route("/", get(|| async { Html(match tokio::fs::read_to_string("static/index.html").await { Ok(h) => h, Err(_) => "Erreur chargement index.html".to_string() }) }))
+        .route("/player/{username}", get(|| async { Html(match tokio::fs::read_to_string("static/index.html").await { Ok(h) => h, Err(_) => "Erreur chargement index.html".to_string() }) }))
         .route("/admin-cotcot", get(admin_panel))
         .route("/auth/login", get(login_redirect))
         .route("/auth/callback", get(auth_callback))
@@ -335,7 +335,7 @@ async fn admin_panel(
 
     let secret = env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
     if params.get("token") == Some(&secret) {
-        Html(include_str!("../static/admin.html")).into_response()
+        Html(match tokio::fs::read_to_string("static/admin.html").await { Ok(h) => h, Err(_) => "Erreur chargement admin.html".to_string() }).into_response()
     } else {
         (axum::http::StatusCode::FORBIDDEN, "Accès refusé").into_response()
     }
