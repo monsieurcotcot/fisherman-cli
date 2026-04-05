@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fisherman Admin</title>
+    <style>
+        body { font-family: sans-serif; background: #0e0e10; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #18181b; padding: 2rem; border-radius: 10px; text-align: center; border: 1px solid #9146ff; }
+        .btn { display: block; text-decoration: none; padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
+        .btn-bot { background: #9146ff; color: white; }
+        .btn-streamer { background: #00e6ff; color: #0e0e10; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Panel Administration</h1>
+        <p>Connectez les comptes pour activer le bot.</p>
+        <a href="/auth/login?type=bot" class="btn btn-bot">🤖 Connecter le Bot (Ze_Fisherman)</a>
+        <a href="/auth/login?type=streamer" class="btn btn-streamer">👑 Connecter le Streameur (MonsieurCotCot)</a>
+    </div>
+</body>
+</html>

@@ -93,10 +93,8 @@ FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
 base_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback//')
 
 echo -e "${BLUE}------------------------------------------${NC}"
-echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE (DOUBLE AUTHENTIFICATION) :${NC}"
-echo -e "Pour que le bot fonctionne avec toutes ses capacités :"
-echo -e "\n${BLUE}1. Connectez le compte du BOT (Ze_Fisherman) :${NC}"
-echo -e "${GREEN}👉 $base_url/auth/login?type=bot${NC}"
-echo -e "\n${BLUE}2. Connectez votre compte STREAMEUR (MonsieurCotCot) :${NC}"
-echo -e "${GREEN}👉 $base_url/auth/login?type=streamer${NC}"
+echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE (ADMINISTRATION) :${NC}"
+echo -e "Pour connecter le Bot et le Streameur, rendez-vous sur :"
+echo -e "\n${BLUE}🔐 Panel Secret :${NC}"
+echo -e "${GREEN}👉 $base_url/admin-cotcot${NC}"
 echo -e "${BLUE}------------------------------------------${NC}"
