@@ -170,6 +170,30 @@
             z-index: 99;
         }
 
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #1f1f23;
+            border-radius: 8px;
+            border: 1px solid #3a3a3d;
+        }
+        .auth-link {
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .btn-bot { background: #9146ff; color: white; }
+        .btn-bot:hover { background: #772ce8; }
+        .btn-streamer { background: #00e6ff; color: #0e0e10; }
+        .btn-streamer:hover { background: #00b8cc; }
+
         .search-box {
             margin-bottom: 1rem;
             display: flex;
@@ -199,7 +223,13 @@
     <div class="container">
         <h1>🎣 Fisherman Stats</h1>
         
-        <div class="search-box">
+        <div class="auth-buttons">
+            <a href="/auth/login?type=bot" class="auth-link btn-bot">🤖 Connecter le Bot (Ze_Fisherman)</a>
+            <a href="/auth/login?type=streamer" class="auth-link btn-streamer">👑 Connecter le Streameur (MonsieurCotCot)</a>
+            <p style="font-size: 0.7rem; color: #adadb8; margin: 0; text-align: center;">Le compte Streameur est requis pour automatiser les /vip.</p>
+        </div>
+
+        <div class="search-box" style="margin-top: 1.5rem;">
             <input type="text" id="usernameInput" placeholder="Ton pseudo Twitch...">
             <button onclick="fetchStats()">Voir</button>
         </div>

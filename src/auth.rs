@@ -19,6 +19,7 @@ pub struct AuthManager {
     client_secret: String,
     redirect_uri: String,
     token_path: String,
+    streamer_token_path: String,
 }
 
 impl AuthManager {
@@ -28,16 +29,41 @@ impl AuthManager {
             client_secret,
             redirect_uri,
             token_path: "data/tokens.json".to_string(),
+            streamer_token_path: "data/streamer_tokens.json".to_string(),
         }
     }
 
-    pub fn get_auth_url(&self) -> String {
+    pub fn load_tokens(&self) -> Option<TwitchTokens> {
+        let data = fs::read_to_string(&self.token_path).ok()?;
+        serde_json::from_str(&data).ok()
+    }
+
+    pub fn load_streamer_tokens(&self) -> Option<TwitchTokens> {
+        let data = fs::read_to_string(&self.streamer_token_path).ok()?;
+        serde_json::from_str(&data).ok()
+    }
+
+    pub fn save_tokens(&self, tokens: &TwitchTokens) -> Result<(), MyError> {
+        let data = serde_json::to_string_pretty(tokens)?;
+        fs::write(&self.token_path, data)?;
+        Ok(())
+    }
+
+    pub fn save_streamer_tokens(&self, tokens: &TwitchTokens) -> Result<(), MyError> {
+        let data = serde_json::to_string_pretty(tokens)?;
+        fs::write(&self.streamer_token_path, data)?;
+        Ok(())
+    }
+
+    pub fn get_auth_url(&self, is_streamer: bool) -> String {
         let mut url = Url::parse("https://id.twitch.tv/oauth2/authorize").unwrap();
+        let state = if is_streamer { "streamer" } else { "bot" };
         url.query_pairs_mut()
             .append_pair("client_id", &self.client_id)
             .append_pair("redirect_uri", &self.redirect_uri)
             .append_pair("response_type", "code")
-            .append_pair("scope", "chat:read chat:edit channel:manage:vips");
+            .append_pair("scope", "chat:read chat:edit channel:manage:vips")
+            .append_pair("state", state);
         url.to_string()
     }
 
@@ -52,8 +78,19 @@ impl AuthManager {
             .await;
 
         match res {
-            Ok(r) => r.status().is_success() || r.status().as_u16() == 422, // 422 = deja VIP
-            Err(_) => false,
+            Ok(r) => {
+                if r.status().is_success() || r.status().as_u16() == 422 {
+                    tracing::info!("[API] VIP ajoute avec succes (ou deja present).");
+                    true
+                } else {
+                    tracing::error!("[API] Erreur add_vip : Status {} - {}", r.status(), r.text().await.unwrap_or_default());
+                    false
+                }
+            },
+            Err(e) => {
+                tracing::error!("[API] Erreur reseau add_vip : {}", e);
+                false
+            }
         }
     }
 
@@ -90,6 +127,23 @@ impl AuthManager {
         res["data"][0]["id"].as_str().map(|s| s.to_string())
     }
 
+    pub async fn get_stream_info(&self, channel_login: &str, access_token: &str) -> Option<String> {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/streams?user_login={}", channel_login);
+        
+        let res = client.get(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await
+            .ok()?
+            .json::<serde_json::Value>()
+            .await
+            .ok()?;
+
+        res["data"][0]["title"].as_str().map(|s| s.to_string())
+    }
+
     pub async fn exchange_code(&self, code: &str) -> Result<TwitchTokens, MyError> {
         let client = Client::new();
         let params = [
@@ -107,72 +161,11 @@ impl AuthManager {
             .json::<TokenResponse>()
             .await?;
 
-        let tokens = TwitchTokens {
+        Ok(TwitchTokens {
             access_token: res.access_token,
             refresh_token: res.refresh_token,
             expires_at: Utc::now() + Duration::seconds(res.expires_in),
-        };
-
-        self.save_tokens(&tokens)?;
-        Ok(tokens)
-    }
-
-    pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, MyError> {
-        let client = Client::new();
-        let params = [
-            ("client_id", self.client_id.as_str()),
-            ("client_secret", self.client_secret.as_str()),
-            ("grant_type", "refresh_token"),
-            ("refresh_token", refresh_token),
-        ];
-
-        let res = client.post("https://id.twitch.tv/oauth2/token")
-            .form(&params)
-            .send()
-            .await?
-            .json::<TokenResponse>()
-            .await?;
-
-        let tokens = TwitchTokens {
-            access_token: res.access_token,
-            refresh_token: res.refresh_token,
-            expires_at: Utc::now() + Duration::seconds(res.expires_in),
-        };
-
-        self.save_tokens(&tokens)?;
-        Ok(tokens)
-    }
-
-    pub async fn get_stream_info(&self, channel: &str, access_token: &str) -> Option<String> {
-        let client = Client::new();
-        let url = format!("https://api.twitch.tv/helix/streams?user_login={}", channel);
-        
-        let res = client.get(url)
-            .header("Client-ID", &self.client_id)
-            .header("Authorization", format!("Bearer {}", access_token))
-            .send()
-            .await
-            .ok()?
-            .json::<serde_json::Value>()
-            .await
-            .ok()?;
-
-        // On extrait le titre du premier stream trouvé (si en ligne)
-        res["data"][0]["title"].as_str().map(|s| s.to_string())
-    }
-
-    pub fn load_tokens(&self) -> Option<TwitchTokens> {
-        if !Path::new(&self.token_path).exists() {
-            return None;
-        }
-        let data = fs::read_to_string(&self.token_path).ok()?;
-        serde_json::from_str(&data).ok()
-    }
-
-    fn save_tokens(&self, tokens: &TwitchTokens) -> Result<(), MyError> {
-        let data = serde_json::to_string_pretty(tokens)?;
-        fs::write(&self.token_path, data)?;
-        Ok(())
+        })
     }
 }
 

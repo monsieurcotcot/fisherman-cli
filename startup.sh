@@ -89,11 +89,14 @@ echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
 docker compose down --remove-orphans
 FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
 
-# Récupérer l'URL d'auth finale pour affichage
-auth_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/callback/\/login/')
+# Récupérer l'URL de base
+base_url=$(grep REDIRECT_URI .env | cut -d '=' -f2 | sed 's/\/auth\/callback//')
 
 echo -e "${BLUE}------------------------------------------${NC}"
-echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE :${NC}"
-echo -e "Pour lier le bot à votre compte Twitch, ouvrez ce lien :"
-echo -e "${GREEN}👉 $auth_url${NC}"
+echo -e "${YELLOW}⚠️  DERNIÈRE ÉTAPE (DOUBLE AUTHENTIFICATION) :${NC}"
+echo -e "Pour que le bot fonctionne avec toutes ses capacités :"
+echo -e "\n${BLUE}1. Connectez le compte du BOT (Ze_Fisherman) :${NC}"
+echo -e "${GREEN}👉 $base_url/auth/login?type=bot${NC}"
+echo -e "\n${BLUE}2. Connectez votre compte STREAMEUR (MonsieurCotCot) :${NC}"
+echo -e "${GREEN}👉 $base_url/auth/login?type=streamer${NC}"
 echo -e "${BLUE}------------------------------------------${NC}"

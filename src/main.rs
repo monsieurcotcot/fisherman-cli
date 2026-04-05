@@ -64,6 +64,36 @@ async fn main() -> Result<(), MyError> {
     let _ = sqlx::query("PRAGMA journal_mode=WAL;").execute(&pool).await;
     let _ = sqlx::query("PRAGMA busy_timeout=5000;").execute(&pool).await;
 
+    // --- INITIALISATION DES TABLES ---
+    sqlx::query(
+        "CREATE TABLE IF NOT EXISTS players (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            total_attempts INTEGER DEFAULT 0,
+            successful_attempts INTEGER DEFAULT 0,
+            failed_attempts INTEGER DEFAULT 0,
+            last_fishing_time DATETIME,
+            level INTEGER DEFAULT 1,
+            xp INTEGER DEFAULT 0,
+            vip_until DATETIME
+        )"
+    ).execute(&pool).await?;
+
+    sqlx::query(
+        "CREATE TABLE IF NOT EXISTS catches (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id INTEGER REFERENCES players(id),
+            fish_name TEXT NOT NULL,
+            rarity TEXT NOT NULL,
+            size REAL NOT NULL,
+            weight REAL DEFAULT 0,
+            state TEXT NOT NULL,
+            description TEXT,
+            stream_title TEXT,
+            caught_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )"
+    ).execute(&pool).await?;
+
     let repo = Arc::new(Repository::new(pool.clone()));
     
     let client_id = env::var("TWITCH_CLIENT_ID").expect("TWITCH_CLIENT_ID must be set");
@@ -83,6 +113,7 @@ async fn main() -> Result<(), MyError> {
     });
 
     if let Some(tokens) = auth_manager.load_tokens() {
+        tracing::info!("Tokens trouves, tentative de connexion...");
         start_bot(state.clone(), tokens.access_token).await;
     }
 
@@ -102,6 +133,7 @@ async fn main() -> Result<(), MyError> {
         .with_state(state);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    tracing::info!("[Web] Serveur API en ligne sur {}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app.into_make_service_with_connect_info::<SocketAddr>()).await?;
 
@@ -110,7 +142,10 @@ async fn main() -> Result<(), MyError> {
 
 async fn start_bot(state: Arc<AppState>, access_token: String) {
     let mut abort_lock = state.bot_abort_handle.write().await;
-    if let Some(handle) = abort_lock.take() { handle.abort(); }
+    if let Some(handle) = abort_lock.take() { 
+        tracing::info!("[Twitch] Arret de l'ancienne instance...");
+        handle.abort(); 
+    }
 
     let credentials = StaticLoginCredentials::new("bot".to_string(), Some(access_token));
     let config = ClientConfig::new_simple(credentials);
@@ -124,16 +159,30 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     let channel_name = state.channel.clone();
 
     let handle = tokio::spawn(async move {
-        let _ = client.join(channel_name.to_lowercase());
+        let channel_lower = channel_name.to_lowercase();
+        match client.join(channel_lower.clone()) {
+            Ok(_) => tracing::info!("[Twitch] Tentative de connexion a #{}", channel_lower),
+            Err(e) => tracing::error!("[Twitch] Erreur join : {}", e),
+        }
         
+        // Pulse task
+        let channel_pulse = channel_lower.clone();
+        tokio::spawn(async move {
+            loop {
+                tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
+                tracing::info!("[Pulse] Le bot ecoute toujours #{}", channel_pulse);
+            }
+        });
+
         while let Some(message) = incoming_messages.recv().await {
             if let ServerMessage::Privmsg(msg) = message {
-                let text = msg.message_text.trim().to_string();
+                let text = msg.message_text.trim().to_lowercase();
                 let username = msg.sender.name.clone();
+                tracing::info!("[Chat] {} : {}", username, text);
                 
-                if text == "!fish help" {
-                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !fish stats | !fish top".to_string()).await;
-                } else if text == "!fish stats" || text == "!fish stat" {
+                if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
+                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !pêche | !fish stats | !fish top".to_string()).await;
+                } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -143,7 +192,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, format!("📊 @{} : Niv. {} (XP: {}/{}) | Stats : {}/player/{}", username, p.level, p.xp, p.xp_for_next_level(), base_url, username)).await;
                         }
                     });
-                } else if text == "!fish top" {
+                } else if text == "!fish top" || text == "!peche top" || text == "!pêche top" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -153,7 +202,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
                         }
                     });
-                } else if text == "!fish reset" {
+                } else if text == "!fish reset" || text == "!peche reset" || text == "!pêche reset" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -161,7 +210,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                         state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
                         let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour confirmer le reset.", username)).await;
                     });
-                } else if text == "!fish yes" {
+                } else if text == "!fish yes" || text == "!peche yes" || text == "!pêche yes" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -176,13 +225,14 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         }
                     });
-                } else if text == "!fish" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "leviewerdelanuit")) {
+                } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "ze_ficherman" || username == "ze_tester")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     let is_test = text == "!fish testvip";
                     
                     tokio::spawn(async move {
+                        tracing::info!("[Fish] Tentative de peche pour {}", username);
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             if player.can_fish() || is_test {
                                 let rate = if is_test { 1.0 } else { match player.level { 1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50, 101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35 } };
@@ -191,25 +241,27 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                                    else { match generate_fish() { Some(f) => f, None => return } };
                                     
                                     let leveled_up = player.add_xp(25);
-                                    if fish.name == "Gemme VIP" || is_test {
-                                        let mins = if is_test { 1 } else { match fish.state.as_str() { "badly damaged" => 10, "damaged" => 20, "worn" => 30, "good" => 40, "pristine" => 120, _ => 10 } };
-                                        player.vip_until = Some(Utc::now() + chrono::Duration::minutes(mins));
-                                        let auth_vip = Arc::clone(&state_task.auth);
-                                        let ch_vip = channel_login.clone();
-                                        let u_vip = username.clone();
-                                        let cl_vip = client_msg.clone();
-                                        tokio::spawn(async move {
-                                            if let Some(t) = auth_vip.load_tokens() {
-                                                if let (Some(b), Some(u)) = (auth_vip.get_user_id(&ch_vip, &t.access_token).await, auth_vip.get_user_id(&u_vip, &t.access_token).await) {
-                                                    let _ = auth_vip.add_vip(&b, &u, &t.access_token).await;
-                                                    tokio::time::sleep(tokio::time::Duration::from_secs(mins as u64 * 60)).await;
-                                                    if auth_vip.remove_vip(&b, &u, &t.access_token).await {
-                                                        let _ = cl_vip.say(ch_vip, format!("🔔 @{}, ton grade VIP a expiré. Merci !", u_vip)).await;
+                                        if fish.name == "Gemme VIP" || is_test {
+                                            let mins = if is_test { 1 } else { match fish.state.as_str() { "badly damaged" => 10, "damaged" => 20, "worn" => 30, "good" => 40, "pristine" => 120, _ => 10 } };
+                                            player.vip_until = Some(Utc::now() + chrono::Duration::minutes(mins));
+                                            let auth_vip = Arc::clone(&state_task.auth);
+                                            let ch_vip = channel_login.clone();
+                                            let u_vip = username.clone();
+                                            let cl_vip = client_msg.clone();
+                                            tokio::spawn(async move {
+                                                if let Some(t) = auth_vip.load_streamer_tokens() {
+                                                    if let (Some(b), Some(u)) = (auth_vip.get_user_id(&ch_vip, &t.access_token).await, auth_vip.get_user_id(&u_vip, &t.access_token).await) {
+                                                        let _ = auth_vip.add_vip(&b, &u, &t.access_token).await;
+                                                        tokio::time::sleep(tokio::time::Duration::from_secs(mins as u64 * 60)).await;
+                                                        if auth_vip.remove_vip(&b, &u, &t.access_token).await {
+                                                            let _ = cl_vip.say(ch_vip, format!("🔔 @{}, ton grade VIP a expiré. Merci !", u_vip)).await;
+                                                        }
                                                     }
+                                                } else {
+                                                    tracing::error!("[VIP] Impossible de donner le VIP : Jeton streamer non trouve. Connectez le compte streamer sur /auth/login?type=streamer");
                                                 }
-                                            }
-                                        });
-                                    }
+                                            });
+                                        }
                                     let mut resp = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
                                     if fish.name == "Gemme VIP" || is_test { 
                                         let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "2H", "good" => "40 MIN", "worn" => "30 MIN", "damaged" => "20 MIN", _ => "10 MIN" } };
@@ -247,16 +299,39 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
     *abort_lock = Some(handle);
 }
 
-async fn login_redirect(State(state): State<Arc<AppState>>) -> impl IntoResponse { Redirect::temporary(&state.auth.get_auth_url()) }
+async fn login_redirect(
+    Query(params): Query<HashMap<String, String>>,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let is_streamer = params.get("type").map(|t| t == "streamer").unwrap_or(false);
+    Redirect::temporary(&state.auth.get_auth_url(is_streamer))
+}
 
 #[derive(serde::Deserialize)]
-struct AuthQuery { code: String }
+struct AuthQuery { 
+    code: String,
+    state: String,
+}
 
-async fn auth_callback(State(state): State<Arc<AppState>>, Query(query): Query<AuthQuery>) -> impl IntoResponse {
+async fn auth_callback(
+    State(app_state): State<Arc<AppState>>,
+    Query(query): Query<AuthQuery>,
+) -> impl IntoResponse {
     let code = query.code.clone();
-    let state_clone = Arc::clone(&state);
-    match state.auth.exchange_code(&code).await {
-        Ok(t) => { start_bot(state_clone, t.access_token).await; Html("<h1>Authentification reussie !</h1>").into_response() }
+    let is_streamer = query.state == "streamer";
+    let state_clone = Arc::clone(&app_state);
+    
+    match app_state.auth.exchange_code(&code).await {
+        Ok(tokens) => {
+            if is_streamer {
+                let _ = app_state.auth.save_streamer_tokens(&tokens);
+                Html("<h1>Authentification Streameur reussie !</h1><p>Les droits VIP sont maintenant actifs.</p>").into_response()
+            } else {
+                let _ = app_state.auth.save_tokens(&tokens);
+                start_bot(state_clone, tokens.access_token).await;
+                Html("<h1>Authentification Bot reussie !</h1><p>Le bot est maintenant connecte au chat.</p>").into_response()
+            }
+        }
         Err(e) => Html(format!("<h1>Erreur</h1><p>{}</p>", e)).into_response(),
     }
 }
