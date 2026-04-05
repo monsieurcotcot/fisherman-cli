@@ -194,13 +194,24 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
                         }
                     });
-                } else if text == "!fish reset" || text == "!peche reset" || text == "!pêche reset" {
+                } else if text.starts_with("!fish reset") {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
+                    let args: Vec<String> = text.split_whitespace().map(|s| s.to_string()).collect();
+
                     tokio::spawn(async move {
-                        state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
-                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour reset.", username)).await;
+                        // Cas Admin : !fish reset <pseudo>
+                        if args.len() >= 3 && username == "monsieurcotcot" {
+                            let target = args[2].to_lowercase();
+                            if let Ok(_) = state_task.repo.reset_player(&target).await {
+                                let _ = client_msg.say(channel_login, format!("♻️ @{}, l'inventaire de @{} a été réinitialisé par l'administrateur.", username, target)).await;
+                            }
+                        } else {
+                            // Cas classique : Reset de soi-meme avec confirmation
+                            state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour confirmer ton propre reset.", username)).await;
+                        }
                     });
                 } else if text == "!fish yes" || text == "!peche yes" || text == "!pêche yes" {
                     let state_task = Arc::clone(&state_clone);
