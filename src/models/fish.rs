@@ -13,6 +13,7 @@ pub struct Fish {
     pub description: String,
     pub stream_title: Option<String>,
     pub caught_at: Option<DateTime<Utc>>,
+    pub is_junk: bool,
 }
 
 impl Fish {
@@ -26,6 +27,21 @@ impl Fish {
             description,
             stream_title: None,
             caught_at: None,
+            is_junk: false,
+        }
+    }
+
+    pub fn new_junk(name: String, rarity: Rarity, size: f64, weight: f64, state: String, description: String) -> Self {
+        Self {
+            name,
+            rarity,
+            size,
+            weight,
+            state,
+            description,
+            stream_title: None,
+            caught_at: None,
+            is_junk: true,
         }
     }
 }

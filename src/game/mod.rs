@@ -1,2 +1,2 @@
 pub mod generator;
-pub use generator::generate_fish;
+pub use generator::{generate_fish, generate_junk};

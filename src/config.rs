@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-
 #[derive(Debug, Serialize, Deserialize, Clone, Copy, PartialEq, Eq, Hash)]
 #[serde(rename_all = "lowercase")]
 pub enum Rarity {
@@ -11,18 +10,20 @@ pub enum Rarity {
     Epic,
     Legendary,
     Mythical,
+    Divin,
 }
 
 impl Rarity {
     pub fn odds() -> Vec<(Rarity, f64)> {
         vec![
             (Rarity::Common, 60.0),
-            (Rarity::Uncommon, 18.0),
+            (Rarity::Uncommon, 20.0),
             (Rarity::Rare, 10.0),
-            (Rarity::VeryRare, 6.0),
-            (Rarity::Epic, 3.5),
-            (Rarity::Legendary, 1.5),
-            (Rarity::Mythical, 0.5),
+            (Rarity::VeryRare, 5.78),
+            (Rarity::Epic, 3.0),
+            (Rarity::Legendary, 1.0),
+            (Rarity::Mythical, 0.2),
+            (Rarity::Divin, 0.02),
         ]
     }
 }
@@ -34,6 +35,7 @@ pub struct FishData {
     pub size_mean: f64,
     pub size_sigma: f64,
     pub force_pristine: Option<bool>,
+    pub force_state: Option<String>,
     pub descriptions: HashMap<String, Vec<String>>,
 }
 
@@ -232,7 +234,7 @@ pub fn get_fail_attempt_reasons() -> Vec<&'static str> {
         "🐸🎣🌦️⏰ Pas de chance pour @#viewer_name#, juste au moment où ils étaient sur le point d'attraper un poisson, un chœur bruyant de grenouilles effraie les poissons et une soudaine averse les oblige à ranger tôt.",
         "🐝🌼🎣💨 Juste au moment où @#viewer_name# était sur le point de remonter un poisson, une abeille bourdonne près de leur oreille, les distrayant, et une rafale de vent emporte leur chapeau, les faisant perdre leur prise.",
         "🎈🍦🎣🌊 Oh non ! Un ballon égaré effraie les poissons juste au moment où @#viewer_name# était sur le point d'en attraper un, puis la mélodie d'un camion de crème glacée les distrait, les faisant lâcher leur canne dans l'eau.",
-        "🌲🐿️🎣☀️ Mauvaise chance pour @#viewer_name#. Juste au moment où ils s'apprêtaient à lancer leur ligne, un écureuil espiègle les surprend, les faisant perdre leur appât, puis le soleil sort si brillamment que tous les poissons plongent plus profondément.",
+        "🌲🐿️🎣☀️ Pas de chance pour @#viewer_name#. Juste au moment où il s'apprêtait à lancer sa ligne, un écureuil malicieux le surprend, lui faisant perdre son appât.",
         "🚁🎣🍔🌩️ Oh là là, @#viewer_name#! Juste au moment où vous profitiez de votre session de pêche, un hélicoptère bruyant effraie les poissons, votre burger tombe dans l'eau, et un orage soudain vous fait partir.",
         "🌌🌠🎣🐕 Juste au moment où @#viewer_name# profitait d'une session de pêche paisible la nuit, une étoile filante les distrait, leur chien excité saute dans l'eau et effraie tous les poissons.",
         "🌸🎣🎈🌦️ Alors que @#viewer_name# admirait de belles fleurs, un ballon dérive dans leur zone de pêche effrayant les poissons, puis une pluie soudaine les force à arrêter de pêcher.",
@@ -548,7 +550,7 @@ pub fn get_fail_attempt_reasons() -> Vec<&'static str> {
         "🎨 Attaque artistique ! Inspiré par Paul Watson, @#viewer_name# a peint une fresque pour sensibiliser à la conservation des océans.",
         "🔧 Changement de matériel ! Paul Watson a aidé @#viewer_name# à mettre à niveau leur équipement pour une pêche durable, mais la lumière du jour a disparu.",
         "🐋🌈 Observation d'arc-en-ciel ! Paul Watson et @#viewer_name# ont regardé un arc-en-ciel sur l'océan, rendant la pêche moins importante.",
-        "🕶️ À la mode ! Paul Watson a offert à @#viewer_name# des lunettes de soleil écologiques, et ils ont passé la journée à admirer la vue.",
+        "🕶️ À la mode ! Paul Watson a offert à @#viewer_name# des lunettes de soleil écologiques, et ils ont passé la journée à admirer la",
         "📆 Tournage du calendrier ! @#viewer_name# a aidé Paul Watson avec un calendrier de la vie marine, oubliant la pêche.",
         "🎣🍃 Devenir vert ! Inspiré par Paul Watson, @#viewer_name# a décidé de planter des arbres au lieu de pêcher aujourd'hui.",
         " Correspondants ! Paul Watson a connecté @#viewer_name# avec des conservationnistes internationaux, suscitant de nouveaux intérêts.",
@@ -556,7 +558,9 @@ pub fn get_fail_attempt_reasons() -> Vec<&'static str> {
         " Mission mondiale ! @#viewer_name# a rejoint l'initiative mondiale de Paul Watson, mettant la pêche en pause.",
         "🪈👀 @#viewer_name# a accroché une flûte avec une note à l'intérieur disant 'Pas de banane ici !'. Lilypeach a encore tenté de jouer de la flûte sous l'eau. Silly Lily !",
         "🪈👀 @#viewer_name# a accroché une flûte mignonne avec une note à l'intérieur disant 'Pas de banane ici !'. Lilypeach a encore tenté de jouer de la flûte sous l'eau. Silly Lily :D",
-        "🪈👀 @#viewer_name# a trouvé une GRANDE flûte avec une note à l'intérieur disant 'Pas de banane ici, désolé désolé !'. Lilypeach a essayé de jouer cette GRANDE flûte sous l'eau mais... Silly Lily :P"
+        "🪈👀 @#viewer_name# a trouvé une GRANDE flûte avec une note à l'intérieur disant 'Pas de banane ici, désolé désolé !'. Lilypeach a essayé de jouer cette GRANDE flûte sous l'eau mais... Silly Lily :P",
+        "🎒😂 @#viewer_name# a remonté un Gros Sac :O hmmmm on peut lire 'Ashxra' sur l'étiquette. On fait quoi @kikettebot ??",
+        "😫🤢 @#viewer_name# non mais WTF, tu viens de remonter un emballage chelou avec des reste de 'trippes cuisinée à la mode de Caen'. Appelle @Nigntube kikettebot vite !!"
     ]
 }
 
@@ -859,38 +863,244 @@ pub fn get_fish_data() -> HashMap<Rarity, Vec<FishData>> {
     // LEGENDARY
     data.insert(Rarity::Legendary, vec![
         fish_forced("Pristine Banana 1", 5.0, 10.0, 1.0, vec![
-            ("pristine", "✨😱 Wow !! It is the ✨Pristine✨ Banana 1 🍌 !! A rare treasure for the Banana Lovers !!")
+            ("pristine", "✨😱 Wow !! C'est la ✨Pristine✨ Banana 1 🍌 !! Un trésor rare pour les amoureux des bananes !"),
+            ("pristine", "✨😱 Incroyable ! Une ✨Banane Divine✨ vient d'être pêchée ! Sa courbure est absolument parfaite."),
+            ("pristine", "✨🍌 Une banane si jaune qu'elle illumine le fond marin ! C'est la Pristine Banana !"),
         ]),
         fish_forced("Pristine Banana 2", 5.0, 10.0, 2.0, vec![
-            ("pristine", "✨😱 Wow !! It is the ✨Pristine✨ Banana 2 🍌 !! A rare treasure for the Banana Lovers !!")
+            ("pristine", "✨😱 Wow !! C'est la ✨Pristine✨ Banana 2 🍌 !! Un trésor rarissime !"),
+            ("pristine", "✨😱 Une deuxième variante de la ✨Banane Sacrée✨ ! Elle brille d'un éclat tropical."),
+            ("pristine", "✨🍌 La légende disait vrai... La Pristine Banana 2 existe bel et bien !"),
         ]),
+    ]);
+
+    // MYTHICAL
+    data.insert(Rarity::Mythical, vec![
         FishData {
             name: "Gemme VIP".to_string(),
             size_min: 1.0,
             size_mean: 5.0,
             size_sigma: 2.0,
             force_pristine: None,
+            force_state: None,
             descriptions: [
-                ("badly damaged", vec!["Une Gemme VIP très abîmée... Elle brille encore un peu. (10 min VIP)".to_string()]),
-                ("damaged", vec!["Une Gemme VIP rayée, mais son pouvoir est intact. (20 min VIP)".to_string()]),
-                ("worn", vec!["Une Gemme VIP usée par le temps. (30 min VIP)".to_string()]),
-                ("good", vec!["Une Gemme VIP en bon état, elle rayonne ! (40 min VIP)".to_string()]),
-                ("pristine", vec!["✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (50 min VIP)".to_string()]),
+                ("badly damaged", vec!["Une Gemme VIP très abîmée... Elle brille encore un peu. (20 min VIP)".to_string()]),
+                ("damaged", vec!["Une Gemme VIP rayée, mais son pouvoir est intact. (40 min VIP)".to_string()]),
+                ("worn", vec!["Une Gemme VIP usée par le temps. (60 min VIP)".to_string()]),
+                ("good", vec!["Une Gemme VIP en bon état, elle rayonne ! (80 min VIP)".to_string()]),
+                ("pristine", vec!["✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (240 min VIP)".to_string()]),
             ].into_iter().map(|(k, v)| (k.to_string(), v)).collect(),
         },
     ]);
 
-    // MYTHICAL
-    data.insert(Rarity::Mythical, vec![
+    // DIVIN
+    data.insert(Rarity::Divin, vec![
         fish_forced("Carte Postale", 0.0, 12.0, 0.5, vec![
-            ("pristine", "✨😱 Woooww !!! This is the only one ✨Pristine✨ Postcard signed \"MonsieurCotCot\" ! Awesome treasure.")
+            ("pristine", "✨😱 Woooww !!! C'est l'unique ✨Carte Postale✨ dédicacée par \"MonsieurCotCot\" ! Un trésor divin !"),
+            ("pristine", "✨📜 Un fragment d'histoire ! La ✨Carte Postale Divine✨ signée de la main du Maître Pêcheur !"),
+            ("pristine", "✨🕊️ Tombée du ciel ou remontée des abysses ? La ✨Carte Postale du CotCot✨ est entre vos mains !"),
+            ("pristine", "✨🎖️ L'objet ultime de tout collectionneur : La ✨Carte Postale✨ de MonsieurCotCot !"),
         ]),
     ]);
 
     data
 }
 
+pub fn get_junk_data() -> HashMap<Rarity, Vec<FishData>> {
+    let mut data = HashMap::new();
+
+    // COMMON
+    data.insert(Rarity::Common, vec![
+        junk("Sac Plastique Vert", "badly damaged", "🔴 Un vulgaire sac en plastique vert, complètement déchiqueté..."),
+        junk("Sac Plastique Bleu", "badly damaged", "🔴 Un pauvre sac en plastique bleu, il n'en reste presque rien."),
+        junk("Sac Plastique Blanc", "badly damaged", "🔴 Ca ressemble à un sac en plastique..."),
+        junk("Bouchon de bouteille", "badly damaged", "🔴 Un petit pas pour l'homme, un grand pas pour la pollution."),
+        junk("Paille en polypropylène", "worn", "🟡 L'ennemi public numéro un des tortues."),
+        junk("Mégot de cigarette", "badly damaged", "🔴 Contient assez de poison pour une famille de crevettes."),
+        junk("Canette d'aluminium écrasée", "damaged", "🟠 Le vestige d'une soif étanchée."),
+        junk("Emballage de snack", "worn", "🟡 Croustillant sous la dent, mortel sous l'eau."),
+        junk("Tesson de verre vert", "worn", "🟡 Poli par les vagues, tranchant pour les doigts."),
+        junk("Fragment de polystyrène", "badly damaged", "🔴 Ne coulera jamais, ne disparaîtra jamais."),
+        junk("Filet de pêche fantôme (lambeau)", "damaged", "🟠 Un piège invisible qui continue de chasser."),
+        junk("Hameçon rouillé", "badly damaged", "🔴 Le tétanos au bout de la ligne."),
+        junk("Ligne de nylon emmêlée", "worn", "🟡 Un nœud gordien version maritime."),
+        junk("Gobelet en plastique", "damaged", "🟠 Souvenir d'une fête dont personne ne se rappelle."),
+        junk("Coton-tige usagé", "badly damaged", "🔴 Certaines choses ne devraient pas être pêchées."),
+        junk("Brosse à dents usée", "worn", "🟡 Elle a brossé plus d'algues que de dents récemment."),
+        junk("Bouchon de liège synthétique", "worn", "🟡 L'élégance du plastique."),
+        junk("Élastique de bureau", "badly damaged", "🔴 A perdu toute son élasticité et son utilité."),
+        junk("Agrafe métallique", "badly damaged", "🔴 Un micro-déchet pour un macro-problème."),
+        junk("Capsule de bière", "damaged", "🟠 L'archéologie du samedi soir."),
+        junk("Opercule de yaourt", "worn", "🟡 Brille comme de l'argent, vaut moins que rien."),
+        junk("Briquet jetable vide", "badly damaged", "🔴 La flamme est éteinte depuis bien longtemps."),
+        junk("Morceau de verre dépoli", "worn", "🟡 La mer essaie de cacher nos erreurs en les polissant."),
+        junk("Papier aluminium froissé", "badly damaged", "🔴 Un miroir pour poissons aveugles."),
+        junk("Confetti plastique", "worn", "🟡 La fête est finie depuis des décennies."),
+        junk("Gant en latex jetable", "badly damaged", "🔴 Ressemble étrangement à une méduse toxique."),
+        junk("Masque chirurgical", "worn", "🟡 Le fossile caractéristique des années 2020."),
+        junk("Bâtonnet de glace en bois", "badly damaged", "🔴 Le seul déchet presque biodégradable ici."),
+        junk("Étiquette de prix plastifiée", "worn", "🟡 Indique 'Promotion', mais le coût écologique est plein tarif."),
+        junk("Fil de fer torsadé", "damaged", "🟠 Une structure complexe pour une utilité oubliée."),
+        junk("Morceau de pneu déchiqueté", "badly damaged", "🔴 Du caoutchouc, du soufre et beaucoup de regret."),
+        junk("Débris de bois traité", "worn", "🟡 Imbibé de produits chimiques pour durer mille ans."),
+        junk("Cordelette en nylon", "worn", "🟡 Aura raison de n'importe quelle hélice."),
+        junk("Clou rouillé", "badly damaged", "🔴 À éviter de toucher à mains nues."),
+        junk("Rivet en acier", "damaged", "🟠 Lâché par une structure qui a fini par s'écrouler."),
+        junk("Morceau de carrelage cassé", "worn", "🟡 Un bout de salle de bain au milieu de l'océan."),
+        junk("Sachet de thé", "badly damaged", "🔴 99% de microplastiques, 1% de thé."),
+        junk("Emballage de barre chocolatée", "worn", "🟡 Le sucre est parti, le plastique reste."),
+        junk("Couvercle de café à emporter", "damaged", "🟠 Un matin pressé qui finit au fond de l'eau."),
+        junk("Tube de dentifrice vide", "worn", "🟡 Pressé jusqu'à la dernière goutte de dignité."),
+        junk("Pile bouton usagée", "badly damaged", "🔴 Une petite bombe chimique prête à fuir."),
+        junk("Morceau de grillage", "damaged", "🟠 Ne retient plus personne, sauf les algues."),
+    ]);
+
+    // UNCOMMON
+    data.insert(Rarity::Uncommon, vec![
+        junk("Botte en caoutchouc trouée", "worn", "🟡 L'accessoire de mode préféré des poissons-chats."),
+        junk("Chaussure de sport", "damaged", "🟠 Marque célèbre, état déplorable."),
+        junk("Bidon d'huile moteur vide", "badly damaged", "🔴 Laisse une trace irisée sur votre bateau."),
+        junk("Seau en plastique fendu", "worn", "🟡 Ne contient plus que des souvenirs amers."),
+        junk("Pelle de plage cassée", "damaged", "🟠 Un château de sable qui a mal tourné."),
+        junk("Jouet d'enfant (figurine)", "worn", "🟡 Le soldat de plastique a perdu sa guerre contre l'érosion."),
+        junk("Parapluie brisé", "badly damaged", "🔴 Inutile contre la pluie, encombrant pour la ligne."),
+        junk("Boîte de conserve scellée", "damaged", "🟠 Le contenu est probablement devenu une nouvelle forme de vie."),
+        junk("Ampoule à incandescence", "worn", "🟡 Une idée lumineuse qui a fini dans le noir."),
+        junk("Pile 9V oxydée", "badly damaged", "🔴 Le goût du métal et du poison."),
+        junk("Câble USB sectionné", "worn", "🟡 Pas de charge, pas de données, juste du cuivre."),
+        junk("Télécommande sans piles", "damaged", "🟠 Impossible de changer de chaîne ici."),
+        junk("Clavier d'ordinateur", "badly damaged", "🔴 La touche 'Echap' est bloquée. Quelle ironie."),
+        junk("Souris informatique filaire", "worn", "🟡 Ne clique plus, mais s'accroche bien au fond."),
+        junk("T-shirt en lambeaux", "badly damaged", "🔴 Taille unique pour poisson-globe."),
+        junk("Pneu de vélo usé", "worn", "🟡 A parcouru trop de kilomètres avant de sombrer."),
+        junk("Jante de roue de secours", "damaged", "🟠 L'acier résiste, le pneu a disparu."),
+        junk("Brique de construction", "worn", "🟡 Un bout de maison qui n'a jamais vu le jour."),
+        junk("Tuyau PVC sectionné", "damaged", "🟠 L'art moderne de la plomberie sous-marine."),
+        junk("Pot de peinture séchée", "badly damaged", "🔴 Un monochrome de gris et de rouille."),
+        junk("Jerrican plastique", "worn", "🟡 Vide de carburant, plein de vase."),
+        junk("Cartouche de gaz", "damaged", "🟠 Un pique-nique qui a fini en naufrage."),
+        junk("Marteau à tête rouillée", "badly damaged", "🔴 L'outil parfait pour ne rien réparer."),
+        junk("Tournevis à manche plastique", "worn", "🟡 Tourne dans le vide, comme ce déchet."),
+        junk("Poêle de cuisine rayée", "damaged", "🟠 Revêtement anti-adhésif désormais dans l'estomac des poissons."),
+        junk("Passoire métallique", "worn", "🟡 Filtre l'eau, mais laisse passer la pollution."),
+        junk("Poste radio à cassettes", "badly damaged", "🔴 Nostalgie des années 80, version mouillée."),
+        junk("Lampe de poche", "damaged", "🟠 N'éclairera plus jamais votre chemin."),
+        junk("Batterie de smartphone gonflée", "badly damaged", "🔴 Une bombe à retardement chimique."),
+        junk("Cintre en fil de fer", "worn", "🟡 Pratique pour suspendre votre deuil."),
+    ]);
+
+    // RARE
+    data.insert(Rarity::Rare, vec![
+        junk("Smartphone", "badly damaged", "🔴 Le dernier selfie était probablement celui du naufrage."),
+        junk("Tablette tactile HS", "damaged", "🟠 Plus de batterie, plus d'écran, plus d'espoir."),
+        junk("Ordinateur portable", "badly damaged", "🔴 Le watercooling est allé un peu trop loin."),
+        junk("Batterie de voiture au plomb", "badly damaged", "🔴 Lourde, toxique et parfaitement illégale."),
+        junk("Pneu de camion", "worn", "🟡 Un habitat artificiel pour anguilles peu exigeantes."),
+        junk("Moteur de tondeuse", "badly damaged", "🔴 L'herbe ne sera plus jamais coupée avec ça."),
+        junk("Cadre de vélo rouillé", "damaged", "🟠 Manque les roues, la chaîne et le cycliste."),
+        junk("Chaise de bureau pivotante", "worn", "🟡 Pour travailler confortablement au fond des abysses."),
+        junk("Four micro-ondes", "badly damaged", "🔴 Idéal pour irradier les planctons environnants."),
+        junk("Aspirateur traineau", "damaged", "🟠 A essayé d'aspirer l'océan, sans succès."),
+        junk("Perceuse électrique", "badly damaged", "🔴 Un outil de précision devenu un bloc de rouille."),
+        junk("Téléviseur à tube", "damaged", "🟠 Ne diffuse plus que de la neige statique."),
+        junk("Radiateur bain d'huile", "worn", "🟡 Réchauffe le climat, mais pas l'eau."),
+        junk("Jante en alliage", "damaged", "🟠 Le luxe à 20 mètres de profondeur."),
+        junk("Évier en inox", "worn", "🟡 Il ne manque plus que le reste de la cuisine."),
+        junk("Cuvette de toilette", "worn", "🟡 Le trône de l'Atlantide est plus décevant que prévu."),
+        junk("Panier de basket tordu", "damaged", "🟠 Un dunk qui a fini dans le décor."),
+        junk("Panneau de signalisation", "worn", "🟡 Indique 'Stop', mais la pollution continue."),
+        junk("Extincteur à poudre", "damaged", "🟠 Ironique de trouver ça entouré de tant d'eau."),
+        junk("Moteur hors-bord (petit)", "badly damaged", "🔴 5 chevaux, 0 espoir de démarrage."),
+    ]);
+
+    // VERY RARE
+    data.insert(Rarity::VeryRare, vec![
+        junk("Châssis de moto", "badly damaged", "🔴 Une carcasse d'acier qui ne rugira plus."),
+        junk("Réfrigérateur domestique", "damaged", "🟠 Le gaz fréon s'est échappé depuis longtemps."),
+        junk("Lave-linge", "badly damaged", "🔴 Le cycle 'essorage' a été un peu violent."),
+        junk("Baril de pétrole", "worn", "🟡 Un cadeau empoisonné de l'industrie pétrochimique."),
+        junk("Caddie de supermarché", "worn", "🟡 La roue avant est bloquée, même sous l'eau."),
+        junk("Carcasse de scooter électrique", "badly damaged", "🔴 La mobilité douce finit parfois durement."),
+        junk("Panneau solaire brisé", "damaged", "🟠 Ne capte plus que l'obscurité des profondeurs."),
+        junk("Unité de climatisation", "badly damaged", "🔴 Un ventilateur pour poissons surchauffés."),
+        junk("Coffre de toit de voiture", "worn", "🟡 Aérodynamique, mais pas vraiment hydrodynamique."),
+        junk("Portière de berline", "damaged", "🟠 Quelqu'un a claqué la porte un peu trop fort."),
+    ]);
+
+    // EPIC
+    data.insert(Rarity::Epic, vec![
+        junk("Bloc moteur V6", "badly damaged", "🔴 Des centaines de kilos de fonte inutile."),
+        junk("Transformateur électrique", "worn", "🟡 Un monolithe de métal et d'huile toxique."),
+        junk("Conteneur de transport", "damaged", "🟠 Ce qu'il y a dedans est probablement perdu à jamais."),
+        junk("Jet-ski immergé", "worn", "🟡 Le jouet des mers est devenu la mer elle-même."),
+        junk("Ancre de cargo", "worn", "🟡 Elle a tenu un géant avant de lâcher prise."),
+        junk("Pylône métallique", "damaged", "🟠 Une structure monumentale dévorée par le sel."),
+        junk("Coffre-fort de bureau", "badly damaged", "🔴 Le secret qu'il contenait est désormais bien gardé."),
+        junk("Statue de jardin en béton", "worn", "🟡 Une nymphe érodée qui pleure sur l'écologie."),
+        junk("Épave de drone de livraison", "badly damaged", "🔴 Votre colis ne sera pas livré aujourd'hui."),
+        junk("Touret de câble industriel", "worn", "🟡 Des kilomètres de cuivre perdus pour la science."),
+    ]);
+
+    // LEGENDARY
+    data.insert(Rarity::Legendary, vec![
+        junk("Réacteur d'avion", "damaged", "🟠 Une merveille d'ingénierie devenue un récif de luxe."),
+        junk("Cabine téléphonique", "worn", "🟡 Plus personne n'a de pièces, de toute façon."),
+        junk("Distributeur de billets", "badly damaged", "🔴 Solde insuffisant pour la planète."),
+        junk("Satellite météo", "damaged", "🟠 Il n'avait pas prévu sa propre chute."),
+        junk("Canon de char (WW2)", "badly damaged", "🔴 Le silence après la fureur de l'acier."),
+        junk("Torpille d'exercice", "worn", "🟡 Inerte, mais terrifiante à remonter."),
+        junk("Scaphandre ancien", "badly damaged", "🔴 Un fantôme de cuivre et de laiton."),
+        junk("Cloche de navire", "worn", "🟡 Le dernier son qu'elle a produit était un glas."),
+        junk("Voiture de sport italienne", "badly damaged", "🔴 Le luxe ne flotte pas mieux que le reste."),
+        junk("Piano droit", "badly damaged", "🔴 Une mélodie muette pour poissons mélomanes."),
+    ]);
+
+    // MYTHICAL
+    data.insert(Rarity::Mythical, vec![
+        junk("Fragment de station spatiale", "damaged", "🟠 La pollution n'a plus de frontières célestes."),
+        junk("Prototype de robot", "badly damaged", "🔴 L'intelligence artificielle face à la bêtise naturelle."),
+        junk("Conteneur sécurisé", "worn", "🟡 Scellé magnétiquement. Qu'y a-t-il dedans ?"),
+        junk("Moteur-fusée", "badly damaged", "🔴 A propulsé des rêves avant de couler dans la vase."),
+        junk("Sous-marin de poche", "worn", "🟡 L'ironie d'un sous-marin qui ne peut plus remonter."),
+        junk("Radar de défense", "damaged", "🟠 Il n'a rien vu venir."),
+        junk("Buste monumental", "worn", "🟡 Un empereur oublié qui règne sur les algues."),
+        junk("Tourelle d'artillerie", "badly damaged", "🔴 Un vestige d'une époque plus violente."),
+        junk("Mine sous-marine", "worn", "🟡 Ne faites pas de mouvements brusques."),
+        junk("Tête de tunnelier", "badly damaged", "🔴 A creusé trop profond, ou pas au bon endroit."),
+    ]);
+
+    // DIVINE
+    data.insert(Rarity::Divin, vec![
+        junk("Sonde spatiale (Voyager)", "worn", "🟡 Un message pour les étoiles échoué dans la boue."),
+        junk("Cockpit de chasseur furtif", "damaged", "🟠 Invisible au radar, mais pas à votre hameçon."),
+        junk("Cœur de réacteur (inerte)", "badly damaged", "🔴 Émet encore une chaleur résiduelle inquiétante."),
+        junk("Monolithe métallique", "worn", "🟡 On dirait qu'il vibre quand on le regarde."),
+        junk("Capsule de rentrée", "damaged", "🟠 Brûlée par l'atmosphère, noyée par l'océan."),
+        junk("Moteur ionique", "badly damaged", "🔴 La technologie du futur, déjà obsolète."),
+        junk("Boîte noire (Vol MH370)", "worn", "🟡 La fin d'un mystère, le début d'une légende."),
+        junk("Débris de la station MIR", "badly damaged", "🔴 Un morceau d'histoire soviétique sous-marine."),
+        junk("Rover lunaire", "worn", "🟡 On se demande comment il a fini ici."),
+        junk("Satellite militaire classifié", "damaged", "🟠 Vous ne devriez probablement pas posséder ceci."),
+    ]);
+
+    data
+}
+
 // Helpers to reduce boilerplate
+fn junk(name: &str, state: &str, desc: &str) -> FishData {
+    let mut descriptions = HashMap::new();
+    descriptions.insert(state.to_string(), vec![desc.to_string()]);
+    FishData {
+        name: name.to_string(),
+        size_min: 0.0,
+        size_mean: 0.0,
+        size_sigma: 0.0,
+        force_pristine: None,
+        force_state: Some(state.to_string()),
+        descriptions,
+    }
+}
+
 fn fish(name: &str, min: f64, mean: f64, sigma: f64, descs: Vec<(&str, Vec<&str>)>) -> FishData {
     FishData {
         name: name.to_string(),
@@ -898,6 +1108,7 @@ fn fish(name: &str, min: f64, mean: f64, sigma: f64, descs: Vec<(&str, Vec<&str>
         size_mean: mean,
         size_sigma: sigma,
         force_pristine: None,
+        force_state: None,
         descriptions: descs.into_iter().map(|(k, v)| (k.to_string(), v.into_iter().map(|s| s.to_string()).collect())).collect(),
     }
 }
@@ -909,6 +1120,7 @@ fn fish_simple(name: &str, min: f64, mean: f64, sigma: f64, descs: Vec<(&str, &s
         size_mean: mean,
         size_sigma: sigma,
         force_pristine: None,
+        force_state: None,
         descriptions: descs.into_iter().map(|(k, v)| (k.to_string(), vec![v.to_string()])).collect(),
     }
 }
@@ -920,6 +1132,7 @@ fn fish_forced(name: &str, min: f64, mean: f64, sigma: f64, descs: Vec<(&str, &s
         size_mean: mean,
         size_sigma: sigma,
         force_pristine: Some(true),
+        force_state: None,
         descriptions: descs.into_iter().map(|(k, v)| (k.to_string(), vec![v.to_string()])).collect(),
     }
 }

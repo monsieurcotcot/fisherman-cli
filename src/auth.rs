@@ -167,6 +167,29 @@ impl AuthManager {
             expires_at: Utc::now() + Duration::seconds(res.expires_in),
         })
     }
+
+    pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, MyError> {
+        let client = Client::new();
+        let params = [
+            ("client_id", self.client_id.as_str()),
+            ("client_secret", self.client_secret.as_str()),
+            ("refresh_token", refresh_token),
+            ("grant_type", "refresh_token"),
+        ];
+
+        let res = client.post("https://id.twitch.tv/oauth2/token")
+            .form(&params)
+            .send()
+            .await?
+            .json::<TokenResponse>()
+            .await?;
+
+        Ok(TwitchTokens {
+            access_token: res.access_token,
+            refresh_token: res.refresh_token,
+            expires_at: Utc::now() + Duration::seconds(res.expires_in),
+        })
+    }
 }
 
 #[derive(Deserialize)]

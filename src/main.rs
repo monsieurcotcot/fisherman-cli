@@ -30,7 +30,7 @@ use tower_http::set_header::SetResponseHeaderLayer;
 use tower_http::services::ServeFile;
 
 use crate::db::Repository;
-use crate::game::generate_fish;
+use crate::game::{generate_fish, generate_junk};
 use crate::auth::{AuthManager, MyError};
 use crate::config::get_fail_attempt_reasons;
 
@@ -91,7 +91,8 @@ async fn main() -> Result<(), MyError> {
             state TEXT NOT NULL,
             description TEXT,
             stream_title TEXT,
-            caught_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            caught_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            is_junk BOOLEAN DEFAULT 0
         )"
     ).execute(&pool).await?;
 
@@ -114,7 +115,18 @@ async fn main() -> Result<(), MyError> {
         rate_limiter: RwLock::new(HashMap::new()),
     });
 
-    if let Some(tokens) = auth_manager.load_tokens() {
+    if let Some(mut tokens) = auth_manager.load_tokens() {
+        if tokens.expires_at < Utc::now() {
+            match auth_manager.refresh_tokens(&tokens.refresh_token).await {
+                Ok(new_tokens) => {
+                    let _ = auth_manager.save_tokens(&new_tokens);
+                    tokens = new_tokens;
+                }
+                Err(e) => {
+                    tracing::error!("Failed to refresh bot tokens: {}", e);
+                }
+            }
+        }
         start_bot(state.clone(), tokens.access_token).await;
     }
 
@@ -167,6 +179,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
         });
 
         while let Some(message) = incoming_messages.recv().await {
+            // ... (rest of function unchanged)
             if let ServerMessage::Privmsg(msg) = message {
                 let text = msg.message_text.trim().to_lowercase();
                 let username = msg.sender.name.to_lowercase();
@@ -190,7 +203,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let channel_login = msg.channel_login.clone();
                     tokio::spawn(async move {
                         if let Ok(players) = state_task.repo.get_leaderboard().await {
-                            let list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {})", i + 1, p.username, p.level)).collect();
+                            let list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| format!("#{}. {} (Niv. {} | {} 🐟 | {} 🗑️ | {} 🍌 | {} 📜)", i + 1, p.username, p.level, p.successful_attempts, p.junk_count, p.banana_count, p.postcard_count)).collect();
                             let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
                         }
                     });
@@ -233,28 +246,35 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     let args: Vec<String> = text.split_whitespace().map(|s| s.to_string()).collect();
-                    
-                    if args.len() >= 4 {
+
+                    if args.len() >= 3 {
                         let target_user = args[2].to_lowercase();
-                        let count = args[3].parse::<u32>().unwrap_or(0);
-                        
+                        let count = if args.len() >= 4 { args[3].parse::<u32>().unwrap_or(10) } else { 10 };
+
                         tokio::spawn(async move {
                             tracing::info!("[Admin] Simulation de {} lancers pour {}", count, target_user);
                             if let Ok(mut player) = state_task.repo.get_or_create_player(&target_user).await {
                                 let mut success_count = 0;
+                                let mut junk_count = 0;
                                 let mut fail_count = 0;
-                                
+
                                 for _ in 0..count {
-                                    let success_rate = match player.level {
-                                        1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50,
-                                        101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35
-                                    };
-                                    
-                                    if rand::random::<f64>() < success_rate {
+                                    let level_factor = (player.level as f64 - 1.0) / 199.0;
+                                    let success_rate = 0.35 + (level_factor * 0.20);
+                                    let junk_rate = 0.05;
+                                    let roll = rand::random::<f64>();
+
+                                    if roll < success_rate {
                                         if let Some(fish) = generate_fish() {
                                             success_count += 1;
                                             player.add_xp(25);
                                             let _ = state_task.repo.save_attempt(&player, true, Some(fish)).await;
+                                        }
+                                    } else if roll < success_rate + junk_rate {
+                                        if let Some(junk) = generate_junk() {
+                                            junk_count += 1;
+                                            player.add_xp(5);
+                                            let _ = state_task.repo.save_attempt(&player, false, Some(junk)).await;
                                         }
                                     } else {
                                         fail_count += 1;
@@ -262,7 +282,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         let _ = state_task.repo.save_attempt(&player, false, None).await;
                                     }
                                 }
-                                let _ = client_msg.say(channel_login, format!("✅ Simulation terminee pour @{} : {} succes, {} echecs. Niv. {}", target_user, success_count, fail_count, player.level)).await;
+                                let _ = client_msg.say(channel_login, format!("✅ Simulation terminée pour @{} : {} poissons, {} déchets, {} échecs. Niv. {}", target_user, success_count, junk_count, fail_count, player.level)).await;
                             }
                         });
                     }
@@ -271,25 +291,37 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     let is_test = text == "!fish testvip";
-                    
+
                     tokio::spawn(async move {
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
-                            if player.can_fish() || is_test {
-                                let rate = if is_test { 1.0 } else { match player.level { 1..=25 => 0.35, 26..=50 => 0.40, 51..=75 => 0.45, 76..=100 => 0.50, 101..=125 => 0.53, 126..=150 => 0.55, 151..=175 => 0.57, 176..=199 => 0.59, 200 => 0.60, _ => 0.35 } };
-                                if rand::random::<f64>() < rate {
+                            let is_admin = username == "monsieurcotcot";
+                            if player.can_fish() || is_test || is_admin {
+                                // Calcul des taux basés sur le niveau (1 à 200)
+                                let level_factor = (player.level as f64 - 1.0) / 199.0;
+                                let success_rate = 0.35 + (level_factor * 0.20);
+                                let junk_rate = 0.05;
+                                let roll = rand::random::<f64>();
+
+                                if is_test || roll < success_rate {
                                     let mut fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
                                                    else { match generate_fish() { Some(f) => f, None => return } };
-                                    
+
                                     let leveled_up = player.add_xp(25);
                                     if fish.name == "Gemme VIP" || is_test {
-                                        let mins = if is_test { 1 } else { match fish.state.as_str() { "badly damaged" => 10, "damaged" => 20, "worn" => 30, "good" => 40, "pristine" => 120, _ => 10 } };
+                                        let mins = if is_test { 1 } else { match fish.state.as_str() { "badly damaged" => 20, "damaged" => 40, "worn" => 60, "good" => 80, "pristine" => 240, _ => 20 } };
                                         player.vip_until = Some(Utc::now() + chrono::Duration::minutes(mins));
                                         let auth_vip = Arc::clone(&state_task.auth);
                                         let ch_vip = channel_login.clone();
                                         let u_vip = username.clone();
                                         let cl_vip = client_msg.clone();
                                         tokio::spawn(async move {
-                                            if let Some(t) = auth_vip.load_streamer_tokens() {
+                                            if let Some(mut t) = auth_vip.load_streamer_tokens() {
+                                                if t.expires_at < Utc::now() {
+                                                    if let Ok(new_t) = auth_vip.refresh_tokens(&t.refresh_token).await {
+                                                        let _ = auth_vip.save_streamer_tokens(&new_t);
+                                                        t = new_t;
+                                                    }
+                                                }
                                                 if let (Some(b), Some(u)) = (auth_vip.get_user_id(&ch_vip, &t.access_token).await, auth_vip.get_user_id(&u_vip, &t.access_token).await) {
                                                     let _ = auth_vip.add_vip(&b, &u, &t.access_token).await;
                                                     tokio::time::sleep(tokio::time::Duration::from_secs(mins as u64 * 60)).await;
@@ -302,19 +334,36 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
                                     let mut resp = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
                                     if fish.name == "Gemme VIP" || is_test { 
-                                        let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "2H", "good" => "40 MIN", "worn" => "30 MIN", "damaged" => "20 MIN", _ => "10 MIN" } };
+                                        let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "4H", "good" => "80 MIN", "worn" => "60 MIN", "damaged" => "40 MIN", _ => "20 MIN" } };
                                         resp.push_str(&format!(" 🌟 TU ES VIP PENDANT {} ! 🌟", d)); 
                                     }
                                     if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
                                     let _ = client_msg.say(channel_login.clone(), resp).await;
-                                    
+
                                     let state_bg = state_task.clone();
                                     let ch_bg = channel_login.clone();
                                     tokio::spawn(async move {
                                         if let Some(t) = state_bg.auth.load_tokens() { fish.stream_title = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await; }
                                         let _ = state_bg.repo.save_attempt(&player, true, Some(fish)).await;
                                     });
-                                } else {
+                                } else if roll < success_rate + junk_rate {
+                                    // DÉCHET
+                                    if let Some(mut junk) = generate_junk() {
+                                        let leveled_up = player.add_xp(5); // Les déchets donnent un peu d'XP
+                                        let mut resp = format!("🗑️ @{} a remonté un déchet : {} ! {}", username, junk.name, junk.description);
+                                        if junk.rarity != crate::config::Rarity::Common { resp.push_str(&format!(" (Rareté: {:?})", junk.rarity)); }
+
+                                        if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                        let _ = client_msg.say(channel_login.clone(), resp).await;
+
+                                        let state_bg = state_task.clone();
+                                        let ch_bg = channel_login.clone();
+                                        tokio::spawn(async move {
+                                            if let Some(t) = state_bg.auth.load_tokens() { junk.stream_title = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await; }
+                                            let _ = state_bg.repo.save_attempt(&player, false, Some(junk)).await;
+                                        });
+                                    }
+                                } else {                                    // ÉCHEC TOTAL
                                     let reasons = get_fail_attempt_reasons();
                                     let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !").replace("#viewer_name#", &username);
                                     let leveled_up = player.add_xp(5);
@@ -432,18 +481,18 @@ async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo<Soc
     let client_ip = headers.get("CF-Connecting-IP").and_then(|v| v.to_str().ok()).map(|s| s.to_string()).unwrap_or_else(|| addr.ip().to_string());
     tracing::info!("[Web] Recherche de {} par l'IP : {}", username, client_ip);
     let u_low = username.to_lowercase();
-    match state.repo.get_or_create_player(&u_low).await {
-        Ok(p) => {
+    match state.repo.get_player(&u_low).await {
+        Ok(Some(p)) => {
             let catches = state.repo.get_player_catches(p.id.unwrap()).await.unwrap_or_default();
             Json(serde_json::json!({ "username": p.username, "total": p.total_attempts, "success": p.successful_attempts, "failed": p.failed_attempts, "can_fish": p.can_fish(), "level": p.level, "xp": p.xp, "xp_next": p.xp_for_next_level(), "is_vip": p.is_vip(), "catches": catches })).into_response()
         },
-        Err(_) => Json(serde_json::json!({"error": "Not found"})).into_response(),
+        _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),
     }
 }
 
 async fn get_leaderboard(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     match state.repo.get_leaderboard().await {
-        Ok(players) => Json(serde_json::json!({"top": players.iter().map(|p| serde_json::json!({"username": p.username, "success": p.successful_attempts, "level": p.level})).collect::<Vec<_>>()})).into_response(),
+        Ok(players) => Json(serde_json::json!({"top": players.iter().map(|p| serde_json::json!({"username": p.username, "success": p.successful_attempts, "level": p.level, "junk": p.junk_count, "banana": p.banana_count, "postcard": p.postcard_count})).collect::<Vec<_>>()})).into_response(),
         Err(_) => Json(serde_json::json!({"error": "Error"})).into_response()
     }
 }

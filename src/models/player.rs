@@ -12,6 +12,9 @@ pub struct Player {
     pub level: i32,
     pub xp: i64,
     pub vip_until: Option<DateTime<Utc>>,
+    pub junk_count: i64,
+    pub banana_count: i64,
+    pub postcard_count: i64,
 }
 
 impl Player {
@@ -26,6 +29,9 @@ impl Player {
             level: 1,
             xp: 0,
             vip_until: None,
+            junk_count: 0,
+            banana_count: 0,
+            postcard_count: 0,
         }
     }
 
@@ -37,8 +43,9 @@ impl Player {
     }
 
     pub fn xp_for_next_level(&self) -> i64 {
-        // Formule : Niveau^1.5 * 100 (Progression jusqu'au niveau 200)
-        ((self.level as f64).powf(1.5) * 100.0) as i64
+        // Nouvelle formule linéaire : Niveau * 40 + 50
+        // Permet d'atteindre le Niv 200 de manière réaliste pour un viewer régulier.
+        (self.level as i64 * 40) + 50
     }
 
     pub fn add_xp(&mut self, amount: i64) -> bool {

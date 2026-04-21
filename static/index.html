@@ -123,6 +123,28 @@
             height: 6px;
             border-radius: 50%;
         }
+        .fish-slot.junk-item {
+            background: #1a1a1e;
+        }
+        .fish-slot.junk-item .icon {
+            filter: grayscale(1) sepia(0.5);
+        }
+        
+        .badge.pristine-star {
+            background: none !important;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: shine 1.5s infinite alternate;
+            filter: drop-shadow(0 0 2px #ffd700);
+        }
+
+        @keyframes shine {
+            from { transform: scale(0.9); filter: drop-shadow(0 0 1px #ffd700); }
+            to { transform: scale(1.2); filter: drop-shadow(0 0 4px #ffd700); }
+        }
+        
         .inventory-container {
             max-height: 250px;
             overflow-y: auto;
@@ -264,15 +286,26 @@
 
                 <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
                 
+                <div class="filter-bar" id="typeFilterBar">
+                    <button class="filter-btn active" data-type="all" onclick="filterByType('all')">Tout</button>
+                    <button class="filter-btn" data-type="fish" onclick="filterByType('fish')">🐟 Poissons</button>
+                    <button class="filter-btn" data-type="junk" onclick="filterByType('junk')">🗑️ Déchets</button>
+                </div>
+
                 <div class="filter-bar" id="filterBar">
-                    <button class="filter-btn active" data-rarity="all" onclick="filterCatches('all')">Tous</button>
-                    <button class="filter-btn" data-rarity="common" onclick="filterCatches('common')">Commun</button>
-                    <button class="filter-btn" data-rarity="uncommon" onclick="filterCatches('uncommon')">Peu commun</button>
-                    <button class="filter-btn" data-rarity="rare" onclick="filterCatches('rare')">Rare</button>
-                    <button class="filter-btn" data-rarity="veryrare" onclick="filterCatches('veryrare')">Très rare</button>
-                    <button class="filter-btn" data-rarity="epic" onclick="filterCatches('epic')">Épique</button>
-                    <button class="filter-btn" data-rarity="legendary" onclick="filterCatches('legendary')">Légendaire</button>
-                    <button class="filter-btn" data-rarity="mythical" onclick="filterCatches('mythical')">Mythique</button>
+                    <button class="filter-btn active" data-rarity="all" onclick="filterByRarity('all')">Tous</button>
+                    <button class="filter-btn" data-rarity="common" onclick="filterByRarity('common')">Commun</button>
+                    <button class="filter-btn" data-rarity="uncommon" onclick="filterByRarity('uncommon')">Peu commun</button>
+                    <button class="filter-btn" data-rarity="rare" onclick="filterByRarity('rare')">Rare</button>
+                    <button class="filter-btn" data-rarity="veryrare" onclick="filterByRarity('veryrare')">Très rare</button>
+                    <button class="filter-btn" data-rarity="epic" onclick="filterByRarity('epic')">Épique</button>
+                    <button class="filter-btn" data-rarity="legendary" onclick="filterByRarity('legendary')">Légendaire</button>
+                    <button class="filter-btn" data-rarity="mythical" onclick="filterByRarity('mythical')">Mythique</button>
+                    <button class="filter-btn" data-rarity="divin" onclick="filterByRarity('divin')">Divin</button>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <input type="text" id="inventorySearch" placeholder="Rechercher un objet..." oninput="applyFilters()" style="width: 100%; box-sizing: border-box;">
                 </div>
 
                 <div class="inventory-container">
@@ -289,8 +322,8 @@
             <h2 id="modal-name" style="margin-top: 0; color: #9146ff;"></h2>
             <div style="border-top: 1px solid #3a3a3d; margin: 10px 0; padding-top: 10px;">
                 <p><strong>Rareté:</strong> <span id="modal-rarity"></span></p>
-                <p><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
-                <p><strong>Poids:</strong> <span id="modal-weight"></span> g</p>
+                <p id="modal-size-row"><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
+                <p id="modal-weight-row"><strong>Poids:</strong> <span id="modal-weight"></span></p>
                 <p><strong>État:</strong> <span id="modal-state"></span></p>
                 <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
                     📅 <span id="modal-date"></span><br>
@@ -305,7 +338,7 @@
             <h3>🏆 Top 10 Pêcheurs</h3>
             <div id="leaderboardList">Chargement...</div>
         </div>
-        <div id="error">Joueur non trouvé ou erreur.</div>
+        <div id="error" style="background: #ff4f4f; color: white; padding: 10px; border-radius: 4px; margin-top: 20px; font-weight: bold; display: none;">❌ Joueur introuvable. Ce viewer n'a probablement pas encore pêché !</div>
 
         <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
             <p>© 2026 MonsieurCotCot. Tous droits réservés.</p>
@@ -358,7 +391,7 @@
                     nameLink.style.cursor = "pointer";
                     
                     const scoreStrong = document.createElement('strong');
-                    scoreStrong.textContent = `${p.success} 🐟`;
+                    scoreStrong.innerHTML = `${p.success} 🐟 <span style="color: #adadb8; font-size: 0.8rem; margin-left: 5px;">${p.junk} 🗑️</span> <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;">${p.banana} 🍌</span> <span style="color: #ffffff; font-size: 0.8rem; margin-left: 5px;">${p.postcard} 📜</span>`;
                     
                     item.appendChild(nameLink);
                     item.appendChild(scoreStrong);
@@ -368,6 +401,8 @@
         }
 
         let allCatches = [];
+        let currentRarity = 'all';
+        let currentType = 'all';
 
         async function fetchStats(u) {
             const username = u || document.getElementById('usernameInput').value;
@@ -396,35 +431,91 @@
 
                     // Stocker pour le filtrage
                     allCatches = data.catches || [];
-                    filterCatches('all');
+                    applyFilters();
                 }
             } catch (err) {
                 console.error(err);
             }
         }
 
-        function filterCatches(rarity) {
-            // Update buttons UI
-            const btns = document.querySelectorAll('.filter-btn');
-            btns.forEach(b => {
-                b.classList.toggle('active', b.getAttribute('data-rarity') === rarity);
-            });
+        function filterByRarity(rarity) {
+            currentRarity = rarity;
+            const btns = document.querySelectorAll('#filterBar .filter-btn');
+            btns.forEach(b => b.classList.toggle('active', b.getAttribute('data-rarity') === rarity));
+            applyFilters();
+        }
 
+        function filterByType(type) {
+            currentType = type;
+            const btns = document.querySelectorAll('#typeFilterBar .filter-btn');
+            btns.forEach(b => b.classList.toggle('active', b.getAttribute('data-type') === type));
+            applyFilters();
+        }
+
+        function applyFilters() {
             const inv = document.getElementById('res-inventory');
             inv.innerHTML = '';
             
-            const filtered = rarity === 'all' 
-                ? allCatches 
-                : allCatches.filter(f => f.rarity.toLowerCase() === rarity);
+            const searchTerm = document.getElementById('inventorySearch').value.toLowerCase();
+
+            const filtered = allCatches.filter(f => {
+                const isJunk = !!f.is_junk;
+                const matchRarity = currentRarity === 'all' || f.rarity.toLowerCase() === currentRarity;
+                const matchType = currentType === 'all' || 
+                                (currentType === 'fish' && !isJunk) || 
+                                (currentType === 'junk' && isJunk);
+                const matchSearch = f.name.toLowerCase().includes(searchTerm);
+                return matchRarity && matchType && matchSearch;
+            });
 
             if (filtered.length > 0) {
                 filtered.forEach(f => {
                     const slot = document.createElement('div');
                     slot.className = 'fish-slot';
+                    if (f.is_junk) slot.classList.add('junk-item');
                     
                     const icon = document.createElement('span');
                     icon.className = 'icon';
-                    icon.textContent = '🐟';
+                    
+                    const nameLower = f.name.toLowerCase();
+                    
+                    // Logique d'icônes étendue
+                    if (nameLower.includes('banana')) {
+                        icon.textContent = '🍌';
+                    } else if (nameLower.includes('gemme vip')) {
+                        icon.textContent = '💎';
+                    } else if (nameLower.includes('carte postale')) {
+                        icon.textContent = '📜';
+                    } else if (nameLower.includes('grenouille') || nameLower.includes('têtard')) {
+                        icon.textContent = '🐸';
+                    } else if (nameLower.includes('requin')) {
+                        icon.textContent = '🦈';
+                    } else if (nameLower.includes('anguille')) {
+                        icon.textContent = '🐍';
+                    } else if (nameLower.includes('calmar')) {
+                        icon.textContent = '🦑';
+                    } else if (nameLower.includes('piranha')) {
+                        icon.textContent = '🐡';
+                    } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
+                        icon.textContent = '🍣';
+                    } else if (f.is_junk) {
+                        // Icônes spécifiques pour les déchets
+                        if (nameLower.includes('pneu')) icon.textContent = '🛞';
+                        else if (nameLower.includes('botte') || nameLower.includes('chaussure') || nameLower.includes('gant')) icon.textContent = '🥾';
+                        else if (nameLower.includes('canette') || nameLower.includes('bouteille') || nameLower.includes('gobelet') || nameLower.includes('soda')) icon.textContent = '🥫';
+                        else if (nameLower.includes('smartphone') || nameLower.includes('tablette') || nameLower.includes('téléphone') || nameLower.includes('clavier') || nameLower.includes('souris') || nameLower.includes('ordinateur') || nameLower.includes('pc')) icon.textContent = '💻';
+                        else if (nameLower.includes('pile') || nameLower.includes('batterie')) icon.textContent = '🔋';
+                        else if (nameLower.includes('radio') || nameLower.includes('téléviseur') || nameLower.includes('tv')) icon.textContent = '📻';
+                        else if (nameLower.includes('vélo') || nameLower.includes('moto') || nameLower.includes('scooter') || nameLower.includes('caddie')) icon.textContent = '🚲';
+                        else if (nameLower.includes('réfrigérateur') || nameLower.includes('lave-linge') || nameLower.includes('climatisation') || nameLower.includes('four')) icon.textContent = '🧊';
+                        else if (nameLower.includes('sac') || nameLower.includes('emballage') || nameLower.includes('plastique')) icon.textContent = '🛍️';
+                        else if (nameLower.includes('ancre') || nameLower.includes('moteur') || nameLower.includes('réacteur')) icon.textContent = '⚙️';
+                        else if (nameLower.includes('satellite') || nameLower.includes('station') || nameLower.includes('sonde') || nameLower.includes('capsule')) icon.textContent = '🛰️';
+                        else if (nameLower.includes('graal') || nameLower.includes('monolithe') || nameLower.includes('relique')) icon.textContent = '🏺';
+                        else icon.textContent = '🗑️';
+                    } else {
+                        icon.textContent = '🐟';
+                    }
                     slot.appendChild(icon);
 
                     const label = document.createElement('div');
@@ -439,22 +530,46 @@
                         'veryrare': '#9146ff',
                         'epic': '#ff4ce2',
                         'legendary': '#ffb444',
-                        'mythical': '#ff4f4f'
+                        'mythical': '#ff4f4f',
+                        'divin': '#ffffff'
                     };
                     const color = rarityColors[f.rarity.toLowerCase().replace(/\s/g, '')] || '#efeff1';
                     slot.style.borderColor = color;
+                    if (f.rarity.toLowerCase() === 'divin') {
+                        slot.style.boxShadow = "0 0 10px #fff, inset 0 0 5px #fff";
+                    }
+
+                    const stateColors = {
+                        'badly damaged': '#ff4f4f',
+                        'damaged': '#ff8235',
+                        'worn': '#ffd700',
+                        'good': '#1fa363',
+                        'pristine': '#ffffff'
+                    };
+                    const stateColor = stateColors[f.state.toLowerCase()] || '#efeff1';
 
                     const badge = document.createElement('div');
                     badge.className = 'badge';
-                    badge.style.backgroundColor = color;
+                    if (f.state.toLowerCase() === 'pristine') {
+                        badge.classList.add('pristine-star');
+                        badge.textContent = '⭐';
+                    } else {
+                        badge.style.backgroundColor = stateColor;
+                    }
                     slot.appendChild(badge);
 
                     slot.onclick = () => showFishDetails(f, color);
                     inv.appendChild(slot);
                 });
             } else {
-                inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; grid-column: span 4; text-align: center; padding: 20px;">Aucun poisson dans cette catégorie.</p>';
+                inv.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; grid-column: span 4; text-align: center; padding: 20px;">Aucun objet trouvé.</p>';
             }
+        }
+
+        function formatWeight(g) {
+            if (g >= 1000000) return (g / 1000000).toFixed(2) + " T";
+            if (g >= 1000) return (g / 1000).toFixed(2) + " kg";
+            return g.toFixed(2) + " g";
         }
 
         function showFishDetails(fish, color) {
@@ -462,8 +577,14 @@
             document.getElementById('modal-name').style.color = color;
             document.getElementById('modal-rarity').textContent = fish.rarity;
             document.getElementById('modal-rarity').style.color = color;
+            
+            // Masquer Taille/Poids si c'est un déchet
+            const isJunk = fish.is_junk;
+            document.getElementById('modal-size-row').style.display = isJunk ? 'none' : 'block';
+            document.getElementById('modal-weight-row').style.display = isJunk ? 'none' : 'block';
+            
             document.getElementById('modal-size').textContent = fish.size;
-            document.getElementById('modal-weight').textContent = fish.weight;
+            document.getElementById('modal-weight').textContent = formatWeight(fish.weight);
             document.getElementById('modal-state').textContent = fish.state;
             document.getElementById('modal-desc').textContent = fish.description;
 
