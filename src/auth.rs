@@ -56,15 +56,17 @@ impl AuthManager {
     }
 
     pub fn get_auth_url(&self, is_streamer: bool) -> String {
-        let mut url = Url::parse("https://id.twitch.tv/oauth2/authorize").unwrap();
         let state = if is_streamer { "streamer" } else { "bot" };
-        url.query_pairs_mut()
-            .append_pair("client_id", &self.client_id)
-            .append_pair("redirect_uri", &self.redirect_uri)
-            .append_pair("response_type", "code")
-            .append_pair("scope", "chat:read chat:edit channel:manage:vips")
-            .append_pair("state", state);
-        url.to_string()
+        let scope = "chat:read chat:edit channel:manage:vips";
+        
+        // Construction manuelle pour éviter l'encodage des slashs/deux-points qui bloque Twitch
+        format!(
+            "https://id.twitch.tv/oauth2/authorize?client_id={}&redirect_uri={}&response_type=code&scope={}&state={}",
+            self.client_id,
+            self.redirect_uri,
+            scope.replace(" ", "+"),
+            state
+        )
     }
 
     pub async fn add_vip(&self, broadcaster_id: &str, user_id: &str, access_token: &str) -> bool {

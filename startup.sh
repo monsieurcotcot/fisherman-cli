@@ -15,7 +15,7 @@ configure_env() {
     echo -e "\n${YELLOW}1. Configuration de l'accès réseau :${NC}"
     
     # 1. Adresse IP / Hostname
-    default_host="fisherman-cli.cotcotuniverse.com"
+    default_host="fisherman-cli.monsieurcotcot.com"
     echo -e "${BLUE}ℹ️  Configuration du domaine public${NC}"
     read -p "👉 Adresse IP ou Domaine (Défaut: $default_host) : " host_addr
     host_addr=${host_addr:-$default_host}

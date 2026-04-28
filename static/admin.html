@@ -5,33 +5,42 @@
     <title>Fisherman Admin</title>
     <style>
         body { font-family: sans-serif; background: #0e0e10; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: #18181b; padding: 2rem; border-radius: 10px; text-align: center; border: 1px solid #9146ff; width: 350px; }
-        .btn { display: block; text-decoration: none; padding: 12px; margin: 15px 0; border-radius: 4px; font-weight: bold; }
+        .container { background: #18181b; padding: 2rem; border-radius: 10px; text-align: center; border: 1px solid #9146ff; width: 450px; }
+        .btn { display: block; text-decoration: none; padding: 12px; margin: 15px 0; border-radius: 4px; font-weight: bold; cursor: pointer; border: none; width: 100%; font-size: 1rem; }
         .btn-bot { background: #9146ff; color: white; }
         .btn-streamer { background: #00e6ff; color: #0e0e10; }
+        .info { color: #adadb8; font-size: 0.8rem; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔐 Panel Admin</h1>
-        <p style="color: #adadb8; font-size: 0.9rem;">Connectez les comptes pour activer le bot.</p>
+        <p style="color: #adadb8; font-size: 0.9rem;">Cliquez pour vous authentifier. (Version Forcée)</p>
         
         <div id="links">
-            <a href="#" id="link-bot" class="btn btn-bot">🤖 Connecter le Bot</a>
-            <a href="#" id="link-streamer" class="btn btn-streamer">👑 Connecter le Streameur</a>
+            <button onclick="auth('bot')" class="btn btn-bot">🤖 Connecter le Bot</button>
+            <button onclick="auth('streamer')" class="btn btn-streamer">👑 Connecter le Streameur</button>
         </div>
     </div>
 
     <script>
-        // Récupérer le token depuis l'URL actuelle
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        const CLIENT_ID = "8ibsok6lg0nn4kqartpsf7i0bc1h3s";
 
-        if (token) {
-            document.getElementById('link-bot').href = `/auth/login?type=bot&token=${token}`;
-            document.getElementById('link-streamer').href = `/auth/login?type=streamer&token=${token}`;
-        } else {
-            document.getElementById('links').innerHTML = "<p style='color:red;'>Token manquant !</p>";
+        function auth(type) {
+            // Construction manuelle STRRICTE sans encodage pour matcher le test manuel
+            const url = "https://id.twitch.tv/oauth2/authorize" +
+                        "?client_id=" + CLIENT_ID +
+                        "&redirect_uri=https://fisherman-cli.monsieurcotcot.com/auth/callback" +
+                        "&response_type=code" +
+                        "&scope=chat:read+chat:edit+channel:manage:vips" +
+                        "&state=" + type;
+            
+            window.location.href = url;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!urlParams.get('token')) {
+            document.getElementById('links').innerHTML = "<p style='color:red;'>⚠️ Token d'accès manquant !</p>";
         }
     </script>
 </body>

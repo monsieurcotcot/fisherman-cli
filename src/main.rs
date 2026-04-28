@@ -53,6 +53,7 @@ struct AppState {
 
 #[tokio::main]
 async fn main() -> Result<(), MyError> {
+    // Forcer la recompilation pour le changement de domaine
     dotenv().ok();
     tracing_subscriber::fmt::init();
 
@@ -186,7 +187,7 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                 tracing::info!("[Chat] {} : {}", username, text);
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !pêche | !fish stats | !fish top".to_string()).await;
+                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !pêche | !fish stats | !fish top | !fish reset".to_string()).await;
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
