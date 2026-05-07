@@ -121,6 +121,37 @@ impl Repository {
         }
     }
 
+    pub async fn get_expired_vips(&self) -> Result<Vec<Player>, sqlx::Error> {
+        let rows = sqlx::query("SELECT *, 0 as junk_count, 0 as banana_count, 0 as postcard_count \
+            FROM players WHERE vip_until IS NOT NULL AND vip_until < ?")
+            .bind(Utc::now())
+            .fetch_all(&self.pool)
+            .await?;
+
+        Ok(rows.into_iter().map(|row| Player {
+            id: Some(row.get::<i64, _>("id")),
+            username: row.get("username"),
+            total_attempts: row.get("total_attempts"),
+            successful_attempts: row.get("successful_attempts"),
+            failed_attempts: row.get("failed_attempts"),
+            last_fishing_time: row.get::<Option<DateTime<Utc>>, _>("last_fishing_time"),
+            level: row.get("level"),
+            xp: row.get("xp"),
+            vip_until: row.get::<Option<DateTime<Utc>>, _>("vip_until"),
+            junk_count: 0,
+            banana_count: 0,
+            postcard_count: 0,
+        }).collect())
+    }
+
+    pub async fn remove_vip_status(&self, player_id: i64) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE players SET vip_until = NULL WHERE id = ?")
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
     pub async fn get_or_create_player(&self, username: &str) -> Result<Player, sqlx::Error> {
         let username_lower = username.to_lowercase();
         let row = sqlx::query("SELECT p.*, \

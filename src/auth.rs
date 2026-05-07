@@ -96,7 +96,7 @@ impl AuthManager {
         }
     }
 
-    pub async fn remove_vip(&self, broadcaster_id: &str, user_id: &str, access_token: &str) -> bool {
+    pub async fn remove_vip(&self, access_token: &str, broadcaster_id: &str, user_id: &str) -> Result<(), MyError> {
         let client = Client::new();
         let url = format!("https://api.twitch.tv/helix/channels/vips?broadcaster_id={}&user_id={}", broadcaster_id, user_id);
         
@@ -104,15 +104,16 @@ impl AuthManager {
             .header("Client-ID", &self.client_id)
             .header("Authorization", format!("Bearer {}", access_token))
             .send()
-            .await;
+            .await?;
 
-        match res {
-            Ok(r) => r.status().is_success(),
-            Err(_) => false,
+        if res.status().is_success() || res.status().as_u16() == 422 || res.status().as_u16() == 404 {
+            Ok(())
+        } else {
+            Err(format!("Twitch API Error: {}", res.status()).into())
         }
     }
 
-    pub async fn get_user_id(&self, username: &str, access_token: &str) -> Option<String> {
+    pub async fn get_user_id(&self, access_token: &str, username: &str) -> Result<String, MyError> {
         let client = Client::new();
         let url = format!("https://api.twitch.tv/helix/users?login={}", username);
         
@@ -120,13 +121,14 @@ impl AuthManager {
             .header("Client-ID", &self.client_id)
             .header("Authorization", format!("Bearer {}", access_token))
             .send()
-            .await
-            .ok()?
+            .await?
             .json::<serde_json::Value>()
-            .await
-            .ok()?;
+            .await?;
 
-        res["data"][0]["id"].as_str().map(|s| s.to_string())
+        res["data"][0]["id"]
+            .as_str()
+            .map(|s| s.to_string())
+            .ok_or_else(|| "User not found".into())
     }
 
     pub async fn get_stream_info(&self, channel_login: &str, access_token: &str) -> Option<String> {

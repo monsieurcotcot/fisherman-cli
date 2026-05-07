@@ -130,6 +130,10 @@ async fn main() -> Result<(), MyError> {
         )"
     ).execute(&pool).await?;
 
+    // --- OPTIMISATION DB (GEMINI.md) ---
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_catches_player_id ON catches(player_id);").execute(&pool).await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_players_username ON players(username);").execute(&pool).await?;
+
     let repo = Arc::new(Repository::new(pool.clone()));
     
     let client_id = env::var("TWITCH_CLIENT_ID").expect("TWITCH_CLIENT_ID must be set");
@@ -147,6 +151,32 @@ async fn main() -> Result<(), MyError> {
         pending_resets: RwLock::new(HashMap::new()),
         bot_abort_handle: RwLock::new(None),
         rate_limiter: RwLock::new(HashMap::new()),
+    });
+
+    // --- TACHE DE NETTOYAGE VIP (GEMINI.md) ---
+    let state_vip = Arc::clone(&state);
+    tokio::spawn(async move {
+        loop {
+            tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
+            if let Ok(expired_vips) = state_vip.repo.get_expired_vips().await {
+                for player in expired_vips {
+                    tracing::info!("⏳ [VIP] Expiration pour @{}", player.username);
+                    if let Some(tokens) = state_vip.auth.load_tokens() {
+                        if let Ok(broadcaster_id) = state_vip.auth.get_user_id(&tokens.access_token, &state_vip.channel).await {
+                            if let Ok(user_id) = state_vip.auth.get_user_id(&tokens.access_token, &player.username).await {
+                                match state_vip.auth.remove_vip(&tokens.access_token, &broadcaster_id, &user_id).await {
+                                    Ok(_) => {
+                                        let _ = state_vip.repo.remove_vip_status(player.id.unwrap()).await;
+                                        tracing::info!("✅ [VIP] Grade retire pour @{}", player.username);
+                                    },
+                                    Err(e) => tracing::error!("❌ [VIP] Erreur retrait Helix pour @{} : {}", player.username, e),
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     });
 
     // --- LOGIQUE DE RESTAURATION ---
@@ -485,12 +515,8 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                                                         t = new_t;
                                                     }
                                                 }
-                                                if let (Some(b), Some(u)) = (auth_vip.get_user_id(&ch_vip, &t.access_token).await, auth_vip.get_user_id(&u_vip, &t.access_token).await) {
+                                                if let (Ok(b), Ok(u)) = (auth_vip.get_user_id(&t.access_token, &ch_vip).await, auth_vip.get_user_id(&t.access_token, &u_vip).await) {
                                                     let _ = auth_vip.add_vip(&b, &u, &t.access_token).await;
-                                                    tokio::time::sleep(tokio::time::Duration::from_secs(mins as u64 * 60)).await;
-                                                    if auth_vip.remove_vip(&b, &u, &t.access_token).await {
-                                                        let _ = cl_vip.say(ch_vip, format!("🔔 @{}, ton grade VIP a expiré. Merci !", u_vip)).await;
-                                                    }
                                                 }
                                             }
                                         });
