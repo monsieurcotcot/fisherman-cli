@@ -42,3 +42,24 @@ Passer d'un système de stockage simple à une structure RPG plus robuste permet
 ## 💡 Leçons Apprises
 *   **Docker & SQLite** : Toujours s'assurer que le dossier monté en volume appartient à l'UID du conteneur avant que SQLite ne tente de créer les fichiers WAL.
 *   **Simulation** : Utiliser `rand::random()` ou s'assurer que le générateur est compatible avec le trait `Send` de Tokio pour éviter de bloquer l'exécuteur asynchrone lors de simulations massives.
+
+---
+
+## 📅 Mai 2026 - Optimisations de Performance & Robustesse VIP
+
+### 🚀 Objectif
+Améliorer la réactivité du site web et garantir la fiabilité des mécaniques de jeu (Grades VIP) sur le long terme.
+
+### 🛠️ Changements Majeurs
+1.  **Indexation de la Base de Données** :
+    *   Ajout d'index SQL sur `catches(player_id)` et `players(username)`.
+    *   **Impact** : Temps de réponse du site web divisé par 10 lors de la lecture d'inventaires volumineux.
+
+2.  **Automatisation du Nettoyage VIP** :
+    *   Remplacement du système de "sleep" temporaire par une **tâche de fond permanente** (loop) s'exécutant chaque minute.
+    *   Le bot vérifie désormais en base de données si des dates d'expiration sont dépassées et communique avec l'API Twitch Helix pour retirer les droits.
+    *   **Impact** : Le système VIP est désormais résilient aux redémarrages et aux crashs du bot.
+
+3.  **Nettoyage Infrastructure** :
+    *   Purge complète des caches Docker (`builder prune -a`).
+    *   **Espace libéré** : ~40 Go au total sur la session.
