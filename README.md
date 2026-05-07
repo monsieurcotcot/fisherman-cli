@@ -37,6 +37,12 @@ Utilisez ce lien unique pour connecter le **Bot** et le **Streameur** (obligatoi
 Les joueurs peuvent consulter leurs statistiques et le classement mondial ici :
 👉 **[Statistiques Fisherman](https://fisherman-cli.monsieurcotcot.com/)**
 
+## ✨ Caractéristiques principales
+- **Persistence Robuste** : Système de backup JSON hybride et restauration automatique par simulation (Auto-Wipe & Simulate) pour garantir la survie des données lors des mises à jour.
+- **Identifiants Uniques** : Chaque prise possède un ID unique pour permettre des actions ciblées (vente, échange).
+- **Dashboard Web** : Interface moderne pour consulter les statistiques et l'inventaire en temps réel.
+- **RPG & Progression** : Système d'XP, niveaux et raretés dynamiques.
+
 ## 🏗 Stack Technique
 - **Langage** : Rust (Tokio runtime)
 - **Serveur Web** : Axum
@@ -45,4 +51,5 @@ Les joueurs peuvent consulter leurs statistiques et le classement mondial ici :
 - **Exposition** : Cloudflare Tunnel (port 3000).
 
 ---
-*Dernière mise à jour : Avril 2026 - Migration vers monsieurcotcot.com effectuée.*
+*Dernière mise à jour : Mai 2026 - Implémentation du système d'ID unique et Auto-simulation.*
+Consultez le fichier [HISTORY.md](./HISTORY.md) pour le détail des migrations et des évolutions techniques.

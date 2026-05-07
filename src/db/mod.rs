@@ -1,2 +1,2 @@
 pub mod repository;
-pub use repository::Repository;
+pub use repository::{Repository, PlayerBackup};

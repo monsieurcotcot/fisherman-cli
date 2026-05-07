@@ -5,6 +5,7 @@ use chrono::{DateTime, Utc};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Fish {
+    pub id: Option<i64>,
     pub name: String,
     pub rarity: Rarity,
     pub size: f64,
@@ -19,6 +20,7 @@ pub struct Fish {
 impl Fish {
     pub fn new(name: String, rarity: Rarity, size: f64, weight: f64, state: String, description: String) -> Self {
         Self {
+            id: None,
             name,
             rarity,
             size,
@@ -33,6 +35,7 @@ impl Fish {
 
     pub fn new_junk(name: String, rarity: Rarity, size: f64, weight: f64, state: String, description: String) -> Self {
         Self {
+            id: None,
             name,
             rarity,
             size,

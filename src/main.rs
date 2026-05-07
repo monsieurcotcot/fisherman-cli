@@ -29,7 +29,7 @@ use tower_http::cors::CorsLayer;
 use tower_http::set_header::SetResponseHeaderLayer;
 use tower_http::services::ServeFile;
 
-use crate::db::Repository;
+use crate::db::{Repository, PlayerBackup};
 use crate::game::{generate_fish, generate_junk};
 use crate::auth::{AuthManager, MyError};
 use crate::config::get_fail_attempt_reasons;
@@ -37,6 +37,7 @@ use crate::config::get_fail_attempt_reasons;
 use std::collections::HashMap;
 use chrono::DateTime;
 use chrono::Utc;
+use rand::Rng;
 
 type TwitchClient = TwitchIRCClient<SecureTCPTransport, StaticLoginCredentials>;
 
@@ -66,6 +67,38 @@ async fn main() -> Result<(), MyError> {
 
     let _ = sqlx::query("PRAGMA journal_mode=WAL;").execute(&pool).await;
     let _ = sqlx::query("PRAGMA busy_timeout=5000;").execute(&pool).await;
+
+    // --- LOGIQUE DE MIGRATION AUTOMATIQUE (AUTO-WIPE & SIMULATE) ---
+    let catches_info: Vec<(i64, String, String, i64, Option<String>, i64)> = sqlx::query_as("PRAGMA table_info(catches)").fetch_all(&pool).await.unwrap_or_default();
+    let has_id = catches_info.iter().any(|c| c.1 == "id");
+    
+    // Si la table catches existe mais n'a pas d'ID, ou si on veut forcer une migration
+    if !catches_info.is_empty() && !has_id {
+        tracing::warn!("🚨 [Migration] Ancien schéma détecté ! Sauvegarde et Wipe automatique...");
+        
+        // 1. On tente un backup de sécurité des joueurs actuels avant de wiper
+        let temp_repo = Repository::new(pool.clone());
+        if let Ok(players) = temp_repo.get_all_players().await {
+            let backups: Vec<PlayerBackup> = players.into_iter().map(|p| PlayerBackup {
+                username: p.username,
+                total_attempts: p.total_attempts,
+                successful_attempts: p.successful_attempts,
+                failed_attempts: p.failed_attempts,
+                level: p.level,
+                xp: p.xp,
+                vip_until: p.vip_until,
+            }).collect();
+            if let Ok(json) = serde_json::to_string_pretty(&backups) {
+                let _ = tokio::fs::write("data/players_backup.json", json).await;
+                tracing::info!("✅ [Migration] Backup de sécurité créé.");
+            }
+        }
+
+        // 2. On wipe les tables
+        let _ = sqlx::query("DROP TABLE IF EXISTS catches").execute(&pool).await;
+        let _ = sqlx::query("DROP TABLE IF EXISTS players").execute(&pool).await;
+        tracing::info!("🧹 [Migration] Tables supprimées.");
+    }
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS players (
@@ -114,6 +147,71 @@ async fn main() -> Result<(), MyError> {
         pending_resets: RwLock::new(HashMap::new()),
         bot_abort_handle: RwLock::new(None),
         rate_limiter: RwLock::new(HashMap::new()),
+    });
+
+    // --- LOGIQUE DE RESTAURATION ---
+    if let Ok(0) = repo.count_players().await {
+        if let Ok(data) = tokio::fs::read_to_string("data/players_backup.json").await {
+            if let Ok(backups) = serde_json::from_str::<Vec<PlayerBackup>>(&data) {
+                tracing::info!("⚠️ [Restore] Base de données vide ! Tentative de restauration de {} joueurs...", backups.len());
+                for backup in backups {
+                    let username = backup.username.clone();
+                    let player_id = repo.restore_player(&backup).await?;
+                    let mut success_count = 0;
+                    let mut fail_count = 0;
+
+                    // Simulation des tentatives globales pour reconstruire l'inventaire
+                    for _ in 0..backup.total_attempts {
+                        // Chances dynamiques basées sur le niveau restauré
+                        let success_chance = 0.35 + (backup.level as f64 - 1.0) * (0.20 / 199.0);
+                        let junk_chance = 0.05;
+                        
+                        let r: f64 = rand::random::<f64>();
+                        if r < success_chance {
+                            if let Some(fish) = generate_fish() {
+                                let _ = repo.save_catch_only(player_id, fish).await;
+                                success_count += 1;
+                            }
+                        } else if r < (success_chance + junk_chance) {
+                            if let Some(junk) = generate_junk() {
+                                let _ = repo.save_catch_only(player_id, junk).await;
+                                success_count += 1;
+                            }
+                        } else {
+                            fail_count += 1;
+                        }
+                    }
+                    // Mise à jour finale des compteurs pour matcher l'inventaire simulé
+                    let _ = repo.update_player_stats_after_restore(player_id, success_count, fail_count).await;
+                    tracing::info!("✅ [Restore] {} restauré ({} tentatives simulées).", username, backup.total_attempts);
+                }
+            }
+        }
+    }
+
+    // --- TACHE DE BACKUP PERIODIQUE ---
+    let repo_backup = Arc::clone(&repo);
+    tokio::spawn(async move {
+        loop {
+            tokio::time::sleep(tokio::time::Duration::from_secs(300)).await; // Toutes les 5 minutes
+            if let Ok(players) = repo_backup.get_all_players().await {
+                let backups: Vec<PlayerBackup> = players.into_iter().map(|p| PlayerBackup {
+                    username: p.username,
+                    total_attempts: p.total_attempts,
+                    successful_attempts: p.successful_attempts,
+                    failed_attempts: p.failed_attempts,
+                    level: p.level,
+                    xp: p.xp,
+                    vip_until: p.vip_until,
+                }).collect();
+                
+                if let Ok(json) = serde_json::to_string_pretty(&backups) {
+                    if let Ok(_) = tokio::fs::write("data/players_backup.json", json).await {
+                        tracing::info!("[Backup] {} joueurs sauvegardés dans data/players_backup.json", backups.len());
+                    }
+                }
+            }
+        }
     });
 
     if let Some(mut tokens) = auth_manager.load_tokens() {
@@ -187,7 +285,11 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                 tracing::info!("[Chat] {} : {}", username, text);
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let _ = client.say(msg.channel_login.clone(), "📖 !fish | !pêche | !fish stats | !fish top | !fish reset".to_string()).await;
+                    let mut help_msg = "📖 !fish | !pêche | !fish stats | !fish top | !fish reset".to_string();
+                    if username == "monsieurcotcot" {
+                        help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n>");
+                    }
+                    let _ = client.say(msg.channel_login.clone(), help_msg).await;
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -287,6 +389,66 @@ async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         });
                     }
+                } else if text == "!admin backup" && username == "monsieurcotcot" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(players) = state_task.repo.get_all_players().await {
+                            let backups: Vec<PlayerBackup> = players.into_iter().map(|p| PlayerBackup {
+                                username: p.username,
+                                total_attempts: p.total_attempts,
+                                successful_attempts: p.successful_attempts,
+                                failed_attempts: p.failed_attempts,
+                                level: p.level,
+                                xp: p.xp,
+                                vip_until: p.vip_until,
+                            }).collect();
+                            
+                            if let Ok(json) = serde_json::to_string_pretty(&backups) {
+                                if let Ok(_) = tokio::fs::write("data/players_backup.json", json).await {
+                                    let _ = client_msg.say(channel_login, format!("💾 [Admin] Backup forcé : {} joueurs sauvegardés.", backups.len())).await;
+                                }
+                            }
+                        }
+                    });
+                } else if text == "!admin restore" && username == "monsieurcotcot" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(data) = tokio::fs::read_to_string("data/players_backup.json").await {
+                            if let Ok(backups) = serde_json::from_str::<Vec<PlayerBackup>>(&data) {
+                                let _ = client_msg.say(channel_login.clone(), format!("⚠️ [Admin] Restauration forcée de {} joueurs en cours...", backups.len())).await;
+                                for backup in backups {
+                                    if let Ok(player_id) = state_task.repo.restore_player(&backup).await {
+                                        let mut success_count = 0;
+                                        let mut fail_count = 0;
+                                        for _ in 0..backup.total_attempts {
+                                            let success_chance = 0.35 + (backup.level as f64 - 1.0) * (0.20 / 199.0);
+                                            let junk_chance = 0.05;
+                                            let r: f64 = rand::random::<f64>();
+                                            if r < success_chance {
+                                                if let Some(fish) = generate_fish() {
+                                                    let _ = state_task.repo.save_catch_only(player_id, fish).await;
+                                                    success_count += 1;
+                                                }
+                                            } else if r < (success_chance + junk_chance) {
+                                                if let Some(junk) = generate_junk() {
+                                                    let _ = state_task.repo.save_catch_only(player_id, junk).await;
+                                                    success_count += 1;
+                                                }
+                                            } else {
+                                                fail_count += 1;
+                                            }
+                                        }
+                                        let _ = state_task.repo.update_player_stats_after_restore(player_id, success_count, fail_count).await;
+                                    }
+                                }
+                                let _ = client_msg.say(channel_login, "✅ [Admin] Restauration terminée.".to_string()).await;
+                            }
+                        }
+                    });
                 } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();

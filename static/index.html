@@ -110,6 +110,17 @@
             bottom: 0;
             color: #efeff1;
         }
+        .fish-slot .id-label {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.5rem;
+            color: #adadb8;
+            background: rgba(0,0,0,0.4);
+            padding: 1px 3px;
+            border-radius: 2px;
+            z-index: 5;
+        }
         .fish-slot:hover {
             transform: scale(1.15);
             border-color: #9146ff;
@@ -320,6 +331,7 @@
         <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
         <div id="fishModal" class="modal">
             <h2 id="modal-name" style="margin-top: 0; color: #9146ff;"></h2>
+            <p style="font-size: 0.7rem; color: #adadb8; margin-top: -10px;">ID Unique: #<span id="modal-id"></span></p>
             <div style="border-top: 1px solid #3a3a3d; margin: 10px 0; padding-top: 10px;">
                 <p><strong>Rareté:</strong> <span id="modal-rarity"></span></p>
                 <p id="modal-size-row"><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
@@ -518,6 +530,11 @@
                     }
                     slot.appendChild(icon);
 
+                    const idLabel = document.createElement('div');
+                    idLabel.className = 'id-label';
+                    idLabel.textContent = `#${f.id || '?'}`;
+                    slot.appendChild(idLabel);
+
                     const label = document.createElement('div');
                     label.className = 'name-label';
                     label.textContent = f.name;
@@ -575,6 +592,7 @@
         function showFishDetails(fish, color) {
             document.getElementById('modal-name').textContent = fish.name;
             document.getElementById('modal-name').style.color = color;
+            document.getElementById('modal-id').textContent = fish.id || '?';
             document.getElementById('modal-rarity').textContent = fish.rarity;
             document.getElementById('modal-rarity').style.color = color;
             
