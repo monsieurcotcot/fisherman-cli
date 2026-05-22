@@ -31,7 +31,66 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
     
     let all_data = if is_junk { get_junk_data() } else { get_fish_data() };
     let item_list = all_data.get(&selected_rarity)?;
-    let item_data: &FishData = item_list.choose(&mut rng)?;
+    
+    let item_data: &FishData = if is_junk {
+        item_list.choose(&mut rng)?
+    } else {
+        use chrono::Datelike;
+        use chrono::Timelike;
+        
+        let now = chrono::Local::now();
+        let current_month = now.month() as i32;
+        let current_hour = now.hour();
+        
+        // 1. Filtrage saisonnier (mois actifs)
+        let mut seasonal_pool: Vec<&FishData> = item_list.iter().filter(|fish| {
+            match &fish.months {
+                Some(months) if !months.is_empty() => months.contains(&current_month),
+                _ => true
+            }
+        }).collect();
+        
+        if seasonal_pool.is_empty() {
+            seasonal_pool = item_list.iter().collect();
+        }
+        
+        // 2. Pondération horaire (Stream 20h - 00h, après 22h la logique s'inverse)
+        // Considère après 22h entre 22h et 4h du matin (prolongation live)
+        let is_after_22h = current_hour >= 22 || current_hour < 4;
+        
+        let mut weighted_pool = Vec::new();
+        for fish in seasonal_pool {
+            let weight = match &fish.time_restriction {
+                Some(restriction) => {
+                    if restriction == "before_22h" {
+                        if is_after_22h { 1 } else { 5 }
+                    } else if restriction == "after_22h" {
+                        if is_after_22h { 5 } else { 1 }
+                    } else {
+                        5
+                    }
+                }
+                None => 5,
+            };
+            weighted_pool.push((fish, weight));
+        }
+        
+        let total_pool_weight: i32 = weighted_pool.iter().map(|(_, w)| w).sum();
+        if total_pool_weight == 0 {
+            item_list.choose(&mut rng)?
+        } else {
+            let mut choice = rng.gen_range(0..total_pool_weight);
+            let mut selected_fish = item_list.choose(&mut rng)?;
+            for (fish, weight) in &weighted_pool {
+                if choice < *weight {
+                    selected_fish = *fish;
+                    break;
+                }
+                choice -= weight;
+            }
+            selected_fish
+        }
+    };
     
     // Generate size and weight (only for fish)
     let (size, weight) = if is_junk {

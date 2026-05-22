@@ -64,11 +64,12 @@ impl Player {
         leveled_up
     }
 
-    /// Calcule le cooldown dynamique basé sur le niveau (40s au niv 1 vers 25s au niv 200)
+    /// Calcule le cooldown dynamique basé sur le niveau (50s au niv 1 vers 30s au niv 200 max)
     /// Si le joueur est VIP, le cooldown est divisé par 2.
     pub fn get_current_cooldown(&self) -> i64 {
-        let base = 40.0;
-        let reduction = (self.level as f64 - 1.0) * (15.0 / 199.0);
+        let base = 50.0;
+        let lvl = self.level.min(200);
+        let reduction = (lvl as f64 - 1.0) * (20.0 / 199.0);
         let mut cooldown = (base - reduction).round() as i64;
         
         if self.is_vip() {
@@ -137,16 +138,16 @@ mod tests {
     fn test_player_cooldown() {
         let mut player = Player::new("test_user".to_string());
         
-        // Base cooldown at level 1 is 40 seconds
-        assert_eq!(player.get_current_cooldown(), 40);
+        // Base cooldown at level 1 is 50 seconds
+        assert_eq!(player.get_current_cooldown(), 50);
 
-        // Level 200 cooldown calculation: 40 - 199 * (15/199) = 25 seconds
+        // Level 200 cooldown calculation: 50 - 199 * (20/199) = 30 seconds
         player.level = 200;
-        assert_eq!(player.get_current_cooldown(), 25);
+        assert_eq!(player.get_current_cooldown(), 30);
 
         // VIP cuts cooldown in half
         player.vip_until = Some(Utc::now() + Duration::minutes(10));
-        assert_eq!(player.get_current_cooldown(), 12); // 25 / 2 = 12
+        assert_eq!(player.get_current_cooldown(), 15); // 30 / 2 = 15
     }
 
     #[test]
@@ -160,8 +161,8 @@ mod tests {
         player.last_fishing_time = Some(Utc::now());
         assert!(!player.can_fish());
         
-        // Fished 41 seconds ago (cooldown is 40s)
-        player.last_fishing_time = Some(Utc::now() - Duration::seconds(41));
+        // Fished 51 seconds ago (cooldown is 50s)
+        player.last_fishing_time = Some(Utc::now() - Duration::seconds(51));
         assert!(player.can_fish());
     }
 }

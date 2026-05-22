@@ -23,6 +23,17 @@ pub struct BananaKingRecord {
     pub dethroned_at: Option<DateTime<Utc>>,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct PlayerTrophy {
+    pub id: Option<i64>,
+    pub player_id: i64,
+    pub username: String,
+    pub season: String,
+    pub trophy_tier: String,
+    pub level: i32,
+    pub unlocked_at: String,
+}
+
 pub struct Repository {
     pool: SqlitePool,
 }
@@ -493,8 +504,10 @@ impl Repository {
         // Supprimer d'abord les index et tables existantes
         sqlx::query("DROP INDEX IF EXISTS idx_catches_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP INDEX IF EXISTS idx_players_username").execute(&mut *tx).await?;
+        sqlx::query("DROP INDEX IF EXISTS idx_trophies_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS catches").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS banana_kings_history").execute(&mut *tx).await?;
+        sqlx::query("DROP TABLE IF EXISTS player_trophies").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS players").execute(&mut *tx).await?;
 
         // Supprimer toutes les entrées de sqlite_sequence
@@ -544,13 +557,200 @@ impl Repository {
             )"
         ).execute(&mut *tx).await?;
 
+        // Recréer la table player_trophies
+        sqlx::query(
+            "CREATE TABLE player_trophies (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
+                username TEXT NOT NULL,
+                season TEXT NOT NULL,
+                trophy_tier TEXT NOT NULL,
+                level INTEGER DEFAULT 1,
+                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(player_id, season)
+            )"
+        ).execute(&mut *tx).await?;
+
         // Recréer les index
         sqlx::query("CREATE INDEX idx_catches_player_id ON catches(player_id);").execute(&mut *tx).await?;
         sqlx::query("CREATE INDEX idx_players_username ON players(username);").execute(&mut *tx).await?;
+        sqlx::query("CREATE INDEX idx_trophies_player_id ON player_trophies(player_id);").execute(&mut *tx).await?;
 
         tx.commit().await?;
 
         // Supprimer le fichier de sauvegarde s'il existe pour éviter une auto-restauration au redémarrage
+        let _ = std::fs::remove_file("data/players_backup.json");
+
+        Ok(())
+    }
+
+    pub async fn get_player_trophies(&self, player_id: i64) -> Result<Vec<PlayerTrophy>, sqlx::Error> {
+        let rows = sqlx::query("SELECT id, player_id, username, season, trophy_tier, level, strftime('%Y-%m-%dT%H:%M:%SZ', unlocked_at) as unlocked_at FROM player_trophies WHERE player_id = ? ORDER BY unlocked_at DESC")
+            .bind(player_id)
+            .fetch_all(&self.pool)
+            .await?;
+
+        let trophies = rows.into_iter().map(|row| PlayerTrophy {
+            id: Some(row.get("id")),
+            player_id: row.get("player_id"),
+            username: row.get("username"),
+            season: row.get("season"),
+            trophy_tier: row.get("trophy_tier"),
+            level: row.get("level"),
+            unlocked_at: row.get("unlocked_at"),
+        }).collect();
+
+        Ok(trophies)
+    }
+
+    pub async fn reset_player_all(&self, username: &str) -> Result<(), sqlx::Error> {
+        let username_lower = username.to_lowercase();
+        let mut tx = self.pool.begin().await?;
+
+        // 1. Supprimer ses trophées éternels
+        sqlx::query("DELETE FROM player_trophies WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        // 2. Supprimer les poissons capturés
+        sqlx::query("DELETE FROM catches WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        // 3. Réinitialiser les stats du joueur
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL WHERE username = ?")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn archive_and_reset_season(&self, season_name: &str) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // 1. Calculer et enregistrer les trophées de niveau pour tous les joueurs avec level >= 10
+        let players = sqlx::query("SELECT id, username, level FROM players WHERE level >= 10")
+            .fetch_all(&self.pool)
+            .await?;
+
+        for p in players {
+            let player_id: i64 = p.get("id");
+            let username: String = p.get("username");
+            let level: i32 = p.get("level");
+
+            let tier = if level >= 150 {
+                "Obsidienne"
+            } else if level >= 100 {
+                "Diamant"
+            } else if level >= 70 {
+                "Platinium"
+            } else if level >= 40 {
+                "Or"
+            } else if level >= 20 {
+                "Argent"
+            } else {
+                "Bronze"
+            };
+
+            // Insérer ou remplacer le trophée de niveau
+            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(season_name)
+                .bind(tier)
+                .bind(level)
+                .execute(&mut *tx)
+                .await;
+        }
+
+        // 2. Calculer le Trophée de la Night 🌙
+        // Le joueur avec le plus de prises réussies après 22h (entre 22h et 4h)
+        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 0 AND (strftime('%H', caught_at) >= '22' OR strftime('%H', caught_at) < '04') GROUP BY player_id ORDER BY c DESC LIMIT 1")
+            .fetch_optional(&self.pool)
+            .await 
+        {
+            let player_id: i64 = row.get("player_id");
+            let username: String = row.get("username");
+            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(format!("{} (Night 🌙)", season_name))
+                .bind("Night")
+                .bind(0)
+                .execute(&mut *tx)
+                .await;
+        }
+
+        // 3. Calculer le Trophée Roi des Voleurs 🍌
+        // Le joueur avec le plus de dethronements
+        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM banana_kings_history GROUP BY player_id ORDER BY c DESC LIMIT 1")
+            .fetch_optional(&self.pool)
+            .await 
+        {
+            let player_id: i64 = row.get("player_id");
+            let username: String = row.get("username");
+            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(format!("{} (Voleur 🍌)", season_name))
+                .bind("Voleur")
+                .bind(0)
+                .execute(&mut *tx)
+                .await;
+        }
+
+        // 4. Calculer le Trophée Éboueur des Mers 🧹
+        // Le joueur avec le plus de déchets
+        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 1 GROUP BY player_id ORDER BY c DESC LIMIT 1")
+            .fetch_optional(&self.pool)
+            .await 
+        {
+            let player_id: i64 = row.get("player_id");
+            let username: String = row.get("username");
+            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(format!("{} (Éboueur 🧹)", season_name))
+                .bind("Eboueur")
+                .bind(0)
+                .execute(&mut *tx)
+                .await;
+        }
+
+        // 5. Calculer le Trophée Pêcheur Divin 👑
+        // Le joueur avec le plus de poissons rares/divins
+        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 0 AND rarity IN ('divin', 'mythical', 'legendary') GROUP BY player_id ORDER BY c DESC LIMIT 1")
+            .fetch_optional(&self.pool)
+            .await 
+        {
+            let player_id: i64 = row.get("player_id");
+            let username: String = row.get("username");
+            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(format!("{} (Pêcheur Divin 👑)", season_name))
+                .bind("Divin")
+                .bind(0)
+                .execute(&mut *tx)
+                .await;
+        }
+
+        // 6. Purger toutes les captures et historique de bananes actives
+        sqlx::query("DELETE FROM catches").execute(&mut *tx).await?;
+        sqlx::query("DELETE FROM banana_kings_history").execute(&mut *tx).await?;
+
+        // 7. Réinitialiser les statistiques actives des joueurs
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0")
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+
+        // Supprimer le fichier de sauvegarde backup pour éviter l'auto-restauration
         let _ = std::fs::remove_file("data/players_backup.json");
 
         Ok(())

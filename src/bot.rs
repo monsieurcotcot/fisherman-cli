@@ -43,9 +43,9 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 tracing::info!("[Chat] {} : {}", username, text);
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | !pêche | !fish stats | !fish top | !fish reset".to_string();
+                    let mut help_msg = "📖 !fish | !pêche | !fish stats | !fish top | !fish reset | !fish reset all".to_string();
                     if username == "monsieurcotcot" {
-                        help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
+                        help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !admin season_reset <nom_saison> | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
                     let _ = client.say(msg.channel_login.clone(), help_msg).await;
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
@@ -56,9 +56,42 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         if let Ok(p) = state_task.repo.get_or_create_player(&username).await {
                             let fish_count = p.successful_attempts - p.junk_count - p.banana_count - p.postcard_count - p.gem_count;
+                            
+                            // Récupérer et formater les badges de trophées éternels
+                            let mut badges = Vec::new();
+                            if let Ok(trophies) = state_task.repo.get_player_trophies(p.id.unwrap()).await {
+                                for t in trophies {
+                                    let emoji = match t.trophy_tier.as_str() {
+                                        "Obsidienne" => "🌌",
+                                        "Diamant" => "❄️",
+                                        "Platinium" => "💎",
+                                        "Or" => "🥇",
+                                        "Argent" => "🥈",
+                                        "Bronze" => "🥉",
+                                        "Night" => "🌙",
+                                        "Voleur" => "🍌",
+                                        "Eboueur" => "🧹",
+                                        "Divin" => "👑",
+                                        _ => "🏆",
+                                    };
+                                    let season_clean = if let Some(idx) = t.season.find(" (") {
+                                        &t.season[..idx]
+                                    } else {
+                                        &t.season
+                                    };
+                                    let season_display = season_clean.replace("Saison ", "");
+                                    badges.push(format!("[{} {}]", emoji, season_display));
+                                }
+                            }
+                            let badge_prefix = if !badges.is_empty() {
+                                format!("{} ", badges.join(" "))
+                            } else {
+                                "".to_string()
+                            };
+
                             let msg_str = format!(
-                                "📊 @{} : Niv. {} (XP: {}/{}) | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
-                                username, p.level, p.xp, p.xp_for_next_level(), fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
+                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
+                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
                             );
                             let _ = client_msg.say(channel_login, msg_str).await;
                         }
@@ -83,14 +116,32 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let args: Vec<String> = text.split_whitespace().map(|s| s.to_string()).collect();
 
                     tokio::spawn(async move {
-                        if args.len() >= 3 && username == "monsieurcotcot" {
+                        if args.len() >= 3 && args[2] == "all" {
+                            state_task.pending_resets_all.write().await.insert(username.clone(), Utc::now());
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes all pour confirmer ton reset COMPLET (stats actives ET trophées éternels seront supprimés définitivement !).", username)).await;
+                        } else if args.len() >= 3 && username == "monsieurcotcot" {
                             let target = args[2].to_lowercase();
                             if let Ok(_) = state_task.repo.reset_player(&target).await {
                                 let _ = client_msg.say(channel_login, format!("♻️ @{}, l'inventaire de @{} a été réinitialisé par l'administrateur.", username, target)).await;
                             }
                         } else {
                             state_task.pending_resets.write().await.insert(username.clone(), Utc::now());
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour confirmer ton propre reset.", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tape !fish yes pour confirmer ton propre reset (les trophées éternels seront conservés).", username)).await;
+                        }
+                    });
+                } else if text == "!fish yes all" || text == "!peche yes all" || text == "!pêche yes all" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        let mut pending = state_task.pending_resets_all.write().await;
+                        if let Some(time) = pending.get(&username) {
+                            if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
+                                if let Ok(_) = state_task.repo.reset_player_all(&username).await {
+                                    let _ = client_msg.say(channel_login, format!("💥 @{}, reset total réussi ! Tous vos trophées éternels et statistiques actives ont été supprimés.", username)).await;
+                                }
+                                pending.remove(&username);
+                            }
                         }
                     });
                 } else if text == "!fish yes" || text == "!peche yes" || text == "!pêche yes" {
@@ -102,10 +153,27 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Some(time) = pending.get(&username) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.reset_player(&username).await {
-                                    let _ = client_msg.say(channel_login, format!("♻️ @{}, reset réussi !", username)).await;
+                                    let _ = client_msg.say(channel_login, format!("♻️ @{}, reset réussi ! Vos statistiques actives de saison ont été réinitialisées (trophées conservés).", username)).await;
                                 }
                                 pending.remove(&username);
                             }
+                        }
+                    });
+                } else if text.starts_with("!admin season_reset ") && username == "monsieurcotcot" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let args: Vec<String> = msg.message_text.split_whitespace().map(|s| s.to_string()).collect();
+                    tokio::spawn(async move {
+                        if args.len() >= 3 {
+                            let season_name = args[2..].join(" ");
+                            if let Ok(_) = state_task.repo.archive_and_reset_season(&season_name).await {
+                                let _ = client_msg.say(channel_login, format!("🏆 La Saison '{}' est close ! Les exploits ont été gravés éternellement, place à la nouvelle saison ! 🎣", season_name)).await;
+                            } else {
+                                let _ = client_msg.say(channel_login, "❌ [Admin] Erreur lors de la réinitialisation de la saison.".to_string()).await;
+                            }
+                        } else {
+                            let _ = client_msg.say(channel_login, "⚠️ [Admin] Syntaxe : !admin season_reset <nom_saison>".to_string()).await;
                         }
                     });
                 } else if text.starts_with("!fish simulate ") && username == "monsieurcotcot" {

@@ -39,6 +39,13 @@ pub struct FishData {
     pub force_pristine: Option<bool>,
     pub force_state: Option<String>,
     pub descriptions: HashMap<String, Vec<String>>,
+    pub price: Option<i32>,
+    pub location: Option<String>,
+    pub preferred_time: Option<String>,
+    pub preferred_season: Option<String>,
+    pub months: Option<Vec<i32>>,
+    pub fun_fact: Option<String>,
+    pub time_restriction: Option<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

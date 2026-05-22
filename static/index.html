@@ -210,6 +210,184 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+        /* Trophées Éternels Premium glassmorphism styling */
+        .trophy-badge {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-align: center;
+            background: rgba(30, 30, 35, 0.65);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            min-width: 80px;
+        }
+        .trophy-badge:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        .trophy-badge .trophy-emoji {
+            font-size: 1.6rem;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .trophy-badge .trophy-season {
+            font-size: 0.55rem;
+            color: #adadb8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .trophy-badge .trophy-tier-name {
+            font-size: 0.65rem;
+            margin-top: 1px;
+        }
+
+        /* Trophy tier glows */
+        .trophy-bronze {
+            border: 1px solid rgba(205, 127, 50, 0.4);
+            box-shadow: 0 0 10px rgba(205, 127, 50, 0.1), inset 0 0 5px rgba(205, 127, 50, 0.1);
+        }
+        .trophy-bronze:hover {
+            box-shadow: 0 0 15px rgba(205, 127, 50, 0.4), inset 0 0 8px rgba(205, 127, 50, 0.2);
+            border-color: rgba(205, 127, 50, 0.8);
+        }
+        .trophy-bronze .trophy-tier-name { color: #cd7f32; }
+
+        .trophy-argent {
+            border: 1px solid rgba(192, 192, 192, 0.4);
+            box-shadow: 0 0 10px rgba(192, 192, 192, 0.1), inset 0 0 5px rgba(192, 192, 192, 0.1);
+        }
+        .trophy-argent:hover {
+            box-shadow: 0 0 15px rgba(192, 192, 192, 0.4), inset 0 0 8px rgba(192, 192, 192, 0.2);
+            border-color: rgba(192, 192, 192, 0.8);
+        }
+        .trophy-argent .trophy-tier-name { color: #c0c0c0; }
+
+        .trophy-or {
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.15), inset 0 0 5px rgba(255, 215, 0, 0.15);
+        }
+        .trophy-or:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.25);
+            border-color: rgba(255, 215, 0, 0.8);
+        }
+        .trophy-or .trophy-tier-name { color: #ffd700; }
+
+        .trophy-platinium {
+            border: 1px solid rgba(224, 224, 235, 0.5);
+            box-shadow: 0 0 12px rgba(224, 224, 235, 0.2), inset 0 0 6px rgba(224, 224, 235, 0.2);
+            background: linear-gradient(135deg, rgba(30,30,35,0.7), rgba(45,45,55,0.7));
+        }
+        .trophy-platinium:hover {
+            box-shadow: 0 0 22px rgba(224, 224, 235, 0.6), inset 0 0 12px rgba(224, 224, 235, 0.3);
+            border-color: rgba(224, 224, 235, 0.9);
+        }
+        .trophy-platinium .trophy-tier-name { color: #e0e0eb; text-shadow: 0 0 5px rgba(224, 224, 235, 0.5); }
+
+        .trophy-diamant {
+            border: 1px solid rgba(135, 206, 250, 0.5);
+            box-shadow: 0 0 15px rgba(135, 206, 250, 0.25), inset 0 0 8px rgba(135, 206, 250, 0.2);
+            background: linear-gradient(135deg, rgba(30,30,40,0.7), rgba(40,55,70,0.7));
+        }
+        .trophy-diamant:hover {
+            box-shadow: 0 0 25px rgba(135, 206, 250, 0.75), inset 0 0 15px rgba(135, 206, 250, 0.4);
+            border-color: rgba(135, 206, 250, 0.9);
+        }
+        .trophy-diamant .trophy-tier-name { color: #87cefa; text-shadow: 0 0 8px rgba(135, 206, 250, 0.6); }
+
+        .trophy-obsidienne {
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 18px rgba(138, 43, 226, 0.3), inset 0 0 10px rgba(138, 43, 226, 0.25);
+            background: linear-gradient(135deg, rgba(20,10,30,0.8), rgba(40,20,60,0.8));
+        }
+        .trophy-obsidienne:hover {
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.8), inset 0 0 18px rgba(138, 43, 226, 0.5);
+            border-color: rgba(138, 43, 226, 0.9);
+        }
+        .trophy-obsidienne .trophy-tier-name { color: #ba55d3; text-shadow: 0 0 10px rgba(138, 43, 226, 0.7); }
+
+        /* Special badges glows */
+        .trophy-night {
+            border: 1px solid rgba(145, 70, 255, 0.5);
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.3), inset 0 0 8px rgba(145, 70, 255, 0.2);
+            background: linear-gradient(135deg, rgba(20,10,40,0.8), rgba(40,10,80,0.8));
+        }
+        .trophy-night:hover {
+            box-shadow: 0 0 25px rgba(145, 70, 255, 0.8), inset 0 0 15px rgba(145, 70, 255, 0.4);
+            border-color: rgba(145, 70, 255, 0.9);
+        }
+        .trophy-night .trophy-tier-name { color: #bf94ff; text-shadow: 0 0 8px rgba(145, 70, 255, 0.6); }
+
+        .trophy-voleur {
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 0 8px rgba(255, 215, 0, 0.2);
+            background: linear-gradient(135deg, rgba(40,35,10,0.8), rgba(80,70,20,0.8));
+        }
+        .trophy-voleur:hover {
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), inset 0 0 15px rgba(255, 215, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.9);
+        }
+        .trophy-voleur .trophy-tier-name { color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+
+        .trophy-eboueur {
+            border: 1px solid rgba(120, 120, 120, 0.5);
+            box-shadow: 0 0 15px rgba(120, 120, 120, 0.2), inset 0 0 8px rgba(120, 120, 120, 0.1);
+            background: linear-gradient(135deg, rgba(25,25,25,0.8), rgba(50,50,50,0.8));
+        }
+        .trophy-eboueur:hover {
+            box-shadow: 0 0 25px rgba(120, 120, 120, 0.6), inset 0 0 15px rgba(120, 120, 120, 0.3);
+            border-color: rgba(120, 120, 120, 0.9);
+        }
+        .trophy-eboueur .trophy-tier-name { color: #adadb8; text-shadow: 0 0 8px rgba(120, 120, 120, 0.5); }
+
+        .trophy-divin-special {
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(40,40,40,0.8), rgba(70,70,70,0.8));
+        }
+        .trophy-divin-special:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), inset 0 0 18px rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+        .trophy-divin-special .trophy-tier-name { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
+
+        /* Custom tooltip for trophy hover */
+        .trophy-tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(15, 15, 20, 0.95);
+            color: #efeff1;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(145, 70, 255, 0.3);
+            font-size: 0.65rem;
+            white-space: nowrap;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.2s, visibility 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            pointer-events: none;
+            line-height: 1.4;
+        }
+        .trophy-badge:hover .trophy-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
         .inventory-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -625,6 +803,13 @@
                         </div>
                     </div>
 
+                    <!-- Trophées Éternels -->
+                    <div id="trophiesSection" style="display: none; margin-top: 20px;">
+                        <h3 style="color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px; margin-bottom: 10px;">🏆 Trophées Éternels</h3>
+                        <div id="trophiesContainer" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px 5px; background: rgba(31, 31, 35, 0.4); border-radius: 8px; border: 1px solid rgba(58, 58, 61, 0.4);">
+                        </div>
+                    </div>
+
                     <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
                     
                     <div class="filter-bar" id="typeFilterBar">
@@ -725,6 +910,22 @@
             <p id="modal-size-row"><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
             <p id="modal-weight-row"><strong>Poids:</strong> <span id="modal-weight"></span></p>
             <p id="modal-state-row"><strong>État:</strong> <span id="modal-state"></span></p>
+            
+            <!-- gameplay metadata fields -->
+            <div id="modal-gameplay-meta" style="display: none; margin-top: 12px; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; text-align: left; line-height: 1.5;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div>📍 <strong>Lieu:</strong> <span id="modal-location">-</span></div>
+                    <div>🪙 <strong>Prix:</strong> <span id="modal-price">-</span> cloch.</div>
+                    <div>⏰ <strong>Heures:</strong> <span id="modal-time">-</span></div>
+                    <div>📅 <strong>Saison:</strong> <span id="modal-season">-</span></div>
+                </div>
+            </div>
+
+            <!-- Stylized fun fact -->
+            <div id="modal-fun-fact-container" style="display: none; margin-top: 15px; padding: 10px; background: rgba(145, 70, 255, 0.05); border: 1px dashed rgba(145, 70, 255, 0.3); border-radius: 6px; text-align: left;">
+                <p style="margin: 0; font-size: 0.75rem; color: #bf94ff; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">💡 Anecdote Scientifique</p>
+                <p id="modal-fun-fact" style="margin: 5px 0 0 0; font-size: 0.8rem; color: #efeff1; font-style: italic;"></p>
+            </div>
             
             <div id="modal-meta-row">
                 <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
@@ -1017,6 +1218,75 @@
                         bananaShowcase.classList.remove('active');
                     }
 
+                    // Rendre les Trophées Éternels
+                    const trophiesSection = document.getElementById('trophiesSection');
+                    const trophiesContainer = document.getElementById('trophiesContainer');
+                    const trophies = data.trophies || [];
+                    
+                    if (trophies.length > 0) {
+                        trophiesSection.style.display = 'block';
+                        trophiesContainer.innerHTML = '';
+                        
+                        const emojiMap = {
+                            'Bronze': '🥉',
+                            'Argent': '🥈',
+                            'Or': '🥇',
+                            'Platinium': '💎',
+                            'Diamant': '❄️',
+                            'Obsidienne': '🌌',
+                            'Night': '🌙',
+                            'Voleur': '🍌',
+                            'Eboueur': '🧹',
+                            'Divin': '👑'
+                        };
+                        
+                        trophies.forEach(t => {
+                            const badge = document.createElement('div');
+                            const tierClass = t.trophy_tier.toLowerCase()
+                                .replace('bronze', 'trophy-bronze')
+                                .replace('argent', 'trophy-argent')
+                                .replace('or', 'trophy-or')
+                                .replace('platinium', 'trophy-platinium')
+                                .replace('diamant', 'trophy-diamant')
+                                .replace('obsidienne', 'trophy-obsidienne')
+                                .replace('night', 'trophy-night')
+                                .replace('voleur', 'trophy-voleur')
+                                .replace('eboueur', 'trophy-eboueur')
+                                .replace('divin', 'trophy-divin-special');
+                                
+                            badge.className = `trophy-badge ${tierClass}`;
+                            
+                            const emoji = emojiMap[t.trophy_tier] || '🏆';
+                            
+                            const dateUnlocked = new Date(t.unlocked_at);
+                            const dateStr = dateUnlocked.toLocaleDateString('fr-FR', {
+                                day: 'numeric', month: 'short', year: 'numeric'
+                            });
+                            
+                            let displayName = t.trophy_tier;
+                            if (t.trophy_tier === 'Night') displayName = 'Trophée de la Night';
+                            if (t.trophy_tier === 'Voleur') displayName = 'Roi des Voleurs';
+                            if (t.trophy_tier === 'Eboueur') displayName = 'Éboueur des Mers';
+                            if (t.trophy_tier === 'Divin') displayName = 'Pêcheur Divin';
+                            
+                            badge.innerHTML = `
+                                <span class="trophy-emoji">${emoji}</span>
+                                <span class="trophy-season">${t.season.split(' ')[0]}</span>
+                                <span class="trophy-tier-name">${displayName}</span>
+                                <div class="trophy-tooltip">
+                                    <strong>🏆 ${displayName}</strong><br>
+                                    Saison : ${t.season}<br>
+                                    ${t.level > 0 ? `Niveau Final : ${t.level}<br>` : ''}
+                                    Débloqué le : ${dateStr}
+                                </div>
+                            `;
+                            
+                            trophiesContainer.appendChild(badge);
+                        });
+                    } else {
+                        trophiesSection.style.display = 'none';
+                    }
+
                     // Rendre le Musée
                     renderMuseum();
 
@@ -1245,6 +1515,29 @@
             document.getElementById('modal-state').textContent = fish.state;
             document.getElementById('modal-desc').textContent = fish.description;
 
+            // Chercher les métadonnées statiques pour enrichir
+            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
+            const gpMeta = document.getElementById('modal-gameplay-meta');
+            const ffContainer = document.getElementById('modal-fun-fact-container');
+            
+            if (staticInfo && !isJunk) {
+                gpMeta.style.display = 'block';
+                document.getElementById('modal-location').textContent = staticInfo.location || '-';
+                document.getElementById('modal-price').textContent = staticInfo.price || '-';
+                document.getElementById('modal-time').textContent = staticInfo.preferred_time || 'Toute la journée';
+                document.getElementById('modal-season').textContent = staticInfo.preferred_season || "Toute l'année";
+                
+                if (staticInfo.fun_fact) {
+                    ffContainer.style.display = 'block';
+                    document.getElementById('modal-fun-fact').textContent = staticInfo.fun_fact;
+                } else {
+                    ffContainer.style.display = 'none';
+                }
+            } else {
+                gpMeta.style.display = 'none';
+                ffContainer.style.display = 'none';
+            }
+
             // Date et Stream
             const date = new Date(fish.caught_at);
             const dateStr = date.toLocaleDateString('fr-FR', {
@@ -1278,6 +1571,29 @@
             document.getElementById('modal-weight').textContent = formatWeight(pb.maxWeight);
             document.getElementById('modal-state').textContent = pb.bestState;
             document.getElementById('modal-desc').textContent = pb.description;
+
+            // Chercher les métadonnées statiques pour enrichir
+            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+            const gpMeta = document.getElementById('modal-gameplay-meta');
+            const ffContainer = document.getElementById('modal-fun-fact-container');
+            
+            if (staticInfo) {
+                gpMeta.style.display = 'block';
+                document.getElementById('modal-location').textContent = staticInfo.location || '-';
+                document.getElementById('modal-price').textContent = staticInfo.price || '-';
+                document.getElementById('modal-time').textContent = staticInfo.preferred_time || 'Toute la journée';
+                document.getElementById('modal-season').textContent = staticInfo.preferred_season || "Toute l'année";
+                
+                if (staticInfo.fun_fact) {
+                    ffContainer.style.display = 'block';
+                    document.getElementById('modal-fun-fact').textContent = staticInfo.fun_fact;
+                } else {
+                    ffContainer.style.display = 'none';
+                }
+            } else {
+                gpMeta.style.display = 'none';
+                ffContainer.style.display = 'none';
+            }
 
             // Remplacer les métadonnées par les statistiques du Musée
             document.getElementById('modal-meta-row').innerHTML = `

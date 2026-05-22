@@ -41,6 +41,7 @@ pub struct AppState {
     pub twitch_client: RwLock<Option<TwitchClient>>,
     pub channel: String,
     pub pending_resets: RwLock<HashMap<String, DateTime<Utc>>>,
+    pub pending_resets_all: RwLock<HashMap<String, DateTime<Utc>>>,
     pub pending_purges: RwLock<HashMap<String, DateTime<Utc>>>,
     pub bot_abort_handle: RwLock<Option<tokio::task::JoinHandle<()>>>,
     pub rate_limiter: RwLock<HashMap<String, (u32, Option<DateTime<Utc>>)>>,
@@ -132,8 +133,22 @@ async fn main() -> Result<(), MyError> {
         )"
     ).execute(&pool).await?;
 
+    sqlx::query(
+        "CREATE TABLE IF NOT EXISTS player_trophies (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
+            username TEXT NOT NULL,
+            season TEXT NOT NULL,
+            trophy_tier TEXT NOT NULL,
+            level INTEGER DEFAULT 1,
+            unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(player_id, season)
+        )"
+    ).execute(&pool).await?;
+
     sqlx::query("CREATE INDEX IF NOT EXISTS idx_catches_player_id ON catches(player_id);").execute(&pool).await?;
     sqlx::query("CREATE INDEX IF NOT EXISTS idx_players_username ON players(username);").execute(&pool).await?;
+    sqlx::query("CREATE INDEX IF NOT EXISTS idx_trophies_player_id ON player_trophies(player_id);").execute(&pool).await?;
 
     let repo = Arc::new(Repository::new(pool.clone()));
     
@@ -150,6 +165,7 @@ async fn main() -> Result<(), MyError> {
         twitch_client: RwLock::new(None),
         channel: channel.clone(),
         pending_resets: RwLock::new(HashMap::new()),
+        pending_resets_all: RwLock::new(HashMap::new()),
         pending_purges: RwLock::new(HashMap::new()),
         bot_abort_handle: RwLock::new(None),
         rate_limiter: RwLock::new(HashMap::new()),

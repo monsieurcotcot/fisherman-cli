@@ -109,6 +109,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
     match state.repo.get_player(&u_low).await {
         Ok(Some(p)) => {
             let catches = state.repo.get_player_catches(p.id.unwrap()).await.unwrap_or_default();
+            let trophies = state.repo.get_player_trophies(p.id.unwrap()).await.unwrap_or_default();
             
             let mut profile_image_url = p.profile_image_url.clone();
             if profile_image_url.is_none() {
@@ -145,6 +146,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "xp_next": p.xp_for_next_level(),
                 "is_vip": p.is_vip(),
                 "catches": catches,
+                "trophies": trophies,
                 "profile_image_url": profile_image_url,
                 "junk": p.junk_count,
                 "banana": p.banana_count,
