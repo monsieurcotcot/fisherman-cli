@@ -17,7 +17,27 @@
                 "size_sigma": 10.0,
                 "force_pristine": null,
                 "force_state": null,
-                "descriptions": {}
+                "descriptions": {},
+                "price": 400,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson côtier très recherché pour sa combativité et sa chair délicate.",
+                "time_restriction": null
             },
             {
                 "name": "Carassin",
@@ -42,7 +62,27 @@
                     "pristine": [
                         "✨ Un spécimen parfait, ses écailles dorées éclatent sous la lumière."
                     ]
-                }
+                },
+                "price": 160,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge.",
+                "time_restriction": null
             },
             {
                 "name": "Brème",
@@ -192,7 +232,27 @@
                     "pristine": [
                         "✨ Un crapet éclatant, parfaitement proportionné."
                     ]
-                }
+                },
+                "price": 180,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un petit poisson d'eau douce très combatif et coloré, originaire d'Amérique du Nord.",
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Têtard",
@@ -203,34 +263,485 @@
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Ce têtard a clairement eu des débuts difficiles, marqué par les épreuves de la vie aquatique.",
-                        "🔴 Visiblement, ce petit têtard a échappé de justesse à un destin funeste. Il porte les cicatrices de sa lutte pour la survie.",
-                        "🔴 À peine plus qu'une queue frétillante, ce têtard porte les stigmates d'une rude introduction au monde aquatique."
+                        "🔴 Un pauvre petit têtard tout égratigné. Jiraya n'aurait pas été fier."
                     ],
                     "damaged": [
-                        "🟠 Ce têtard porte quelques égratignures, témoignage des petites batailles qu'il a dû mener.",
-                        "🟠 Légèrement meurtri, ce petit têtard a déjà affronté des défis considérables.",
-                        "🟠 Avec des signes clairs de lutte, ce têtard a survécu contre toute attente.",
-                        "🟠 Ce têtard me rappelle les premiers essais d'invocation ratés de Naruto... Un jour, ce sera un crapaud géant !"
+                        "🟠 Un têtard abîmé. Son chakra semble complètement à plat."
                     ],
                     "worn": [
-                        "🟡 Ce têtard a navigué à travers de nombreux périls, un vrai petit guerrier des eaux.",
-                        "🟡 Portant les marques d'une vie déjà mouvementée, ce têtard montre des signes d'usure mais aussi de résilience.",
-                        "🟡 Un combattant des ruisseaux, ce têtard a une histoire à raconter avec chaque cicatrice.",
-                        "🟡 Ce têtard a été invoqué par un ninja en herbe avec trop peu de chakra. Pas de pattes, juste de l'ambition !"
+                        "🟡 Un têtard ordinaire. Il frétille doucement du bout de la queue."
                     ],
                     "good": [
-                        "🟢 Ce têtard est vif et alerte, prêt à sauter vers l'aventure.",
-                        "🟢 Avec une énergie débordante, ce têtard est un modèle de vitalité.",
-                        "🟢 Plein de vie et d'espoir, ce têtard a tout ce qu'il faut pour grandir en une belle grenouille.",
-                        "🟢 Un futur Gamabunta en devenir ? Pour l'instant, c'est juste une queue frétillante sans chakra."
+                        "🟢 Un têtard vigoureux ! Il s'entraîne déjà à bondir de nénuphar en nénuphar."
                     ],
                     "pristine": [
-                        "✨ Un spécimen exceptionnel, ce têtard est l'image même de la perfection aquatique.",
-                        "✨ Impeccable et prometteur, ce têtard est sur la voie rapide pour devenir une grenouille remarquable.",
-                        "✨ Dans son état idéal, ce têtard est prêt à évoluer avec toutes les chances de son côté."
+                        "✨ Un têtard d'exception ! On dirait la réincarnation d'un têtard ninja du Mont Myoboku prêt à invoquer Gamabunta ! 🌀🐸"
                     ]
-                }
+                },
+                "price": 100,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mars - juillet",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un futur ninja de l'étang qui rêve secrètement de maîtriser les techniques secrètes d'invocation !",
+                "time_restriction": null
+            },
+            {
+                "name": "Ayu",
+                "size_min": 8.0,
+                "size_mean": 18.0,
+                "size_sigma": 4.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) ayu en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) ayu blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) ayu ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique ayu vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de ayu absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 900,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juillet - septembre",
+                "months": [
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Surnommé poisson-doux en raison de sa chair au parfum unique de melon et de concombre.",
+                "time_restriction": null
+            },
+            {
+                "name": "Bar",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) bar en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) bar blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) bar ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique bar vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de bar absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 400,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Le compagnon incontournable de toutes vos sessions de pêche en rivière !",
+                "time_restriction": null
+            },
+            {
+                "name": "Carpe",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) carpe en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) carpe blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) carpe ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique carpe vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de carpe absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 300,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Symbole de persévérance, elle peut vivre plusieurs décennies dans les étangs paisibles.",
+                "time_restriction": null
+            },
+            {
+                "name": "Chevaine",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) chevaine en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) chevaine blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) chevaine ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique chevaine vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de chevaine absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 200,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson omnivore très méfiant qui peuple nos rivières calmes.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Chinchard",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) chinchard en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) chinchard blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) chinchard ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique chinchard vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de chinchard absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 150,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson grégaire très commun, pêché en grande quantité à travers le monde.",
+                "time_restriction": null
+            },
+            {
+                "name": "Ecrevisse",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) ecrevisse en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) ecrevisse blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) ecrevisse ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique ecrevisse vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de ecrevisse absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 200,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - septembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Ce petit crustacé d'eau douce adore se cacher sous les pierres des rivières.",
+                "time_restriction": null
+            },
+            {
+                "name": "Eperlan",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) eperlan en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) eperlan blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) eperlan ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique eperlan vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de eperlan absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 320,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - février",
+                "months": [
+                    12,
+                    1,
+                    2
+                ],
+                "fun_fact": "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais.",
+                "time_restriction": null
+            },
+            {
+                "name": "Fondule barré",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) fondule barré en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) fondule barré blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) fondule barré ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique fondule barré vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de fondule barré absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 300,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - août",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Un petit poisson rayé extrêmement tolérant aux variations de salinité.",
+                "time_restriction": null
+            },
+            {
+                "name": "Limande",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) limande en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) limande blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) limande ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique limande vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de limande absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 300,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Octobre - avril",
+                "months": [
+                    10,
+                    11,
+                    12,
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "fun_fact": "Un poisson plat camouflé dont les deux yeux sont situés du côté droit de sa tête.",
+                "time_restriction": null
+            },
+            {
+                "name": "Loche d'étang",
+                "size_min": 8.0,
+                "size_mean": 18.0,
+                "size_sigma": 4.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) loche d'étang en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) loche d'étang blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) loche d'étang ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique loche d'étang vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de loche d'étang absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 400,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mars - mai",
+                "months": [
+                    3,
+                    4,
+                    5
+                ],
+                "fun_fact": "Elle est sensible aux variations de pression atmosphérique, d'où son surnom de poisson météo.",
+                "time_restriction": null
+            },
+            {
+                "name": "Perche jaune",
+                "size_min": 8.0,
+                "size_mean": 18.0,
+                "size_sigma": 4.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) perche jaune en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) perche jaune blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) perche jaune ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique perche jaune vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de perche jaune absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 300,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Octobre - mars",
+                "months": [
+                    10,
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Reconnaissable à ses rayures sombres sur fond doré, elle adore les eaux calmes.",
+                "time_restriction": null
             }
         ],
         "uncommon": [
@@ -257,7 +768,27 @@
                     "pristine": [
                         "✨ Un magnifique spécimen, parfaitement sain et éclatant de couleurs."
                     ]
-                }
+                },
+                "price": 1300,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un compagnon domestique classique qui adore nager paisiblement dans les bassins.",
+                "time_restriction": null
             },
             {
                 "name": "Truite Arc-en-Ciel",
@@ -357,7 +888,20 @@
                     "pristine": [
                         "✨ Un tilapia parfait, aux écailles éclatantes et bien proportionné."
                     ]
-                }
+                },
+                "price": 800,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juin - octobre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Un poisson robuste et adaptable, élevé depuis l'Antiquité en Égypte.",
+                "time_restriction": null
             },
             {
                 "name": "Vandoise",
@@ -382,7 +926,27 @@
                     "pristine": [
                         "✨ Une vandoise éclatante, parfaite pour une photo."
                     ]
-                }
+                },
+                "price": 240,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson vif et argenté qui adore gober les insectes à la surface des rivières.",
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Calmar",
@@ -407,7 +971,24 @@
                     "pristine": [
                         "✨ Un calmar parfait, une véritable beauté marine."
                     ]
-                }
+                },
+                "price": 500,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - août",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Il peut projeter un jet d'encre noire pour aveugler ses agresseurs et s'enfuir.",
+                "time_restriction": null
             },
             {
                 "name": "Barbeau",
@@ -457,7 +1038,20 @@
                     "pristine": [
                         "✨ Une bouvière éclatante, petite mais impressionnante."
                     ]
-                }
+                },
+                "price": 900,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Novembre - mars",
+                "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Elle pond ses œufs à l'intérieur des moules d'eau douce pour les protéger.",
+                "time_restriction": null
             },
             {
                 "name": "Grenouille",
@@ -468,31 +1062,673 @@
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Wat ze FOK is this ?? C'est vraiment une Grenouille ce machin là ??? ",
-                        "🔴 On ne pourrait même pas espérer cuisiner un truc pareil. Pauvre Grenouille.",
-                        "🔴 Cette grenouille a l'air d'avoir été écrasée par un camion poubelle."
+                        "🔴 Une grenouille mal en point, son chakra senjutsu semble totalement vidé."
                     ],
                     "damaged": [
-                        "🟠 Une grenouille cabossée, probablement échappée d'une lutte.",
-                        "🟠 On dirait Gamabunta miniature... Il ne lui manque plus que sa pipe, son sabre et quelques bandages !"
+                        "🟠 Une grenouille froissée, elle a dû rater son atterrissage depuis le mont Myoboku."
                     ],
                     "worn": [
-                        "🟡 Une grenouille ordinaire, avec des marques d'usure.",
-                        "🟡 Cette grenouille porte une veste de ninja orange... Aurait-elle un penchant pour le ramen d'Ichiraku ?"
+                        "🟡 Une grenouille de rivière tout à fait classique."
                     ],
                     "good": [
-                        "🟢 Une grenouille en bonne santé, prête à bondir.",
-                        "🟢 Wow ! C'est Gamakichi en personne ! Prêt à apprendre le Senjutsu avec Naruto ?"
+                        "🟢 Une grenouille vigoureuse qui coasse fièrement. Jiraya approuverait son potentiel ! 🐸"
                     ],
                     "pristine": [
-                        "✨ Un spécimen exceptionnel du Mont Myōboku ! Elle a l'air de vouloir signer un pacte de sang avec toi.",
-                        "✨ Non mais OH !! Poussez vous là, Monsieur Grenouille (ou devrais-je dire Maître Fukasaku) est dans la place !! Regardez moi cette prestance 🥰",
-                        "✨🐸 Wow ! Quelle Grenouille remarquable ! Elle pourrait être servit telle quelle en sashimi 😱 !",
-                        "✨🐸 Prête pour le tapis rouge, cette grenouille pourrait être la vedette d'une soirée gastronomique de luxe.",
-                        "✨🐸 Tellement parfaite, elle pourrait être l'invitée d'honneur à un banquet de grenouilles.",
-                        "✨🐸 Une grenouille parfaite, avec une peau lisse et brillante."
+                        "✨ Une grenouille ninja légendaire du mont Myoboku dotée d'une puissance incroyable et prête pour le mode ermite ! 🐸🔥🌀"
                     ]
-                }
+                },
+                "price": 120,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mai - août",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Un amphibien bavard qui adore chanter sous la pluie d'été au bord de l'étang.",
+                "time_restriction": null
+            },
+            {
+                "name": "Anchois",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) anchois en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) anchois blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) anchois ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique anchois vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de anchois absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 200,
+                "location": "Océan",
+                "preferred_time": "4h - 21h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Se déplace en bancs immenses pour échapper aux prédateurs de l'océan.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Cardeau",
+                "size_min": 50.0,
+                "size_mean": 80.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) cardeau en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) cardeau blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) cardeau ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique cardeau vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de cardeau absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 800,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un maître du camouflage plat qui se fond parfaitement dans le sable marin.",
+                "time_restriction": null
+            },
+            {
+                "name": "Clione",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) clione en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) clione blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) clione ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique clione vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de clione absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - mars",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Surnommé l'ange des mers, c'est en fait un minuscule prédateur mollusque sans coquille.",
+                "time_restriction": null
+            },
+            {
+                "name": "Gobie d'eau douce",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) gobie d'eau douce en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) gobie d'eau douce blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) gobie d'eau douce ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique gobie d'eau douce vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de gobie d'eau douce absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 400,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Il utilise ses nageoires pelviennes comme ventouses pour s'accrocher aux rochers.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Guppy",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) guppy en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) guppy blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) guppy ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique guppy vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de guppy absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1300,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Avril - novembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un minuscule poisson tropical très populaire, célèbre pour ses queues colorées en éventail.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Hippocampe",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) hippocampe en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) hippocampe blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) hippocampe ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique hippocampe vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de hippocampe absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1100,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - novembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un poisson singulier où ce sont les mâles qui portent les œufs dans leur poche ventrale.",
+                "time_restriction": null
+            },
+            {
+                "name": "Murène ruban bleue",
+                "size_min": 10.0,
+                "size_mean": 40.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) murène ruban bleue en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) murène ruban bleue blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) murène ruban bleue ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique murène ruban bleue vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de murène ruban bleue absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 600,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juin - octobre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Elle change de sexe et de couleur au cours de sa vie, devenant d'un bleu électrique magnifique.",
+                "time_restriction": null
+            },
+            {
+                "name": "Néon bleu",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) néon bleu en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) néon bleu blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) néon bleu ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique néon bleu vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de néon bleu absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 500,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Avril - novembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un petit poisson scintillant originaire d'Amazonie qui brille d'un éclat bleu et rouge.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Poisson arc-en-ciel",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson arc-en-ciel en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson arc-en-ciel blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson arc-en-ciel ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson arc-en-ciel vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson arc-en-ciel absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 800,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Ses reflets irisés changent de couleur selon l'angle de la lumière.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Poisson chirurgien",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson chirurgien en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson chirurgien blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson chirurgien ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson chirurgien vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson chirurgien absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - septembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Il possède des scalpels tranchants à la base de sa queue pour se défendre.",
+                "time_restriction": null
+            },
+            {
+                "name": "Poisson-papillon",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-papillon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-papillon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-papillon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-papillon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-papillon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - septembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Ses motifs colorés imitent des yeux pour tromper et désorienter ses prédateurs.",
+                "time_restriction": null
+            },
+            {
+                "name": "Poisson-porc-épic",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-porc-épic en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-porc-épic blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-porc-épic ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-porc-épic vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-porc-épic absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 250,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juillet - septembre",
+                "months": [
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Une variété de poisson-globe recouverte d'épines acérées qui se dressent lorsqu'il se gonfle.",
+                "time_restriction": null
+            },
+            {
+                "name": "Poisson-scorpion",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-scorpion en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-scorpion blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-scorpion ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-scorpion vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-scorpion absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 500,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - novembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Il se fond parfaitement dans les rochers et possède des épines venimeuses redoutables.",
+                "time_restriction": null
+            },
+            {
+                "name": "Saumon",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) saumon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) saumon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) saumon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique saumon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de saumon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 700,
+                "location": "Embouchure de rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Septembre",
+                "months": [
+                    9
+                ],
+                "fun_fact": "Un voyageur infatigable qui remonte les rivières contre le courant pour aller pondre.",
+                "time_restriction": null
+            },
+            {
+                "name": "Saumon masou",
+                "size_min": 8.0,
+                "size_mean": 18.0,
+                "size_sigma": 4.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) saumon masou en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) saumon masou blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) saumon masou ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique saumon masou vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de saumon masou absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1000,
+                "location": "Rivière (falaise)",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mars - juin, septembre - novembre",
+                "months": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un saumon sauvage très agile appréciant particulièrement les torrents de montagne.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Silure",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) silure en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) silure blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) silure ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique silure vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de silure absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 800,
+                "location": "Étang",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Ce géant d'eau douce sans écailles utilise ses longs barbillons pour s'orienter dans la vase.",
+                "time_restriction": "after_22h"
             }
         ],
         "rare": [
@@ -528,7 +1764,27 @@
                 "size_sigma": 30.0,
                 "force_pristine": null,
                 "force_state": null,
-                "descriptions": {}
+                "descriptions": {},
+                "price": 11000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Novembre - avril",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un colosse marin ultra-rapide doté d'une régulation thermique unique pour les eaux froides.",
+                "time_restriction": null
             },
             {
                 "name": "Saumon Atlantique",
@@ -563,6 +1819,679 @@
                         "✨ Une prise de légende, immaculée et majestueuse."
                     ]
                 }
+            },
+            {
+                "name": "Bichir",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) bichir en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) bichir blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) bichir ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique bichir vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de bichir absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 4000,
+                "location": "Rivière",
+                "preferred_time": "21h - 4h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Cette créature préhistorique possède des poumons primitifs lui permettant de ramper hors de l'eau.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Brochet",
+                "size_min": 20.0,
+                "size_mean": 35.0,
+                "size_sigma": 7.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) brochet en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) brochet blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) brochet ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique brochet vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de brochet absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1800,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Septembre - décembre",
+                "months": [
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un redoutable prédateur embusqué doté d'une mâchoire remplie de dents acérées.",
+                "time_restriction": null
+            },
+            {
+                "name": "Carangue grosse tête",
+                "size_min": 50.0,
+                "size_mean": 80.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) carangue grosse tête en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) carangue grosse tête blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) carangue grosse tête ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique carangue grosse tête vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de carangue grosse tête absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 4500,
+                "location": "Océan (ponton)",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Un colosse de l'océan connu pour sa force brute phénoménale lors des combats.",
+                "time_restriction": null
+            },
+            {
+                "name": "Carpe koï",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) carpe koï en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) carpe koï blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) carpe koï ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique carpe koï vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de carpe koï absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 4000,
+                "location": "Étang",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Ces carpes ornementales japonaises sont admirées pour leurs motifs colorés uniques.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Combattant",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) combattant en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) combattant blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) combattant ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique combattant vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de combattant absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 2500,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Les mâles de cette espèce sont extrêmement territoriaux et arborent de somptueux voiles.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Crabe chinois",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) crabe chinois en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) crabe chinois blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) crabe chinois ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique crabe chinois vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de crabe chinois absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 2000,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Septembre - novembre",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Reconnaissable à ses pinces recouvertes de fourrure, il migre sur de longues distances.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Murène",
+                "size_min": 10.0,
+                "size_mean": 40.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) murène en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) murène blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) murène ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique murène vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de murène absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 2000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Août - octobre",
+                "months": [
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Un prédateur marin serpentiforme qui se cache dans les crevasses rocheuses.",
+                "time_restriction": null
+            },
+            {
+                "name": "Omble",
+                "size_min": 20.0,
+                "size_mean": 35.0,
+                "size_sigma": 7.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) omble en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) omble blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) omble ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique omble vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de omble absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 3800,
+                "location": "Rivière (falaise)",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mars - juin, septembre - novembre",
+                "months": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un poisson des eaux froides et pures de montagne, cousin du saumon.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Poisson docteur",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson docteur en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson docteur blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson docteur ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson docteur vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson docteur absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1500,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Mai - septembre",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Célèbre pour grignoter doucement les peaux mortes dans les sources thermales.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Poisson lanterne",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson lanterne en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson lanterne blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson lanterne ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson lanterne vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson lanterne absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 2500,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Novembre - mars",
+                "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Il utilise un leurre lumineux suspendu au-dessus de sa tête pour attirer ses proies dans l'obscurité.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Poisson-ange",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-ange en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-ange blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-ange ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-ange vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-ange absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 3000,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Un magnifique poisson plat et majestueux, très prisé des aquariophiles.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Raie",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) raie en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) raie blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) raie ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique raie vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de raie absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 3000,
+                "location": "Océan",
+                "preferred_time": "4h - 21h",
+                "preferred_season": "Août - novembre",
+                "months": [
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Elle glisse gracieusement dans l'eau comme si elle volait avec ses nageoires pectorales.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Rémora rayé",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) rémora rayé en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) rémora rayé blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) rémora rayé ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique rémora rayé vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de rémora rayé absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1500,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Il utilise sa ventouse crânienne pour s'accrocher aux requins et voyager sans effort.",
+                "time_restriction": null
+            },
+            {
+                "name": "Saumon roi",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) saumon roi en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) saumon roi blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) saumon roi ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique saumon roi vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de saumon roi absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1800,
+                "location": "Embouchure de rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Septembre",
+                "months": [
+                    9
+                ],
+                "fun_fact": "Le plus grand et le plus noble des saumons du Pacifique, à la chair savoureuse.",
+                "time_restriction": null
+            },
+            {
+                "name": "Thon",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) thon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) thon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) thon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique thon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de thon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 7000,
+                "location": "Océan (ponton)",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Novembre - avril",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un nageur infatigable capable de traverser des océans entiers à une vitesse impressionnante.",
+                "time_restriction": null
+            },
+            {
+                "name": "Tortue trionyx",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) tortue trionyx en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) tortue trionyx blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) tortue trionyx ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique tortue trionyx vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de tortue trionyx absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 3750,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Août - septembre",
+                "months": [
+                    8,
+                    9
+                ],
+                "fun_fact": "Une tortue d'eau douce insolite au corps mou et au long nez en forme de tuba.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Vivaneau",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) vivaneau en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) vivaneau blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) vivaneau ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique vivaneau vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de vivaneau absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 3000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson côtier apprécié pour sa chair ferme et sa belle couleur rouge orangé.",
+                "time_restriction": null
             }
         ],
         "veryrare": [
@@ -589,7 +2518,19 @@
                     "pristine": [
                         "✨ Un piranha parfait, une véritable machine à tuer."
                     ]
-                }
+                },
+                "price": 2500,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h, 21h - 4h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Ce redoutable poisson d'eau douce possède des dents acérées comme des rasoirs.",
+                "time_restriction": null
             },
             {
                 "name": "Poisson-Lune",
@@ -640,6 +2581,132 @@
                         "✨ Une anguille parfaite, symbole de danger et de puissance."
                     ]
                 }
+            },
+            {
+                "name": "Cyprin doré",
+                "size_min": 1.0,
+                "size_mean": 5.0,
+                "size_sigma": 1.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) cyprin doré en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) cyprin doré blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) cyprin doré ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique cyprin doré vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de cyprin doré absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 1300,
+                "location": "Étang",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Une variété rare et précieuse sélectionnée pour sa couleur orange vif étincelante.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Lune de mer",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) lune de mer en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) lune de mer blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) lune de mer ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique lune de mer vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de lune de mer absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 4000,
+                "location": "Océan",
+                "preferred_time": "4h - 21h",
+                "preferred_season": "Juillet - septembre",
+                "months": [
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Aussi appelée Mola Mola, ce géant insolite adore flotter sur le flanc pour bronzer au soleil.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Ranchu",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) ranchu en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) ranchu blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) ranchu ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique ranchu vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de ranchu absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 4500,
+                "location": "Étang",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Surnommé le roi des poissons rouges au Japon, il est dépourvu de nageoire dorsale.",
+                "time_restriction": "before_22h"
             }
         ],
         "epic": [
@@ -666,7 +2733,21 @@
                     "pristine": [
                         "✨ Un poisson-clown magnifique, aux couleurs vives et parfaites."
                     ]
-                }
+                },
+                "price": 650,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - septembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Il vit en parfaite symbiose au milieu des tentacules urticants des anémones de mer.",
+                "time_restriction": null
             },
             {
                 "name": "Coelacanthe",
@@ -684,7 +2765,480 @@
                 "size_sigma": 500.0,
                 "force_pristine": null,
                 "force_state": null,
-                "descriptions": {}
+                "descriptions": {},
+                "price": 8000,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "La forme unique de sa tête en marteau lui offre une vision panoramique exceptionnelle à 360 degrés.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Arapaïma",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) arapaïma en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) arapaïma blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) arapaïma ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique arapaïma vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de arapaïma absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 10000,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Un fossile vivant qui respire de l'air à la surface grâce à une vessie natatoire modifiée.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Arowana",
+                "size_min": 50.0,
+                "size_mean": 80.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) arowana en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) arowana blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) arowana ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique arowana vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de arowana absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 10000,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Aussi appelé poisson-dragon, il est un symbole de chance et de prospérité en Asie.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Coryphène",
+                "size_min": 50.0,
+                "size_mean": 80.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) coryphène en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) coryphène blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) coryphène ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique coryphène vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de coryphène absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 6000,
+                "location": "Océan (ponton)",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mai - octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Aussi appelée Mahi-Mahi, elle est célèbre pour ses couleurs dorées et sa vitesse fulgurante.",
+                "time_restriction": null
+            },
+            {
+                "name": "Esturgeon",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) esturgeon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) esturgeon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) esturgeon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique esturgeon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de esturgeon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 10000,
+                "location": "Embouchure de rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Septembre - mars",
+                "months": [
+                    9,
+                    10,
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Ce géant des eaux est célèbre pour ses œufs précieux, le caviar.",
+                "time_restriction": null
+            },
+            {
+                "name": "Gar",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) gar en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) gar blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) gar ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique gar vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de gar absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 6000,
+                "location": "Étang",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Un poisson préhistorique doté d'un long bec et d'écailles dures comme des pierres.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Ishidai",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) ishidai en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) ishidai blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) ishidai ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique ishidai vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de ishidai absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 5000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mars - novembre",
+                "months": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Reconnaissable à ses rayures noires et blanches, il possède un bec puissant pour briser les coquillages.",
+                "time_restriction": null
+            },
+            {
+                "name": "Marlin bleu",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) marlin bleu en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) marlin bleu blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) marlin bleu ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique marlin bleu vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de marlin bleu absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 10000,
+                "location": "Océan (ponton)",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juillet - septembre, novembre - avril",
+                "months": [
+                    7,
+                    8,
+                    9,
+                    11,
+                    12,
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "fun_fact": "L'un des poissons les plus rapides de l'océan, célèbre pour son rostre en forme d'épée.",
+                "time_restriction": null
+            },
+            {
+                "name": "Napoléon",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) napoléon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) napoléon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) napoléon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique napoléon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de napoléon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 10000,
+                "location": "Océan",
+                "preferred_time": "4h - 21h",
+                "preferred_season": "Juillet - août",
+                "months": [
+                    7,
+                    8
+                ],
+                "fun_fact": "Ce géant des récifs coralliens arbore une bosse frontale caractéristique rappelant le bicorne de l'empereur.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Poisson-ballon",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-ballon en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-ballon blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-ballon ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-ballon vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-ballon absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 5000,
+                "location": "Océan",
+                "preferred_time": "21h - 4h",
+                "preferred_season": "Novembre - février",
+                "months": [
+                    11,
+                    12,
+                    1,
+                    2
+                ],
+                "fun_fact": "Il se gonfle d'eau ou d'air pour effrayer ses prédateurs, et contient un poison mortel.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Poisson-ruban",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) poisson-ruban en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) poisson-ruban blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) poisson-ruban ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique poisson-ruban vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de poisson-ruban absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 9000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - mai",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ],
+                "fun_fact": "Un géant serpentiforme argenté qui peut atteindre des longueurs impressionnantes dans les abysses.",
+                "time_restriction": null
+            },
+            {
+                "name": "Tête-de-serpent",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) tête-de-serpent en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) tête-de-serpent blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) tête-de-serpent ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique tête-de-serpent vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de tête-de-serpent absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 5500,
+                "location": "Étang",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Juin - août",
+                "months": [
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Ce redoutable prédateur peut survivre hors de l'eau pendant plusieurs jours en respirant de l'air.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Tortue serpentine",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) tortue serpentine en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) tortue serpentine blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) tortue serpentine ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique tortue serpentine vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de tortue serpentine absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 5000,
+                "location": "Rivière",
+                "preferred_time": "21h - 4h",
+                "preferred_season": "Avril - octobre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Dotée d'une mâchoire puissante, elle ne doit pas être approchée de trop près !",
+                "time_restriction": "after_22h"
             }
         ],
         "legendary": [
@@ -717,6 +3271,365 @@
                         "✨🍌 La légende disait vrai... La Pristine Banana 2 existe bel et bien !"
                     ]
                 }
+            },
+            {
+                "name": "Cœlacanthe",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) cœlacanthe en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) cœlacanthe blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) cœlacanthe ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique cœlacanthe vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de cœlacanthe absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Océan (pluie)",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un véritable dinosaure vivant, que l'on croyait éteint depuis 65 millions d'années !",
+                "time_restriction": null
+            },
+            {
+                "name": "Dai yu",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) dai yu en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) dai yu blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) dai yu ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique dai yu vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de dai yu absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Rivière (falaise)",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Décembre - mars",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Un poisson légendaire des rivières de montagnes, extrêmement rare et mystérieux.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Dorado",
+                "size_min": 50.0,
+                "size_mean": 80.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) dorado en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) dorado blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) dorado ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique dorado vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de dorado absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Rivière",
+                "preferred_time": "4h - 21h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Surnommé l'or des rivières en raison de ses écailles dorées éblouissantes.",
+                "time_restriction": "before_22h"
+            },
+            {
+                "name": "Grand requin blanc",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) grand requin blanc en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) grand requin blanc blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) grand requin blanc ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique grand requin blanc vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de grand requin blanc absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Le plus grand prédateur marin de la planète, doté de plusieurs rangées de dents tranchantes !",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Macropinna",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) macropinna en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) macropinna blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) macropinna ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique macropinna vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de macropinna absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Océan",
+                "preferred_time": "21h - 4h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson abyssal doté d'une tête transparente à travers laquelle on aperçoit ses yeux tubulaires verts !",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Requin scie",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) requin scie en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) requin scie blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) requin scie ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique requin scie vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de requin scie absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 12000,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Son long rostre bordé de dents en scie lui sert à déterrer et couper ses proies.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Requin-baleine",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) requin-baleine en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) requin-baleine blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) requin-baleine ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique requin-baleine vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de requin-baleine absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 13000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Le plus grand poisson vivant au monde, un géant pacifique qui se nourrit exclusivement de plancton.",
+                "time_restriction": null
+            },
+            {
+                "name": "Truite dorée",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) truite dorée en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) truite dorée blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) truite dorée ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique truite dorée vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de truite dorée absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Rivière (falaise)",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mars - mai, septembre - novembre",
+                "months": [
+                    3,
+                    4,
+                    5,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un joyau scintillant des rivières cristallines, extrêmement recherché.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Piranhator",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Piranhator désactivé, rouillé par la rivière et court-circuité."
+                    ],
+                    "damaged": [
+                        "🟠 Ses circuits cybernétiques sont endommagés, des étincelles jaillissent."
+                    ],
+                    "worn": [
+                        "🟡 Un cyborg piranha. Sa nageoire mécanique grince légèrement."
+                    ],
+                    "good": [
+                        "🟢 Un Piranhator en parfait état mécanique de fonctionnement."
+                    ],
+                    "pristine": [
+                        "✨ Un Piranhator flamboyant ! Ses implants chromés et ses yeux lasers brillent intensément ! 🤖🔥"
+                    ]
+                },
+                "price": 25000,
+                "location": "Rivière (falaise)",
+                "preferred_time": "22h - 4h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Moitié piranha, moitié machine à tuer, il patrouille dans les eaux tumultueuses avec ses yeux lasers.",
+                "time_restriction": "after_22h"
             }
         ],
         "mythical": [
@@ -744,6 +3657,79 @@
                         "✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (240 min VIP)"
                     ]
                 }
+            },
+            {
+                "name": "Xénomorphe des Abysses",
+                "size_min": 80.0,
+                "size_mean": 130.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un reste informe de xénomorphe broyé par la pression abyssale."
+                    ],
+                    "damaged": [
+                        "🟠 La bête est blessée, son sang acide vert fluorescent corrode le filet."
+                    ],
+                    "worn": [
+                        "🟡 Il glisse silencieusement dans le noir, un prédateur parfait."
+                    ],
+                    "good": [
+                        "🟢 Une créature d'un noir d'encre dotée d'une double mâchoire interne effrayante."
+                    ],
+                    "pristine": [
+                        "✨ Un Xénomorphe des Abysses absolument terrifiant d'éclat ! L'acide bout dans ses veines ! 👽☠️"
+                    ]
+                },
+                "price": 50000,
+                "location": "Océan",
+                "preferred_time": "21h - 5h",
+                "preferred_season": "Décembre - mars",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Une monstruosité noire née dans les profondeurs insondables de la mer noire. Son sang acide corrode tous les filets.",
+                "time_restriction": "after_22h"
+            },
+            {
+                "name": "Le Crabe Dictateur",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Le tyran est tombé ! Ses pinces brisées ne font plus peur à personne."
+                    ],
+                    "damaged": [
+                        "🟠 Son armure impériale rouge est fissurée, mais sa fureur autoritaire reste entière."
+                    ],
+                    "worn": [
+                        "🟡 Un crabe en uniforme doté d'un petit chapeau d'amiral rigide."
+                    ],
+                    "good": [
+                        "🟢 Il claque fièrement de sa pince géante, ordonnant votre reddition immédiate."
+                    ],
+                    "pristine": [
+                        "👑 Le Crabe Dictateur brandissant sa pince en signe de domination absolue sur tout l'étang !"
+                    ]
+                },
+                "price": 45000,
+                "location": "Océan",
+                "preferred_time": "9h - 18h",
+                "preferred_season": "Juin - août",
+                "months": [
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Il règne sans partage sur les récifs, armé de sa pince autoritaire en uniforme d'amiral.",
+                "time_restriction": "before_22h"
             }
         ],
         "divin": [
