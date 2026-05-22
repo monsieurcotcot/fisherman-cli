@@ -43,6 +43,7 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
         s = (s * 100.0).round() / 100.0;
         let mut w = 0.01 * s.powi(3);
         w = (w * 100.0).round() / 100.0;
+        if w < 0.01 { w = 0.01; }
         (s, w)
     };
     
@@ -95,5 +96,31 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
             state,
             description,
         ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_generate_fish() {
+        // Since get_fish_data reads from game_data.json, this test also validates the JSON structure.
+        let fish = generate_fish();
+        assert!(fish.is_some(), "Should generate at least one fish");
+        let f = fish.unwrap();
+        assert!(!f.name.is_empty(), "Fish name should not be empty");
+        assert!(f.size > 0.0, "Fish size should be positive");
+        assert!(f.weight > 0.0, "Fish weight should be positive");
+    }
+
+    #[test]
+    fn test_generate_junk() {
+        let junk = generate_junk();
+        assert!(junk.is_some(), "Should generate at least one junk");
+        let j = junk.unwrap();
+        assert!(!j.name.is_empty(), "Junk name should not be empty");
+        // Check if state is damaged or badly damaged since junk is always damaged
+        assert!(j.state == "damaged" || j.state == "badly damaged" || j.state == "worn", "Junk should have a damaged state");
     }
 }

@@ -131,6 +131,24 @@ impl AuthManager {
             .ok_or_else(|| "User not found".into())
     }
 
+    pub async fn get_user_profile_image(&self, access_token: &str, username: &str) -> Result<String, MyError> {
+        let client = Client::new();
+        let url = format!("https://api.twitch.tv/helix/users?login={}", username);
+        
+        let res = client.get(url)
+            .header("Client-ID", &self.client_id)
+            .header("Authorization", format!("Bearer {}", access_token))
+            .send()
+            .await?
+            .json::<serde_json::Value>()
+            .await?;
+
+        res["data"][0]["profile_image_url"]
+            .as_str()
+            .map(|s| s.to_string())
+            .ok_or_else(|| "Profile image not found".into())
+    }
+
     pub async fn get_stream_info(&self, channel_login: &str, access_token: &str) -> Option<String> {
         let client = Client::new();
         let url = format!("https://api.twitch.tv/helix/streams?user_login={}", channel_login);

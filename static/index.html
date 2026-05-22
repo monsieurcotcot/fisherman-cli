@@ -24,40 +24,100 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.15;
+            opacity: 0.1;
+        }
+        /* App Layout Grid for Premium Dual-Pane */
+        .app-layout {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 24px;
+            max-width: 960px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 15px;
+            box-sizing: border-box;
+            z-index: 1;
         }
         .container {
-            background-color: rgba(24, 24, 27, 0.9);
+            background: rgba(24, 24, 27, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(145, 70, 255, 0.1);
             text-align: center;
-            width: 400px;
-            position: relative;
-            z-index: 1;
-            margin: 20px;
+            width: 450px;
+            max-width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        h1 { color: #9146ff; }
+        .museum-pane {
+            width: 100%;
+            max-width: 100%;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #3a3a3d;
+            text-align: center;
+        }
+        /* Desktop: museum as a side panel */
+        @media (min-width: 951px) {
+            .app-layout {
+                position: relative;
+            }
+            .museum-pane {
+                position: absolute;
+                top: 0;
+                left: calc(50% + 240px);
+                width: 450px;
+                margin-top: 0;
+                padding: 2rem;
+                padding-top: 2rem;
+                border-top: none;
+                background: rgba(24, 24, 27, 0.85);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+                border: 1px solid rgba(145, 70, 255, 0.1);
+                box-sizing: border-box;
+            }
+        }
+        h1 {
+            color: #9146ff;
+            font-size: 1.8rem;
+            margin-top: 0;
+            text-shadow: 0 0 10px rgba(145, 70, 255, 0.3);
+        }
+        h2, h3 {
+            color: #bf94ff;
+            margin-bottom: 10px;
+        }
         .stats-box {
             margin-top: 1.5rem;
-            background: #26262c;
-            padding: 1rem;
+            background: rgba(38, 38, 44, 0.6);
+            border: 1px solid rgba(58, 58, 61, 0.5);
+            padding: 1.2rem;
             border-radius: 8px;
             text-align: left;
         }
         .stat-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin: 0.5rem 0;
-            border-bottom: 1px solid #3a3a3d;
-            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(58, 58, 61, 0.4);
+            padding-bottom: 0.4rem;
         }
         .xp-bar-container {
             background: #3a3a3d;
             height: 10px;
             border-radius: 5px;
-            margin-top: 10px;
+            margin-top: 8px;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .xp-bar-fill {
             background: linear-gradient(90deg, #9146ff, #bf94ff);
@@ -67,10 +127,88 @@
         }
         .level-badge {
             background: #9146ff;
-            padding: 2px 8px;
+            padding: 3px 8px;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: bold;
+            box-shadow: 0 0 8px rgba(145, 70, 255, 0.4);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(58, 58, 61, 0.6);
+            padding-bottom: 1rem;
+        }
+        .profile-avatar-container {
+            position: relative;
+        }
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid #9146ff;
+            background: #18181b;
+            box-shadow: 0 0 12px rgba(145, 70, 255, 0.4);
+            display: block;
+            object-fit: cover;
+        }
+        .profile-crown {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: bounce-crown 2s infinite alternate;
+        }
+        @keyframes bounce-crown {
+            from { transform: translateX(-50%) rotate(-5deg) translateY(0); }
+            to { transform: translateX(-50%) rotate(5deg) translateY(-3px); }
+        }
+        /* Banana divine showcase */
+        .banana-showcase {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255, 215, 0, 0.03);
+            border: 1px dashed rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .banana-showcase.active {
+            background: rgba(255, 215, 0, 0.07);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+        }
+        .banana-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.25;
+            filter: grayscale(1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.9);
+        }
+        .banana-slot.unlocked {
+            opacity: 1;
+            filter: grayscale(0) drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+            transform: scale(1.05);
+        }
+        .banana-slot .banana-icon {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+        .banana-slot .banana-title {
+            font-size: 0.65rem;
+            color: #ffd700;
+            font-weight: bold;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .inventory-grid {
             display: grid;
@@ -83,18 +221,18 @@
             height: 60px;
             background: #26262c;
             border: 1px solid #3a3a3d;
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.1s, border-color 0.2s;
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s, box-shadow 0.2s;
             position: relative;
             overflow: hidden;
         }
         .fish-slot .icon {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-top: -5px;
         }
         .fish-slot .name-label {
@@ -105,7 +243,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             padding: 2px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             position: absolute;
             bottom: 0;
             color: #efeff1;
@@ -116,31 +254,44 @@
             left: 2px;
             font-size: 0.5rem;
             color: #adadb8;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             padding: 1px 3px;
             border-radius: 2px;
             z-index: 5;
         }
         .fish-slot:hover {
-            transform: scale(1.15);
-            border-color: #9146ff;
+            transform: scale(1.18);
             z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
-        .fish-slot .badge {
+        .fish-slot .badge, .museum-slot .badge {
             position: absolute;
             top: 2px;
             right: 2px;
             width: 6px;
             height: 6px;
             border-radius: 50%;
+            z-index: 5;
+        }
+        .museum-slot .catch-count {
+            position: absolute;
+            bottom: 12px;
+            left: 2px;
+            font-size: 0.5rem;
+            color: #adadb8;
+            font-weight: bold;
+            background: rgba(0,0,0,0.5);
+            padding: 1px 3px;
+            border-radius: 2px;
+            z-index: 5;
+            pointer-events: none;
         }
         .fish-slot.junk-item {
             background: #1a1a1e;
         }
         .fish-slot.junk-item .icon {
-            filter: grayscale(1) sepia(0.5);
+            filter: grayscale(0.8) sepia(0.3);
         }
-        
         .badge.pristine-star {
             background: none !important;
             font-size: 10px;
@@ -150,28 +301,154 @@
             animation: shine 1.5s infinite alternate;
             filter: drop-shadow(0 0 2px #ffd700);
         }
-
         @keyframes shine {
             from { transform: scale(0.9); filter: drop-shadow(0 0 1px #ffd700); }
-            to { transform: scale(1.2); filter: drop-shadow(0 0 4px #ffd700); }
+            to { transform: scale(1.2); filter: drop-shadow(0 0 5px #ffd700); }
         }
-        
         .inventory-container {
-            max-height: 250px;
+            min-height: 150px;
+            max-height: 275px;
             overflow-y: auto;
-            background: #1f1f23;
+            background: rgba(31, 31, 35, 0.8);
             padding: 10px;
             border-radius: 8px;
             border: 1px solid #3a3a3d;
             margin-top: 10px;
         }
-
-        /* Styles pour le filtrage */
+        /* Custom Scrollbar for Premium Feel */
+        .inventory-container::-webkit-scrollbar,
+        .museum-grid::-webkit-scrollbar,
+        #bananaKingsList::-webkit-scrollbar {
+            width: 6px;
+        }
+        .inventory-container::-webkit-scrollbar-track,
+        .museum-grid::-webkit-scrollbar-track,
+        #bananaKingsList::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        .inventory-container::-webkit-scrollbar-thumb,
+        .museum-grid::-webkit-scrollbar-thumb,
+        #bananaKingsList::-webkit-scrollbar-thumb {
+            background: rgba(145, 70, 255, 0.4);
+            border-radius: 3px;
+        }
+        .inventory-container::-webkit-scrollbar-thumb:hover,
+        .museum-grid::-webkit-scrollbar-thumb:hover,
+        #bananaKingsList::-webkit-scrollbar-thumb:hover {
+            background: rgba(145, 70, 255, 0.7);
+        }
+        /* Ze Pristine Museum styling */
+        .museum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            background: rgba(31, 31, 35, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #3a3a3d;
+            margin-top: 10px;
+        }
+        .museum-slot {
+            width: 60px;
+            height: 60px;
+            background: #18181b;
+            border: 1px solid #2d2d30;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .museum-slot.locked {
+            opacity: 0.35;
+            filter: grayscale(1);
+        }
+        .museum-slot.locked:hover {
+            opacity: 0.55;
+            transform: scale(1.05);
+        }
+        .museum-slot.unlocked {
+            background: #26262c;
+        }
+        .museum-slot.unlocked:hover {
+            transform: scale(1.18);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .museum-slot .lock-icon {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.55rem;
+            color: #adadb8;
+        }
+        .museum-slot .icon {
+            font-size: 1.3rem;
+            margin-top: -5px;
+        }
+        .museum-slot .name-label {
+            font-size: 0.5rem;
+            width: 100%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 2px;
+            background: rgba(0,0,0,0.6);
+            position: absolute;
+            bottom: 0;
+            color: #efeff1;
+        }
+        /* Pagination styling */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .pagination-btn {
+            background: rgba(38, 38, 44, 0.8);
+            border: 1px solid rgba(58, 58, 61, 0.8);
+            color: #efeff1;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #9146ff;
+            background: #9146ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(145, 70, 255, 0.4);
+        }
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .pagination-info {
+            font-size: 0.8rem;
+            color: #adadb8;
+            min-width: 80px;
+            text-align: center;
+        }
+        /* Filtering and other elements */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            margin-top: 15px;
+            margin-top: 12px;
             justify-content: center;
         }
         .filter-btn {
@@ -192,9 +469,8 @@
             background: #9146ff;
             color: white;
             border-color: #9146ff;
+            box-shadow: 0 0 8px rgba(145, 70, 255, 0.4);
         }
-        
-        /* Modal pour les détails */
         .modal {
             display: none;
             position: fixed;
@@ -205,163 +481,261 @@
             border: 2px solid #9146ff;
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
             z-index: 100;
-            width: 300px;
+            width: 320px;
+            box-sizing: border-box;
         }
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.85);
             z-index: 99;
+            backdrop-filter: blur(4px);
         }
-
-        .auth-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 1rem;
-            padding: 1rem;
-            background: #1f1f23;
-            border-radius: 8px;
-            border: 1px solid #3a3a3d;
-        }
-        .auth-link {
-            text-decoration: none;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-align: center;
-            transition: background 0.2s;
-        }
-        .btn-bot { background: #9146ff; color: white; }
-        .btn-bot:hover { background: #772ce8; }
-        .btn-streamer { background: #00e6ff; color: #0e0e10; }
-        .btn-streamer:hover { background: #00b8cc; }
-
         .search-box {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             display: flex;
             gap: 10px;
         }
         input {
-            background: #3a3a3d;
-            border: none;
+            background: #26262c;
+            border: 1px solid #3a3a3d;
             color: white;
             padding: 0.5rem;
-            border-radius: 4px;
+            border-radius: 6px;
             flex-grow: 1;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            border-color: #9146ff;
+            outline: none;
         }
         button {
             background: #9146ff;
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
         }
-        button:hover { background: #772ce8; }
+        button:hover {
+            background: #772ce8;
+            box-shadow: 0 0 10px rgba(145, 70, 255, 0.4);
+        }
         #error { color: #ff4f4f; margin-top: 10px; display: none; }
+        @media (max-width: 950px) {
+            body {
+                align-items: flex-start;
+                padding-top: 10px;
+            }
+            .app-layout {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            .container {
+                width: 100%;
+                max-width: 450px;
+                padding: 1.5rem;
+            }
+            .museum-pane {
+                width: 100%;
+                max-width: 450px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .search-box input {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            .search-box button {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <canvas id="matrix-bg"></canvas>
-    <div class="container">
-        <a href="/" style="text-decoration: none; color: inherit;"><h1>🎣 Ze_Fisherman Stats</h1></a>
-        
-        <div class="search-box">
-            <input type="text" id="usernameInput" placeholder="Ton pseudo Twitch...">
-            <button onclick="fetchStats()">Voir</button>
-        </div>
+    
+    <div class="app-layout">
+        <!-- Main Pane (Left Panel) -->
+        <div class="container">
+            <a href="/" style="text-decoration: none; color: inherit;"><h1>🎣 Ze_Fisherman Stats</h1></a>
+            
+            <div class="search-box">
+                <input type="text" id="usernameInput" placeholder="Ton pseudo Twitch...">
+                <button onclick="fetchStats()">Voir</button>
+            </div>
 
-        <div id="statsDisplay" style="display: none;">
-            <div class="stats-box">
-                <div class="stat-item">
-                    <span>Pseudo: <strong id="res-username"></strong></span>
-                    <div>
-                        <span id="res-vip" class="level-badge" style="background: #ffb444; color: #18181b; display: none; margin-right: 5px;">VIP</span>
-                        <span class="level-badge">Niv. <span id="res-level"></span></span>
+            <div id="statsDisplay" style="display: none;">
+                <div class="stats-box">
+                    <div class="profile-header">
+                        <div class="profile-avatar-container">
+                            <span id="res-crown" class="profile-crown" style="display: none;">👑</span>
+                            <img id="res-avatar" class="profile-avatar" src="" alt="Avatar" style="display: none;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px;">
+                            <span id="res-username" style="font-size: 1.3rem; font-weight: bold; color: #efeff1;"></span>
+                            <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                                <span id="res-vip" class="level-badge" style="background: #ffb444; color: #18181b; display: none;">VIP</span>
+                                <span id="res-banana-king-badge" class="level-badge" style="background: linear-gradient(135deg, #ffd700, #ffb444); color: #18181b; display: none;">Roi des Bananes</span>
+                                <span class="level-badge">Niv. <span id="res-level"></span></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-item"><span>XP: <span id="res-xp-text"></span></span></div>
-                <div class="xp-bar-container">
-                    <div id="res-xp-fill" class="xp-bar-fill"></div>
-                </div>
-                <div style="margin-top: 15px;">
-                    <div class="stat-item"><span>Tentatives:</span> <strong id="res-total"></strong></div>
-                    <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
-                    <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
-                </div>
 
-                <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
-                
-                <div class="filter-bar" id="typeFilterBar">
-                    <button class="filter-btn active" data-type="all" onclick="filterByType('all')">Tout</button>
-                    <button class="filter-btn" data-type="fish" onclick="filterByType('fish')">🐟 Poissons</button>
-                    <button class="filter-btn" data-type="junk" onclick="filterByType('junk')">🗑️ Déchets</button>
-                </div>
+                    <div class="stat-item"><span>XP: <span id="res-xp-text"></span></span></div>
+                    <div class="xp-bar-container">
+                        <div id="res-xp-fill" class="xp-bar-fill"></div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div class="stat-item"><span>Tentatives:</span> <strong id="res-total"></strong></div>
+                        <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
+                        <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
+                        <div style="display: flex; gap: 8px; margin-top: 12px; padding: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; justify-content: space-around; font-size: 0.85rem;">
+                            <span title="Poissons" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-fish">0</strong> 🐟</span>
+                            <span title="Déchets" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-junk">0</strong> 🗑️</span>
+                            <span title="Bananes" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-banana">0</strong> 🍌</span>
+                            <span title="Gemmes" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-gem">0</strong> 💎</span>
+                            <span title="Cartes Postales" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-postcard">0</strong> 📜</span>
+                        </div>
+                    </div>
 
-                <div class="filter-bar" id="filterBar">
-                    <button class="filter-btn active" data-rarity="all" onclick="filterByRarity('all')">Tous</button>
-                    <button class="filter-btn" data-rarity="common" onclick="filterByRarity('common')">Commun</button>
-                    <button class="filter-btn" data-rarity="uncommon" onclick="filterByRarity('uncommon')">Peu commun</button>
-                    <button class="filter-btn" data-rarity="rare" onclick="filterByRarity('rare')">Rare</button>
-                    <button class="filter-btn" data-rarity="veryrare" onclick="filterByRarity('veryrare')">Très rare</button>
-                    <button class="filter-btn" data-rarity="epic" onclick="filterByRarity('epic')">Épique</button>
-                    <button class="filter-btn" data-rarity="legendary" onclick="filterByRarity('legendary')">Légendaire</button>
-                    <button class="filter-btn" data-rarity="mythical" onclick="filterByRarity('mythical')">Mythique</button>
-                    <button class="filter-btn" data-rarity="divin" onclick="filterByRarity('divin')">Divin</button>
-                </div>
+                    <!-- Divine Banana Showcase -->
+                    <div class="banana-showcase" id="bananaShowcase" style="display: none;">
+                        <div class="banana-slot" id="banana1Slot">
+                            <span class="banana-icon">🍌</span>
+                            <span class="banana-title">Pristine Banana 1</span>
+                        </div>
+                        <div class="banana-slot" id="banana2Slot">
+                            <span class="banana-icon">🍌</span>
+                            <span class="banana-title">Pristine Banana 2</span>
+                        </div>
+                    </div>
 
-                <div style="margin-top: 10px;">
-                    <input type="text" id="inventorySearch" placeholder="Rechercher un objet..." oninput="applyFilters()" style="width: 100%; box-sizing: border-box;">
-                </div>
+                    <h3 style="margin-top: 20px; color: #9146ff; border-bottom: 1px solid #3a3a3d; padding-bottom: 5px;">🎒 Inventaire</h3>
+                    
+                    <div class="filter-bar" id="typeFilterBar">
+                        <button class="filter-btn active" data-type="all" onclick="filterByType('all')">Tout</button>
+                        <button class="filter-btn" data-type="fish" onclick="filterByType('fish')">🐟 Poissons</button>
+                        <button class="filter-btn" data-type="junk" onclick="filterByType('junk')">🗑️ Déchets</button>
+                    </div>
 
-                <div class="inventory-container">
-                    <div id="res-inventory" class="inventory-grid">
-                        <!-- Grille de cases -->
+                    <div class="filter-bar" id="filterBar">
+                        <button class="filter-btn active" data-rarity="all" onclick="filterByRarity('all')">Tous</button>
+                        <button class="filter-btn" data-rarity="common" onclick="filterByRarity('common')">Commun</button>
+                        <button class="filter-btn" data-rarity="uncommon" onclick="filterByRarity('uncommon')">Peu commun</button>
+                        <button class="filter-btn" data-rarity="rare" onclick="filterByRarity('rare')">Rare</button>
+                        <button class="filter-btn" data-rarity="veryrare" onclick="filterByRarity('veryrare')">Très rare</button>
+                        <button class="filter-btn" data-rarity="epic" onclick="filterByRarity('epic')">Épique</button>
+                        <button class="filter-btn" data-rarity="legendary" onclick="filterByRarity('legendary')">Légendaire</button>
+                        <button class="filter-btn" data-rarity="mythical" onclick="filterByRarity('mythical')">Mythique</button>
+                        <button class="filter-btn" data-rarity="divin" onclick="filterByRarity('divin')">Divin</button>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="inventorySearch" placeholder="Rechercher un objet..." oninput="applyFilters()" style="width: 100%; box-sizing: border-box;">
+                    </div>
+
+                    <div class="inventory-container">
+                        <div id="res-inventory" class="inventory-grid">
+                            <!-- Grille de cases -->
+                        </div>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination-container" id="paginationControls" style="display: none;">
+                        <button class="pagination-btn" id="btnPrevPage" onclick="prevPage()">
+                            ◀ Précédent
+                        </button>
+                        <span class="pagination-info" id="paginationInfo">Page 1 / 1</span>
+                        <button class="pagination-btn" id="btnNextPage" onclick="nextPage()">
+                            Suivant ▶
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+            
+            <div class="stats-box">
+                <h3>🏆 Top 10 Pêcheurs</h3>
+                <div id="leaderboardList">Chargement...</div>
+            </div>
 
-        <!-- Modal pour les détails du poisson -->
-        <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
-        <div id="fishModal" class="modal">
-            <h2 id="modal-name" style="margin-top: 0; color: #9146ff;"></h2>
-            <p style="font-size: 0.7rem; color: #adadb8; margin-top: -10px;">ID Unique: #<span id="modal-id"></span></p>
-            <div style="border-top: 1px solid #3a3a3d; margin: 10px 0; padding-top: 10px;">
-                <p><strong>Rareté:</strong> <span id="modal-rarity"></span></p>
-                <p id="modal-size-row"><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
-                <p id="modal-weight-row"><strong>Poids:</strong> <span id="modal-weight"></span></p>
-                <p><strong>État:</strong> <span id="modal-state"></span></p>
+            <div class="stats-box" style="border-color: rgba(255, 215, 0, 0.25); background: rgba(24, 20, 10, 0.35);">
+                <h3 style="color: #ffd700; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px;">👑 Historique des Rois Banane</h3>
+                <div id="bananaKingsList" style="max-height: 220px; overflow-y: auto; padding-right: 4px; display: flex; flex-direction: column; gap: 8px;">
+                    Chargement...
+                </div>
+            </div>
+            
+            <div id="error" style="background: #ff4f4f; color: white; padding: 10px; border-radius: 4px; margin-top: 20px; font-weight: bold; display: none;">❌ Joueur introuvable. Ce viewer n'a probablement pas encore pêché !</div>
+
+            <!-- Ze Pristine Museum (inside main container, after banana kings) -->
+            <div class="museum-pane" id="museumPane" style="display: none;">
+                <h2 style="margin-top: 0; color: #9146ff; display: flex; align-items: center; justify-content: center; gap: 8px;">📖 Ze Pristine Museum</h2>
+                
+                <!-- Progression bar for Ze Pristine Museum -->
+                <div style="margin-bottom: 1.5rem; text-align: left; background: rgba(38, 38, 44, 0.4); border: 1px solid rgba(58, 58, 61, 0.3); padding: 12px; border-radius: 8px;">
+                    <div class="stat-item" style="border-bottom: none; padding-bottom: 0; margin: 0;">
+                        <span>Complétion : <strong id="museum-percentage" style="color: #00e6ff;">0%</strong></span>
+                        <span style="font-size: 0.8rem; color: #adadb8;"><span id="museum-discovered-count" style="font-weight: bold; color: #efeff1;">0</span> / <span id="museum-total-count">0</span></span>
+                    </div>
+                    <div class="xp-bar-container" style="margin-top: 8px;">
+                        <div id="museum-progress-fill" class="xp-bar-fill" style="background: linear-gradient(90deg, #00e6ff, #9146ff); width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="museum-grid" id="museumGrid">
+                    <!-- Grid of all fish possible -->
+                </div>
+            </div>
+
+            <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
+                <p>© 2026 MonsieurCotCot. Tous droits réservés.</p>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
+                    <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
+                    <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
+                    <a href="https://twitter.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitter</a>
+                    <a href="https://youtube.com/@MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">YouTube</a>
+                    <a href="https://instagram.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Instagram</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal pour les détails du poisson -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
+    <div id="fishModal" class="modal">
+        <h2 id="modal-name" style="margin-top: 0; color: #9146ff;"></h2>
+        <p style="font-size: 0.7rem; color: #adadb8; margin-top: -10px;" id="modal-id-row">ID Unique: #<span id="modal-id"></span></p>
+        <div style="border-top: 1px solid #3a3a3d; margin: 10px 0; padding-top: 10px;">
+            <p><strong>Rareté:</strong> <span id="modal-rarity"></span></p>
+            <p id="modal-size-row"><strong>Taille:</strong> <span id="modal-size"></span> cm</p>
+            <p id="modal-weight-row"><strong>Poids:</strong> <span id="modal-weight"></span></p>
+            <p id="modal-state-row"><strong>État:</strong> <span id="modal-state"></span></p>
+            
+            <div id="modal-meta-row">
                 <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
                     📅 <span id="modal-date"></span><br>
                     🎥 <span id="modal-stream"></span>
                 </p>
-                <p style="font-style: italic; color: #efeff1; margin-top: 15px;" id="modal-desc"></p>
             </div>
-            <button onclick="closeModal()" style="width: 100%; margin-top: 10px;">Fermer</button>
+            
+            <p style="font-style: italic; color: #efeff1; margin-top: 15px;" id="modal-desc"></p>
         </div>
-        
-        <div class="stats-box">
-            <h3>🏆 Top 10 Pêcheurs</h3>
-            <div id="leaderboardList">Chargement...</div>
-        </div>
-        <div id="error" style="background: #ff4f4f; color: white; padding: 10px; border-radius: 4px; margin-top: 20px; font-weight: bold; display: none;">❌ Joueur introuvable. Ce viewer n'a probablement pas encore pêché !</div>
-
-        <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
-            <p>© 2026 MonsieurCotCot. Tous droits réservés.</p>
-            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
-                <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
-                <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
-                <a href="https://twitter.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitter</a>
-                <a href="https://youtube.com/@MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">YouTube</a>
-                <a href="https://instagram.com/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Instagram</a>
-            </div>
-        </footer>
+        <button onclick="closeModal()" style="width: 100%; margin-top: 10px;">Fermer</button>
     </div>
 
     <script>
@@ -375,14 +749,55 @@
             if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
         };
 
-        // Charger le leaderboard au démarrage
-        fetchLeaderboard();
+        let staticFishData = {};
+        let flatFishList = [];
+        let allCatches = [];
+        let currentRarity = 'all';
+        let currentType = 'all';
+        let currentPage = 1;
+        const itemsPerPage = 36;
 
-        const path = window.location.pathname;
-        if (path.startsWith('/player/')) {
-            const username = path.split('/').pop();
-            document.getElementById('usernameInput').value = username;
-            fetchStats(username);
+        const stateRanks = {
+            'badly damaged': 1,
+            'damaged': 2,
+            'worn': 3,
+            'good': 4,
+            'pristine': 5
+        };
+
+        // Charger les données au démarrage
+        fetchLeaderboard();
+        fetchBananaKings();
+        
+        loadFishData().then(() => {
+            const path = window.location.pathname;
+            if (path.startsWith('/player/')) {
+                const username = path.split('/').pop();
+                document.getElementById('usernameInput').value = username;
+                fetchStats(username);
+            }
+        });
+
+        async function loadFishData() {
+            try {
+                const response = await fetch('/api/fish_data');
+                staticFishData = await response.json();
+                flatFishList = [];
+                for (const rarity in staticFishData) {
+                    staticFishData[rarity].forEach(fish => {
+                        flatFishList.push({
+                            ...fish,
+                            rarity: rarity
+                        });
+                    });
+                }
+                // Si le panneau du musée est déjà affiché (ex: fetchStats s'est terminé en premier), on le re-render
+                if (document.getElementById('museumPane').style.display === 'block') {
+                    renderMuseum();
+                }
+            } catch (err) {
+                console.error("Failed to load fish data:", err);
+            }
         }
 
         async function fetchLeaderboard() {
@@ -403,7 +818,9 @@
                     nameLink.style.cursor = "pointer";
                     
                     const scoreStrong = document.createElement('strong');
-                    scoreStrong.innerHTML = `${p.success} 🐟 <span style="color: #adadb8; font-size: 0.8rem; margin-left: 5px;">${p.junk} 🗑️</span> <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;">${p.banana} 🍌</span> <span style="color: #ffffff; font-size: 0.8rem; margin-left: 5px;">${p.postcard} 📜</span>`;
+                    const pureFish = p.success - p.junk - p.banana - p.postcard - (p.gem || 0);
+                    scoreStrong.innerHTML = `${pureFish} 🐟 <span style="color: #adadb8; font-size: 0.8rem; margin-left: 5px;">${p.junk} 🗑️</span> <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;">${p.banana} 🍌</span> <span style="color: #00ffff; font-size: 0.8rem; margin-left: 5px;">${p.gem || 0} 💎</span> <span style="color: #ffffff; font-size: 0.8rem; margin-left: 5px;">${p.postcard} 📜</span>`;
+
                     
                     item.appendChild(nameLink);
                     item.appendChild(scoreStrong);
@@ -412,9 +829,111 @@
             } catch (err) { console.error(err); }
         }
 
-        let allCatches = [];
-        let currentRarity = 'all';
-        let currentType = 'all';
+        async function fetchBananaKings() {
+            try {
+                const response = await fetch('/api/banana_kings');
+                const data = await response.json();
+                const list = document.getElementById('bananaKingsList');
+                list.innerHTML = '';
+                
+                if (!data.history || data.history.length === 0) {
+                    list.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; text-align: center; padding: 10px; margin: 0;">Aucun Roi Banane n\'a encore été sacré ! 🍌</p>';
+                    return;
+                }
+                
+                data.history.forEach(king => {
+                    const item = document.createElement('div');
+                    item.style.display = 'flex';
+                    item.style.flexDirection = 'column';
+                    item.style.padding = '8px 12px';
+                    item.style.background = king.dethroned_at ? 'rgba(38, 38, 44, 0.4)' : 'rgba(255, 215, 0, 0.08)';
+                    item.style.border = king.dethroned_at ? '1px solid rgba(58, 58, 61, 0.4)' : '1px solid rgba(255, 215, 0, 0.5)';
+                    item.style.borderRadius = '8px';
+                    item.style.boxShadow = king.dethroned_at ? 'none' : '0 0 10px rgba(255, 215, 0, 0.15)';
+                    item.style.transition = 'all 0.3s ease';
+                    
+                    const header = document.createElement('div');
+                    header.style.display = 'flex';
+                    header.style.justifyContent = 'space-between';
+                    header.style.alignItems = 'center';
+                    
+                    const nameLink = document.createElement('a');
+                    nameLink.textContent = `👑 @${king.username}`;
+                    nameLink.href = `/player/${king.username}`;
+                    nameLink.style.color = king.dethroned_at ? '#bf94ff' : '#ffd700';
+                    nameLink.style.textDecoration = 'none';
+                    nameLink.style.fontWeight = 'bold';
+                    nameLink.style.cursor = 'pointer';
+                    
+                    const badge = document.createElement('span');
+                    badge.style.fontSize = '0.7rem';
+                    badge.style.padding = '2px 6px';
+                    badge.style.borderRadius = '4px';
+                    badge.style.fontWeight = 'bold';
+                    if (king.dethroned_at) {
+                        badge.textContent = 'DÉTHRONÉ';
+                        badge.style.background = 'rgba(255, 79, 79, 0.1)';
+                        badge.style.color = '#ff4f4f';
+                    } else {
+                        badge.textContent = 'ACTUEL';
+                        badge.style.background = 'rgba(0, 230, 255, 0.15)';
+                        badge.style.color = '#00e6ff';
+                        badge.style.animation = 'shine 1.5s infinite alternate';
+                    }
+                    
+                    header.appendChild(nameLink);
+                    header.appendChild(badge);
+                    
+                    const details = document.createElement('div');
+                    details.style.fontSize = '0.75rem';
+                    details.style.color = '#adadb8';
+                    details.style.marginTop = '4px';
+                    details.style.display = 'flex';
+                    details.style.flexDirection = 'column';
+                    details.style.gap = '2px';
+                    
+                    const dateCrowned = new Date(king.crowned_at);
+                    const crownedStr = dateCrowned.toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                    });
+                    
+                    const crownedEl = document.createElement('span');
+                    crownedEl.innerHTML = `Sacré : <strong style="color: #efeff1;">${crownedStr}</strong>`;
+                    details.appendChild(crownedEl);
+                    
+                    if (king.dethroned_at) {
+                        const dateDethroned = new Date(king.dethroned_at);
+                        const dethronedStr = dateDethroned.toLocaleDateString('fr-FR', {
+                            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                        });
+                        
+                        const durationMs = dateDethroned - dateCrowned;
+                        const durationMins = Math.round(durationMs / 60000);
+                        let durationStr = `${durationMins} min`;
+                        if (durationMins >= 1440) {
+                            durationStr = `${(durationMins / 1440).toFixed(1)} jours`;
+                        } else if (durationMins >= 60) {
+                            durationStr = `${(durationMins / 60).toFixed(1)} h`;
+                        }
+                        
+                        const dethronedEl = document.createElement('span');
+                        dethronedEl.innerHTML = `Détrôné : <strong style="color: #efeff1;">${dethronedStr}</strong> <span style="color: #8f8f98; font-size: 0.7rem; margin-left: 5px;">(Règne : ${durationStr})</span>`;
+                        details.appendChild(dethronedEl);
+                    } else {
+                        const activeEl = document.createElement('span');
+                        activeEl.innerHTML = `<span style="color: #00ff00; font-weight: bold;">Règne en cours... 🌟</span>`;
+                        details.appendChild(activeEl);
+                    }
+                    
+                    item.appendChild(header);
+                    item.appendChild(details);
+                    list.appendChild(item);
+                });
+            } catch (err) {
+                console.error(err);
+                document.getElementById('bananaKingsList').innerHTML = '<p style="font-size: 0.8rem; color: #ff4f4f; text-align: center; padding: 10px; margin: 0;">Erreur lors du chargement de l\'historique.</p>';
+            }
+        }
 
         async function fetchStats(u) {
             const username = u || document.getElementById('usernameInput').value;
@@ -427,9 +946,11 @@
                 if (data.error) {
                     document.getElementById('error').style.display = 'block';
                     document.getElementById('statsDisplay').style.display = 'none';
+                    document.getElementById('museumPane').style.display = 'none';
                 } else {
                     document.getElementById('error').style.display = 'none';
                     document.getElementById('statsDisplay').style.display = 'block';
+                    document.getElementById('museumPane').style.display = 'block';
                     document.getElementById('res-username').innerText = data.username;
                     document.getElementById('res-level').innerText = data.level;
                     document.getElementById('res-vip').style.display = data.is_vip ? 'inline' : 'none';
@@ -441,8 +962,66 @@
                     document.getElementById('res-success').textContent = data.success;
                     document.getElementById('res-failed').textContent = data.failed;
 
-                    // Stocker pour le filtrage
+                    const fishCount = data.success - data.junk - data.banana - data.postcard - (data.gem || 0);
+                    document.getElementById('res-stat-fish').textContent = fishCount;
+                    document.getElementById('res-stat-junk').textContent = data.junk;
+                    document.getElementById('res-stat-banana').textContent = data.banana;
+                    document.getElementById('res-stat-gem').textContent = data.gem || 0;
+                    document.getElementById('res-stat-postcard').textContent = data.postcard;
+
+
+                    // Stocker les captures
                     allCatches = data.catches || [];
+
+                    // Affichage de la photo de profil Twitch
+                    const avatarUrl = data.profile_image_url;
+                    const avatarEl = document.getElementById('res-avatar');
+                    if (avatarUrl) {
+                        avatarEl.src = avatarUrl;
+                        avatarEl.style.display = 'block';
+                    } else {
+                        avatarEl.src = '';
+                        avatarEl.style.display = 'none';
+                    }
+
+                    // Logique "Roi des Bananes" & Couronne
+                    const hasBanana1 = allCatches.some(c => c.name === "Pristine Banana 1");
+                    const hasBanana2 = allCatches.some(c => c.name === "Pristine Banana 2");
+                    const isBananaKing = hasBanana1 && hasBanana2;
+
+                    document.getElementById('res-crown').style.display = isBananaKing ? 'block' : 'none';
+                    document.getElementById('res-banana-king-badge').style.display = isBananaKing ? 'inline' : 'none';
+
+                    // Divine Banana Showcase
+                    const bananaShowcase = document.getElementById('bananaShowcase');
+                    bananaShowcase.style.display = 'flex';
+
+                    const b1Slot = document.getElementById('banana1Slot');
+                    const b2Slot = document.getElementById('banana2Slot');
+
+                    if (hasBanana1) {
+                        b1Slot.classList.add('unlocked');
+                    } else {
+                        b1Slot.classList.remove('unlocked');
+                    }
+
+                    if (hasBanana2) {
+                        b2Slot.classList.add('unlocked');
+                    } else {
+                        b2Slot.classList.remove('unlocked');
+                    }
+
+                    if (hasBanana1 || hasBanana2) {
+                        bananaShowcase.classList.add('active');
+                    } else {
+                        bananaShowcase.classList.remove('active');
+                    }
+
+                    // Rendre le Musée
+                    renderMuseum();
+
+                    // Réinitialiser la pagination et filtrer
+                    currentPage = 1;
                     applyFilters();
                 }
             } catch (err) {
@@ -451,6 +1030,7 @@
         }
 
         function filterByRarity(rarity) {
+            currentPage = 1;
             currentRarity = rarity;
             const btns = document.querySelectorAll('#filterBar .filter-btn');
             btns.forEach(b => b.classList.toggle('active', b.getAttribute('data-rarity') === rarity));
@@ -458,10 +1038,41 @@
         }
 
         function filterByType(type) {
+            currentPage = 1;
             currentType = type;
             const btns = document.querySelectorAll('#typeFilterBar .filter-btn');
             btns.forEach(b => b.classList.toggle('active', b.getAttribute('data-type') === type));
             applyFilters();
+        }
+
+        // Réinitialiser la pagination lors de la saisie de recherche
+        document.getElementById('inventorySearch').addEventListener('input', () => {
+            currentPage = 1;
+        });
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                applyFilters();
+            }
+        }
+
+        function nextPage() {
+            const searchTerm = document.getElementById('inventorySearch').value.toLowerCase();
+            const filtered = allCatches.filter(f => {
+                const isJunk = !!f.is_junk;
+                const matchRarity = currentRarity === 'all' || f.rarity.toLowerCase() === currentRarity;
+                const matchType = currentType === 'all' || 
+                                (currentType === 'fish' && !isJunk) || 
+                                (currentType === 'junk' && isJunk);
+                const matchSearch = f.name.toLowerCase().includes(searchTerm);
+                return matchRarity && matchType && matchSearch;
+            });
+            const totalPages = Math.max(1, Math.ceil(filtered.length / itemsPerPage));
+            if (currentPage < totalPages) {
+                currentPage++;
+                applyFilters();
+            }
         }
 
         function applyFilters() {
@@ -480,8 +1091,33 @@
                 return matchRarity && matchType && matchSearch;
             });
 
-            if (filtered.length > 0) {
-                filtered.forEach(f => {
+            // Logique de pagination
+            const totalItems = filtered.length;
+            const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+            
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginated = filtered.slice(startIndex, endIndex);
+
+            const paginationControls = document.getElementById('paginationControls');
+            if (totalItems > itemsPerPage) {
+                paginationControls.style.display = 'flex';
+                document.getElementById('paginationInfo').textContent = `Page ${currentPage} / ${totalPages}`;
+                document.getElementById('btnPrevPage').disabled = (currentPage === 1);
+                document.getElementById('btnNextPage').disabled = (currentPage === totalPages);
+            } else {
+                paginationControls.style.display = 'none';
+            }
+
+            if (paginated.length > 0) {
+                paginated.forEach(f => {
                     const slot = document.createElement('div');
                     slot.className = 'fish-slot';
                     if (f.is_junk) slot.classList.add('junk-item');
@@ -511,7 +1147,6 @@
                     } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
                         icon.textContent = '🍣';
                     } else if (f.is_junk) {
-                        // Icônes spécifiques pour les déchets
                         if (nameLower.includes('pneu')) icon.textContent = '🛞';
                         else if (nameLower.includes('botte') || nameLower.includes('chaussure') || nameLower.includes('gant')) icon.textContent = '🥾';
                         else if (nameLower.includes('canette') || nameLower.includes('bouteille') || nameLower.includes('gobelet') || nameLower.includes('soda')) icon.textContent = '🥫';
@@ -592,14 +1227,18 @@
         function showFishDetails(fish, color) {
             document.getElementById('modal-name').textContent = fish.name;
             document.getElementById('modal-name').style.color = color;
+            
+            // Rétablir la mise en page normale du modal
+            document.getElementById('modal-id-row').style.display = fish.is_junk ? 'none' : 'block';
             document.getElementById('modal-id').textContent = fish.id || '?';
+            
             document.getElementById('modal-rarity').textContent = fish.rarity;
             document.getElementById('modal-rarity').style.color = color;
             
-            // Masquer Taille/Poids si c'est un déchet
             const isJunk = fish.is_junk;
             document.getElementById('modal-size-row').style.display = isJunk ? 'none' : 'block';
             document.getElementById('modal-weight-row').style.display = isJunk ? 'none' : 'block';
+            document.getElementById('modal-state-row').style.display = isJunk ? 'none' : 'block';
             
             document.getElementById('modal-size').textContent = fish.size;
             document.getElementById('modal-weight').textContent = formatWeight(fish.weight);
@@ -608,13 +1247,200 @@
 
             // Date et Stream
             const date = new Date(fish.caught_at);
-            document.getElementById('modal-date').textContent = date.toLocaleDateString('fr-FR', {
+            const dateStr = date.toLocaleDateString('fr-FR', {
                 day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
             });
-            document.getElementById('modal-stream').textContent = fish.stream_title || "Hors live";
+            const streamStr = fish.stream_title || "Hors live";
+
+            document.getElementById('modal-meta-row').innerHTML = `
+                <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
+                    📅 <span>${dateStr}</span><br>
+                    🎥 <span>${streamStr}</span>
+                </p>
+            `;
 
             document.getElementById('fishModal').style.display = 'block';
             document.getElementById('modalOverlay').style.display = 'block';
+        }
+
+        function showMuseumDetails(pb) {
+            document.getElementById('modal-name').textContent = "Record : " + pb.name;
+            document.getElementById('modal-name').style.color = pb.color;
+            document.getElementById('modal-id-row').style.display = 'none';
+            document.getElementById('modal-rarity').textContent = pb.rarity;
+            document.getElementById('modal-rarity').style.color = pb.color;
+            
+            document.getElementById('modal-size-row').style.display = 'block';
+            document.getElementById('modal-weight-row').style.display = 'block';
+            document.getElementById('modal-state-row').style.display = 'block';
+            
+            document.getElementById('modal-size').textContent = pb.maxSize;
+            document.getElementById('modal-weight').textContent = formatWeight(pb.maxWeight);
+            document.getElementById('modal-state').textContent = pb.bestState;
+            document.getElementById('modal-desc').textContent = pb.description;
+
+            // Remplacer les métadonnées par les statistiques du Musée
+            document.getElementById('modal-meta-row').innerHTML = `
+                <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
+                    📊 Total pêchés : <strong>${pb.totalCaught}</strong>
+                </p>
+            `;
+
+            document.getElementById('fishModal').style.display = 'block';
+            document.getElementById('modalOverlay').style.display = 'block';
+        }
+
+        function renderMuseum() {
+            const grid = document.getElementById('museumGrid');
+            grid.innerHTML = '';
+
+            let discoveredCount = 0;
+            const totalCount = flatFishList.length;
+
+            flatFishList.forEach(fish => {
+                const catches = allCatches.filter(c => c.name === fish.name);
+                const isUnlocked = catches.length > 0;
+
+                const slot = document.createElement('div');
+                slot.className = 'museum-slot';
+
+                const icon = document.createElement('span');
+                icon.className = 'icon';
+                
+                const nameLower = fish.name.toLowerCase();
+                if (nameLower.includes('banana')) {
+                    icon.textContent = '🍌';
+                } else if (nameLower.includes('grenouille') || nameLower.includes('têtard')) {
+                    icon.textContent = '🐸';
+                } else if (nameLower.includes('requin')) {
+                    icon.textContent = '🦈';
+                } else if (nameLower.includes('anguille')) {
+                    icon.textContent = '🐍';
+                } else if (nameLower.includes('calmar')) {
+                    icon.textContent = '🦑';
+                } else if (nameLower.includes('piranha')) {
+                    icon.textContent = '🐡';
+                } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
+                    icon.textContent = '🍣';
+                } else {
+                    icon.textContent = '🐟';
+                }
+
+                const nameLabel = document.createElement('div');
+                nameLabel.className = 'name-label';
+                nameLabel.textContent = fish.name;
+
+                const rarityColors = {
+                    'common': '#efeff1',
+                    'uncommon': '#1fa363',
+                    'rare': '#00e6ff',
+                    'veryrare': '#9146ff',
+                    'epic': '#ff4ce2',
+                    'legendary': '#ffb444',
+                    'mythical': '#ff4f4f',
+                    'divin': '#ffffff'
+                };
+                const color = rarityColors[fish.rarity.toLowerCase().replace(/\s/g, '')] || '#efeff1';
+
+                if (isUnlocked) {
+                    discoveredCount++;
+                    slot.classList.add('unlocked');
+                    slot.style.borderColor = color;
+                    if (fish.rarity.toLowerCase() === 'divin') {
+                        slot.style.boxShadow = "0 0 8px #fff, inset 0 0 4px #fff";
+                    }
+
+                    // Calcul des records personnels
+                    let maxWeight = 0;
+                    let maxSize = 0;
+                    let bestStateRank = 0;
+                    let bestState = '';
+                    let bestDescription = '';
+
+                    catches.forEach(c => {
+                        if (c.weight > maxWeight) maxWeight = c.weight;
+                        if (c.size > maxSize) maxSize = c.size;
+                        
+                        const rank = stateRanks[c.state.toLowerCase()] || 1;
+                        if (rank > bestStateRank) {
+                            bestStateRank = rank;
+                            bestState = c.state;
+                            bestDescription = c.description;
+                        }
+                    });
+
+                    if (!bestDescription && catches[0]) {
+                        bestDescription = catches[0].description;
+                    }
+
+                    slot.appendChild(icon);
+                    slot.appendChild(nameLabel);
+
+                    // Badge d'état (comme dans l'inventaire)
+                    const stateColors = {
+                        'badly damaged': '#ff4f4f',
+                        'damaged': '#ff8235',
+                        'worn': '#ffd700',
+                        'good': '#1fa363',
+                        'pristine': '#ffffff'
+                    };
+                    const stateColor = stateColors[bestState.toLowerCase()] || '#efeff1';
+
+                    const badge = document.createElement('div');
+                    badge.className = 'badge';
+                    if (bestState.toLowerCase() === 'pristine') {
+                        badge.classList.add('pristine-star');
+                        badge.textContent = '⭐';
+                    } else {
+                        badge.style.backgroundColor = stateColor;
+                    }
+                    slot.appendChild(badge);
+
+                    // Compteur d'éléments pêchés en bas à gauche
+                    const countLabel = document.createElement('div');
+                    countLabel.className = 'catch-count';
+                    countLabel.textContent = `x${catches.length}`;
+                    slot.appendChild(countLabel);
+
+                    slot.onclick = () => {
+                        showMuseumDetails({
+                            name: fish.name,
+                            rarity: fish.rarity,
+                            color: color,
+                            maxSize: maxSize,
+                            maxWeight: maxWeight,
+                            bestState: bestState,
+                            description: bestDescription,
+                            totalCaught: catches.length
+                        });
+                    };
+                } else {
+                    slot.classList.add('locked');
+                    
+                    const lockIcon = document.createElement('span');
+                    lockIcon.className = 'lock-icon';
+                    lockIcon.textContent = '🔒';
+                    slot.appendChild(lockIcon);
+
+                    icon.textContent = '❓';
+                    slot.appendChild(icon);
+                    slot.appendChild(nameLabel);
+
+                    slot.onclick = () => {
+                        alert(`Non encore pêché ! Continue à lancer ta ligne pour découvrir le ${fish.name}.`);
+                    };
+                }
+
+                grid.appendChild(slot);
+            });
+
+            // Mettre à jour la barre de progression globale
+            document.getElementById('museum-discovered-count').textContent = discoveredCount;
+            document.getElementById('museum-total-count').textContent = totalCount;
+            
+            const percentage = totalCount > 0 ? Math.round((discoveredCount / totalCount) * 100) : 0;
+            document.getElementById('museum-percentage').textContent = `${percentage}%`;
+            document.getElementById('museum-progress-fill').style.width = `${percentage}%`;
         }
 
         function closeModal() {
