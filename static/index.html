@@ -1511,6 +1511,7 @@
         }
 
         function formatWeight(g) {
+            if (!g || isNaN(g) || g <= 0) return "-";
             if (g >= 1000000) return (g / 1000000).toFixed(2) + " T";
             if (g >= 1000) return (g / 1000).toFixed(2) + " kg";
             return g.toFixed(2) + " g";
@@ -1582,19 +1583,28 @@
         function showMuseumDetails(pb) {
             const staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
             const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
-            document.getElementById('modal-name').textContent = "Record : " + pb.name + idStr;
-            document.getElementById('modal-name').style.color = pb.color;
+            const isUnlocked = pb.totalCaught > 0;
+
+            document.getElementById('modal-name').textContent = (isUnlocked ? "Record : " : "Mystère : ") + pb.name + idStr;
+            document.getElementById('modal-name').style.color = isUnlocked ? pb.color : '#8b8b9c';
             document.getElementById('modal-id-row').style.display = 'none';
             document.getElementById('modal-rarity').textContent = pb.rarity;
             document.getElementById('modal-rarity').style.color = pb.color;
             
-            document.getElementById('modal-size-row').style.display = 'block';
-            document.getElementById('modal-weight-row').style.display = 'block';
-            document.getElementById('modal-state-row').style.display = 'block';
+            if (isUnlocked) {
+                document.getElementById('modal-size-row').style.display = 'block';
+                document.getElementById('modal-weight-row').style.display = 'block';
+                document.getElementById('modal-state-row').style.display = 'block';
+                
+                document.getElementById('modal-size').textContent = pb.maxSize + " cm";
+                document.getElementById('modal-weight').textContent = formatWeight(pb.maxWeight);
+                document.getElementById('modal-state').textContent = pb.bestState;
+            } else {
+                document.getElementById('modal-size-row').style.display = 'none';
+                document.getElementById('modal-weight-row').style.display = 'none';
+                document.getElementById('modal-state-row').style.display = 'none';
+            }
             
-            document.getElementById('modal-size').textContent = pb.maxSize;
-            document.getElementById('modal-weight').textContent = formatWeight(pb.maxWeight);
-            document.getElementById('modal-state').textContent = pb.bestState;
             document.getElementById('modal-desc').textContent = pb.description;
 
             // Chercher les métadonnées statiques pour enrichir
@@ -1604,7 +1614,7 @@
             if (staticInfo) {
                 gpMeta.style.display = 'block';
                 document.getElementById('modal-location').textContent = staticInfo.location || '-';
-                document.getElementById('modal-price').textContent = staticInfo.price || '-';
+                document.getElementById('modal-price').textContent = staticInfo.price ? (staticInfo.price + " 🪙") : '-';
                 document.getElementById('modal-time').textContent = staticInfo.preferred_time || 'Toute la journée';
                 document.getElementById('modal-season').textContent = staticInfo.preferred_season || "Toute l'année";
                 
@@ -1774,7 +1784,16 @@
                     slot.appendChild(nameLabel);
 
                     slot.onclick = () => {
-                        alert(`Non encore pêché ! Continue à lancer ta ligne pour découvrir le ${fish.name}.`);
+                        showMuseumDetails({
+                            name: fish.name,
+                            rarity: fish.rarity,
+                            color: color,
+                            maxSize: null,
+                            maxWeight: null,
+                            bestState: null,
+                            description: "Cette espèce mystérieuse n'a pas encore été enregistrée dans votre collection de la saison. Continuez à pêcher pour la découvrir !",
+                            totalCaught: 0
+                        });
                     };
                 }
 
