@@ -12,6 +12,8 @@ pub struct PlayerBackup {
     pub level: i32,
     pub xp: i64,
     pub vip_until: Option<DateTime<Utc>>,
+    #[serde(default)]
+    pub gold: Option<i64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -68,6 +70,7 @@ impl Repository {
             postcard_count: row.get("postcard_count"),
             gem_count: row.get("gem_count"),
             profile_image_url: row.get("profile_image_url"),
+            gold: row.get("gold"),
         }).collect();
 
         Ok(players)
@@ -81,15 +84,17 @@ impl Repository {
     }
 
     pub async fn restore_player(&self, backup: &PlayerBackup) -> Result<i64, sqlx::Error> {
-        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until) \
-            VALUES (?, ?, ?, ?, ?, ?, ?) \
+        let gold_val = backup.gold.unwrap_or(0);
+        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until, gold) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?) \
             ON CONFLICT(username) DO UPDATE SET \
             total_attempts = excluded.total_attempts, \
             successful_attempts = excluded.successful_attempts, \
             failed_attempts = excluded.failed_attempts, \
             level = excluded.level, \
             xp = excluded.xp, \
-            vip_until = excluded.vip_until")
+            vip_until = excluded.vip_until, \
+            gold = excluded.gold")
             .bind(&backup.username.to_lowercase())
             .bind(backup.total_attempts)
             .bind(backup.successful_attempts)
@@ -97,6 +102,7 @@ impl Repository {
             .bind(backup.level)
             .bind(backup.xp)
             .bind(backup.vip_until)
+            .bind(gold_val)
             .execute(&self.pool)
             .await?
             .last_insert_rowid();
@@ -141,6 +147,7 @@ impl Repository {
                 postcard_count: r.get("postcard_count"),
                 gem_count: r.get("gem_count"),
                 profile_image_url: r.get("profile_image_url"),
+                gold: r.get("gold"),
             }))
         } else {
             Ok(None)
@@ -169,6 +176,7 @@ impl Repository {
             postcard_count: 0,
             gem_count: 0,
             profile_image_url: row.get("profile_image_url"),
+            gold: row.get("gold"),
         }).collect())
     }
 
@@ -208,6 +216,7 @@ impl Repository {
                 postcard_count: row.get("postcard_count"),
                 gem_count: row.get("gem_count"),
                 profile_image_url: row.get("profile_image_url"),
+                gold: row.get("gold"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -248,6 +257,7 @@ impl Repository {
             postcard_count: row.get("postcard_count"),
             gem_count: row.get("gem_count"),
             profile_image_url: row.get("profile_image_url"),
+            gold: row.get("gold"),
         }).collect();
 
         Ok(players)
@@ -480,6 +490,162 @@ impl Repository {
         Ok(count > 0)
     }
 
+    async fn check_and_update_banana_king_status(
+        tx: &mut sqlx::Transaction<'_, sqlx::Sqlite>,
+        player_id: i64,
+    ) -> Result<(), sqlx::Error> {
+        let username: String = sqlx::query_scalar("SELECT username FROM players WHERE id = ?")
+            .bind(player_id)
+            .fetch_one(&mut **tx)
+            .await?;
+
+        let count: i64 = sqlx::query_scalar(
+            "SELECT COUNT(*) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
+        )
+        .bind(player_id)
+        .fetch_one(&mut **tx)
+        .await?;
+
+        if count == 2 {
+            let is_already_king: i64 = sqlx::query_scalar(
+                "SELECT COUNT(*) FROM banana_kings_history WHERE player_id = ? AND dethroned_at IS NULL"
+            )
+            .bind(player_id)
+            .fetch_one(&mut **tx)
+            .await?;
+
+            if is_already_king == 0 {
+                // Dethrone any existing active King
+                sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
+                    .execute(&mut **tx)
+                    .await?;
+
+                // Insert new King record
+                sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
+                    .bind(player_id)
+                    .bind(&username)
+                    .execute(&mut **tx)
+                    .await?;
+            }
+        } else {
+            // If they are currently the active king, dethrone them
+            sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE player_id = ? AND dethroned_at IS NULL")
+                .bind(player_id)
+                .execute(&mut **tx)
+                .await?;
+        }
+        Ok(())
+    }
+
+    pub async fn execute_gold_sale(
+        &self,
+        seller_id: i64,
+        catch_ids: &[i64],
+        gold_earned: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        for &id in catch_ids {
+            sqlx::query("DELETE FROM catches WHERE id = ? AND player_id = ?")
+                .bind(id)
+                .bind(seller_id)
+                .execute(&mut *tx)
+                .await?;
+        }
+
+        sqlx::query("UPDATE players SET gold = gold + ? WHERE id = ?")
+            .bind(gold_earned)
+            .bind(seller_id)
+            .execute(&mut *tx)
+            .await?;
+
+        Self::check_and_update_banana_king_status(&mut tx, seller_id).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn execute_direct_trade(
+        &self,
+        catch_id: i64,
+        seller_id: i64,
+        buyer_id: i64,
+        price: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // 1. Transfer catch ownership
+        let rows_affected = sqlx::query("UPDATE catches SET player_id = ? WHERE id = ? AND player_id = ?")
+            .bind(buyer_id)
+            .bind(catch_id)
+            .bind(seller_id)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+
+        if rows_affected == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        // 2. Transfer gold
+        sqlx::query("UPDATE players SET gold = gold - ? WHERE id = ?")
+            .bind(price)
+            .bind(buyer_id)
+            .execute(&mut *tx)
+            .await?;
+
+        sqlx::query("UPDATE players SET gold = gold + ? WHERE id = ?")
+            .bind(price)
+            .bind(seller_id)
+            .execute(&mut *tx)
+            .await?;
+
+        // 3. Update Banana King status for both players
+        Self::check_and_update_banana_king_status(&mut tx, seller_id).await?;
+        Self::check_and_update_banana_king_status(&mut tx, buyer_id).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn execute_barter_trade(
+        &self,
+        catch_id_a: i64,
+        player_id_a: i64,
+        catch_id_b: i64,
+        player_id_b: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // 1. Swap ownership
+        let rows_a = sqlx::query("UPDATE catches SET player_id = ? WHERE id = ? AND player_id = ?")
+            .bind(player_id_b)
+            .bind(catch_id_a)
+            .bind(player_id_a)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+
+        let rows_b = sqlx::query("UPDATE catches SET player_id = ? WHERE id = ? AND player_id = ?")
+            .bind(player_id_a)
+            .bind(catch_id_b)
+            .bind(player_id_b)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+
+        if rows_a == 0 || rows_b == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        // 2. Update Banana King status for both players
+        Self::check_and_update_banana_king_status(&mut tx, player_id_a).await?;
+        Self::check_and_update_banana_king_status(&mut tx, player_id_b).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
     pub async fn get_banana_kings_history(&self) -> Result<Vec<BananaKingRecord>, sqlx::Error> {
         let rows = sqlx::query(
             "SELECT id, player_id, username, crowned_at, dethroned_at FROM banana_kings_history ORDER BY crowned_at DESC, id DESC"
@@ -525,7 +691,8 @@ impl Repository {
                 level INTEGER DEFAULT 1,
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
-                profile_image_url TEXT
+                profile_image_url TEXT,
+                gold INTEGER DEFAULT 0
             )"
         ).execute(&mut *tx).await?;
 
@@ -782,7 +949,8 @@ mod tests {
                 level INTEGER DEFAULT 1,
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
-                profile_image_url TEXT
+                profile_image_url TEXT,
+                gold INTEGER DEFAULT 0
             )"
         ).execute(&pool).await.unwrap();
 
@@ -937,6 +1105,7 @@ mod tests {
             level: 3,
             xp: 250,
             vip_until: None,
+            gold: Some(0),
         }).await.unwrap();
 
         let fish = Fish::new("Brochet".to_string(), Rarity::Common, 12.5, 2.4, "state".to_string(), "desc".to_string());

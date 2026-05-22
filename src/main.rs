@@ -35,6 +35,41 @@ use crate::auth::{AuthManager, MyError};
 
 pub type TwitchClient = TwitchIRCClient<SecureTCPTransport, StaticLoginCredentials>;
 
+#[derive(Debug, Clone)]
+pub struct PendingSale {
+    pub player_id: i64,
+    pub catch_ids: Vec<i64>,
+    pub catch_names: Vec<String>,
+    pub gold_earned: i64,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone)]
+pub enum PendingTrade {
+    Direct {
+        seller_id: i64,
+        seller_username: String,
+        buyer_username: String, // lowercase
+        catch_id: i64,
+        catch_name: String,
+        price: i64,
+        created_at: DateTime<Utc>,
+    },
+    Barter {
+        player_a_id: i64,
+        player_a_username: String, // lowercase
+        catch_a_id: i64,
+        catch_a_name: String,
+        player_b_username: String, // lowercase
+        catch_b_id: Option<i64>, // filled in step 2
+        catch_b_name: Option<String>,
+        step: u8,
+        player_a_accepted: bool,
+        player_b_accepted: bool,
+        last_activity: DateTime<Utc>,
+    },
+}
+
 pub struct AppState {
     pub repo: Arc<Repository>,
     pub auth: Arc<AuthManager>,
@@ -45,6 +80,8 @@ pub struct AppState {
     pub pending_purges: RwLock<HashMap<String, DateTime<Utc>>>,
     pub bot_abort_handle: RwLock<Option<tokio::task::JoinHandle<()>>>,
     pub rate_limiter: RwLock<HashMap<String, (u32, Option<DateTime<Utc>>)>>,
+    pub pending_sales: RwLock<HashMap<String, PendingSale>>,
+    pub pending_trades: RwLock<Vec<PendingTrade>>,
 }
 
 use bot::start_bot;
@@ -79,6 +116,7 @@ async fn main() -> Result<(), MyError> {
                 level: p.level,
                 xp: p.xp,
                 vip_until: p.vip_until,
+                gold: Some(p.gold),
             }).collect();
             if let Ok(json) = serde_json::to_string_pretty(&backups) {
                 let _ = tokio::fs::write("data/players_backup.json", json).await;
@@ -101,11 +139,13 @@ async fn main() -> Result<(), MyError> {
             level INTEGER DEFAULT 1,
             xp INTEGER DEFAULT 0,
             vip_until DATETIME,
-            profile_image_url TEXT
+            profile_image_url TEXT,
+            gold INTEGER DEFAULT 0
         )"
     ).execute(&pool).await?;
 
     let _ = sqlx::query("ALTER TABLE players ADD COLUMN profile_image_url TEXT").execute(&pool).await;
+    let _ = sqlx::query("ALTER TABLE players ADD COLUMN gold INTEGER DEFAULT 0").execute(&pool).await;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS catches (
@@ -169,6 +209,8 @@ async fn main() -> Result<(), MyError> {
         pending_purges: RwLock::new(HashMap::new()),
         bot_abort_handle: RwLock::new(None),
         rate_limiter: RwLock::new(HashMap::new()),
+        pending_sales: RwLock::new(HashMap::new()),
+        pending_trades: RwLock::new(Vec::new()),
     });
 
     tasks::start_vip_cleanup_task(Arc::clone(&state));

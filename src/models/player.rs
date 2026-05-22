@@ -17,6 +17,7 @@ pub struct Player {
     pub postcard_count: i64,
     pub gem_count: i64,
     pub profile_image_url: Option<String>,
+    pub gold: i64,
 }
 
 impl Player {
@@ -36,6 +37,7 @@ impl Player {
             postcard_count: 0,
             gem_count: 0,
             profile_image_url: None,
+            gold: 0,
         }
     }
 

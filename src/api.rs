@@ -151,7 +151,8 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "junk": p.junk_count,
                 "banana": p.banana_count,
                 "postcard": p.postcard_count,
-                "gem": p.gem_count
+                "gem": p.gem_count,
+                "gold": p.gold
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),
@@ -164,7 +165,7 @@ pub async fn get_fish_data_api() -> impl IntoResponse {
 
 pub async fn get_leaderboard(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     match state.repo.get_leaderboard().await {
-        Ok(players) => Json(serde_json::json!({"top": players.iter().map(|p| serde_json::json!({"username": p.username, "success": p.successful_attempts, "level": p.level, "junk": p.junk_count, "banana": p.banana_count, "postcard": p.postcard_count, "gem": p.gem_count})).collect::<Vec<_>>()})).into_response(),
+        Ok(players) => Json(serde_json::json!({"top": players.iter().map(|p| serde_json::json!({"username": p.username, "success": p.successful_attempts, "level": p.level, "junk": p.junk_count, "banana": p.banana_count, "postcard": p.postcard_count, "gem": p.gem_count, "gold": p.gold})).collect::<Vec<_>>()})).into_response(),
         Err(_) => Json(serde_json::json!({"error": "Error"})).into_response()
     }
 }

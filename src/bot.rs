@@ -7,9 +7,262 @@ use twitch_irc::TwitchIRCClient;
 use twitch_irc::message::ServerMessage;
 use twitch_irc::SecureTCPTransport;
 
-use crate::AppState;
+use crate::{AppState, PendingSale, PendingTrade};
 use crate::game::{generate_fish, generate_junk};
 use crate::config::get_fail_attempt_reasons;
+
+#[derive(Debug)]
+pub enum SellArg {
+    ConfirmYes,
+    ConfirmNo,
+    ById(i64),
+    ByName {
+        name: String,
+        state: Option<String>,
+        quantity: i64,
+    },
+}
+
+pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
+    let args_str = args_str.trim();
+    if args_str.is_empty() {
+        return None;
+    }
+
+    let lower = args_str.to_lowercase();
+    if lower == "oui" || lower == "yes" || lower == "y" {
+        return Some(SellArg::ConfirmYes);
+    }
+    if lower == "non" || lower == "no" || lower == "n" {
+        return Some(SellArg::ConfirmNo);
+    }
+
+    if args_str.starts_with('#') {
+        if let Ok(id) = args_str[1..].parse::<i64>() {
+            return Some(SellArg::ById(id));
+        }
+    }
+
+    let mut tokens: Vec<&str> = args_str.split_whitespace().collect();
+    if tokens.is_empty() {
+        return None;
+    }
+
+    let mut quantity = 1;
+    if let Some(&last_token) = tokens.last() {
+        if let Ok(qty) = last_token.parse::<i64>() {
+            if qty > 0 {
+                quantity = qty;
+                tokens.pop();
+            }
+        }
+    }
+
+    if tokens.is_empty() {
+        return None;
+    }
+
+    let mut state = None;
+    let n = tokens.len();
+    if n >= 2 {
+        let two_words = format!("{} {}", tokens[n - 2], tokens[n - 1]).to_lowercase();
+        if two_words == "badly damaged" || two_words == "très endommagé" || two_words == "tres endommage" {
+            state = Some("badly damaged".to_string());
+            tokens.pop();
+            tokens.pop();
+        }
+    }
+
+    if state.is_none() {
+        if let Some(&last_token) = tokens.last() {
+            let state_str = match last_token.to_lowercase().as_str() {
+                "pristine" | "parfait" => Some("pristine".to_string()),
+                "good" | "bon" | "bonne" => Some("good".to_string()),
+                "worn" | "usé" | "use" => Some("worn".to_string()),
+                "damaged" | "endommagé" | "endommage" => Some("damaged".to_string()),
+                "badly" | "tres" | "très" => Some("badly damaged".to_string()),
+                _ => None,
+            };
+            if let Some(s) = state_str {
+                state = Some(s);
+                tokens.pop();
+            }
+        }
+    }
+
+    if tokens.is_empty() {
+        return None;
+    }
+
+    let name = tokens.join(" ");
+    if name.to_lowercase() == "pristine banana" && (quantity == 1 || quantity == 2) {
+        let final_name = format!("Pristine Banana {}", quantity);
+        return Some(SellArg::ByName {
+            name: final_name,
+            state,
+            quantity: 1,
+        });
+    }
+
+    Some(SellArg::ByName {
+        name,
+        state,
+        quantity,
+    })
+}
+
+#[derive(Debug)]
+pub enum TradeArg {
+    Accept,
+    Cancel,
+    Direct {
+        catch_id: i64,
+        price: i64,
+        recipient: String,
+    },
+    Barter {
+        catch_id: i64,
+        recipient: String,
+    },
+}
+
+pub fn parse_trade_args(args_str: &str) -> Option<TradeArg> {
+    let args_str = args_str.trim();
+    if args_str.is_empty() {
+        return None;
+    }
+
+    let lower = args_str.to_lowercase();
+    if lower == "accept" || lower == "oui" || lower == "yes" {
+        return Some(TradeArg::Accept);
+    }
+    if lower == "cancel" || lower == "non" || lower == "no" {
+        return Some(TradeArg::Cancel);
+    }
+
+    let tokens: Vec<&str> = args_str.split_whitespace().collect();
+    if tokens.len() < 2 {
+        return None;
+    }
+
+    if !tokens[0].starts_with('#') {
+        return None;
+    }
+    let catch_id = tokens[0][1..].parse::<i64>().ok()?;
+
+    if tokens.len() == 2 {
+        let recipient = tokens[1].trim_start_matches('@').to_lowercase();
+        return Some(TradeArg::Barter { catch_id, recipient });
+    }
+
+    if tokens.len() == 3 {
+        let price = tokens[1].parse::<i64>().ok()?;
+        let recipient = tokens[2].trim_start_matches('@').to_lowercase();
+        return Some(TradeArg::Direct { catch_id, price, recipient });
+    }
+
+    None
+}
+
+pub fn get_base_price(name: &str) -> i64 {
+    if name == "Pristine Banana 1" || name == "Pristine Banana 2" {
+        return 5000;
+    } else if name == "Gemme VIP" || name == "Gemme VIP (TEST)" {
+        return 10000;
+    } else if name.to_lowercase().contains("carte postale") {
+        return 50000;
+    }
+
+    let game_data = crate::config::get_game_data();
+    for (rarity, fishes) in &game_data.fish_data {
+        for fish in fishes {
+            if fish.name.to_lowercase() == name.to_lowercase() {
+                if let Some(p) = fish.price {
+                    if p > 0 {
+                        return p as i64;
+                    }
+                }
+                
+                // Fallback to a deterministic unique price based on the species' name!
+                // This ensures each fish has a fixed, unique price forever (like its name/desc).
+                let mut hash = 0u32;
+                for c in fish.name.bytes() {
+                    hash = hash.wrapping_add(c as u32).wrapping_mul(31);
+                }
+                
+                // Map the hash to a realistic unique price range based on Rarity
+                let (min_p, max_p) = match rarity {
+                    crate::config::Rarity::Common => (40, 95),
+                    crate::config::Rarity::Uncommon => (100, 220),
+                    crate::config::Rarity::Rare => (230, 480),
+                    crate::config::Rarity::VeryRare => (500, 950),
+                    crate::config::Rarity::Epic => (1000, 2400),
+                    crate::config::Rarity::Legendary => (2500, 4800),
+                    crate::config::Rarity::Mythical => (5000, 12000),
+                    crate::config::Rarity::Divin => (15000, 45000),
+                };
+                
+                let range = max_p - min_p + 1;
+                let offset = (hash % range as u32) as i64;
+                
+                // If the fish has preferred active hours or restrictions, apply a premium multiplier
+                let mut time_multiplier = 1.0;
+                if fish.preferred_time.is_some() || fish.time_restriction.is_some() {
+                    time_multiplier = 1.3;
+                }
+                
+                return ((min_p + offset) as f64 * time_multiplier).round() as i64;
+            }
+        }
+    }
+    
+    for (_, junks) in &game_data.junk_data {
+        for junk in junks {
+            if junk.name.to_lowercase() == name.to_lowercase() {
+                return 10;
+            }
+        }
+    }
+
+    50
+}
+
+pub fn get_stored_state_multiplier(state: &str) -> f64 {
+    match state.to_lowercase().as_str() {
+        "pristine" => 3.0,
+        "good" => 1.0,
+        "worn" => 0.8,
+        "damaged" => 0.5,
+        "badly damaged" => 0.2,
+        _ => 1.0,
+    }
+}
+
+pub fn get_state_weight(state: &str) -> i32 {
+    match state.to_lowercase().as_str() {
+        "badly damaged" => 0,
+        "damaged" => 1,
+        "worn" => 2,
+        "good" => 3,
+        "pristine" => 4,
+        _ => 5,
+    }
+}
+
+pub fn get_size_multiplier(name: &str, size: f64) -> f64 {
+    let game_data = crate::config::get_game_data();
+    for (_, fishes) in &game_data.fish_data {
+        for fish in fishes {
+            if fish.name.to_lowercase() == name.to_lowercase() {
+                let mean = fish.size_mean;
+                if mean > 0.0 {
+                    return (size / mean).clamp(0.5, 1.8);
+                }
+            }
+        }
+    }
+    1.0
+}
 
 pub async fn start_bot(state: Arc<AppState>, access_token: String) {
     let mut abort_lock = state.bot_abort_handle.write().await;
@@ -43,11 +296,23 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 tracing::info!("[Chat] {} : {}", username, text);
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | !pêche | !fish stats | !fish top | !fish reset | !fish reset all".to_string();
+                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> <état> <qté> | sell oui/non | trade #id <prix> @pseudo (vente directe) | trade #id_A @pseudo (troc) | Tape !fish help sell ou !fish help trade pour les détails".to_string();
                     if username == "monsieurcotcot" {
                         help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !admin season_reset <nom_saison> | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
                     let _ = client.say(msg.channel_login.clone(), help_msg).await;
+                } else if text.starts_with("!fish help ") || text.starts_with("!peche help ") || text.starts_with("!pêche help ") {
+                    let sub = text.split_whitespace().skip(2).collect::<Vec<&str>>().join(" ");
+                    let reply = match sub.as_str() {
+                        "sell" | "vendre" | "vends" | "vend" => {
+                            "💰 Vente : !fish sell <nom/id_poisson> [état] [qté]. Ex : '!fish sell bar pristine 1' ou '!fish sell #42'. Si l'état est omis, vend les plus abîmés en premier. Confirme par '!fish sell oui' (durée 1m).".to_string()
+                        },
+                        "trade" | "echange" | "échanger" | "echanger" => {
+                            "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
+                        },
+                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' pour plus de détails.")
+                    };
+                    let _ = client.say(msg.channel_login.clone(), reply).await;
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -90,8 +355,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             };
 
                             let msg_str = format!(
-                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
-                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
+                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🪙 | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
+                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), p.gold, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
                             );
                             let _ = client_msg.say(channel_login, msg_str).await;
                         }
@@ -104,9 +369,592 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Ok(players) = state_task.repo.get_leaderboard().await {
                             let list: Vec<String> = players.iter().take(5).enumerate().map(|(i, p)| {
                                 let fish_count = p.successful_attempts - p.junk_count - p.banana_count - p.postcard_count - p.gem_count;
-                                format!("#{}. {} (Niv. {} | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜)", i + 1, p.username, p.level, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count)
+                                format!("#{}. {} (Niv. {} | {} 🪙 | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜)", i + 1, p.username, p.level, p.gold, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count)
                             }).collect();
                             let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
+                        }
+                    });
+                } else if text.starts_with("!fish list") || text.starts_with("!peche list") || text.starts_with("!pêche list") || text.starts_with("!fish liste") || text.starts_with("!peche liste") || text.starts_with("!pêche liste") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish list") {
+                            raw_msg["!fish list".len()..].trim()
+                        } else if text_trim.starts_with("!fish liste") {
+                            raw_msg["!fish liste".len()..].trim()
+                        } else if text_trim.starts_with("!peche list") {
+                            raw_msg["!peche list".len()..].trim()
+                        } else if text_trim.starts_with("!peche liste") {
+                            raw_msg["!peche liste".len()..].trim()
+                        } else if text_trim.starts_with("!pêche list") {
+                            raw_msg["!pêche list".len()..].trim()
+                        } else if text_trim.starts_with("!pêche liste") {
+                            raw_msg["!pêche liste".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        if arg.is_empty() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom d'un poisson ou objet pour lister tes exemplaires, ex : !fish list Ayu", username)).await;
+                            return;
+                        }
+
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                let matching_catches: Vec<_> = catches.into_iter()
+                                    .filter(|c| c.name.to_lowercase() == arg.to_lowercase())
+                                    .collect();
+
+                                if matching_catches.is_empty() {
+                                    let _ = client_msg.say(channel_login, format!("⚠️ @{}, tu ne possèdes aucun '{}' dans ton inventaire.", username, arg)).await;
+                                    return;
+                                }
+
+                                // Group by state
+                                let mut pristine_cnt = 0;
+                                let mut good_cnt = 0;
+                                let mut worn_cnt = 0;
+                                let mut damaged_cnt = 0;
+                                let mut badly_damaged_cnt = 0;
+
+                                for c in &matching_catches {
+                                    match c.state.to_lowercase().as_str() {
+                                        "pristine" => pristine_cnt += 1,
+                                        "good" => good_cnt += 1,
+                                        "worn" => worn_cnt += 1,
+                                        "damaged" => damaged_cnt += 1,
+                                        "badly damaged" => badly_damaged_cnt += 1,
+                                        _ => good_cnt += 1,
+                                    }
+                                }
+
+                                let base_price = get_base_price(&matching_catches[0].name);
+
+                                let mut parts = Vec::new();
+                                if pristine_cnt > 0 { parts.push(format!("Pristine x{} ({} po)", pristine_cnt, (base_price as f64 * 3.0).round() as i64)); }
+                                if good_cnt > 0 { parts.push(format!("Good x{} ({} po)", good_cnt, (base_price as f64 * 1.0).round() as i64)); }
+                                if worn_cnt > 0 { parts.push(format!("Worn x{} ({} po)", worn_cnt, (base_price as f64 * 0.8).round() as i64)); }
+                                if damaged_cnt > 0 { parts.push(format!("Damaged x{} ({} po)", damaged_cnt, (base_price as f64 * 0.5).round() as i64)); }
+                                if badly_damaged_cnt > 0 { parts.push(format!("Badly Damaged x{} ({} po)", badly_damaged_cnt, (base_price as f64 * 0.2).round() as i64)); }
+
+                                let _ = client_msg.say(channel_login, format!("📋 @{}, exemplaires de '{}' : {} | Total : {} exemplaire(s)", username, matching_catches[0].name, parts.join(" | "), matching_catches.len())).await;
+                            }
+                        }
+                    });
+                } else if text.starts_with("!fish info") || text.starts_with("!peche info") || text.starts_with("!pêche info") || text.starts_with("!fish infos") || text.starts_with("!peche infos") || text.starts_with("!pêche infos") {
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish info") {
+                            raw_msg["!fish info".len()..].trim()
+                        } else if text_trim.starts_with("!fish infos") {
+                            raw_msg["!fish infos".len()..].trim()
+                        } else if text_trim.starts_with("!peche info") {
+                            raw_msg["!peche info".len()..].trim()
+                        } else if text_trim.starts_with("!peche infos") {
+                            raw_msg["!peche infos".len()..].trim()
+                        } else if text_trim.starts_with("!pêche info") {
+                            raw_msg["!pêche info".len()..].trim()
+                        } else if text_trim.starts_with("!pêche infos") {
+                            raw_msg["!pêche infos".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        if arg.is_empty() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom exact du poisson pour afficher ses infos, ex : !fish info Ayu", username)).await;
+                            return;
+                        }
+
+                        // Search in config game_data
+                        let game_data = crate::config::get_game_data();
+                        let mut found_fish = None;
+
+                        for (_, fishes) in &game_data.fish_data {
+                            for fish in fishes {
+                                if fish.name.to_lowercase() == arg.to_lowercase() {
+                                    found_fish = Some(fish.clone());
+                                    break;
+                                }
+                            }
+                        }
+
+                        if found_fish.is_none() {
+                            for (_, junks) in &game_data.junk_data {
+                                for junk in junks {
+                                    if junk.name.to_lowercase() == arg.to_lowercase() {
+                                        found_fish = Some(junk.clone());
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if let Some(f) = found_fish {
+                            let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
+                            let hours = f.time_restriction.unwrap_or_else(|| "Toutes heures".to_string());
+                            let period = f.preferred_season.unwrap_or_else(|| "Toutes saisons".to_string());
+                            let base_price = get_base_price(&f.name);
+                            let _ = client_msg.say(channel_login, format!("🔍 [{}] Lieu : {} | Horaires : {} | Période : {} | Prix de base : {} po 🪙", f.name, loc, hours, period, base_price)).await;
+                        } else {
+                            let _ = client_msg.say(channel_login, format!("❌ @{}, aucun objet ou poisson sous le nom '{}' dans le catalogue.", username, arg)).await;
+                        }
+                    });
+                } else if text.starts_with("!fish sell") || text.starts_with("!fish vend") || text.starts_with("!fish vendre") || text.starts_with("!fish vends") || text.starts_with("!peche sell") || text.starts_with("!peche vend") || text.starts_with("!peche vendre") || text.starts_with("!peche vends") || text.starts_with("!pêche sell") || text.starts_with("!pêche vend") || text.starts_with("!pêche vendre") || text.starts_with("!pêche vends") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish sell") {
+                            raw_msg["!fish sell".len()..].trim()
+                        } else if text_trim.starts_with("!fish vend") {
+                            raw_msg["!fish vend".len()..].trim()
+                        } else if text_trim.starts_with("!fish vendre") {
+                            raw_msg["!fish vendre".len()..].trim()
+                        } else if text_trim.starts_with("!fish vends") {
+                            raw_msg["!fish vends".len()..].trim()
+                        } else if text_trim.starts_with("!peche sell") {
+                            raw_msg["!peche sell".len()..].trim()
+                        } else if text_trim.starts_with("!peche vend") {
+                            raw_msg["!peche vend".len()..].trim()
+                        } else if text_trim.starts_with("!peche vendre") {
+                            raw_msg["!peche vendre".len()..].trim()
+                        } else if text_trim.starts_with("!peche vends") {
+                            raw_msg["!peche vends".len()..].trim()
+                        } else if text_trim.starts_with("!pêche sell") {
+                            raw_msg["!pêche sell".len()..].trim()
+                        } else if text_trim.starts_with("!pêche vend") {
+                            raw_msg["!pêche vend".len()..].trim()
+                        } else if text_trim.starts_with("!pêche vendre") {
+                            raw_msg["!pêche vendre".len()..].trim()
+                        } else if text_trim.starts_with("!pêche vends") {
+                            raw_msg["!pêche vends".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        let parsed = parse_sell_args(arg);
+                        if parsed.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish sell [poisson] [état] [qté], ou !fish sell #[id_capture]", username)).await;
+                            return;
+                        }
+
+                        match parsed.unwrap() {
+                            SellArg::ConfirmYes => {
+                                let mut sales = state_task.pending_sales.write().await;
+                                if let Some(pending) = sales.get(&username) {
+                                    if Utc::now().signed_duration_since(pending.created_at).num_seconds() <= 60 {
+                                        let pending_clone = pending.clone();
+                                        drop(sales); // drop write lock before DB
+                                        if let Ok(_) = state_task.repo.execute_gold_sale(pending_clone.player_id, &pending_clone.catch_ids, pending_clone.gold_earned).await {
+                                            let _ = client_msg.say(channel_login, format!("💸 @{}, vente réussie ! Tu as vendu {} exemplaire(s) pour {} pièces d'or 🪙.", username, pending_clone.catch_ids.len(), pending_clone.gold_earned)).await;
+                                        } else {
+                                            let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors de la vente.", username)).await;
+                                        }
+                                        state_task.pending_sales.write().await.remove(&username);
+                                    } else {
+                                        sales.remove(&username);
+                                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, proposition de vente expirée (1 min).", username)).await;
+                                    }
+                                } else {
+                                    let _ = client_msg.say(channel_login, format!("⚠️ @{}, aucune proposition de vente en attente.", username)).await;
+                                }
+                            }
+                            SellArg::ConfirmNo => {
+                                let mut sales = state_task.pending_sales.write().await;
+                                if sales.remove(&username).is_some() {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, proposition de vente annulée.", username)).await;
+                                } else {
+                                    let _ = client_msg.say(channel_login, format!("⚠️ @{}, aucune proposition de vente en attente.", username)).await;
+                                }
+                            }
+                            SellArg::ById(id) => {
+                                if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                        let target = catches.into_iter().find(|c| c.id == Some(id));
+                                        if let Some(c) = target {
+                                            let base = get_base_price(&c.name);
+                                            let mult = if c.is_junk { 1.0 } else { get_stored_state_multiplier(&c.state) };
+                                            let price = if c.is_junk { 10 } else { ((base as f64 * mult).round() as i64).max(1) };
+
+                                            let pending = PendingSale {
+                                                player_id: player.id.unwrap(),
+                                                catch_ids: vec![id],
+                                                catch_names: vec![c.name.clone()],
+                                                gold_earned: price,
+                                                created_at: Utc::now(),
+                                            };
+                                            state_task.pending_sales.write().await.insert(username.clone(), pending);
+                                            let _ = client_msg.say(channel_login, format!("💰 @{}, tu es sur le point de vendre '{}' (#{}, {}) pour {} pièces d'or 🪙. Tape !fish sell oui pour valider (1 min max) !", username, c.name, id, c.state, price)).await;
+                                        } else {
+                                            let _ = client_msg.say(channel_login, format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, id)).await;
+                                        }
+                                    }
+                                }
+                            }
+                            SellArg::ByName { name, state, quantity } => {
+                                if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                        let mut matching: Vec<_> = catches.into_iter()
+                                            .filter(|c| {
+                                                let name_match = c.name.to_lowercase() == name.to_lowercase();
+                                                let state_match = match &state {
+                                                    Some(s) => c.state.to_lowercase() == s.to_lowercase(),
+                                                    None => true,
+                                                };
+                                                name_match && state_match
+                                            })
+                                            .collect();
+
+                                        if matching.is_empty() {
+                                            let state_str = state.map(|s| format!(" ({})", s)).unwrap_or_default();
+                                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tu ne possèdes aucun '{}'{} dans ton inventaire.", username, name, state_str)).await;
+                                            return;
+                                        }
+
+                                        if (matching.len() as i64) < quantity {
+                                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tu ne possèdes que {} exemplaire(s) de '{}' (requis: {}).", username, matching.len(), name, quantity)).await;
+                                            return;
+                                        }
+
+                                        // If state is not specified, sort most-damaged-first
+                                        if state.is_none() {
+                                            matching.sort_by_key(|c| get_state_weight(&c.state));
+                                        }
+
+                                        // Select the first `quantity` elements
+                                        let selected = &matching[0..(quantity as usize)];
+                                        let mut total_price = 0;
+                                        let mut selected_ids = Vec::new();
+                                        let mut selected_names = Vec::new();
+
+                                        for c in selected {
+                                            let base = get_base_price(&c.name);
+                                            let mult = if c.is_junk { 1.0 } else { get_stored_state_multiplier(&c.state) };
+                                            let price = if c.is_junk { 10 } else { ((base as f64 * mult).round() as i64).max(1) };
+                                            total_price += price;
+                                            selected_ids.push(c.id.unwrap());
+                                            selected_names.push(c.name.clone());
+                                        }
+
+                                        let pending = PendingSale {
+                                            player_id: player.id.unwrap(),
+                                            catch_ids: selected_ids,
+                                            catch_names: selected_names,
+                                            gold_earned: total_price,
+                                            created_at: Utc::now(),
+                                        };
+                                        state_task.pending_sales.write().await.insert(username.clone(), pending);
+                                        let _ = client_msg.say(channel_login, format!("💰 @{}, tu es sur le point de vendre {}x '{}' pour {} pièces d'or 🪙. Tape !fish sell oui pour valider (1 min max) !", username, quantity, name, total_price)).await;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else if text.starts_with("!fish trade") || text.starts_with("!peche trade") || text.starts_with("!pêche trade") || text.starts_with("!fish echange") || text.starts_with("!fish échange") || text.starts_with("!peche echange") || text.starts_with("!pêche échange") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish trade") {
+                            raw_msg["!fish trade".len()..].trim()
+                        } else if text_trim.starts_with("!peche trade") {
+                            raw_msg["!peche trade".len()..].trim()
+                        } else if text_trim.starts_with("!pêche trade") {
+                            raw_msg["!pêche trade".len()..].trim()
+                        } else if text_trim.starts_with("!fish echange") {
+                            raw_msg["!fish echange".len()..].trim()
+                        } else if text_trim.starts_with("!fish échange") {
+                            raw_msg["!fish échange".len()..].trim()
+                        } else if text_trim.starts_with("!peche echange") {
+                            raw_msg["!peche echange".len()..].trim()
+                        } else if text_trim.starts_with("!pêche échange") {
+                            raw_msg["!pêche échange".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        let parsed = parse_trade_args(arg);
+                        if parsed.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : Direct : !fish trade #[id] [prix] @destinataire | Troc : !fish trade #[id] @destinataire | accept | cancel", username)).await;
+                            return;
+                        }
+
+                        // Clean up expired trades first
+                        {
+                            let mut trades = state_task.pending_trades.write().await;
+                            trades.retain(|t| {
+                                match t {
+                                    PendingTrade::Direct { created_at, .. } => {
+                                        Utc::now().signed_duration_since(*created_at).num_seconds() <= 60
+                                    }
+                                    PendingTrade::Barter { last_activity, .. } => {
+                                        Utc::now().signed_duration_since(*last_activity).num_seconds() <= 60
+                                    }
+                                }
+                            });
+                        }
+
+                        match parsed.unwrap() {
+                            TradeArg::Accept => {
+                                let mut found_idx = None;
+                                {
+                                    let trades = state_task.pending_trades.read().await;
+                                    for (i, t) in trades.iter().enumerate() {
+                                        match t {
+                                            PendingTrade::Direct { buyer_username, .. } => {
+                                                if buyer_username == &username {
+                                                    found_idx = Some(i);
+                                                    break;
+                                                }
+                                            }
+                                            PendingTrade::Barter { player_a_username, player_b_username, step, .. } => {
+                                                if *step == 2 && (player_a_username == &username || player_b_username == &username) {
+                                                    found_idx = Some(i);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if let Some(idx) = found_idx {
+                                    let mut trades = state_task.pending_trades.write().await;
+                                    let trade = &mut trades[idx];
+                                    match trade.clone() {
+                                        PendingTrade::Direct { seller_id, seller_username, buyer_username, catch_id, catch_name, price, .. } => {
+                                            trades.remove(idx);
+                                            drop(trades);
+
+                                            if let Ok(buyer) = state_task.repo.get_or_create_player(&buyer_username).await {
+                                                if buyer.gold < price {
+                                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu n'as pas assez de pièces d'or (requis: {} po, tu as {} po).", buyer_username, price, buyer.gold)).await;
+                                                    return;
+                                                }
+
+                                                if let Ok(_) = state_task.repo.execute_direct_trade(catch_id, seller_id, buyer.id.unwrap(), price).await {
+                                                    let _ = client_msg.say(channel_login, format!("🤝 Échange réussi ! @{} a acheté '{}' (#{}) de @{} pour {} pièces d'or 🪙 !", buyer_username, catch_name, catch_id, seller_username, price)).await;
+                                                } else {
+                                                    let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors de l'échange.", buyer_username)).await;
+                                                }
+                                            }
+                                        }
+                                        PendingTrade::Barter { player_a_id, player_a_username, catch_a_id, catch_a_name, player_b_username, catch_b_id, catch_b_name, mut player_a_accepted, mut player_b_accepted, .. } => {
+                                            if player_a_username == username {
+                                                player_a_accepted = true;
+                                            } else if player_b_username == username {
+                                                player_b_accepted = true;
+                                            }
+
+                                            if player_a_accepted && player_b_accepted {
+                                                trades.remove(idx);
+                                                drop(trades);
+
+                                                if let Ok(player_b) = state_task.repo.get_or_create_player(&player_b_username).await {
+                                                    if let Ok(_) = state_task.repo.execute_barter_trade(catch_a_id, player_a_id, catch_b_id.unwrap(), player_b.id.unwrap()).await {
+                                                        let _ = client_msg.say(channel_login, format!("🔄 Troc réussi ! @{} a échangé '{}' (#{}) contre '{}' (#{}) de @{} !", player_a_username, catch_a_name, catch_a_id, catch_b_name.unwrap(), catch_b_id.unwrap(), player_b_username)).await;
+                                                    } else {
+                                                        let _ = client_msg.say(channel_login, format!("❌ Échange échoué. Assurez-vous que les poissons sont toujours dans les inventaires respectifs.")).await;
+                                                    }
+                                                }
+                                            } else {
+                                                if let PendingTrade::Barter { player_a_accepted: a_acc, player_b_accepted: b_acc, last_activity, .. } = &mut trades[idx] {
+                                                    *a_acc = player_a_accepted;
+                                                    *b_acc = player_b_accepted;
+                                                    *last_activity = Utc::now();
+                                                }
+                                                let other = if player_a_username == username { &player_b_username } else { &player_a_username };
+                                                let _ = client_msg.say(channel_login, format!("✅ @{} a accepté l'échange. @{}, tape à ton tour !fish trade accept pour finaliser l'échange (1 min max) !", username, other)).await;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    let mut is_step1_target = false;
+                                    {
+                                        let trades = state_task.pending_trades.read().await;
+                                        for t in trades.iter() {
+                                            if let PendingTrade::Barter { player_b_username, step, .. } = t {
+                                                if player_b_username == &username && *step == 1 {
+                                                    is_step1_target = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if is_step1_target {
+                                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, tu dois d'abord proposer ton poisson d'échange : !fish trade #[ton_id] @[partenaire] !", username)).await;
+                                    } else {
+                                        let _ = client_msg.say(channel_login, format!("⚠️ @{}, aucun échange en attente de ta confirmation.", username)).await;
+                                    }
+                                }
+                            }
+                            TradeArg::Cancel => {
+                                let mut found_idx = None;
+                                {
+                                    let trades = state_task.pending_trades.read().await;
+                                    for (i, t) in trades.iter().enumerate() {
+                                        match t {
+                                            PendingTrade::Direct { seller_username, buyer_username, .. } => {
+                                                if seller_username == &username || buyer_username == &username {
+                                                    found_idx = Some(i);
+                                                    break;
+                                                }
+                                            }
+                                            PendingTrade::Barter { player_a_username, player_b_username, .. } => {
+                                                if player_a_username == &username || player_b_username == &username {
+                                                    found_idx = Some(i);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if let Some(idx) = found_idx {
+                                    state_task.pending_trades.write().await.remove(idx);
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, échange annulé.", username)).await;
+                                } else {
+                                    let _ = client_msg.say(channel_login, format!("⚠️ @{}, aucun échange en cours te concernant.", username)).await;
+                                }
+                            }
+                            TradeArg::Direct { catch_id, price, recipient } => {
+                                if recipient == username {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas faire d'échange avec toi-même.", username)).await;
+                                    return;
+                                }
+
+                                if price < 0 {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, le prix doit être positif.", username)).await;
+                                    return;
+                                }
+
+                                if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                        let catch = catches.into_iter().find(|c| c.id == Some(catch_id));
+                                        if let Some(c) = catch {
+                                            if let Ok(buyer) = state_task.repo.get_or_create_player(&recipient).await {
+                                                if buyer.gold < price {
+                                                    let _ = client_msg.say(channel_login, format!("❌ @{}, @{} n'a pas assez d'or (requis: {} po, il a {} po).", username, recipient, price, buyer.gold)).await;
+                                                    return;
+                                                }
+
+                                                let pending = PendingTrade::Direct {
+                                                    seller_id: player.id.unwrap(),
+                                                    seller_username: username.clone(),
+                                                    buyer_username: recipient.clone(),
+                                                    catch_id,
+                                                    catch_name: c.name.clone(),
+                                                    price,
+                                                    created_at: Utc::now(),
+                                                };
+
+                                                {
+                                                    let mut trades = state_task.pending_trades.write().await;
+                                                    trades.retain(|t| {
+                                                        match t {
+                                                            PendingTrade::Direct { seller_username, buyer_username, .. } => {
+                                                                !(seller_username == &username && buyer_username == &recipient)
+                                                            }
+                                                            _ => true
+                                                        }
+                                                    });
+                                                    trades.push(pending);
+                                                }
+
+                                                let _ = client_msg.say(channel_login, format!("🤝 @{}, @{} te propose d'acheter son poisson '{}' (#{}) pour {} pièces d'or 🪙. Tape !fish trade accept pour accepter (1 min max) !", recipient, username, c.name, catch_id, price)).await;
+                                            }
+                                        } else {
+                                            let _ = client_msg.say(channel_login, format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, catch_id)).await;
+                                        }
+                                    }
+                                }
+                            }
+                            TradeArg::Barter { catch_id, recipient } => {
+                                if recipient == username {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas faire d'échange avec toi-même.", username)).await;
+                                    return;
+                                }
+
+                                if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                        let catch = catches.into_iter().find(|c| c.id == Some(catch_id));
+                                        if let Some(c) = catch {
+                                            let mut found_step1_idx = None;
+                                            {
+                                                let trades = state_task.pending_trades.read().await;
+                                                for (i, t) in trades.iter().enumerate() {
+                                                    if let PendingTrade::Barter { player_a_username, player_b_username, step, .. } = t {
+                                                        if player_a_username == &recipient && player_b_username == &username && *step == 1 {
+                                                            found_step1_idx = Some(i);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            if let Some(idx) = found_step1_idx {
+                                                let mut trades = state_task.pending_trades.write().await;
+                                                if let PendingTrade::Barter { catch_b_id, catch_b_name, step, last_activity, .. } = &mut trades[idx] {
+                                                    *catch_b_id = Some(catch_id);
+                                                    *catch_b_name = Some(c.name.clone());
+                                                    *step = 2;
+                                                    *last_activity = Utc::now();
+                                                }
+                                                let trade_clone = trades[idx].clone();
+                                                drop(trades);
+
+                                                if let PendingTrade::Barter { catch_a_id, catch_a_name, .. } = trade_clone {
+                                                    let _ = client_msg.say(channel_login, format!("🔄 Contre-proposition ! @{} propose '{}' (#{}) contre '{}' (#{}) de @{}. Pour confirmer cet échange, vous devez TOUS LES DEUX tapez !fish trade accept (1 min max) !", username, c.name, catch_id, catch_a_name, catch_a_id, recipient)).await;
+                                                }
+                                            } else {
+                                                let pending = PendingTrade::Barter {
+                                                    player_a_id: player.id.unwrap(),
+                                                    player_a_username: username.clone(),
+                                                    catch_a_id: catch_id,
+                                                    catch_a_name: c.name.clone(),
+                                                    player_b_username: recipient.clone(),
+                                                    catch_b_id: None,
+                                                    catch_b_name: None,
+                                                    step: 1,
+                                                    player_a_accepted: false,
+                                                    player_b_accepted: false,
+                                                    last_activity: Utc::now(),
+                                                };
+
+                                                {
+                                                    let mut trades = state_task.pending_trades.write().await;
+                                                    trades.retain(|t| {
+                                                        match t {
+                                                            PendingTrade::Barter { player_a_username, player_b_username, .. } => {
+                                                                !((player_a_username == &username && player_b_username == &recipient) || (player_a_username == &recipient && player_b_username == &username))
+                                                            }
+                                                            _ => true
+                                                        }
+                                                    });
+                                                    trades.push(pending);
+                                                }
+
+                                                let _ = client_msg.say(channel_login, format!("🤝 @{}, @{} te propose d'échanger son poisson '{}' (#{}). Fais une contre-proposition en tapant !fish trade #[ton_id] @{} dans la minute !", recipient, username, c.name, catch_id, username)).await;
+                                            }
+                                        } else {
+                                            let _ = client_msg.say(channel_login, format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, catch_id)).await;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     });
                 } else if text.starts_with("!fish reset") {
@@ -235,6 +1083,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 level: p.level,
                                 xp: p.xp,
                                 vip_until: p.vip_until,
+                                gold: Some(p.gold),
                             }).collect();
                             
                             if let Ok(json) = serde_json::to_string_pretty(&backups) {

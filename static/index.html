@@ -801,6 +801,7 @@
                         <div class="stat-item"><span>Tentatives:</span> <strong id="res-total"></strong></div>
                         <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
                         <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
+                        <div class="stat-item" style="margin-top: 5px;"><span>Pièces d'Or:</span> <strong style="color: #ffd700; display: inline-flex; align-items: center; gap: 3px;">🪙 <span id="res-stat-gold">0</span> po</strong></div>
                         <div style="display: flex; gap: 8px; margin-top: 12px; padding: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; justify-content: space-around; font-size: 0.85rem;">
                             <span title="Poissons" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-fish">0</strong> 🐟</span>
                             <span title="Déchets" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-junk">0</strong> 🗑️</span>
@@ -883,6 +884,39 @@
                     Chargement...
                 </div>
             </div>
+
+            <div class="stats-box" style="border-color: rgba(145, 70, 255, 0.25); background: rgba(15, 10, 24, 0.35); text-align: left;">
+                <h3 style="color: #bf94ff; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px;">📖 Guide des Commandes</h3>
+                <div style="font-size: 0.82rem; line-height: 1.5; color: #efeff1; display: flex; flex-direction: column; gap: 12px; max-height: 280px; overflow-y: auto; padding-right: 4px;">
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🎣 Action principale</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!peche</code> : Tenter d'attraper un poisson ou un objet. Le cooldown diminue avec le niveau (50s à 30s) et est divisé par 2 pour les VIPs.
+                    </div>
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">📊 Statistiques & Infos</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish stats</code> : Affiche vos statistiques, vos médailles et votre solde d'or.<br>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish list [id/nom]</code> : Liste vos poissons de cette espèce par état et prix. Supporte le Pokédex ID (ex: <code style="color: #ffd700;">#001</code>) ou le nom exact (ex: <code style="color: #ffd700;">Bar</code>).<br>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish info [id/nom]</code> : Affiche les records, la description et les infos de pêche. Supporte le Pokédex ID (ex: <code style="color: #ffd700;">!fish info #001</code>) ou le nom (ex: <code style="color: #ffd700;">!fish info Bar</code>).
+                    </div>
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">💰 Vente de Poisson (Serveur)</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish sell [nom_poisson] [état] [qté]</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish sell #[id_unique]</code> : Vend des poissons au serveur.<br>
+                        <em>Exemples de ventes :</em><br>
+                        • Par Nom : <code style="color: #ffd700;">!fish sell Bar</code> (vend le plus abîmé), <code style="color: #ffd700;">!fish sell Bar pristine 1</code> (vend précisément 1 Bar pristine).<br>
+                        • Par ID Unique de Capture : <code style="color: #ffd700;">!fish sell #123</code> (vend précisément le poisson capturé sous l'identifiant #123 de votre inventaire).<br>
+                        <em>Astuces :</em> Si l'état est omis, vend les plus abîmés en premier pour protéger votre collection. Confirmez avec <code style="color: #00ff00;">!fish sell oui</code> sous 60s.
+                    </div>
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🤝 Échanges de Joueur à Joueur</strong>
+                        <strong>• Vente directe (Or) :</strong> <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish trade #id prix @destinataire</code>. L'identifiant <code>#id</code> est l'ID unique de capture dans votre inventaire (ex: <code style="color: #ffd700;">!fish trade #123 500 @destinataire</code>).<br>
+                        <strong>• Troc sécurisé (2 poissons) :</strong> Échange en 4 étapes basé sur vos IDs de capture :<br>
+                        1. Lancez : <code style="color: #00ffff;">!fish trade #123 @destinataire</code><br>
+                        2. Le destinataire propose : <code style="color: #00ffff;">!fish trade #456 @lanceur</code><br>
+                        3. Le lanceur valide par <code style="color: #00ff00;">!fish trade oui</code><br>
+                        4. Le destinataire finalise par <code style="color: #00ff00;">!fish trade oui</code>.
+                    </div>
+                </div>
+            </div>
             
             <div id="error" style="background: #ff4f4f; color: white; padding: 10px; border-radius: 4px; margin-top: 20px; font-weight: bold; display: none;">❌ Joueur introuvable. Ce viewer n'a probablement pas encore pêché !</div>
 
@@ -907,7 +941,7 @@
             </div>
 
             <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
-                <p>© 2026 MonsieurCotCot. Tous droits réservés.</p>
+                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">Beta V1.0</span></p>
                 <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
                     <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
                     <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
@@ -934,7 +968,7 @@
             <div id="modal-gameplay-meta" style="display: none; margin-top: 12px; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; text-align: left; line-height: 1.5;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                     <div>📍 <strong>Lieu:</strong> <span id="modal-location">-</span></div>
-                    <div>🪙 <strong>Prix:</strong> <span id="modal-price">-</span> cloch.</div>
+                    <div>🪙 <strong>Prix:</strong> <span id="modal-price">-</span></div>
                     <div>⏰ <strong>Heures:</strong> <span id="modal-time">-</span></div>
                     <div>📅 <strong>Saison:</strong> <span id="modal-season">-</span></div>
                 </div>
@@ -1042,7 +1076,7 @@
                     
                     const scoreStrong = document.createElement('strong');
                     const pureFish = p.success - p.junk - p.banana - p.postcard - (p.gem || 0);
-                    scoreStrong.innerHTML = `${pureFish} 🐟 <span style="color: #adadb8; font-size: 0.8rem; margin-left: 5px;">${p.junk} 🗑️</span> <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;">${p.banana} 🍌</span> <span style="color: #00ffff; font-size: 0.8rem; margin-left: 5px;">${p.gem || 0} 💎</span> <span style="color: #ffffff; font-size: 0.8rem; margin-left: 5px;">${p.postcard} 📜</span>`;
+                    scoreStrong.innerHTML = `${pureFish} 🐟 <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;" title="Or">🪙 ${p.gold || 0}</span> <span style="color: #adadb8; font-size: 0.8rem; margin-left: 5px;">${p.junk} 🗑️</span> <span style="color: #ffd700; font-size: 0.8rem; margin-left: 5px;">${p.banana} 🍌</span> <span style="color: #00ffff; font-size: 0.8rem; margin-left: 5px;">${p.gem || 0} 💎</span> <span style="color: #ffffff; font-size: 0.8rem; margin-left: 5px;">${p.postcard} 📜</span>`;
 
                     
                     item.appendChild(nameLink);
@@ -1184,6 +1218,7 @@
                     document.getElementById('res-total').textContent = data.total;
                     document.getElementById('res-success').textContent = data.success;
                     document.getElementById('res-failed').textContent = data.failed;
+                    document.getElementById('res-stat-gold').textContent = data.gold || 0;
 
                     const fishCount = data.success - data.junk - data.banana - data.postcard - (data.gem || 0);
                     document.getElementById('res-stat-fish').textContent = fishCount;
