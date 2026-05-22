@@ -1540,7 +1540,6 @@
             document.getElementById('modal-desc').textContent = fish.description;
 
             // Chercher les métadonnées statiques pour enrichir
-            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
             const gpMeta = document.getElementById('modal-gameplay-meta');
             const ffContainer = document.getElementById('modal-fun-fact-container');
             
@@ -1599,7 +1598,6 @@
             document.getElementById('modal-desc').textContent = pb.description;
 
             // Chercher les métadonnées statiques pour enrichir
-            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
             const gpMeta = document.getElementById('modal-gameplay-meta');
             const ffContainer = document.getElementById('modal-fun-fact-container');
             
