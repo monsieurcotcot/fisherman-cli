@@ -2,304 +2,6 @@
     "fish_data": {
         "common": [
             {
-                "name": "Sardine",
-                "size_min": 5.0,
-                "size_mean": 10.0,
-                "size_sigma": 2.5,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {}
-            },
-            {
-                "name": "Bar Commun",
-                "size_min": 20.0,
-                "size_mean": 40.0,
-                "size_sigma": 10.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {},
-                "price": 400,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
-                "months": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "fun_fact": "Un poisson côtier très recherché pour sa combativité et sa chair délicate.",
-                "time_restriction": null
-            },
-            {
-                "name": "Carassin",
-                "size_min": 10.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un carassin abîmé, son parcours a dû être difficile."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson qui montre des signes d'usure, mais reste appétissant."
-                    ],
-                    "worn": [
-                        "🟡 Il semble en bonne condition, mais sans grande particularité."
-                    ],
-                    "good": [
-                        "🟢 Un joli carassin, brillant et robuste."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen parfait, ses écailles dorées éclatent sous la lumière."
-                    ]
-                },
-                "price": 160,
-                "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
-                "months": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge.",
-                "time_restriction": null
-            },
-            {
-                "name": "Brème",
-                "size_min": 15.0,
-                "size_mean": 30.0,
-                "size_sigma": 6.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 La brème est en piteux état, ses écailles sont éraflées."
-                    ],
-                    "damaged": [
-                        "🟠 Quelques marques de griffures sur son corps."
-                    ],
-                    "worn": [
-                        "🟡 Une brème normale, rien d'extraordinaire."
-                    ],
-                    "good": [
-                        "🟢 Une belle brème, brillante et en bonne forme."
-                    ],
-                    "pristine": [
-                        "✨ Une prise parfaite, sa nageoire dorsale est intacte et élégante."
-                    ]
-                }
-            },
-            {
-                "name": "Rotengle",
-                "size_min": 12.0,
-                "size_mean": 25.0,
-                "size_sigma": 7.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ses nageoires sont abîmées et son corps montre des signes de lutte."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson robuste, malgré quelques marques visibles."
-                    ],
-                    "worn": [
-                        "🟡 Il a fière allure, bien qu'un peu usé."
-                    ],
-                    "good": [
-                        "🟢 Un rotengle en pleine forme, parfait pour une belle prise."
-                    ],
-                    "pristine": [
-                        "✨ Ses nageoires rouges et son corps doré sont parfaits, une prise exceptionnelle."
-                    ]
-                }
-            },
-            {
-                "name": "Perche Soleil",
-                "size_min": 5.0,
-                "size_mean": 15.0,
-                "size_sigma": 4.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 La perche est abîmée, ses couleurs sont ternies."
-                    ],
-                    "damaged": [
-                        "🟠 Elle montre quelques signes de lutte, mais reste vive."
-                    ],
-                    "worn": [
-                        "🟡 Une petite perche mignonne, avec des couleurs délavées."
-                    ],
-                    "good": [
-                        "🟢 Ses écailles scintillent comme un rayon de soleil."
-                    ],
-                    "pristine": [
-                        "✨ Une perche magnifique, éclatante de couleurs vives."
-                    ]
-                }
-            },
-            {
-                "name": "Chevesne",
-                "size_min": 15.0,
-                "size_mean": 35.0,
-                "size_sigma": 8.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ce chevesne a l'air d'avoir traversé une tempête."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson avec des marques d'usure sur son flanc."
-                    ],
-                    "worn": [
-                        "🟡 Un chevesne robuste, sans défaut majeur."
-                    ],
-                    "good": [
-                        "🟢 Une belle prise, vigoureuse et éclatante."
-                    ],
-                    "pristine": [
-                        "✨ Parfaitement intact, un chevesne digne des meilleures rivières."
-                    ]
-                }
-            },
-            {
-                "name": "Éperlan",
-                "size_min": 8.0,
-                "size_mean": 15.0,
-                "size_sigma": 3.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ce petit éperlan semble avoir eu une vie difficile."
-                    ],
-                    "damaged": [
-                        "🟠 Quelques écailles manquent, mais il reste en bon état."
-                    ],
-                    "worn": [
-                        "🟡 Un poisson correct, sans grande particularité."
-                    ],
-                    "good": [
-                        "🟢 Un bel éperlan, brillant et plein de vitalité."
-                    ],
-                    "pristine": [
-                        "✨ Un éperlan parfait, un vrai reflet d'argent dans l'eau."
-                    ]
-                }
-            },
-            {
-                "name": "Crapet",
-                "size_min": 7.0,
-                "size_mean": 15.0,
-                "size_sigma": 3.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Le crapet semble avoir été malmené par d'autres poissons."
-                    ],
-                    "damaged": [
-                        "🟠 Quelques marques visibles, mais il reste vigoureux."
-                    ],
-                    "worn": [
-                        "🟡 Un crapet banal, mais en bonne condition."
-                    ],
-                    "good": [
-                        "🟢 Ses écailles brillent sous la lumière, un bel exemplaire."
-                    ],
-                    "pristine": [
-                        "✨ Un crapet éclatant, parfaitement proportionné."
-                    ]
-                },
-                "price": 180,
-                "location": "Rivière",
-                "preferred_time": "9h - 16h",
-                "preferred_season": "Toute l'année",
-                "months": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "fun_fact": "Un petit poisson d'eau douce très combatif et coloré, originaire d'Amérique du Nord.",
-                "time_restriction": "before_22h"
-            },
-            {
-                "name": "Têtard",
-                "size_min": 0.1,
-                "size_mean": 1.0,
-                "size_sigma": 0.5,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un pauvre petit têtard tout égratigné. Jiraya n'aurait pas été fier."
-                    ],
-                    "damaged": [
-                        "🟠 Un têtard abîmé. Son chakra semble complètement à plat."
-                    ],
-                    "worn": [
-                        "🟡 Un têtard ordinaire. Il frétille doucement du bout de la queue."
-                    ],
-                    "good": [
-                        "🟢 Un têtard vigoureux ! Il s'entraîne déjà à bondir de nénuphar en nénuphar."
-                    ],
-                    "pristine": [
-                        "✨ Un têtard d'exception ! On dirait la réincarnation d'un têtard ninja du Mont Myoboku prêt à invoquer Gamabunta ! 🌀🐸"
-                    ]
-                },
-                "price": 100,
-                "location": "Étang",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Mars - juillet",
-                "months": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "fun_fact": "Un futur ninja de l'étang qui rêve secrètement de maîtriser les techniques secrètes d'invocation !",
-                "time_restriction": null
-            },
-            {
                 "name": "Ayu",
                 "size_min": 8.0,
                 "size_mean": 18.0,
@@ -333,7 +35,8 @@
                     9
                 ],
                 "fun_fact": "Surnommé poisson-doux en raison de sa chair au parfum unique de melon et de concombre.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 1
             },
             {
                 "name": "Bar",
@@ -378,7 +81,110 @@
                     12
                 ],
                 "fun_fact": "Le compagnon incontournable de toutes vos sessions de pêche en rivière !",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 2
+            },
+            {
+                "name": "Bar Commun",
+                "size_min": 20.0,
+                "size_mean": 40.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {},
+                "price": 400,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un poisson côtier très recherché pour sa combativité et sa chair délicate.",
+                "time_restriction": null,
+                "id": 3
+            },
+            {
+                "name": "Brème",
+                "size_min": 15.0,
+                "size_mean": 30.0,
+                "size_sigma": 6.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 La brème est en piteux état, ses écailles sont éraflées."
+                    ],
+                    "damaged": [
+                        "🟠 Quelques marques de griffures sur son corps."
+                    ],
+                    "worn": [
+                        "🟡 Une brème normale, rien d'extraordinaire."
+                    ],
+                    "good": [
+                        "🟢 Une belle brème, brillante et en bonne forme."
+                    ],
+                    "pristine": [
+                        "✨ Une prise parfaite, sa nageoire dorsale est intacte et élégante."
+                    ]
+                },
+                "id": 4
+            },
+            {
+                "name": "Carassin",
+                "size_min": 10.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un carassin abîmé, son parcours a dû être difficile."
+                    ],
+                    "damaged": [
+                        "🟠 Un poisson qui montre des signes d'usure, mais reste appétissant."
+                    ],
+                    "worn": [
+                        "🟡 Il semble en bonne condition, mais sans grande particularité."
+                    ],
+                    "good": [
+                        "🟢 Un joli carassin, brillant et robuste."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen parfait, ses écailles dorées éclatent sous la lumière."
+                    ]
+                },
+                "price": 160,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge.",
+                "time_restriction": null,
+                "id": 5
             },
             {
                 "name": "Carpe",
@@ -423,7 +229,8 @@
                     12
                 ],
                 "fun_fact": "Symbole de persévérance, elle peut vivre plusieurs décennies dans les étangs paisibles.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 6
             },
             {
                 "name": "Chevaine",
@@ -468,7 +275,34 @@
                     12
                 ],
                 "fun_fact": "Un poisson omnivore très méfiant qui peuple nos rivières calmes.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 7
+            },
+            {
+                "name": "Chevesne",
+                "size_min": 15.0,
+                "size_mean": 35.0,
+                "size_sigma": 8.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ce chevesne a l'air d'avoir traversé une tempête."
+                    ],
+                    "damaged": [
+                        "🟠 Un poisson avec des marques d'usure sur son flanc."
+                    ],
+                    "worn": [
+                        "🟡 Un chevesne robuste, sans défaut majeur."
+                    ],
+                    "good": [
+                        "🟢 Une belle prise, vigoureuse et éclatante."
+                    ],
+                    "pristine": [
+                        "✨ Parfaitement intact, un chevesne digne des meilleures rivières."
+                    ]
+                },
+                "id": 8
             },
             {
                 "name": "Chinchard",
@@ -513,7 +347,54 @@
                     12
                 ],
                 "fun_fact": "Un poisson grégaire très commun, pêché en grande quantité à travers le monde.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 9
+            },
+            {
+                "name": "Crapet",
+                "size_min": 7.0,
+                "size_mean": 15.0,
+                "size_sigma": 3.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Le crapet semble avoir été malmené par d'autres poissons."
+                    ],
+                    "damaged": [
+                        "🟠 Quelques marques visibles, mais il reste vigoureux."
+                    ],
+                    "worn": [
+                        "🟡 Un crapet banal, mais en bonne condition."
+                    ],
+                    "good": [
+                        "🟢 Ses écailles brillent sous la lumière, un bel exemplaire."
+                    ],
+                    "pristine": [
+                        "✨ Un crapet éclatant, parfaitement proportionné."
+                    ]
+                },
+                "price": 180,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un petit poisson d'eau douce très combatif et coloré, originaire d'Amérique du Nord.",
+                "time_restriction": "before_22h",
+                "id": 10
             },
             {
                 "name": "Ecrevisse",
@@ -552,7 +433,8 @@
                     9
                 ],
                 "fun_fact": "Ce petit crustacé d'eau douce adore se cacher sous les pierres des rivières.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 11
             },
             {
                 "name": "Eperlan",
@@ -588,7 +470,8 @@
                     2
                 ],
                 "fun_fact": "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 12
             },
             {
                 "name": "Fondule barré",
@@ -626,7 +509,8 @@
                     8
                 ],
                 "fun_fact": "Un petit poisson rayé extrêmement tolérant aux variations de salinité.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 13
             },
             {
                 "name": "Limande",
@@ -666,7 +550,8 @@
                     4
                 ],
                 "fun_fact": "Un poisson plat camouflé dont les deux yeux sont situés du côté droit de sa tête.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 14
             },
             {
                 "name": "Loche d'étang",
@@ -702,7 +587,8 @@
                     5
                 ],
                 "fun_fact": "Elle est sensible aux variations de pression atmosphérique, d'où son surnom de poisson météo.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 15
             },
             {
                 "name": "Perche jaune",
@@ -741,196 +627,99 @@
                     3
                 ],
                 "fun_fact": "Reconnaissable à ses rayures sombres sur fond doré, elle adore les eaux calmes.",
-                "time_restriction": null
-            }
-        ],
-        "uncommon": [
+                "time_restriction": null,
+                "id": 16
+            },
             {
-                "name": "Poisson Rouge",
-                "size_min": 0.5,
-                "size_mean": 30.0,
-                "size_sigma": 15.0,
+                "name": "Perche Soleil",
+                "size_min": 5.0,
+                "size_mean": 15.0,
+                "size_sigma": 4.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Ses écailles sont ternes et abîmées, il a clairement vécu des moments difficiles."
+                        "🔴 La perche est abîmée, ses couleurs sont ternies."
                     ],
                     "damaged": [
-                        "🟠 Il a quelques blessures superficielles mais reste reconnaissable."
+                        "🟠 Elle montre quelques signes de lutte, mais reste vive."
                     ],
                     "worn": [
-                        "🟡 Un poisson assez ordinaire avec quelques marques d'usure."
+                        "🟡 Une petite perche mignonne, avec des couleurs délavées."
                     ],
                     "good": [
-                        "🟢 Il est en bon état, avec des couleurs plutôt vives."
+                        "🟢 Ses écailles scintillent comme un rayon de soleil."
                     ],
                     "pristine": [
-                        "✨ Un magnifique spécimen, parfaitement sain et éclatant de couleurs."
+                        "✨ Une perche magnifique, éclatante de couleurs vives."
                     ]
                 },
-                "price": 1300,
-                "location": "Étang",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
-                "months": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "fun_fact": "Un compagnon domestique classique qui adore nager paisiblement dans les bassins.",
-                "time_restriction": null
+                "id": 17
             },
             {
-                "name": "Truite Arc-en-Ciel",
-                "size_min": 5.0,
-                "size_mean": 60.0,
-                "size_sigma": 50.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ses nageoires sont abîmées et ses couleurs ont perdu leur éclat."
-                    ],
-                    "damaged": [
-                        "🟠 Une belle truite, malgré quelques marques de lutte."
-                    ],
-                    "worn": [
-                        "🟡 Elle est en bon état mais pas exceptionnelle."
-                    ],
-                    "good": [
-                        "🟢 Ses écailles brillent avec des reflets arc-en-ciel."
-                    ],
-                    "pristine": [
-                        "✨ Une truite parfaite, digne d'un trophée de pêche."
-                    ]
-                }
-            },
-            {
-                "name": "Dorade Grise",
-                "size_min": 25.0,
-                "size_mean": 40.0,
+                "name": "Rotengle",
+                "size_min": 12.0,
+                "size_mean": 25.0,
                 "size_sigma": 7.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Une dorade malmenée, mais encore identifiable."
+                        "🔴 Ses nageoires sont abîmées et son corps montre des signes de lutte."
                     ],
                     "damaged": [
-                        "🟠 Elle montre quelques cicatrices mais reste impressionnante."
+                        "🟠 Un poisson robuste, malgré quelques marques visibles."
                     ],
                     "worn": [
-                        "🟡 Une belle prise, même si elle n'est pas parfaite."
+                        "🟡 Il a fière allure, bien qu'un peu usé."
                     ],
                     "good": [
-                        "🟢 Une dorade élégante avec des reflets métalliques."
+                        "🟢 Un rotengle en pleine forme, parfait pour une belle prise."
                     ],
                     "pristine": [
-                        "✨ Une dorade grise de concours, immaculée et brillante."
-                    ]
-                }
-            },
-            {
-                "name": "Tanche",
-                "size_min": 20.0,
-                "size_mean": 40.0,
-                "size_sigma": 8.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Une tanche abîmée, sa peau semble avoir subi de nombreuses épreuves."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson robuste mais avec des cicatrices évidentes."
-                    ],
-                    "worn": [
-                        "🟡 Une tanche solide, mais sans éclat particulier."
-                    ],
-                    "good": [
-                        "🟢 Une belle tanche avec une peau luisante."
-                    ],
-                    "pristine": [
-                        "✨ Une tanche magnifique, parfaitement intacte et brillante."
-                    ]
-                }
-            },
-            {
-                "name": "Tilapia",
-                "size_min": 10.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un tilapia malmené, probablement attaqué par d'autres poissons."
-                    ],
-                    "damaged": [
-                        "🟠 Il a subi des coups, mais reste mangeable."
-                    ],
-                    "worn": [
-                        "🟡 Un tilapia en état moyen, mais toujours vigoureux."
-                    ],
-                    "good": [
-                        "🟢 Un poisson en bonne santé, prêt pour une belle recette."
-                    ],
-                    "pristine": [
-                        "✨ Un tilapia parfait, aux écailles éclatantes et bien proportionné."
+                        "✨ Ses nageoires rouges et son corps doré sont parfaits, une prise exceptionnelle."
                     ]
                 },
-                "price": 800,
-                "location": "Rivière",
+                "id": 18
+            },
+            {
+                "name": "Sardine",
+                "size_min": 5.0,
+                "size_mean": 10.0,
+                "size_sigma": 2.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {},
+                "id": 19
+            },
+            {
+                "name": "Têtard",
+                "size_min": 0.1,
+                "size_mean": 1.0,
+                "size_sigma": 0.5,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un pauvre petit têtard tout égratigné. Jiraya n'aurait pas été fier."
+                    ],
+                    "damaged": [
+                        "🟠 Un têtard abîmé. Son chakra semble complètement à plat."
+                    ],
+                    "worn": [
+                        "🟡 Un têtard ordinaire. Il frétille doucement du bout de la queue."
+                    ],
+                    "good": [
+                        "🟢 Un têtard vigoureux ! Il s'entraîne déjà à bondir de nénuphar en nénuphar."
+                    ],
+                    "pristine": [
+                        "✨ Un têtard d'exception ! On dirait la réincarnation d'un têtard ninja du Mont Myoboku prêt à invoquer Gamabunta ! 🌀🐸"
+                    ]
+                },
+                "price": 100,
+                "location": "Étang",
                 "preferred_time": "Toute la journée",
-                "preferred_season": "Juin - octobre",
-                "months": [
-                    6,
-                    7,
-                    8,
-                    9,
-                    10
-                ],
-                "fun_fact": "Un poisson robuste et adaptable, élevé depuis l'Antiquité en Égypte.",
-                "time_restriction": null
-            },
-            {
-                "name": "Vandoise",
-                "size_min": 15.0,
-                "size_mean": 30.0,
-                "size_sigma": 6.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ce poisson semble avoir eu une vie difficile, ses écailles sont ternies."
-                    ],
-                    "damaged": [
-                        "🟠 Une vandoise avec des marques de lutte, mais encore vive."
-                    ],
-                    "worn": [
-                        "🟡 Un poisson correct, sans grande particularité."
-                    ],
-                    "good": [
-                        "🟢 Une belle vandoise, en bonne condition."
-                    ],
-                    "pristine": [
-                        "✨ Une vandoise éclatante, parfaite pour une photo."
-                    ]
-                },
-                "price": 240,
-                "location": "Rivière",
-                "preferred_time": "16h - 9h",
-                "preferred_season": "Toute l'année",
+                "preferred_season": "Mars - juillet",
                 "months": [
                     1,
                     2,
@@ -945,151 +734,38 @@
                     11,
                     12
                 ],
-                "fun_fact": "Un poisson vif et argenté qui adore gober les insectes à la surface des rivières.",
-                "time_restriction": "after_22h"
+                "fun_fact": "Un futur ninja de l'étang qui rêve secrètement de maîtriser les techniques secrètes d'invocation !",
+                "time_restriction": null,
+                "id": 20
             },
             {
-                "name": "Calmar",
-                "size_min": 15.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
+                "name": "Éperlan",
+                "size_min": 8.0,
+                "size_mean": 15.0,
+                "size_sigma": 3.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un calmar avec des tentacules déchirés, il a vu des jours meilleurs."
+                        "🔴 Ce petit éperlan semble avoir eu une vie difficile."
                     ],
                     "damaged": [
-                        "🟠 Ce calmar montre des marques de lutte, mais reste impressionnant."
+                        "🟠 Quelques écailles manquent, mais il reste en bon état."
                     ],
                     "worn": [
-                        "🟡 Un calmar ordinaire, avec quelques blessures."
+                        "🟡 Un poisson correct, sans grande particularité."
                     ],
                     "good": [
-                        "🟢 Un calmar en pleine forme, ses tentacules brillent."
+                        "🟢 Un bel éperlan, brillant et plein de vitalité."
                     ],
                     "pristine": [
-                        "✨ Un calmar parfait, une véritable beauté marine."
+                        "✨ Un éperlan parfait, un vrai reflet d'argent dans l'eau."
                     ]
                 },
-                "price": 500,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Décembre - août",
-                "months": [
-                    12,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8
-                ],
-                "fun_fact": "Il peut projeter un jet d'encre noire pour aveugler ses agresseurs et s'enfuir.",
-                "time_restriction": null
-            },
-            {
-                "name": "Barbeau",
-                "size_min": 30.0,
-                "size_mean": 50.0,
-                "size_sigma": 10.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ce barbeau est marqué par les eaux tumultueuses où il vit."
-                    ],
-                    "damaged": [
-                        "🟠 Il a quelques éraflures, mais reste robuste."
-                    ],
-                    "worn": [
-                        "🟡 Un barbeau solide, prêt à être pêché."
-                    ],
-                    "good": [
-                        "🟢 Un superbe barbeau, brillant et vigoureux."
-                    ],
-                    "pristine": [
-                        "✨ Une prise parfaite, un barbeau digne des trophées."
-                    ]
-                }
-            },
-            {
-                "name": "Bouvière",
-                "size_min": 5.0,
-                "size_mean": 12.0,
-                "size_sigma": 2.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Cette petite bouvière est abîmée, mais toujours reconnaissable."
-                    ],
-                    "damaged": [
-                        "🟠 Une bouvière avec des marques, mais encore vive."
-                    ],
-                    "worn": [
-                        "🟡 Un poisson modeste, mais en bon état."
-                    ],
-                    "good": [
-                        "🟢 Une belle bouvière, parfaite pour une prise en rivière."
-                    ],
-                    "pristine": [
-                        "✨ Une bouvière éclatante, petite mais impressionnante."
-                    ]
-                },
-                "price": 900,
-                "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Novembre - mars",
-                "months": [
-                    11,
-                    12,
-                    1,
-                    2,
-                    3
-                ],
-                "fun_fact": "Elle pond ses œufs à l'intérieur des moules d'eau douce pour les protéger.",
-                "time_restriction": null
-            },
-            {
-                "name": "Grenouille",
-                "size_min": 5.0,
-                "size_mean": 10.0,
-                "size_sigma": 2.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Une grenouille mal en point, son chakra senjutsu semble totalement vidé."
-                    ],
-                    "damaged": [
-                        "🟠 Une grenouille froissée, elle a dû rater son atterrissage depuis le mont Myoboku."
-                    ],
-                    "worn": [
-                        "🟡 Une grenouille de rivière tout à fait classique."
-                    ],
-                    "good": [
-                        "🟢 Une grenouille vigoureuse qui coasse fièrement. Jiraya approuverait son potentiel ! 🐸"
-                    ],
-                    "pristine": [
-                        "✨ Une grenouille ninja légendaire du mont Myoboku dotée d'une puissance incroyable et prête pour le mode ermite ! 🐸🔥🌀"
-                    ]
-                },
-                "price": 120,
-                "location": "Étang",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Mai - août",
-                "months": [
-                    5,
-                    6,
-                    7,
-                    8
-                ],
-                "fun_fact": "Un amphibien bavard qui adore chanter sous la pluie d'été au bord de l'étang.",
-                "time_restriction": null
-            },
+                "id": 21
+            }
+        ],
+        "uncommon": [
             {
                 "name": "Anchois",
                 "size_min": 5.0,
@@ -1133,7 +809,116 @@
                     12
                 ],
                 "fun_fact": "Se déplace en bancs immenses pour échapper aux prédateurs de l'océan.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 22
+            },
+            {
+                "name": "Barbeau",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ce barbeau est marqué par les eaux tumultueuses où il vit."
+                    ],
+                    "damaged": [
+                        "🟠 Il a quelques éraflures, mais reste robuste."
+                    ],
+                    "worn": [
+                        "🟡 Un barbeau solide, prêt à être pêché."
+                    ],
+                    "good": [
+                        "🟢 Un superbe barbeau, brillant et vigoureux."
+                    ],
+                    "pristine": [
+                        "✨ Une prise parfaite, un barbeau digne des trophées."
+                    ]
+                },
+                "id": 23
+            },
+            {
+                "name": "Bouvière",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 2.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Cette petite bouvière est abîmée, mais toujours reconnaissable."
+                    ],
+                    "damaged": [
+                        "🟠 Une bouvière avec des marques, mais encore vive."
+                    ],
+                    "worn": [
+                        "🟡 Un poisson modeste, mais en bon état."
+                    ],
+                    "good": [
+                        "🟢 Une belle bouvière, parfaite pour une prise en rivière."
+                    ],
+                    "pristine": [
+                        "✨ Une bouvière éclatante, petite mais impressionnante."
+                    ]
+                },
+                "price": 900,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Novembre - mars",
+                "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                ],
+                "fun_fact": "Elle pond ses œufs à l'intérieur des moules d'eau douce pour les protéger.",
+                "time_restriction": null,
+                "id": 24
+            },
+            {
+                "name": "Calmar",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un calmar avec des tentacules déchirés, il a vu des jours meilleurs."
+                    ],
+                    "damaged": [
+                        "🟠 Ce calmar montre des marques de lutte, mais reste impressionnant."
+                    ],
+                    "worn": [
+                        "🟡 Un calmar ordinaire, avec quelques blessures."
+                    ],
+                    "good": [
+                        "🟢 Un calmar en pleine forme, ses tentacules brillent."
+                    ],
+                    "pristine": [
+                        "✨ Un calmar parfait, une véritable beauté marine."
+                    ]
+                },
+                "price": 500,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - août",
+                "months": [
+                    12,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Il peut projeter un jet d'encre noire pour aveugler ses agresseurs et s'enfuir.",
+                "time_restriction": null,
+                "id": 25
             },
             {
                 "name": "Cardeau",
@@ -1178,7 +963,8 @@
                     12
                 ],
                 "fun_fact": "Un maître du camouflage plat qui se fond parfaitement dans le sable marin.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 26
             },
             {
                 "name": "Clione",
@@ -1215,7 +1001,34 @@
                     3
                 ],
                 "fun_fact": "Surnommé l'ange des mers, c'est en fait un minuscule prédateur mollusque sans coquille.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 27
+            },
+            {
+                "name": "Dorade Grise",
+                "size_min": 25.0,
+                "size_mean": 40.0,
+                "size_sigma": 7.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Une dorade malmenée, mais encore identifiable."
+                    ],
+                    "damaged": [
+                        "🟠 Elle montre quelques cicatrices mais reste impressionnante."
+                    ],
+                    "worn": [
+                        "🟡 Une belle prise, même si elle n'est pas parfaite."
+                    ],
+                    "good": [
+                        "🟢 Une dorade élégante avec des reflets métalliques."
+                    ],
+                    "pristine": [
+                        "✨ Une dorade grise de concours, immaculée et brillante."
+                    ]
+                },
+                "id": 28
             },
             {
                 "name": "Gobie d'eau douce",
@@ -1260,7 +1073,46 @@
                     12
                 ],
                 "fun_fact": "Il utilise ses nageoires pelviennes comme ventouses pour s'accrocher aux rochers.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 29
+            },
+            {
+                "name": "Grenouille",
+                "size_min": 5.0,
+                "size_mean": 10.0,
+                "size_sigma": 2.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Une grenouille mal en point, son chakra senjutsu semble totalement vidé."
+                    ],
+                    "damaged": [
+                        "🟠 Une grenouille froissée, elle a dû rater son atterrissage depuis le mont Myoboku."
+                    ],
+                    "worn": [
+                        "🟡 Une grenouille de rivière tout à fait classique."
+                    ],
+                    "good": [
+                        "🟢 Une grenouille vigoureuse qui coasse fièrement. Jiraya approuverait son potentiel ! 🐸"
+                    ],
+                    "pristine": [
+                        "✨ Une grenouille ninja légendaire du mont Myoboku dotée d'une puissance incroyable et prête pour le mode ermite ! 🐸🔥🌀"
+                    ]
+                },
+                "price": 120,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Mai - août",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Un amphibien bavard qui adore chanter sous la pluie d'été au bord de l'étang.",
+                "time_restriction": null,
+                "id": 30
             },
             {
                 "name": "Guppy",
@@ -1301,7 +1153,8 @@
                     11
                 ],
                 "fun_fact": "Un minuscule poisson tropical très populaire, célèbre pour ses queues colorées en éventail.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 31
             },
             {
                 "name": "Hippocampe",
@@ -1342,7 +1195,8 @@
                     11
                 ],
                 "fun_fact": "Un poisson singulier où ce sont les mâles qui portent les œufs dans leur poche ventrale.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 32
             },
             {
                 "name": "Murène ruban bleue",
@@ -1380,7 +1234,8 @@
                     10
                 ],
                 "fun_fact": "Elle change de sexe et de couleur au cours de sa vie, devenant d'un bleu électrique magnifique.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 33
             },
             {
                 "name": "Néon bleu",
@@ -1421,7 +1276,8 @@
                     11
                 ],
                 "fun_fact": "Un petit poisson scintillant originaire d'Amazonie qui brille d'un éclat bleu et rouge.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 34
             },
             {
                 "name": "Poisson arc-en-ciel",
@@ -1460,7 +1316,8 @@
                     10
                 ],
                 "fun_fact": "Ses reflets irisés changent de couleur selon l'angle de la lumière.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 35
             },
             {
                 "name": "Poisson chirurgien",
@@ -1499,7 +1356,54 @@
                     9
                 ],
                 "fun_fact": "Il possède des scalpels tranchants à la base de sa queue pour se défendre.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 36
+            },
+            {
+                "name": "Poisson Rouge",
+                "size_min": 0.5,
+                "size_mean": 30.0,
+                "size_sigma": 15.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ses écailles sont ternes et abîmées, il a clairement vécu des moments difficiles."
+                    ],
+                    "damaged": [
+                        "🟠 Il a quelques blessures superficielles mais reste reconnaissable."
+                    ],
+                    "worn": [
+                        "🟡 Un poisson assez ordinaire avec quelques marques d'usure."
+                    ],
+                    "good": [
+                        "🟢 Il est en bon état, avec des couleurs plutôt vives."
+                    ],
+                    "pristine": [
+                        "✨ Un magnifique spécimen, parfaitement sain et éclatant de couleurs."
+                    ]
+                },
+                "price": 1300,
+                "location": "Étang",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Toute l'année",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un compagnon domestique classique qui adore nager paisiblement dans les bassins.",
+                "time_restriction": null,
+                "id": 37
             },
             {
                 "name": "Poisson-papillon",
@@ -1538,7 +1442,8 @@
                     9
                 ],
                 "fun_fact": "Ses motifs colorés imitent des yeux pour tromper et désorienter ses prédateurs.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 38
             },
             {
                 "name": "Poisson-porc-épic",
@@ -1574,7 +1479,8 @@
                     9
                 ],
                 "fun_fact": "Une variété de poisson-globe recouverte d'épines acérées qui se dressent lorsqu'il se gonfle.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 39
             },
             {
                 "name": "Poisson-scorpion",
@@ -1615,7 +1521,8 @@
                     11
                 ],
                 "fun_fact": "Il se fond parfaitement dans les rochers et possède des épines venimeuses redoutables.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 40
             },
             {
                 "name": "Saumon",
@@ -1649,7 +1556,8 @@
                     9
                 ],
                 "fun_fact": "Un voyageur infatigable qui remonte les rivières contre le courant pour aller pondre.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 41
             },
             {
                 "name": "Saumon masou",
@@ -1689,7 +1597,8 @@
                     11
                 ],
                 "fun_fact": "Un saumon sauvage très agile appréciant particulièrement les torrents de montagne.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 42
             },
             {
                 "name": "Silure",
@@ -1728,47 +1637,128 @@
                     10
                 ],
                 "fun_fact": "Ce géant d'eau douce sans écailles utilise ses longs barbillons pour s'orienter dans la vase.",
-                "time_restriction": "after_22h"
-            }
-        ],
-        "rare": [
+                "time_restriction": "after_22h",
+                "id": 43
+            },
             {
-                "name": "Esturgeon Royal",
-                "size_min": 100.0,
-                "size_mean": 200.0,
-                "size_sigma": 40.0,
+                "name": "Tanche",
+                "size_min": 20.0,
+                "size_mean": 40.0,
+                "size_sigma": 8.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un géant marqué par le temps, ses blessures racontent une histoire."
+                        "🔴 Une tanche abîmée, sa peau semble avoir subi de nombreuses épreuves."
                     ],
                     "damaged": [
-                        "🟠 Un grand poisson avec des éraflures, mais toujours imposant."
+                        "🟠 Un poisson robuste mais avec des cicatrices évidentes."
                     ],
                     "worn": [
-                        "🟡 Il est robuste, même si les années se font sentir."
+                        "🟡 Une tanche solide, mais sans éclat particulier."
                     ],
                     "good": [
-                        "🟢 Un esturgeon imposant et élégant."
+                        "🟢 Une belle tanche avec une peau luisante."
                     ],
                     "pristine": [
-                        "✨ Une prise légendaire, parfaitement préservée."
+                        "✨ Une tanche magnifique, parfaitement intacte et brillante."
                     ]
-                }
+                },
+                "id": 44
             },
             {
-                "name": "Thon Rouge",
-                "size_min": 80.0,
-                "size_mean": 150.0,
-                "size_sigma": 30.0,
+                "name": "Tilapia",
+                "size_min": 10.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
                 "force_pristine": null,
                 "force_state": null,
-                "descriptions": {},
-                "price": 11000,
-                "location": "Océan",
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un tilapia malmené, probablement attaqué par d'autres poissons."
+                    ],
+                    "damaged": [
+                        "🟠 Il a subi des coups, mais reste mangeable."
+                    ],
+                    "worn": [
+                        "🟡 Un tilapia en état moyen, mais toujours vigoureux."
+                    ],
+                    "good": [
+                        "🟢 Un poisson en bonne santé, prêt pour une belle recette."
+                    ],
+                    "pristine": [
+                        "✨ Un tilapia parfait, aux écailles éclatantes et bien proportionné."
+                    ]
+                },
+                "price": 800,
+                "location": "Rivière",
                 "preferred_time": "Toute la journée",
-                "preferred_season": "Novembre - avril",
+                "preferred_season": "Juin - octobre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "Un poisson robuste et adaptable, élevé depuis l'Antiquité en Égypte.",
+                "time_restriction": null,
+                "id": 45
+            },
+            {
+                "name": "Truite Arc-en-Ciel",
+                "size_min": 5.0,
+                "size_mean": 60.0,
+                "size_sigma": 50.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ses nageoires sont abîmées et ses couleurs ont perdu leur éclat."
+                    ],
+                    "damaged": [
+                        "🟠 Une belle truite, malgré quelques marques de lutte."
+                    ],
+                    "worn": [
+                        "🟡 Elle est en bon état mais pas exceptionnelle."
+                    ],
+                    "good": [
+                        "🟢 Ses écailles brillent avec des reflets arc-en-ciel."
+                    ],
+                    "pristine": [
+                        "✨ Une truite parfaite, digne d'un trophée de pêche."
+                    ]
+                },
+                "id": 46
+            },
+            {
+                "name": "Vandoise",
+                "size_min": 15.0,
+                "size_mean": 30.0,
+                "size_sigma": 6.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ce poisson semble avoir eu une vie difficile, ses écailles sont ternies."
+                    ],
+                    "damaged": [
+                        "🟠 Une vandoise avec des marques de lutte, mais encore vive."
+                    ],
+                    "worn": [
+                        "🟡 Un poisson correct, sans grande particularité."
+                    ],
+                    "good": [
+                        "🟢 Une belle vandoise, en bonne condition."
+                    ],
+                    "pristine": [
+                        "✨ Une vandoise éclatante, parfaite pour une photo."
+                    ]
+                },
+                "price": 240,
+                "location": "Rivière",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Toute l'année",
                 "months": [
                     1,
                     2,
@@ -1783,43 +1773,12 @@
                     11,
                     12
                 ],
-                "fun_fact": "Un colosse marin ultra-rapide doté d'une régulation thermique unique pour les eaux froides.",
-                "time_restriction": null
-            },
-            {
-                "name": "Saumon Atlantique",
-                "size_min": 60.0,
-                "size_mean": 120.0,
-                "size_sigma": 25.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {}
-            },
-            {
-                "name": "Espadon",
-                "size_min": 200.0,
-                "size_mean": 300.0,
-                "size_sigma": 50.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Son épée est brisée, témoin d'innombrables batailles."
-                    ],
-                    "damaged": [
-                        "🟠 Un espadon impressionnant, malgré quelques égratignures."
-                    ],
-                    "worn": [
-                        "🟡 Un géant des mers, robuste mais marqué par le temps."
-                    ],
-                    "good": [
-                        "🟢 Un espadon éclatant, symbole de puissance marine."
-                    ],
-                    "pristine": [
-                        "✨ Une prise de légende, immaculée et majestueuse."
-                    ]
-                }
-            },
+                "fun_fact": "Un poisson vif et argenté qui adore gober les insectes à la surface des rivières.",
+                "time_restriction": "after_22h",
+                "id": 47
+            }
+        ],
+        "rare": [
             {
                 "name": "Bichir",
                 "size_min": 30.0,
@@ -1855,7 +1814,8 @@
                     9
                 ],
                 "fun_fact": "Cette créature préhistorique possède des poumons primitifs lui permettant de ramper hors de l'eau.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 48
             },
             {
                 "name": "Brochet",
@@ -1892,7 +1852,8 @@
                     12
                 ],
                 "fun_fact": "Un redoutable prédateur embusqué doté d'une mâchoire remplie de dents acérées.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 49
             },
             {
                 "name": "Carangue grosse tête",
@@ -1931,7 +1892,8 @@
                     10
                 ],
                 "fun_fact": "Un colosse de l'océan connu pour sa force brute phénoménale lors des combats.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 50
             },
             {
                 "name": "Carpe koï",
@@ -1976,7 +1938,8 @@
                     12
                 ],
                 "fun_fact": "Ces carpes ornementales japonaises sont admirées pour leurs motifs colorés uniques.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 51
             },
             {
                 "name": "Combattant",
@@ -2015,7 +1978,8 @@
                     10
                 ],
                 "fun_fact": "Les mâles de cette espèce sont extrêmement territoriaux et arborent de somptueux voiles.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 52
             },
             {
                 "name": "Crabe chinois",
@@ -2060,7 +2024,60 @@
                     12
                 ],
                 "fun_fact": "Reconnaissable à ses pinces recouvertes de fourrure, il migre sur de longues distances.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 53
+            },
+            {
+                "name": "Espadon",
+                "size_min": 200.0,
+                "size_mean": 300.0,
+                "size_sigma": 50.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Son épée est brisée, témoin d'innombrables batailles."
+                    ],
+                    "damaged": [
+                        "🟠 Un espadon impressionnant, malgré quelques égratignures."
+                    ],
+                    "worn": [
+                        "🟡 Un géant des mers, robuste mais marqué par le temps."
+                    ],
+                    "good": [
+                        "🟢 Un espadon éclatant, symbole de puissance marine."
+                    ],
+                    "pristine": [
+                        "✨ Une prise de légende, immaculée et majestueuse."
+                    ]
+                },
+                "id": 54
+            },
+            {
+                "name": "Esturgeon Royal",
+                "size_min": 100.0,
+                "size_mean": 200.0,
+                "size_sigma": 40.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un géant marqué par le temps, ses blessures racontent une histoire."
+                    ],
+                    "damaged": [
+                        "🟠 Un grand poisson avec des éraflures, mais toujours imposant."
+                    ],
+                    "worn": [
+                        "🟡 Il est robuste, même si les années se font sentir."
+                    ],
+                    "good": [
+                        "🟢 Un esturgeon imposant et élégant."
+                    ],
+                    "pristine": [
+                        "✨ Une prise légendaire, parfaitement préservée."
+                    ]
+                },
+                "id": 55
             },
             {
                 "name": "Murène",
@@ -2096,7 +2113,8 @@
                     10
                 ],
                 "fun_fact": "Un prédateur marin serpentiforme qui se cache dans les crevasses rocheuses.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 56
             },
             {
                 "name": "Omble",
@@ -2136,7 +2154,8 @@
                     11
                 ],
                 "fun_fact": "Un poisson des eaux froides et pures de montagne, cousin du saumon.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 57
             },
             {
                 "name": "Poisson docteur",
@@ -2181,7 +2200,8 @@
                     12
                 ],
                 "fun_fact": "Célèbre pour grignoter doucement les peaux mortes dans les sources thermales.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 58
             },
             {
                 "name": "Poisson lanterne",
@@ -2219,7 +2239,8 @@
                     3
                 ],
                 "fun_fact": "Il utilise un leurre lumineux suspendu au-dessus de sa tête pour attirer ses proies dans l'obscurité.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 59
             },
             {
                 "name": "Poisson-ange",
@@ -2258,7 +2279,8 @@
                     10
                 ],
                 "fun_fact": "Un magnifique poisson plat et majestueux, très prisé des aquariophiles.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 60
             },
             {
                 "name": "Raie",
@@ -2295,7 +2317,8 @@
                     11
                 ],
                 "fun_fact": "Elle glisse gracieusement dans l'eau comme si elle volait avec ses nageoires pectorales.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 61
             },
             {
                 "name": "Rémora rayé",
@@ -2332,7 +2355,18 @@
                     9
                 ],
                 "fun_fact": "Il utilise sa ventouse crânienne pour s'accrocher aux requins et voyager sans effort.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 62
+            },
+            {
+                "name": "Saumon Atlantique",
+                "size_min": 60.0,
+                "size_mean": 120.0,
+                "size_sigma": 25.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {},
+                "id": 63
             },
             {
                 "name": "Saumon roi",
@@ -2366,7 +2400,8 @@
                     9
                 ],
                 "fun_fact": "Le plus grand et le plus noble des saumons du Pacifique, à la chair savoureuse.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 64
             },
             {
                 "name": "Thon",
@@ -2411,7 +2446,38 @@
                     12
                 ],
                 "fun_fact": "Un nageur infatigable capable de traverser des océans entiers à une vitesse impressionnante.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 65
+            },
+            {
+                "name": "Thon Rouge",
+                "size_min": 80.0,
+                "size_mean": 150.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {},
+                "price": 11000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Novembre - avril",
+                "months": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                ],
+                "fun_fact": "Un colosse marin ultra-rapide doté d'une régulation thermique unique pour les eaux froides.",
+                "time_restriction": null,
+                "id": 66
             },
             {
                 "name": "Tortue trionyx",
@@ -2446,7 +2512,8 @@
                     9
                 ],
                 "fun_fact": "Une tortue d'eau douce insolite au corps mou et au long nez en forme de tuba.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 67
             },
             {
                 "name": "Vivaneau",
@@ -2491,72 +2558,11 @@
                     12
                 ],
                 "fun_fact": "Un poisson côtier apprécié pour sa chair ferme et sa belle couleur rouge orangé.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 68
             }
         ],
         "veryrare": [
-            {
-                "name": "Piranha",
-                "size_min": 10.0,
-                "size_mean": 20.0,
-                "size_sigma": 5.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un piranha avec des dents cassées, mais toujours menaçant."
-                    ],
-                    "damaged": [
-                        "🟠 Un prédateur redoutable, même avec quelques cicatrices."
-                    ],
-                    "worn": [
-                        "🟡 Un piranha robuste, mais sans grande particularité."
-                    ],
-                    "good": [
-                        "🟢 Un piranha en pleine santé, prêt à mordre."
-                    ],
-                    "pristine": [
-                        "✨ Un piranha parfait, une véritable machine à tuer."
-                    ]
-                },
-                "price": 2500,
-                "location": "Rivière",
-                "preferred_time": "9h - 16h, 21h - 4h",
-                "preferred_season": "Juin - septembre",
-                "months": [
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fun_fact": "Ce redoutable poisson d'eau douce possède des dents acérées comme des rasoirs.",
-                "time_restriction": null
-            },
-            {
-                "name": "Poisson-Lune",
-                "size_min": 50.0,
-                "size_mean": 150.0,
-                "size_sigma": 30.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un énorme poisson avec des blessures profondes, probablement des prédateurs."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson-lune impressionnant mais marqué par ses aventures."
-                    ],
-                    "worn": [
-                        "🟡 Une créature massive, un peu usée par les courants."
-                    ],
-                    "good": [
-                        "🟢 Un poisson-lune en bon état, majestueux et étrange."
-                    ],
-                    "pristine": [
-                        "✨ Un poisson-lune immaculé, sa forme étrange et parfaite fascine."
-                    ]
-                }
-            },
             {
                 "name": "Anguille Électrique",
                 "size_min": 30.0,
@@ -2580,7 +2586,8 @@
                     "pristine": [
                         "✨ Une anguille parfaite, symbole de danger et de puissance."
                     ]
-                }
+                },
+                "id": 69
             },
             {
                 "name": "Cyprin doré",
@@ -2625,7 +2632,8 @@
                     12
                 ],
                 "fun_fact": "Une variété rare et précieuse sélectionnée pour sa couleur orange vif étincelante.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 70
             },
             {
                 "name": "Lune de mer",
@@ -2661,7 +2669,72 @@
                     9
                 ],
                 "fun_fact": "Aussi appelée Mola Mola, ce géant insolite adore flotter sur le flanc pour bronzer au soleil.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 71
+            },
+            {
+                "name": "Piranha",
+                "size_min": 10.0,
+                "size_mean": 20.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un piranha avec des dents cassées, mais toujours menaçant."
+                    ],
+                    "damaged": [
+                        "🟠 Un prédateur redoutable, même avec quelques cicatrices."
+                    ],
+                    "worn": [
+                        "🟡 Un piranha robuste, mais sans grande particularité."
+                    ],
+                    "good": [
+                        "🟢 Un piranha en pleine santé, prêt à mordre."
+                    ],
+                    "pristine": [
+                        "✨ Un piranha parfait, une véritable machine à tuer."
+                    ]
+                },
+                "price": 2500,
+                "location": "Rivière",
+                "preferred_time": "9h - 16h, 21h - 4h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Ce redoutable poisson d'eau douce possède des dents acérées comme des rasoirs.",
+                "time_restriction": null,
+                "id": 72
+            },
+            {
+                "name": "Poisson-Lune",
+                "size_min": 50.0,
+                "size_mean": 150.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un énorme poisson avec des blessures profondes, probablement des prédateurs."
+                    ],
+                    "damaged": [
+                        "🟠 Un poisson-lune impressionnant mais marqué par ses aventures."
+                    ],
+                    "worn": [
+                        "🟡 Une créature massive, un peu usée par les courants."
+                    ],
+                    "good": [
+                        "🟢 Un poisson-lune en bon état, majestueux et étrange."
+                    ],
+                    "pristine": [
+                        "✨ Un poisson-lune immaculé, sa forme étrange et parfaite fascine."
+                    ]
+                },
+                "id": 73
             },
             {
                 "name": "Ranchu",
@@ -2706,79 +2779,11 @@
                     12
                 ],
                 "fun_fact": "Surnommé le roi des poissons rouges au Japon, il est dépourvu de nageoire dorsale.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 74
             }
         ],
         "epic": [
-            {
-                "name": "Poisson-Clown",
-                "size_min": 5.0,
-                "size_mean": 12.0,
-                "size_sigma": 2.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ses couleurs sont ternes et ses nageoires abîmées, mais il reste identifiable."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson-clown encore vif mais avec des écailles abîmées."
-                    ],
-                    "worn": [
-                        "🟡 Un poisson-clown mignon, mais marqué par la vie."
-                    ],
-                    "good": [
-                        "🟢 Un poisson-clown éclatant, parfait pour un aquarium."
-                    ],
-                    "pristine": [
-                        "✨ Un poisson-clown magnifique, aux couleurs vives et parfaites."
-                    ]
-                },
-                "price": 650,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Avril - septembre",
-                "months": [
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fun_fact": "Il vit en parfaite symbiose au milieu des tentacules urticants des anémones de mer.",
-                "time_restriction": null
-            },
-            {
-                "name": "Coelacanthe",
-                "size_min": 100.0,
-                "size_mean": 180.0,
-                "size_sigma": 20.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {}
-            },
-            {
-                "name": "Requin Marteau",
-                "size_min": 500.0,
-                "size_mean": 3500.0,
-                "size_sigma": 500.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {},
-                "price": 8000,
-                "location": "Océan",
-                "preferred_time": "16h - 9h",
-                "preferred_season": "Juin - septembre",
-                "months": [
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fun_fact": "La forme unique de sa tête en marteau lui offre une vision panoramique exceptionnelle à 360 degrés.",
-                "time_restriction": "after_22h"
-            },
             {
                 "name": "Arapaïma",
                 "size_min": 80.0,
@@ -2814,7 +2819,8 @@
                     9
                 ],
                 "fun_fact": "Un fossile vivant qui respire de l'air à la surface grâce à une vessie natatoire modifiée.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 75
             },
             {
                 "name": "Arowana",
@@ -2851,7 +2857,18 @@
                     9
                 ],
                 "fun_fact": "Aussi appelé poisson-dragon, il est un symbole de chance et de prospérité en Asie.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 76
+            },
+            {
+                "name": "Coelacanthe",
+                "size_min": 100.0,
+                "size_mean": 180.0,
+                "size_sigma": 20.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {},
+                "id": 77
             },
             {
                 "name": "Coryphène",
@@ -2890,7 +2907,8 @@
                     10
                 ],
                 "fun_fact": "Aussi appelée Mahi-Mahi, elle est célèbre pour ses couleurs dorées et sa vitesse fulgurante.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 78
             },
             {
                 "name": "Esturgeon",
@@ -2930,7 +2948,8 @@
                     3
                 ],
                 "fun_fact": "Ce géant des eaux est célèbre pour ses œufs précieux, le caviar.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 79
             },
             {
                 "name": "Gar",
@@ -2967,7 +2986,8 @@
                     9
                 ],
                 "fun_fact": "Un poisson préhistorique doté d'un long bec et d'écailles dures comme des pierres.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 80
             },
             {
                 "name": "Ishidai",
@@ -3009,7 +3029,8 @@
                     11
                 ],
                 "fun_fact": "Reconnaissable à ses rayures noires et blanches, il possède un bec puissant pour briser les coquillages.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 81
             },
             {
                 "name": "Marlin bleu",
@@ -3051,7 +3072,8 @@
                     4
                 ],
                 "fun_fact": "L'un des poissons les plus rapides de l'océan, célèbre pour son rostre en forme d'épée.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 82
             },
             {
                 "name": "Napoléon",
@@ -3086,7 +3108,8 @@
                     8
                 ],
                 "fun_fact": "Ce géant des récifs coralliens arbore une bosse frontale caractéristique rappelant le bicorne de l'empereur.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 83
             },
             {
                 "name": "Poisson-ballon",
@@ -3123,7 +3146,48 @@
                     2
                 ],
                 "fun_fact": "Il se gonfle d'eau ou d'air pour effrayer ses prédateurs, et contient un poison mortel.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 84
+            },
+            {
+                "name": "Poisson-Clown",
+                "size_min": 5.0,
+                "size_mean": 12.0,
+                "size_sigma": 2.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Ses couleurs sont ternes et ses nageoires abîmées, mais il reste identifiable."
+                    ],
+                    "damaged": [
+                        "🟠 Un poisson-clown encore vif mais avec des écailles abîmées."
+                    ],
+                    "worn": [
+                        "🟡 Un poisson-clown mignon, mais marqué par la vie."
+                    ],
+                    "good": [
+                        "🟢 Un poisson-clown éclatant, parfait pour un aquarium."
+                    ],
+                    "pristine": [
+                        "✨ Un poisson-clown magnifique, aux couleurs vives et parfaites."
+                    ]
+                },
+                "price": 650,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Avril - septembre",
+                "months": [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Il vit en parfaite symbiose au milieu des tentacules urticants des anémones de mer.",
+                "time_restriction": null,
+                "id": 85
             },
             {
                 "name": "Poisson-ruban",
@@ -3162,43 +3226,30 @@
                     5
                 ],
                 "fun_fact": "Un géant serpentiforme argenté qui peut atteindre des longueurs impressionnantes dans les abysses.",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 86
             },
             {
-                "name": "Tête-de-serpent",
-                "size_min": 30.0,
-                "size_mean": 50.0,
-                "size_sigma": 10.0,
+                "name": "Requin Marteau",
+                "size_min": 500.0,
+                "size_mean": 3500.0,
+                "size_sigma": 500.0,
                 "force_pristine": null,
                 "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un(e) tête-de-serpent en piteux état, très abîmé par le combat."
-                    ],
-                    "damaged": [
-                        "🟠 Un(e) tête-de-serpent blessé(e) avec des marques d'écailles manquantes."
-                    ],
-                    "worn": [
-                        "🟡 Un(e) tête-de-serpent ordinaire, un peu fatigué par le courant."
-                    ],
-                    "good": [
-                        "🟢 Un(e) magnifique tête-de-serpent vigoureux et très frais de pêche."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen de tête-de-serpent absolument parfait, resplendissant sous le soleil !"
-                    ]
-                },
-                "price": 5500,
-                "location": "Étang",
-                "preferred_time": "9h - 16h",
-                "preferred_season": "Juin - août",
+                "descriptions": {},
+                "price": 8000,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
                 "months": [
                     6,
                     7,
-                    8
+                    8,
+                    9
                 ],
-                "fun_fact": "Ce redoutable prédateur peut survivre hors de l'eau pendant plusieurs jours en respirant de l'air.",
-                "time_restriction": "before_22h"
+                "fun_fact": "La forme unique de sa tête en marteau lui offre une vision panoramique exceptionnelle à 360 degrés.",
+                "time_restriction": "after_22h",
+                "id": 87
             },
             {
                 "name": "Tortue serpentine",
@@ -3238,40 +3289,48 @@
                     10
                 ],
                 "fun_fact": "Dotée d'une mâchoire puissante, elle ne doit pas être approchée de trop près !",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 88
+            },
+            {
+                "name": "Tête-de-serpent",
+                "size_min": 30.0,
+                "size_mean": 50.0,
+                "size_sigma": 10.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) tête-de-serpent en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) tête-de-serpent blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) tête-de-serpent ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique tête-de-serpent vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de tête-de-serpent absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 5500,
+                "location": "Étang",
+                "preferred_time": "9h - 16h",
+                "preferred_season": "Juin - août",
+                "months": [
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Ce redoutable prédateur peut survivre hors de l'eau pendant plusieurs jours en respirant de l'air.",
+                "time_restriction": "before_22h",
+                "id": 89
             }
         ],
         "legendary": [
-            {
-                "name": "Pristine Banana 1",
-                "size_min": 5.0,
-                "size_mean": 10.0,
-                "size_sigma": 1.0,
-                "force_pristine": true,
-                "force_state": null,
-                "descriptions": {
-                    "pristine": [
-                        "✨😱 Wow !! C'est la ✨Pristine✨ Banana 1 🍌 !! Un trésor rare pour les amoureux des bananes !",
-                        "✨😱 Incroyable ! Une ✨Banane Divine✨ vient d'être pêchée ! Sa courbure est absolument parfaite.",
-                        "✨🍌 Une banane si jaune qu'elle illumine le fond marin ! C'est la Pristine Banana !"
-                    ]
-                }
-            },
-            {
-                "name": "Pristine Banana 2",
-                "size_min": 5.0,
-                "size_mean": 10.0,
-                "size_sigma": 2.0,
-                "force_pristine": true,
-                "force_state": null,
-                "descriptions": {
-                    "pristine": [
-                        "✨😱 Wow !! C'est la ✨Pristine✨ Banana 2 🍌 !! Un trésor rarissime !",
-                        "✨😱 Une deuxième variante de la ✨Banane Sacrée✨ ! Elle brille d'un éclat tropical.",
-                        "✨🍌 La légende disait vrai... La Pristine Banana 2 existe bel et bien !"
-                    ]
-                }
-            },
             {
                 "name": "Cœlacanthe",
                 "size_min": 80.0,
@@ -3315,7 +3374,8 @@
                     12
                 ],
                 "fun_fact": "Un véritable dinosaure vivant, que l'on croyait éteint depuis 65 millions d'années !",
-                "time_restriction": null
+                "time_restriction": null,
+                "id": 90
             },
             {
                 "name": "Dai yu",
@@ -3352,7 +3412,8 @@
                     3
                 ],
                 "fun_fact": "Un poisson légendaire des rivières de montagnes, extrêmement rare et mystérieux.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 91
             },
             {
                 "name": "Dorado",
@@ -3389,7 +3450,8 @@
                     9
                 ],
                 "fun_fact": "Surnommé l'or des rivières en raison de ses écailles dorées éblouissantes.",
-                "time_restriction": "before_22h"
+                "time_restriction": "before_22h",
+                "id": 92
             },
             {
                 "name": "Grand requin blanc",
@@ -3426,7 +3488,8 @@
                     9
                 ],
                 "fun_fact": "Le plus grand prédateur marin de la planète, doté de plusieurs rangées de dents tranchantes !",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 93
             },
             {
                 "name": "Macropinna",
@@ -3471,120 +3534,8 @@
                     12
                 ],
                 "fun_fact": "Un poisson abyssal doté d'une tête transparente à travers laquelle on aperçoit ses yeux tubulaires verts !",
-                "time_restriction": "after_22h"
-            },
-            {
-                "name": "Requin scie",
-                "size_min": 100.0,
-                "size_mean": 160.0,
-                "size_sigma": 30.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un(e) requin scie en piteux état, très abîmé par le combat."
-                    ],
-                    "damaged": [
-                        "🟠 Un(e) requin scie blessé(e) avec des marques d'écailles manquantes."
-                    ],
-                    "worn": [
-                        "🟡 Un(e) requin scie ordinaire, un peu fatigué par le courant."
-                    ],
-                    "good": [
-                        "🟢 Un(e) magnifique requin scie vigoureux et très frais de pêche."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen de requin scie absolument parfait, resplendissant sous le soleil !"
-                    ]
-                },
-                "price": 12000,
-                "location": "Océan",
-                "preferred_time": "16h - 9h",
-                "preferred_season": "Juin - septembre",
-                "months": [
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fun_fact": "Son long rostre bordé de dents en scie lui sert à déterrer et couper ses proies.",
-                "time_restriction": "after_22h"
-            },
-            {
-                "name": "Requin-baleine",
-                "size_min": 100.0,
-                "size_mean": 160.0,
-                "size_sigma": 30.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un(e) requin-baleine en piteux état, très abîmé par le combat."
-                    ],
-                    "damaged": [
-                        "🟠 Un(e) requin-baleine blessé(e) avec des marques d'écailles manquantes."
-                    ],
-                    "worn": [
-                        "🟡 Un(e) requin-baleine ordinaire, un peu fatigué par le courant."
-                    ],
-                    "good": [
-                        "🟢 Un(e) magnifique requin-baleine vigoureux et très frais de pêche."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen de requin-baleine absolument parfait, resplendissant sous le soleil !"
-                    ]
-                },
-                "price": 13000,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Juin - septembre",
-                "months": [
-                    6,
-                    7,
-                    8,
-                    9
-                ],
-                "fun_fact": "Le plus grand poisson vivant au monde, un géant pacifique qui se nourrit exclusivement de plancton.",
-                "time_restriction": null
-            },
-            {
-                "name": "Truite dorée",
-                "size_min": 15.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un(e) truite dorée en piteux état, très abîmé par le combat."
-                    ],
-                    "damaged": [
-                        "🟠 Un(e) truite dorée blessé(e) avec des marques d'écailles manquantes."
-                    ],
-                    "worn": [
-                        "🟡 Un(e) truite dorée ordinaire, un peu fatigué par le courant."
-                    ],
-                    "good": [
-                        "🟢 Un(e) magnifique truite dorée vigoureux et très frais de pêche."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen de truite dorée absolument parfait, resplendissant sous le soleil !"
-                    ]
-                },
-                "price": 15000,
-                "location": "Rivière (falaise)",
-                "preferred_time": "16h - 9h",
-                "preferred_season": "Mars - mai, septembre - novembre",
-                "months": [
-                    3,
-                    4,
-                    5,
-                    9,
-                    10,
-                    11
-                ],
-                "fun_fact": "Un joyau scintillant des rivières cristallines, extrêmement recherché.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 94
             },
             {
                 "name": "Piranhator",
@@ -3629,7 +3580,156 @@
                     12
                 ],
                 "fun_fact": "Moitié piranha, moitié machine à tuer, il patrouille dans les eaux tumultueuses avec ses yeux lasers.",
-                "time_restriction": "after_22h"
+                "time_restriction": "after_22h",
+                "id": 95
+            },
+            {
+                "name": "Pristine Banana 1",
+                "size_min": 5.0,
+                "size_mean": 10.0,
+                "size_sigma": 1.0,
+                "force_pristine": true,
+                "force_state": null,
+                "descriptions": {
+                    "pristine": [
+                        "✨😱 Wow !! C'est la ✨Pristine✨ Banana 1 🍌 !! Un trésor rare pour les amoureux des bananes !",
+                        "✨😱 Incroyable ! Une ✨Banane Divine✨ vient d'être pêchée ! Sa courbure est absolument parfaite.",
+                        "✨🍌 Une banane si jaune qu'elle illumine le fond marin ! C'est la Pristine Banana !"
+                    ]
+                },
+                "id": 96
+            },
+            {
+                "name": "Pristine Banana 2",
+                "size_min": 5.0,
+                "size_mean": 10.0,
+                "size_sigma": 2.0,
+                "force_pristine": true,
+                "force_state": null,
+                "descriptions": {
+                    "pristine": [
+                        "✨😱 Wow !! C'est la ✨Pristine✨ Banana 2 🍌 !! Un trésor rarissime !",
+                        "✨😱 Une deuxième variante de la ✨Banane Sacrée✨ ! Elle brille d'un éclat tropical.",
+                        "✨🍌 La légende disait vrai... La Pristine Banana 2 existe bel et bien !"
+                    ]
+                },
+                "id": 97
+            },
+            {
+                "name": "Requin scie",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) requin scie en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) requin scie blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) requin scie ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique requin scie vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de requin scie absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 12000,
+                "location": "Océan",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Son long rostre bordé de dents en scie lui sert à déterrer et couper ses proies.",
+                "time_restriction": "after_22h",
+                "id": 98
+            },
+            {
+                "name": "Requin-baleine",
+                "size_min": 100.0,
+                "size_mean": 160.0,
+                "size_sigma": 30.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) requin-baleine en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) requin-baleine blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) requin-baleine ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique requin-baleine vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de requin-baleine absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 13000,
+                "location": "Océan",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Juin - septembre",
+                "months": [
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "fun_fact": "Le plus grand poisson vivant au monde, un géant pacifique qui se nourrit exclusivement de plancton.",
+                "time_restriction": null,
+                "id": 99
+            },
+            {
+                "name": "Truite dorée",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Un(e) truite dorée en piteux état, très abîmé par le combat."
+                    ],
+                    "damaged": [
+                        "🟠 Un(e) truite dorée blessé(e) avec des marques d'écailles manquantes."
+                    ],
+                    "worn": [
+                        "🟡 Un(e) truite dorée ordinaire, un peu fatigué par le courant."
+                    ],
+                    "good": [
+                        "🟢 Un(e) magnifique truite dorée vigoureux et très frais de pêche."
+                    ],
+                    "pristine": [
+                        "✨ Un spécimen de truite dorée absolument parfait, resplendissant sous le soleil !"
+                    ]
+                },
+                "price": 15000,
+                "location": "Rivière (falaise)",
+                "preferred_time": "16h - 9h",
+                "preferred_season": "Mars - mai, septembre - novembre",
+                "months": [
+                    3,
+                    4,
+                    5,
+                    9,
+                    10,
+                    11
+                ],
+                "fun_fact": "Un joyau scintillant des rivières cristallines, extrêmement recherché.",
+                "time_restriction": "after_22h",
+                "id": 100
             }
         ],
         "mythical": [
@@ -3656,7 +3756,45 @@
                     "pristine": [
                         "✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (240 min VIP)"
                     ]
-                }
+                },
+                "id": 101
+            },
+            {
+                "name": "Le Crabe Dictateur",
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 5.0,
+                "force_pristine": null,
+                "force_state": null,
+                "descriptions": {
+                    "badly damaged": [
+                        "🔴 Le tyran est tombé ! Ses pinces brisées ne font plus peur à personne."
+                    ],
+                    "damaged": [
+                        "🟠 Son armure impériale rouge est fissurée, mais sa fureur autoritaire reste entière."
+                    ],
+                    "worn": [
+                        "🟡 Un crabe en uniforme doté d'un petit chapeau d'amiral rigide."
+                    ],
+                    "good": [
+                        "🟢 Il claque fièrement de sa pince géante, ordonnant votre reddition immédiate."
+                    ],
+                    "pristine": [
+                        "👑 Le Crabe Dictateur brandissant sa pince en signe de domination absolue sur tout l'étang !"
+                    ]
+                },
+                "price": 45000,
+                "location": "Océan",
+                "preferred_time": "9h - 18h",
+                "preferred_season": "Juin - août",
+                "months": [
+                    6,
+                    7,
+                    8
+                ],
+                "fun_fact": "Il règne sans partage sur les récifs, armé de sa pince autoritaire en uniforme d'amiral.",
+                "time_restriction": "before_22h",
+                "id": 102
             },
             {
                 "name": "Xénomorphe des Abysses",
@@ -3693,43 +3831,8 @@
                     3
                 ],
                 "fun_fact": "Une monstruosité noire née dans les profondeurs insondables de la mer noire. Son sang acide corrode tous les filets.",
-                "time_restriction": "after_22h"
-            },
-            {
-                "name": "Le Crabe Dictateur",
-                "size_min": 15.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Le tyran est tombé ! Ses pinces brisées ne font plus peur à personne."
-                    ],
-                    "damaged": [
-                        "🟠 Son armure impériale rouge est fissurée, mais sa fureur autoritaire reste entière."
-                    ],
-                    "worn": [
-                        "🟡 Un crabe en uniforme doté d'un petit chapeau d'amiral rigide."
-                    ],
-                    "good": [
-                        "🟢 Il claque fièrement de sa pince géante, ordonnant votre reddition immédiate."
-                    ],
-                    "pristine": [
-                        "👑 Le Crabe Dictateur brandissant sa pince en signe de domination absolue sur tout l'étang !"
-                    ]
-                },
-                "price": 45000,
-                "location": "Océan",
-                "preferred_time": "9h - 18h",
-                "preferred_season": "Juin - août",
-                "months": [
-                    6,
-                    7,
-                    8
-                ],
-                "fun_fact": "Il règne sans partage sur les récifs, armé de sa pince autoritaire en uniforme d'amiral.",
-                "time_restriction": "before_22h"
+                "time_restriction": "after_22h",
+                "id": 103
             }
         ],
         "divin": [
@@ -3746,7 +3849,8 @@
                         "✨🕊️ Tombée du ciel ou remontée des abysses ? La ✨Carte Postale du CotCot✨ est entre vos mains !",
                         "✨🎖️ L'objet ultime de tout collectionneur : La ✨Carte Postale✨ de MonsieurCotCot !"
                     ]
-                }
+                },
+                "id": 104
             }
         ]
     },

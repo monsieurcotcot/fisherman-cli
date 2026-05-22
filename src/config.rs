@@ -39,6 +39,7 @@ pub struct FishData {
     pub force_pristine: Option<bool>,
     pub force_state: Option<String>,
     pub descriptions: HashMap<String, Vec<String>>,
+    pub id: Option<i32>,
     pub price: Option<i32>,
     pub location: Option<String>,
     pub preferred_time: Option<String>,

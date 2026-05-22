@@ -584,6 +584,25 @@
             bottom: 0;
             color: #efeff1;
         }
+        .museum-slot .id-badge {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.45rem;
+            color: #8b8b9c;
+            background: rgba(0,0,0,0.75);
+            padding: 1px 3px;
+            border-radius: 2px;
+            z-index: 5;
+            font-weight: bold;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+        }
+        .museum-slot.unlocked:hover .id-badge {
+            color: #efeff1;
+            background: rgba(145, 70, 255, 0.9);
+        }
         /* Pagination styling */
         .pagination-container {
             display: flex;
@@ -992,6 +1011,9 @@
                         });
                     });
                 }
+                // Trier les éléments du musée par ID (Pokédex style)
+                flatFishList.sort((a, b) => (a.id || 0) - (b.id || 0));
+                
                 // Si le panneau du musée est déjà affiché (ex: fetchStats s'est terminé en premier), on le re-render
                 if (document.getElementById('museumPane').style.display === 'block') {
                     renderMuseum();
@@ -1495,7 +1517,9 @@
         }
 
         function showFishDetails(fish, color) {
-            document.getElementById('modal-name').textContent = fish.name;
+            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
+            const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
+            document.getElementById('modal-name').textContent = fish.name + idStr;
             document.getElementById('modal-name').style.color = color;
             
             // Rétablir la mise en page normale du modal
@@ -1557,7 +1581,9 @@
         }
 
         function showMuseumDetails(pb) {
-            document.getElementById('modal-name').textContent = "Record : " + pb.name;
+            const staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+            const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
+            document.getElementById('modal-name').textContent = "Record : " + pb.name + idStr;
             document.getElementById('modal-name').style.color = pb.color;
             document.getElementById('modal-id-row').style.display = 'none';
             document.getElementById('modal-rarity').textContent = pb.rarity;
@@ -1619,6 +1645,13 @@
 
                 const slot = document.createElement('div');
                 slot.className = 'museum-slot';
+
+                // Badge ID style Pokédex
+                const idStr = fish.id ? `#${String(fish.id).padStart(3, '0')}` : '#???';
+                const idBadge = document.createElement('span');
+                idBadge.className = 'id-badge';
+                idBadge.textContent = idStr;
+                slot.appendChild(idBadge);
 
                 const icon = document.createElement('span');
                 icon.className = 'icon';

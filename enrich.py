@@ -260,13 +260,24 @@ def run_enrichment():
                 
             data["fish_data"][rareté_cible].append(new_fish)
 
+    # 5.5 Attribuer des IDs séquentiels (Pokédex style) de 1 à N
+    # Trier par niveau de rareté et par ordre alphabétique pour être déterministe
+    rarity_order = ["common", "uncommon", "rare", "veryrare", "epic", "legendary", "mythical", "divin"]
+    current_id = 1
+    for r_key in rarity_order:
+        if r_key in data["fish_data"]:
+            data["fish_data"][r_key].sort(key=lambda x: x["name"].lower())
+            for fish in data["fish_data"][r_key]:
+                fish["id"] = current_id
+                current_id += 1
+
     # 6. Sauvegarder dans les fichiers de destination
     for p in [json_path, src_json_path]:
         os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
             
-    print("Base de données JSON enrichie avec succès dans les deux destinations !")
+    print("Base de données JSON enrichie avec succès avec IDs dans les deux destinations !")
 
 def apply_naruto_descriptions(fish_obj, name):
     if name.lower() == "têtard":
