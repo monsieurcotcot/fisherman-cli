@@ -11,23 +11,33 @@
                 "descriptions": {
                     "badly damaged": [
                         "🔴 Un(e) ayu en piteux état, très abîmé par le combat.",
-                        "🔴 Dans un état lamentable. On dirait qu'il est passé dans un mixeur avant de gober votre hameçon. Franchement, ça ne donne pas envie de le cuisiner."
+                        "🔴 Dans un état lamentable. On dirait qu'il est passé dans un mixeur avant de gober votre hameçon. Franchement, ça ne donne pas envie de le cuisiner.",
+                        "🔴 On dirait un vieux cornichon décoloré et écrasé qui aurait traîné dans une flaque d'eau stagnante, la tache dorée légendaire a laissé place à une bouillie grisâtre.",
+                        "🔴 Une chair complètement ramollie et gâtée par les infections, exhalant une odeur de décomposition et de vase qui interdit définitivement toute tentative de grillade."
                     ],
                     "damaged": [
                         "🟠 Un(e) ayu blessé(e) avec des marques d'écailles manquantes.",
-                        "🟠 Marqué par des estafilades, probablement dû à une tentative d'évasion face à un oiseau pêcheur. Il a perdu de sa beauté."
+                        "🟠 Marqué par des estafilades, probablement dû à une tentative d'évasion face à un oiseau pêcheur. Il a perdu de sa beauté.",
+                        "🟠 Il s'est frotté d'un peu trop près aux galets d'un rapide ou à un hameçon rival, sa tache jaune est à moitié effacée et il a perdu la moitié de son style fuselé.",
+                        "🟠 Les chairs entourant les plaies cutanées sont ensanglantées et ont perdu leur bonne odeur fruitée, obligeant à parer les flancs abîmés pour récupérer le reste pour une friture."
                     ],
                     "worn": [
                         "🟡 Un(e) ayu ordinaire, un peu fatigué par le courant.",
-                        "🟡 Quelques écailles manquantes et une couleur un peu terne. Il a clairement passé un peu trop de temps à frotter les rochers pour brouter des algues."
+                        "🟡 Quelques écailles manquantes et une couleur un peu terne. Il a clairement passé un peu trop de temps à frotter les rochers pour brouter des algues.",
+                        "🟡 À force de frotter sa bouche contre les cailloux pour brouter de la mousse, ce poisson a le teint grisâtre et sent plus la vieille rivière que le melon d'eau.",
+                        "🟡 La chair reste bonne mais la peau olive a perdu sa fraîcheur et son parfum fruité, nécessitant de le badigeonner de sauce soja ou de miso pour masquer son aspect visuel terne."
                     ],
                     "good": [
                         "🟢 Un(e) magnifique ayu vigoureux et très frais de pêche.",
-                        "🟢 En excellente forme. Ses nageoires sont intactes et il frétille encore avec l'énergie typique d'un poisson de courant."
+                        "🟢 En excellente forme. Ses nageoires sont intactes et il frétille encore avec l'énergie typique d'un poisson de courant.",
+                        "🟢 Ce petit acrobate des rivières pète la forme, il gigote tellement qu'il essaie de vous asperger avec son mucus parfumé au concombre frais.",
+                        "🟢 Un poisson très sain aux petites écailles intactes et à l'odeur marine fruitée, idéal pour une cuisson traditionnelle au gros sel."
                     ],
                     "pristine": [
                         "✨ Un spécimen de ayu absolument parfait, resplendissant sous le soleil !",
-                        "✨Un spécimen étincelant aux reflets dorés impeccables. On dirait qu'il sort tout juste d'une publicité pour de l'eau de source."
+                        "✨Un spécimen étincelant aux reflets dorés impeccables. On dirait qu'il sort tout juste d'une publicité pour de l'eau de source.",
+                        "✨ Il brille tellement et sent si fort le melon d'eau frais qu'on se demande s'il sort d'un torrent de montagne japonais ou d'un rayon de parfumerie de luxe.",
+                        "✨ Une chair nacrée incomparable qui dégage un parfum unique de pastèque sauvage, parfaite pour être embrochée en S et grillée entière au sel sur des braises de charbon de bois."
                     ]
                 },
                 "id": 1,
@@ -45,32 +55,52 @@
             },
             {
                 "name": "Bar",
-                "size_min": 30.0,
-                "size_mean": 50.0,
-                "size_sigma": 10.0,
+                "size_min": 20.0,
+                "size_mean": 35.0,
+                "size_sigma": 6.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
                         "🔴 Un(e) bar en piteux état, très abîmé par le combat.",
                         "🔴 C'est lui le dernier Bar avant l'apocalypse ? Il a dû être remonté au moins 20 fois pour ressembler à ça.",
-                        "🔴 Ce pauvre bar est en lambeaux, presque défiguré. Entre les morsures de parasites, les traces de filet maillant qui lui ont scié les babines et sa chair meurtrie, sa capture relève plus du sauvetage miséricordieux que de la pêche sportive."
+                        "🔴 Ce pauvre bar est en lambeaux, presque défiguré. Entre les morsures de parasites, les traces de filet maillant qui lui ont scié les babines et sa chair meurtrie, sa capture relève plus du sauvetage miséricordieux que de la pêche sportive.",
+                        "🔴 Nécrose ulcéreuse terminale du derme vert-olive avec lyse complète de la bande sombre latérale et décomposition bactérienne de la membrane maxillaire démesurée.",
+                        "🔴 Un poisson d'eau douce en piteux état dont la robe verdâtre est recouverte de moisissure blanche nauséabonde masquant sa grande bouche ouverte.",
+                        "🔴 On dirait un vieux cornichon géant oublié au soleil qui aurait moisi dans un fossé, sa gueule géante ne fait plus peur à personne et pue la vase croupie.",
+                        "🔴 Une chair totalement liquéfiée et infectée dégageant une odeur de marécage putride sous une peau verdâtre pourrie, impropre à toute friture."
                     ],
                     "damaged": [
                         "🟠 Un(e) bar blessé(e) avec des marques d'écailles manquantes.",
-                        "🟠 Une large balafre barre son flanc et plusieurs rayons de sa queue sont déchirés. Il a survécu de justesse aux crocs d'un phoque ou à l'hélice d'un bateau de plaisance, et cela se voit au premier coup d'œil."
+                        "🟠 Une large balafre barre son flanc et plusieurs rayons de sa queue sont déchirés. Il a survécu de justesse aux crocs d'un phoque ou à l'hélice d'un bateau de plaisance, et cela se voit au premier coup d'œil.",
+                        "🟠 Rupture de la continuité cutanée le long de la ligne latérale foncée, lacération de la nageoire dorsale épineuse et traumatismes sur la mâchoire protractile.",
+                        "🟠 Ce poisson montre une vilaine coupure sur son flanc vert-olive qui brise sa bande noire latérale et déchire sa lèvre supérieure.",
+                        "🟠 Il a tenté de gober une branche épineuse un peu trop grosse pour sa bouche géante, il s'en sort avec les flancs verdâtres tout rayés et la queue fendue.",
+                        "🟠 Les tissus sont meurtris autour de la blessure cutanée ensanglantée du dos sombre, ruinant une grande partie du filet blanc et obligeant à un parage sévère."
                     ],
                     "worn": [
                         "🟡 Un(e) bar ordinaire, un peu fatigué par le courant.",
-                        "🟡 Le dos présente des éraflures blanchâtres et le mucus protecteur a disparu par endroits. Il porte les stigmates ordinaires d'une vie passée à traquer le lançon dans les vagues de l'estran et à frotter le sable des baïnes."
+                        "🟡 Le dos présente des éraflures blanchâtres et le mucus protecteur a disparu par endroits. Il porte les stigmates ordinaires d'une vie passée à traquer le lançon dans les vagues de l'estran et à frotter le sable des baïnes.",
+                        "🟡 Érosion superficielle des écailles de la zone ventrale par friction benthique et opacification discrète du mucus exhalant une odeur sédimentaire.",
+                        "🟡 La couleur vert-olive de ce poisson commence à ternir et la ligne sombre sur son flanc est estompée par une couche de mucus un peu odorante.",
+                        "🟡 À force de se cacher dans la boue et les herbiers, ses flancs verdâtres ont la couleur d'une vieille algue cuite et sa bouche géante aspire des débris de vase.",
+                        "🟡 La peau verte est assez terne et dégage une légère odeur d'étang, mais les filets restent fermes si on prend soin de bien les peler avant la cuisson."
                     ],
                     "good": [
                         "🟢 Un(e) magnifique bar vigoureux et très frais de pêche.",
-                        "🟢 Un prédateur fier et vigoureux. Sa robe sombre sur le dos est bien nette, ses nageoires dorsales épineuses sont dressées et prêtes à piquer, témoignant d'un poisson en pleine possession de ses moyens au moment de la touche."
+                        "🟢 Un prédateur fier et vigoureux. Sa robe sombre sur le dos est bien nette, ses nageoires dorsales épineuses sont dressées et prêtes à piquer, témoignant d'un poisson en pleine possession de ses moyens au moment de la touche.",
+                        "🟢 Index corporel conforme, pigmentation contrastée de la bande médio-latérale noire et intégrité de l'appareil mandibulaire s'étendant au-delà de l'orbite oculaire.",
+                        "🟢 Un beau poisson d'eau douce bien trapu, affichant une robe vert-olive saine, une bande noire nette sur le flanc et une immense bouche caractéristique.",
+                        "🟢 Ce glouton des étangs a une bouche tellement énorme qu'il pourrait avaler votre smartphone tout rond si vous le laissiez tomber dans l'eau.",
+                        "🟢 Un spécimen bien charnu à l'odeur fraîche d'eau vive, parfait pour lever deux beaux filets épais à faire dorer doucement à la poêle avec du beurre."
                     ],
                     "pristine": [
                         "✨ Un spécimen de bar absolument parfait, resplendissant sous le soleil !",
-                        "✨ Ses flancs argentés projettent des éclats métalliques parfaits sous la lumière. Les écailles sont si denses, lisses et intactes qu'on croirait capturer un lingot d'argent massif fraîchement sorti de l'océan."
+                        "✨ Ses flancs argentés projettent des éclats métalliques parfaits sous la lumière. Les écailles sont si denses, lisses et intactes qu'on croirait capturer un lingot d'argent massif fraîchement sorti de l'océan.",
+                        "✨ Statut physiologique optimal, réflectivité maximale de la livrée vert-olive, netteté absolue de la bande longitudinal sombre et intégrité parfaite de la membrane buccale.",
+                        "✨ Un poisson magnifique à la silhouette robuste, arborant des flancs vert-bronze étincelants, une ligne noire parfaite et une gueule gigantesque immaculée.",
+                        "✨ Il est tellement vert, brillant et parfait qu'on dirait une peluche de pêche américaine neuve tout juste sortie de son emballage en plastique.",
+                        "✨ Une chair blanche d'une fermeté royale et d'une pureté absolue, exhalant une saine odeur de rivière propre, idéale pour un passage au four en papillote."
                     ]
                 },
                 "id": 2,
@@ -98,25 +128,45 @@
             {
                 "name": "Bar Commun",
                 "size_min": 20.0,
-                "size_mean": 40.0,
+                "size_mean": 55.0,
                 "size_sigma": 10.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un miraculé de la mer en piteux état. Sa mâchoire inférieure est fendue, sa peau est parsemée de cicatrices purulentes causées par des poux de mer et ses nageoires sont tellement effilochées qu'on se demande comment il arrivait encore à nager."
+                        "🔴 Un miraculé de la mer en piteux état. Sa mâchoire inférieure est fendue, sa peau est parsemée de cicatrices purulentes causées par des poux de mer et ses nageoires sont tellement effilochées qu'on se demande comment il arrivait encore à nager.",
+                        "🔴 Diagnostic pathologique terminal caractérisé par une lyse complète du derme argenté, une desquamation totale de la tache noire operculaire et une prolifération bactérienne invasive.",
+                        "🔴 Un bar agonisant et défiguré dont les flancs d'argent sont rongés par des plaques de pourriture blanche exhalant une odeur de marée putride repoussante.",
+                        "🔴 Ce loup de mer ressemble à un vieux poisson resté coincé trois jours dans un filet fantôme au milieu des algues en décomposition, un vrai désastre olfactif.",
+                        "🔴 Une chair molle et gâtée par les infections sous une peau grise en décomposition, dégageant une odeur d'ammoniaque fétide qui exclut toute possibilité de cuisson."
                     ],
                     "damaged": [
-                        "🟠 Des traces de frottement profondes abîment ses écailles et sa première nageoire dorsale a perdu plusieurs de ses épines acérées. Il a visiblement frotté de trop près les mailles d'un vieux filet fantôme ou essuyé une attaque de raie sur le fond."
+                        "🟠 Des traces de frottement profondes abîment ses écailles et sa première nageoire dorsale a perdu plusieurs de ses épines acérées. Il a visiblement frotté de trop près les mailles d'un vieux filet fantôme ou essuyé une attaque de raie sur le fond.",
+                        "🟠 Solutions de continuité dermo-épidermiques localisées avec avulsion des squames argentées et déchirure des membranes interradiales de la nageoire caudale.",
+                        "🟠 Le poisson présente une profonde entaille sanglante sur le dos sombre et plusieurs piquants de sa première nageoire dorsale sont brisés suite à un choc contre les rochers.",
+                        "🟠 Il a voulu faire le caïd face à un phoque ou une hélice de bateau, il s'en sort avec les flancs d'argent complètement rayés et la queue en lambeaux.",
+                        "🟠 Les chairs sont lourdement meurtries autour de la blessure operculaire ensanglantée, ce qui oblige à parer largement le poisson pour ne conserver que la partie arrière saine."
                     ],
                     "worn": [
-                        "🟡 Le poisson a perdu un peu de son éclat métallique et ses flancs présentent des zones légèrement ternies. C'est la marque d'un vieux loup de mer habitué à chasser le crabe au ras des rochers coupants et à affronter les puissants courants de marée."
+                        "🟡 Le poisson a perdu un peu de son éclat métallique et ses flancs présentent des zones légèrement ternies. C'est la marque d'un vieux loup de mer habitué à chasser le crabe au ras des rochers coupants et à affronter les puissants courants de marée.",
+                        "🟡 Érosion mécanique superficielle des squames due aux frottements dans le ressac et opacification bénigne du film de mucus protecteur.",
+                        "🟡 Les flancs argentés de ce bar ont perdu leur éclat métallique pour devenir grisâtres et la tache noire operculaire est un peu estompée par une pellicule mate.",
+                        "🟡 Ce vieux loup de mer a traîné dans tellement de rouleaux d'écume que ses écailles argentées ont l'air d'avoir été lavées à la javel avec un programme essorage intensif.",
+                        "🟡 La peau argentée est un peu terne et dégage une odeur d'algues un peu lourde, mais la chair reste de bonne qualité si elle est pochée avec un bouillon bien relevé."
                     ],
                     "good": [
-                        "🟢 Un magnifique poisson de sport au corps fuselé et musclé. Sa peau sécrète une couche de mucus saine et uniforme, ses yeux sont parfaitement clairs et sa queue puissante ne montre aucun signe de fatigue ou de combat récent."
+                        "🟢 Un magnifique poisson de sport au corps fuselé et musclé. Sa peau sécrète une couche de mucus saine et uniforme, ses yeux sont parfaitement clairs et sa queue puissante ne montre aucun signe de fatigue ou de combat récent.",
+                        "🟢 Tonicité musculaire optimale, intégrité fonctionnelle des rayons épineux de la première nageoire dorsale et opercules branchiaux d'un rouge vif sain.",
+                        "🟢 Un bar robuste au regard vif, arborant des flancs clairs bien argentés et une tache noire distincte derrière l'ouïe qui confirme sa bonne santé.",
+                        "🟢 Ce prédateur a des piquants dorsaux tellement acérés et dressés qu'il pourrait servir de peigne de secours si vous perdez le vôtre sur le bateau.",
+                        "🟢 Un poisson sain aux opercules bien nets exhalant une bonne odeur d'océan, idéal pour lever deux beaux filets à griller unilatéralement sur la peau."
                     ],
                     "pristine": [
-                        "✨ Une merveille de l'océan sans la moindre égratignure, arborant une robe d'un gris bleuté étincelant sur le dos et un ventre d'un blanc pur immaculé. Ce spécimen semble sortir tout droit d'un aquarium de recherche, parfaitement préservé de la dureté de la vie sauvage."
+                        "✨ Une merveille de l'océan sans la moindre égratignure, arborant une robe d'un gris bleuté étincelant sur le dos et un ventre d'un blanc pur immaculé. Ce spécimen semble sortir tout droit d'un aquarium de recherche, parfaitement préservé de la dureté de la vie sauvage.",
+                        "✨ Intégrité cutano-muqueuse absolue, homochromie pélagique parfaite des flancs argentés et netteté de la tache sombre operculaire sans aucun parasitisme.",
+                        "✨ Un bar magnifique au corps fuselé, dont le dos gris-sombre et les flancs d'un argent étincelant brillent sous la lumière sans la moindre égratignure.",
+                        "✨ Ce loup de mer est tellement étincelant et parfait qu'on dirait qu'il sort d'un spot publicitaire pour du dentifrice blancheur, pas une seule écaille d'argent n'est de travers.",
+                        "✨ Une chair blanche extra-ferme d'une fraîcheur absolue exhalant une pure odeur de marée iodée, royale pour être cuite entière en croûte de sel."
                     ]
                 },
                 "id": 3,
@@ -207,27 +257,47 @@
                     "badly damaged": [
                         "🔴 Un carassin abîmé, son parcours a dû être difficile.",
                         "🔴 Une silhouette déformée et couverte de cicatrices blanchâtres mal refermées. Sa peau présente des plaques de friction purulentes et sa nageoire caudale est à moitié rongée par les bactéries des fonds stagnants.",
-                        "🔴 Un rescapé agonisant au corps bosselé, couvert de plaques de sédiments et de lésions fongiques blanchâtres qui masquent presque totalement sa couleur d'origine."
+                        "🔴 Un rescapé agonisant au corps bosselé, couvert de plaques de sédiments et de lésions fongiques blanchâtres qui masquent presque totalement sa couleur d'origine.",
+                        "🔴 Nécrose dermo-épidermique totale effaçant la courbure convexe de la nageoire dorsale, accompagnée d'une lyse complète des épaisses écailles bronzées et d'une putréfaction anaérobie exhalant l'ammoniaque.",
+                        "🔴 Un carassin agonisant au dos très bossu, complètement dépouillé de ses reflets cuivrés par un voile de moisissure blanche exhalant une odeur fétide de marécage.",
+                        "🔴 On dirait un vieux disque de fonte tout rouillé et aplati trouvé au fond d'une mare asséchée, sa bouche sans barbillons est bloquée et il pue la vase décomposée.",
+                        "🔴 Une chair totalement liquéfiée par les parasites sous une peau dorée en décomposition avancée, dégageant une odeur de vase putride qui rend impossible toute manipulation culinaire."
                     ],
                     "damaged": [
                         "🟠 Un poisson qui montre des signes d'usure, mais reste appétissant.",
                         "🟠 Une entaille visible sépare sa longue nageoire dorsale en deux et plusieurs grandes écailles manquent sur son dos. Il a probablement échappé de justesse aux serres acérées d'un héron posté sur la berge.",
-                        "🟠 Une entaille nette sépare ses rayons branchiaux et plusieurs écailles manquent sur son flanc gauche, stigmates d'une attaque de héron."
+                        "🟠 Une entaille nette sépare ses rayons branchiaux et plusieurs écailles manquent sur son flanc gauche, stigmates d'une attaque de héron.",
+                        "🟠 Solution de continuité cutanée profonde avec avulsion des macro-écailles cuivrées et section traumatique du premier rayon dentelé de la nageoire dorsale convexe.",
+                        "🟠 Ce carassin bossu présente une vilaine coupure ensanglantée sur le flanc qui gâche l'alignement de ses grosses écailles bronzées et déchire sa queue.",
+                        "🟠 Ce poisson-disque a visiblement perdu son duel avec un prédateur, sa silhouette haute est balafrée et sa petite bouche dépourvue de moustaches fait une grimace de douleur.",
+                        "🟠 Les tissus entourant la profonde plaie sur le dos haut et cuivré sont lourdement tuméfiés, obligeant à éliminer une grande partie de la chair pour ne sauver qu'un maigre morceau."
                     ],
                     "worn": [
                         "🟡 Il semble en bonne condition, mais sans grande particularité.",
                         "🟡 Les teintes dorées s'estompent au profit d'un gris-brun plus terne. À force de fouiller obstinément la vase épaisse à la recherche de larves, ses flancs robustes ont fini par perdre leur éclat d'origine.",
-                        "🟡 Des marques de frottement ternissent le bas de son abdomen à force de fouiller la végétation dense et la vase des étangs peu profonds."
+                        "🟡 Des marques de frottement ternissent le bas de son abdomen à force de fouiller la végétation dense et la vase des étangs peu profonds.",
+                        "🟡 Érosion mécanique superficielle des grandes écailles de la zone ventrale par frottement benthique prolongé et opacification du mucus exhalant une forte odeur sédimentaire.",
+                        "🟡 Les reflets cuivrés et dorés de ce carassin bossu commencent à ternir et sa peau sans barbillons sécrète un mucus opaque à l'odeur lourde de vase stagnante.",
+                        "🟡 À force de fouiller la boue à plat ventre, ce poisson a le dos bronze aussi mat qu'une vieille poêle en cuivre mal récurée et sa haute silhouette a perdu tout éclat.",
+                        "🟡 La peau épaisse et dorée est devenue très terne et chargée d'un fort parfum de limon, exigeant un écaillage vigoureux et un dégorgement minutieux avant d'espérer la cuire."
                     ],
                     "good": [
                         "🟢 Un joli carassin, brillant et robuste.",
                         "🟢 Un spécimen vigoureux et bien rond, affichant une belle couleur bronze sain. Ses nageoires épaisses sont totalement intactes et sa vivacité témoigne d'une excellente adaptation aux eaux calmes de l'étang.",
-                        "🟢 Un poisson vigoureux au dos bombé bien dessiné, affichant des nageoires saines et une coloration bronze homogène sur l'ensemble du corps."
+                        "🟢 Un poisson vigoureux au dos bombé bien dessiné, affichant des nageoires saines et une coloration bronze homogène sur l'ensemble du corps.",
+                        "🟢 Intégrité morphologique de la silhouette haute et comprimée, pigmentation cuivrée homogène des grandes écailles et absence de lésions sur la nageoire dorsale convexe.",
+                        "🟢 Un carassin vigoureux au dos haut caractéristique, arborant une belle robe de bronze doré sans blessure apparente et une petite bouche propre sans aucun barbillon.",
+                        "🟢 Ce poisson est tellement haut et trapu qu'on dirait une carpe commune qui a percuté un mur à pleine vitesse et qui a perdu ses moustaches dans le choc.",
+                        "🟢 Un spécimen bien charnu à la chair très blanche et ferme, exhalant une saine odeur végétale d'étang propre, idéal pour être frit entier après de fines incisions transversales."
                     ],
                     "pristine": [
                         "✨ Un spécimen parfait, ses écailles dorées éclatent sous la lumière.",
                         "✨ Une robe cuivrée resplendissante et un corps trapu d'une régularité parfaite. Ce poisson semble avoir été sculpté par un orfèvre tant ses reflets métalliques renvoient harmonieusement la lumière dorée du soleil.",
-                        "✨ Un spécimen trapu aux reflets dorés et cuivrés d'une pureté absolue, sans la moindre altération sur ses grosses écailles robustes."
+                        "✨ Un spécimen trapu aux reflets dorés et cuivrés d'une pureté absolue, sans la moindre altération sur ses grosses écailles robustes.",
+                        "✨ Statut homéostatique parfait révélant une réflectivité maximale des iridophores cuivrés, alignement géométrique des grandes écailles et mucus translucide exhalant une fraîcheur aquatique absolue.",
+                        "✨ Un carassin magnifique à la silhouette bossue et robuste, étincelant de reflets bronze et d'un or vieux brillant, doté d'une nageoire dorsale bombée impeccable.",
+                        "✨ Il est si parfait, rond et doré avec ses écailles massives qu'on dirait une pièce de monnaie antique géante tout juste sortie d'un coffre au trésor englouti.",
+                        "✨ Une chair blanche particulièrement dense et saine sous des écailles de bronze étincelantes, dégageant un parfum pur d'eau vive, royale pour une cuisson lente au four."
                     ]
                 },
                 "id": 5,
@@ -255,8 +325,8 @@
             {
                 "name": "Carpe",
                 "size_min": 15.0,
-                "size_mean": 25.0,
-                "size_sigma": 5.0,
+                "size_mean": 35.0,
+                "size_sigma": 12.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
