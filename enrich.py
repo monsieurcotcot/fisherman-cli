@@ -226,15 +226,24 @@ def run_enrichment():
         dyn_restriction = determine_time_restriction(heures)
         
         if existing_fish:
-            # Poisson existant : enrichir ses métadonnées sans modifier sa structure de descriptions/tailles initiale !
+            # Poisson existant : enrichir ses métadonnées uniquement si elles sont absentes (ou null/vides) !
             print(f"Enrichissement de {existing_fish['name']} existant dans '{existing_rarity}'")
-            existing_fish["price"] = prix
-            existing_fish["location"] = lieu
-            existing_fish["preferred_time"] = heures
-            existing_fish["preferred_season"] = période
-            existing_fish["months"] = month_list
-            existing_fish["fun_fact"] = anecdote
-            existing_fish["time_restriction"] = dyn_restriction
+            
+            if existing_fish.get("price") is None:
+                existing_fish["price"] = prix
+            if existing_fish.get("location") is None:
+                existing_fish["location"] = lieu
+            if existing_fish.get("preferred_time") is None:
+                existing_fish["preferred_time"] = heures
+            if existing_fish.get("preferred_season") is None:
+                existing_fish["preferred_season"] = période
+            if existing_fish.get("months") is None or not existing_fish.get("months"):
+                existing_fish["months"] = month_list
+            if existing_fish.get("fun_fact") is None or existing_fish.get("fun_fact") == "":
+                existing_fish["fun_fact"] = anecdote
+                
+            # La restriction de temps est calculée dynamiquement à partir de preferred_time actif dans le JSON !
+            existing_fish["time_restriction"] = determine_time_restriction(existing_fish.get("preferred_time"))
             
             if nom.lower() == "têtard" or nom.lower() == "grenouille":
                 apply_naruto_descriptions(existing_fish, nom)

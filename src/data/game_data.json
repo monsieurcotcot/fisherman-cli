@@ -42,16 +42,17 @@
                 },
                 "id": 1,
                 "price": 900,
-                "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Juillet - septembre",
+                "location": "Rivières rapides, rivières côtières peu profondes et lacs - Japon, Corée, Chine et Taïwan",
+                "preferred_time": "09h - 16h",
+                "preferred_season": "Juin - septembre",
                 "months": [
+                    6,
                     7,
                     8,
                     9
                 ],
-                "fun_fact": "Surnommé poisson-doux en raison de sa chair au parfum unique de melon et de concombre.",
-                "time_restriction": null
+                "fun_fact": "La tranche horaire de 09h - 16h se justifie par l'activité strictement diurne de l'ayu, qui a besoin d'une forte luminosité solaire pour brouter les algues fixées sur les rochers à l'aide de ses dents spécialisées. La période de Juin - Septembre et 06 - 09 correspond à la saison estivale où les cours d'eau se réchauffent, favorisant la croissance rapide de ce poisson annuel avant sa migration de reproduction automnale vers les estuaires. Un fait amusant est que l'ayu est un poisson territorial farouche qui défend son rocher nourricier contre tout autre intrus, une caractéristique exploitée par les pêcheurs japonais qui utilisent la technique traditionnelle du tomozuri en attachant un ayu vivant à leur ligne pour provoquer l'attaque agressive d'un autre individu sauvage. L'anecdote de l'expert rappelle que ce poisson est surnommé le poisson-pastèque en raison de la présence de composés chimiques de la famille des aldéhydes dans son mucus, lui conférant une odeur fruitée saisissante et unique au monde qui disparaît rapidement après sa mort.",
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Bar",
@@ -106,8 +107,8 @@
                 "id": 2,
                 "price": 400,
                 "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
+                "preferred_time": "06h - 20h",
+                "preferred_season": "Mai - Octobre",
                 "months": [
                     1,
                     2,
@@ -122,8 +123,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Le compagnon incontournable de toutes vos sessions de pêche en rivière !",
-                "time_restriction": null
+                "fun_fact": "Ce carnassier s'active surtout aux heures de transition lumineuse, chassant à vue le matin et en fin de journée lorsque les proies se déplacent près de la surface pour s'alimenter. La période propice s'étend de la fin du printemps au milieu de l'automne car ce poisson thermophile a besoin d'eaux chaudes pour stimuler son métabolisme et son agressivité territoriale. Une de ses particularités les plus impressionnantes est sa capacité à sauter hors de l'eau en secouant frénétiquement la tête pour tenter de se libérer lorsqu'il se sent capturé par un intrus. De plus, sa gueule démesurée lui permet d'engloutir des proies mesurant jusqu'à un tiers de sa propre taille, y compris des grenouilles, des petits oiseaux ou des rongeurs imprudents traversant les herbiers.",
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Bar Commun",
@@ -171,13 +172,10 @@
                 },
                 "id": 3,
                 "price": 400,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
+                "location": "Mer, océan - Océan Atlantique Nord-Est, Manche, Mer Méditerranée",
+                "preferred_time": "21h - 05h",
+                "preferred_season": "Avril - Novembre",
                 "months": [
-                    1,
-                    2,
-                    3,
                     4,
                     5,
                     6,
@@ -185,11 +183,10 @@
                     8,
                     9,
                     10,
-                    11,
-                    12
+                    11
                 ],
-                "fun_fact": "Un poisson côtier très recherché pour sa combativité et sa chair délicate.",
-                "time_restriction": null
+                "fun_fact": "Ce prédateur traque ses proies principalement à la faveur de la nuit et de la marée haute, profitant de l'obscurité pour surprendre les petits poissons directement dans l'écume du ressac côtier. Sa présence près des enrochements et des estuaires s'étend du printemps à la fin de l'automne, lorsque la température des eaux littorales reste clémente, avant que les adultes ne rejoignent les grands fonds au large pour la fraie hivernale. Lors de sa manipulation, il faut impérativement se méfier de ses opercules branchiaux latéraux, car ces structures osseuses sont de véritables rasoirs naturels capables de trancher net une ligne de pêche ou un doigt imprudent. Cette dangerosité physique s'accompagne d'une intelligence halieutique redoutable, les grands spécimens possédant une mémoire à long terme développée qui leur permet de reconnaître et de bouder un leurre artificiel s'ils ont déjà été capturés par le passé.",
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Brème",
@@ -231,7 +228,7 @@
                     ]
                 },
                 "id": 4,
-                "price": 450,
+                "price": "450",
                 "location": "Rivières, lacs, étangs - Europe Centrale & Ouest",
                 "preferred_time": "19h - 7h",
                 "preferred_season": "Mai - Octobre",
@@ -302,9 +299,9 @@
                 },
                 "id": 5,
                 "price": 160,
-                "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
+                "location": "Étangs vaseux, lacs peu profonds, canaux et rivières lentes - Europe et Asie",
+                "preferred_time": "06h - 19h",
+                "preferred_season": "Mai - Septembre",
                 "months": [
                     1,
                     2,
@@ -319,8 +316,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge.",
-                "time_restriction": null
+                "fun_fact": "Ce cyprinidé benthique recherche sa nourriture principalement en journée, s'activant du matin jusqu'au crépuscule pour fouiller la vase à l'aide de sa bouche protractile lorsque la luminosité permet de repérer les petits invertébrés. Sa capture est idéale de la fin du printemps au début de l'automne, période durant laquelle les eaux stagnantes se réchauffent et stimulent son métabolisme ainsi que ses rassemblements reproducteurs dans les herbiers. Ce poisson possède une adaptation biologique absolument extraordinaire lui permettant de survivre plusieurs semaines dans des eaux totalement privées d'oxygène, voire prises par les glaces en hiver. Pour réussir cet exploit, son organisme bascule sur un métabolisme anaérobie unique qui transforme le glycogène en éthanol, une forme d'alcool pur ensuite évacuée par les branchies, empêchant ainsi ses cellules de geler ou de s'asphyxier lorsque la mare se transforme en bloc solide.",
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Carpe",
@@ -368,9 +365,9 @@
                 },
                 "id": 6,
                 "price": 300,
-                "location": "Étang",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
+                "location": "Lacs, étangs, canaux et rivières lentes - Europe et Asie",
+                "preferred_time": "18h - 08h",
+                "preferred_season": "Mai - Octobre",
                 "months": [
                     1,
                     2,
@@ -385,8 +382,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Symbole de persévérance, elle peut vivre plusieurs décennies dans les étangs paisibles.",
-                "time_restriction": null
+                "fun_fact": "Ce cyprinidé massif s'alimente principalement à la faveur de la pénombre et de la nuit, lorsque le calme revient sur le plan d'eau et qu'il peut fouiller le sédiment en toute sécurité. La période allant de mai à octobre correspond aux eaux chaudes nécessaires pour activer le métabolisme de ce poisson thermophile, stimulant sa frénésie alimentaire après la fraie printanière. Une de ses facultés stupéfiantes réside dans son sens gustatif hors du commun : ses quatre barbillons et ses lèvres sont tapissés de milliers de récepteurs chimiques lui permettant de détecter des nutriments enfouis sous plusieurs centimètres de vase sans rien voir. Une observation marquante sur les grands spécimens montre qu'ils possèdent une ouïe extrêmement sensible capable de mémoriser les vibrations des bruits de pas sur la berge ou le plomb qui claque sur l'eau, les poussant à fuir instantanément la zone pour se réfugier au large..",
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Chevaine",
@@ -429,9 +426,9 @@
                 },
                 "id": 7,
                 "price": 200,
-                "location": "Rivière",
-                "preferred_time": "9h - 16h",
-                "preferred_season": "Toute l'année",
+                "location": "Rivières rapides, ruisseaux, lacs de barrage - Europe",
+                "preferred_time": "08h - 18h",
+                "preferred_season": "Mai - Septembre",
                 "months": [
                     1,
                     2,
@@ -446,7 +443,7 @@
                     11,
                     12
                 ],
-                "fun_fact": "Un poisson omnivore très méfiant qui peuple nos rivières calmes.",
+                "fun_fact": "Ce chasseur diurne opportuniste s'active pleinement sous la lumière du soleil pour repérer ses proies en surface grâce à sa vue perçante, tandis que les mois de mai à septembre correspondent à la saison chaude où son métabolisme est maximal, le poussant à marauder activement sous la végétation rivulaire. Ce cyprinidé se distingue par son régime omnivore absolument hors norme, capable d'engloutir avec la même voracité des cerises ou des mûres sauvages tombées des arbres riverains que des morceaux de fromage à forte odeur. Surnommé le diable des rivières, il présente toutefois un profil culinaire très complexe : bien que sa chair blanche soit fine et ferme, son squelette intègre un réseau particulièrement dense d'arêtes ramifiées en forme de Y, rendant sa consommation de ce fait laborieuse à table.",
                 "time_restriction": "before_22h"
             },
             {
@@ -495,9 +492,9 @@
                 },
                 "id": 8,
                 "price": 150,
-                "location": "Océan",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Toute l'année",
+                "location": "Mer, océan - Océan Atlantique Nord-Est, Manche, Mer Méditerranée, Mer du Nord",
+                "preferred_time": "20h - 05h",
+                "preferred_season": "Mai - Octobre",
                 "months": [
                     1,
                     2,
@@ -512,8 +509,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Un poisson grégaire très commun, pêché en grande quantité à travers le monde.",
-                "time_restriction": null
+                "fun_fact": "Ce poisson pélagique migre verticalement pour chasser à la faveur de l'obscurité, suivant le plancton et les bancs d'anchois qui remontent vers la surface durant la nuit. Les captures sont optimales de la fin du printemps au début de l'automne car le réchauffement des eaux pousse les grands bancs à se rapprocher des côtes et des couches de surface. Durant leur jeunesse, les juvéniles utilisent une stratégie de survie fascinante en se réfugiant au milieu des tentacules venimeux des grandes méduses, profitant d'une immunité cutanée pour échapper aux prédateurs sans subir de piqûres. Bien que souvent boudé en Europe où il est relégué au rang de sous-produit de pêche en raison de sa ligne d'écailles tranchantes, il est une véritable star de la gastronomie au Japon sous le nom d'Aji, où certaines populations sédentaires côtières n'ayant jamais migré développent une robe dorée et un taux de graisse si exceptionnels qu'elles s'arrachent à des prix astronomiques sur les marchés de Tokyo.",
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Crapet",
