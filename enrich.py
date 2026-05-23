@@ -3,19 +3,14 @@ import os
 
 def run_enrichment():
     json_path = '/opt/gitspace/fisherman-cli/data/game_data.json'
-    src_json_path = '/opt/gitspace/fisherman-cli/src/data/game_data.json'
     
     if not os.path.exists(json_path) and os.path.exists('data/game_data.json'):
         json_path = 'data/game_data.json'
-    if not os.path.exists(src_json_path) and os.path.exists('src/data/game_data.json'):
-        src_json_path = 'src/data/game_data.json'
     
     # 1. Charger le game_data.json existant
     target_path = None
     if os.path.exists(json_path):
         target_path = json_path
-    elif os.path.exists(src_json_path):
-        target_path = src_json_path
     else:
         print("Erreur : Aucun fichier game_data.json trouvé !")
         return
@@ -310,9 +305,18 @@ def run_enrichment():
     for r_key, fishes in data["fish_data"].items():
         updated_fishes = []
         for fish in fishes:
-            # Calcul dynamique de time_restriction si preferred_time est présent et restriction est None
-            if fish.get("preferred_time") and not fish.get("time_restriction"):
+            # Conversion automatique du prix s'il est sous forme de chaîne de caractères (évite les crashs de type)
+            if isinstance(fish.get("price"), str):
+                try:
+                    fish["price"] = int(fish["price"])
+                except ValueError:
+                    fish["price"] = None
+            
+            # Calcul dynamique de time_restriction si preferred_time est présent
+            if fish.get("preferred_time"):
                 fish["time_restriction"] = determine_time_restriction(fish["preferred_time"])
+            else:
+                fish["time_restriction"] = None
             
             ordered_fish = {}
             for k in keys_order:
@@ -320,13 +324,12 @@ def run_enrichment():
             updated_fishes.append(ordered_fish)
         data["fish_data"][r_key] = updated_fishes
 
-    # 6. Sauvegarder dans les fichiers de destination
-    for p in [json_path, src_json_path]:
-        os.makedirs(os.path.dirname(p), exist_ok=True)
-        with open(p, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+    # 6. Sauvegarder dans le fichier de destination
+    os.makedirs(os.path.dirname(json_path), exist_ok=True)
+    with open(json_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
             
-    print("Base de données JSON enrichie avec succès avec IDs dans les deux destinations !")
+    print("Base de données JSON enrichie et formatée avec succès !")
 
 def apply_naruto_descriptions(fish_obj, name):
     if name.lower() == "têtard":

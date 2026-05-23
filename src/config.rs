@@ -63,7 +63,6 @@ pub fn get_game_data() -> &'static GameData {
         let paths = vec![
             "/app/data/game_data.json",
             "data/game_data.json",
-            "src/data/game_data.json",
         ];
         let mut json_str = None;
         for path in paths {
@@ -76,7 +75,7 @@ pub fn get_game_data() -> &'static GameData {
         
         let content = json_str.unwrap_or_else(|| {
             tracing::info!("Falling back to embedded game_data.json");
-            include_str!("data/game_data.json").to_string()
+            include_str!("../data/game_data.json").to_string()
         });
         
         serde_json::from_str(&content).expect("Failed to parse game_data.json")
