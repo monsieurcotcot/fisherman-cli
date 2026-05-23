@@ -5,16 +5,36 @@ def run_enrichment():
     json_path = '/opt/gitspace/fisherman-cli/data/game_data.json'
     src_json_path = '/opt/gitspace/fisherman-cli/src/data/game_data.json'
     
+    if not os.path.exists(json_path) and os.path.exists('data/game_data.json'):
+        json_path = 'data/game_data.json'
+    if not os.path.exists(src_json_path) and os.path.exists('src/data/game_data.json'):
+        src_json_path = 'src/data/game_data.json'
+    
     # 1. Charger le game_data.json existant
+    target_path = None
     if os.path.exists(json_path):
-        with open(json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        target_path = json_path
     elif os.path.exists(src_json_path):
-        with open(src_json_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        target_path = src_json_path
     else:
         print("Erreur : Aucun fichier game_data.json trouvé !")
         return
+
+    with open(target_path, 'r', encoding='utf-8') as f:
+        raw_content = f.read()
+    
+    # Nettoyer les virgules traînantes du JSON avant de le charger
+    import re
+    cleaned_content = re.sub(r',(\s*[\]}])', r'\1', raw_content)
+    data = json.loads(cleaned_content)
+
+    # Nettoyage des doublons/variantes invalides
+    for r_key in ["epic"]:
+        if r_key in data.get("fish_data", {}):
+            data["fish_data"][r_key] = [f for f in data["fish_data"][r_key] if f["name"] != "Coelacanthe"]
+    for r_key in ["common"]:
+        if r_key in data.get("fish_data", {}):
+            data["fish_data"][r_key] = [f for f in data["fish_data"][r_key] if f["name"] not in ["Eperlan", "Chevesne"]]
 
     # S'assurer que fish_data est structuré
     if "fish_data" not in data:
@@ -54,7 +74,7 @@ def run_enrichment():
         ("Dai yu", "legendary", "Rivière (falaise)", 15000, "Décembre - mars", "16h - 9h", "after_22h", "Énorme", "Un poisson légendaire des rivières de montagnes, extrêmement rare et mystérieux."),
         ("Dorado", "legendary", "Rivière", 15000, "Juin - septembre", "4h - 21h", "before_22h", "Très grande", "Surnommé l'or des rivières en raison de ses écailles dorées éblouissantes."),
         ("Ecrevisse", "common", "Étang", 200, "Avril - septembre", "Toute la journée", None, "Petite", "Ce petit crustacé d'eau douce adore se cacher sous les pierres des rivières."),
-        ("Eperlan", "common", "Rivière", 320, "Décembre - février", "Toute la journée", None, "Petite", "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais."),
+        ("Éperlan", "common", "Rivière", 320, "Décembre - février", "Toute la journée", None, "Petite", "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais."),
         ("Esturgeon", "epic", "Embouchure de rivière", 10000, "Septembre - mars", "Toute la journée", None, "Énorme", "Ce géant des eaux est célèbre pour ses œufs précieux, le caviar."),
         ("Fondule barré", "common", "Étang", 300, "Avril - août", "Toute la journée", None, "Minuscule", "Un petit poisson rayé extrêmement tolérant aux variations de salinité."),
         ("Gar", "epic", "Étang", 6000, "Juin - septembre", "16h - 9h", "after_22h", "Énorme", "Un poisson préhistorique doté d'un long bec et d'écailles dures comme des pierres."),
@@ -169,6 +189,22 @@ def run_enrichment():
     # 5. Parcourir et fusionner/ajouter les poissons AC et Fantasy
     all_to_process = ac_fishes + fantasy_fishes
     
+    def determine_time_restriction(pref_time):
+        if not pref_time:
+            return None
+        pref_time = pref_time.strip()
+        if pref_time.lower() in ["toute la journée", "24h/24"]:
+            return None
+        
+        match = re.search(r'^(\d+)\s*h', pref_time, re.IGNORECASE)
+        if match:
+            start_hour = int(match.group(1))
+            if start_hour < 12:
+                return "before_22h"
+            else:
+                return "after_22h"
+        return None
+
     for nom, rareté_cible, lieu, prix, période, heures, restriction, taille_str, anecdote in all_to_process:
         # Chercher s'il existe déjà dans l'une des raretés du game_data
         existing_fish = None
@@ -186,6 +222,9 @@ def run_enrichment():
         # Conversion mois
         month_list = months_mapping.get(période, list(range(1, 13)))
         
+        # Calcul dynamique de time_restriction
+        dyn_restriction = determine_time_restriction(heures)
+        
         if existing_fish:
             # Poisson existant : enrichir ses métadonnées sans modifier sa structure de descriptions/tailles initiale !
             print(f"Enrichissement de {existing_fish['name']} existant dans '{existing_rarity}'")
@@ -195,7 +234,7 @@ def run_enrichment():
             existing_fish["preferred_season"] = période
             existing_fish["months"] = month_list
             existing_fish["fun_fact"] = anecdote
-            existing_fish["time_restriction"] = restriction
+            existing_fish["time_restriction"] = dyn_restriction
             
             if nom.lower() == "têtard" or nom.lower() == "grenouille":
                 apply_naruto_descriptions(existing_fish, nom)
@@ -218,7 +257,7 @@ def run_enrichment():
                 "preferred_season": période,
                 "months": month_list,
                 "fun_fact": anecdote,
-                "time_restriction": restriction
+                "time_restriction": dyn_restriction
             }
             
             # Appliquer les descriptions spécifiques ou génériques en français
@@ -270,6 +309,26 @@ def run_enrichment():
             for fish in data["fish_data"][r_key]:
                 fish["id"] = current_id
                 current_id += 1
+
+    # 5.6 Assurer une structure 15-clés uniforme et ordonnée pour TOUS les poissons
+    keys_order = [
+        "name", "size_min", "size_mean", "size_sigma",
+        "force_pristine", "force_state", "descriptions", "id",
+        "price", "location", "preferred_time", "preferred_season",
+        "months", "fun_fact", "time_restriction"
+    ]
+    for r_key, fishes in data["fish_data"].items():
+        updated_fishes = []
+        for fish in fishes:
+            # Calcul dynamique de time_restriction si preferred_time est présent et restriction est None
+            if fish.get("preferred_time") and not fish.get("time_restriction"):
+                fish["time_restriction"] = determine_time_restriction(fish["preferred_time"])
+            
+            ordered_fish = {}
+            for k in keys_order:
+                ordered_fish[k] = fish.get(k, None)
+            updated_fishes.append(ordered_fish)
+        data["fish_data"][r_key] = updated_fishes
 
     # 6. Sauvegarder dans les fichiers de destination
     for p in [json_path, src_json_path]:

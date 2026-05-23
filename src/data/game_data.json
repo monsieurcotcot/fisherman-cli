@@ -30,6 +30,7 @@
                         "✨Un spécimen étincelant aux reflets dorés impeccables. On dirait qu'il sort tout juste d'une publicité pour de l'eau de source."
                     ]
                 },
+                "id": 1,
                 "price": 900,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -39,9 +40,8 @@
                     8,
                     9
                 ],
-                "fun_fact": "Surnommé poisson-doux ou poisson-parfum au Japon en raison de sa chair au parfum unique de melon et de concombre lié à son alimentation exclusive de micro-algues fluviales.",
-                "time_restriction": null,
-                "id": 1
+                "fun_fact": "Surnommé poisson-doux en raison de sa chair au parfum unique de melon et de concombre.",
+                "time_restriction": null
             },
             {
                 "name": "Bar",
@@ -73,6 +73,7 @@
                         "✨ Ses flancs argentés projettent des éclats métalliques parfaits sous la lumière. Les écailles sont si denses, lisses et intactes qu'on croirait capturer un lingot d'argent massif fraîchement sorti de l'océan."
                     ]
                 },
+                "id": 2,
                 "price": 400,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -91,9 +92,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Le bar possède des opercules operculaires (les plaques osseuses qui protègent ses ouïes) extrêmement tranchants, coupants comme des lames de rasoir. Les pêcheurs novices s'en souviennent généralement toute leur vie après avoir tenté de saisir ce poisson par la tête à mains nues pour le décrocher.",
-                "time_restriction": null,
-                "id": 2
+                "fun_fact": "Le compagnon incontournable de toutes vos sessions de pêche en rivière !",
+                "time_restriction": null
             },
             {
                 "name": "Bar Commun",
@@ -119,6 +119,7 @@
                         "✨ Une merveille de l'océan sans la moindre égratignure, arborant une robe d'un gris bleuté étincelant sur le dos et un ventre d'un blanc pur immaculé. Ce spécimen semble sortir tout droit d'un aquarium de recherche, parfaitement préservé de la dureté de la vie sauvage."
                     ]
                 },
+                "id": 3,
                 "price": 400,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -137,40 +138,63 @@
                     11,
                     12
                 ],
-                "fun_fact": "Pour protéger les consommateurs face aux arnaques sur les menus des restaurants, la loi française interdit d'utiliser le mot seul Bar ou Loup pour d'autres poissons exotiques (comme le Bar du Chili qui est en fait de la Légine australe). Si un joueur pêche un Bar dans votre jeu, c'est obligatoirement le prédateur argenté de nos côtes !",
-                "time_restriction": null,
-                "id": 3
+                "fun_fact": "Un poisson côtier très recherché pour sa combativité et sa chair délicate.",
+                "time_restriction": null
             },
             {
                 "name": "Brème",
                 "size_min": 15.0,
-                "size_mean": 30.0,
-                "size_sigma": 6.0,
+                "size_mean": 35.0,
+                "size_sigma": 10.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
                         "🔴 La brème est en piteux état, ses écailles sont éraflées. Il n'a pas une gueule de porte bonheur celui-là.",
-                        "🔴 Un poisson bossu et décharné en fin de vie. Recouvert d'une couche de sédiments incrustés dans une bave jaunâtre, il présente des ulcères cutanés et une silhouette déformée par les maladies de l'eau douce."
+                        "🔴 Un poisson bossu et décharné en fin de vie. Recouvert d'une couche de sédiments incrustés dans une bave jaunâtre, il présente des ulcères cutanés et une silhouette déformée par les maladies de l'eau douce.",
+                        "🔴 Stigmates pathologiques majeurs caractérisés par des ulcérations dermo-épidermiques étendues, des foyers de saprolégniose et des déformations squelettiques sévères.",
+                        "🔴 Un vieux poisson bossu couvert d'un voile de moisissure blanche et de bave jaunâtre nauséabonde qui ne donne absolument pas envie d'être touché."
                     ],
                     "damaged": [
                         "🟠 Quelques marques de griffures sur son corps.",
-                        "🟠 Quelques grosses écailles manquent sur sa bosse dorsale et sa nageoire caudale est légèrement fendue, stigmates évidents d'une rencontre tendue avec les dents acérées d'un brochet."
+                        "🟠 Quelques grosses écailles manquent sur sa bosse dorsale et sa nageoire caudale est légèrement fendue, stigmates évidents d'une rencontre tendue avec les dents acérées d'un brochet.",
+                        "🟠 Érosions cutanées localisées avec avulsion partielle des squames sur la zone dorsale et déchirures d'origine mécanique sur la nageoire caudale.",
+                        "🟠 Ce spécimen a croisé la route d'un brochet affamé qui lui a arraché plusieurs écailles et fendu la queue, mais il s'en est sorti de justesse."
                     ],
                     "worn": [
                         "🟡 Une brème normale, rien d'extraordinaire.",
-                        "🟡 Sa couleur vire doucement au bronze jaunâtre et ses flancs portent les traces de frottements répétés contre la vase. Le mucus protecteur est très épais et commence à coller lourdement aux mains."
+                        "🟡 Sa couleur vire doucement au bronze jaunâtre et ses flancs portent les traces de frottements répétés contre la vase. Le mucus protecteur est très épais et commence à coller lourdement aux mains.",
+                        "🟡 Altération superficielle de la couche de mucus par friction sédimentaire chronique et opacification bénigne des écailles ventrales.",
+                        "🟡 Les flancs dorés commencent à virer au bronze et la peau est devenue si gluante qu'elle colle désagréablement aux mains après la prise."
                     ],
                     "good": [
                         "🟢 Une belle brème, brillante et en bonne forme.",
-                        "🟢 En bonne santé, cette brème arbore sa forme de disque caractéristique. Ses grandes nageoires foncées sont intactes et sa bouche protractile en forme d'accordéon fonctionne parfaitement pour fouiller le fond."
+                        "🟢 En bonne santé, cette brème arbore sa forme de disque caractéristique. Ses grandes nageoires foncées sont intactes et sa bouche protractile en forme d'accordéon fonctionne parfaitement pour fouiller le fond.",
+                        "🟢 Un poisson en pleine santé qui affiche sa forme de soucoupe caractéristique et déploie sa bouche en accordéon prête à aspirer les sédiments.",
+                        "🟢 Morphologie conforme aux standards de l'espèce, homochromie de la robe flanc-dos respectée et tonus musculaire vigoureux lors de la manipulation."
                     ],
                     "pristine": [
                         "✨ Une prise parfaite, sa nageoire dorsale est intacte et élégante.",
-                        "✨ Un corps extrêmement plat aux flancs argentés parfaits, brillant comme un plateau de service en étain poli. Le mucus qui recouvre sa peau est totalement uniforme, transparent et impeccable."
+                        "✨ Un corps extrêmement plat aux flancs argentés parfaits, brillant comme un plateau de service en étain poli. Le mucus qui recouvre sa peau est totalement uniforme, transparent et impeccable.",
+                        "✨ Diagnostic biologique optimal révélant une intégrité dermique parfaite, des opercules sans érosion et un système sécréteur de mucus totalement translucide.",
+                        "✨ Un magnifique disque d'argent brillant de mille feux comme un plateau de service métallique poli avec soin, exempt de la moindre égratignure."
                     ]
                 },
-                "id": 4
+                "id": 4,
+                "price": "450",
+                "location": "Rivières, lacs, étangs - Europe Centrale & Ouest",
+                "preferred_time": "19h - 7h",
+                "preferred_season": "Mai - Octobre",
+                "months": [
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                ],
+                "fun_fact": "La brème produit une quantité phénoménale de mucus visqueux pour faire barrière aux parasites de l'eau douce. Cette bave est si épaisse et adhérente qu'elle laisse une traînée gluante tenace sur les lignes et les épuisettes, ce qui vaut à ce poisson le surnom peu flatteur de baveuse ou de plaque de glu chez les pêcheurs.",
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Carassin",
@@ -206,6 +230,7 @@
                         "✨ Un spécimen trapu aux reflets dorés et cuivrés d'une pureté absolue, sans la moindre altération sur ses grosses écailles robustes."
                     ]
                 },
+                "id": 5,
                 "price": 160,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -224,9 +249,8 @@
                     11,
                     12
                 ],
-                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge. Le carassin possède une résistance phénoménale au manque d'oxygène qui lui permet de survivre plusieurs semaines dans des étangs entièrement gelés ou asséchés. Pour accomplir cet exploit, son métabolisme bascule en mode anaérobie et transforme ses réserves de glycogène en éthanol, c'est-à-dire en alcool pur, qu'il rejette ensuite par ses ouïes pour éviter de s'empoisonner tout en empêchant ses cellules de geler.",
-                "time_restriction": null,
-                "id": 5
+                "fun_fact": "Très résistant, il est l'ancêtre sauvage du célèbre poisson rouge.",
+                "time_restriction": null
             },
             {
                 "name": "Carpe",
@@ -239,24 +263,40 @@
                     "badly damaged": [
                         "🔴 Un(e) carpe en piteux état, très abîmé par le combat.",
                         "🔴 Un vieux briscard des fonds boueux à l'agonie, présentant une bouche déformée par d'anciennes blessures d'hameçons mal soignées et de larges zones de peau nue colonisées par un duvet fongique blanchâtre.",
+                        "🔴 Stigmates pathologiques majeurs incluant des ulcérations dermo-épidermiques sévères, des déformations maxillaires chroniques et une prolifération fongique invasive.",
+                        "🔴 Ce poisson ressemble plus à un vieux paillasson moisi oublié sous la pluie qu'à un être vivant, abrégez ses souffrances par pitié.",
+                        "🔴 Un vieux briscard des fonds boueux à l'agonie, présentant une bouche déformée par d'anciennes blessures d'hameçons et des zones de peau nue couvertes de moisissure."
                     ],
                     "damaged": [
                         "🟠 Un(e) carpe blessé(e) avec des marques d'écailles manquantes.",
-                        "🟠 Le flanc montre des marques de frottement profondes contre des débris acérés, un de ses barbillons est sectionné et sa nageoire dorsale dentelée a perdu plusieurs de ses rayons rigides."
+                        "🟠 Le flanc montre des marques de frottement profondes contre des débris acérés, un de ses barbillons est sectionné et sa nageoire dorsale dentelée a perdu plusieurs de ses rayons rigides.",
+                        "🟠 Altérations traumatiques d'origine mécanique avec avulsion locale du derme, rayons rigides de la nageoire dorsale brisés et asymétrie des barbillons.",
+                        "🟠 Le flanc montre des marques de frottement profondes contre des débris acérés et sa nageoire dorsale dentelée a perdu plusieurs de ses rayons rigides.",
+                        "🟠 Il a visiblement survécu à un combat de catch contre un monstre du fond ou un vieux filet maillant, et il a laissé des plumes dans la bataille."
                     ],
                     "worn": [
                         "🟡 Un(e) carpe ordinaire, un peu fatigué par le courant.",
-                        "🟡 La lèvre inférieure est très calleuse à force de fouiller le substrat vaseux et plusieurs grosses écailles sur les flancs ont perdu leur éclat d'origine pour prendre une teinte mate."
+                        "🟡 La lèvre inférieure est très calleuse à force de fouiller le substrat vaseux et plusieurs grosses écailles sur les flancs ont perdu leur éclat d'origine pour prendre une teinte mate.",
+                        "🟡 Érosion mécanique superficielle de la zone ventrale consécutive aux activités de fouissage et légère opacification des squames.",
+                        "🟡 La lèvre inférieure est très calleuse à force de retourner la vase et plusieurs grosses écailles sur les flancs ont perdu leur éclat d'origine.",
+                        "🟡 Ce poisson a passé tellement de temps le nez enfoncé dans la boue qu'il a le teint plus terne que votre compte en banque en fin de mois."
                     ],
                     "good": [
                         "🟢 Un(e) magnifique carpe vigoureux et très frais de pêche.",
-                        "🟢 Un poisson robuste et massif en parfaite santé, équipé de barbillons tactiles intacts et d'un mucus protecteur bien homogène qui le rend particulièrement glissant."
+                        "🟢 Un poisson robuste et massif en parfaite santé, équipé de barbillons tactiles intacts et d'un mucus protecteur bien homogène qui le rend particulièrement glissant.",
+                        "🟢 Spécimen vigoureux présentant une morphologie benthique saine, des barbillons péribuccaux intacts et une motricité caudale optimale.",
+                        "🟢 Un poisson robuste et massif en parfaite santé, équipé de barbillons tactiles impeccables et d'un mucus protecteur bien homogène.",
+                        "🟢 Il a une sacrée bédaine et une forme de poire, mais il pète la forme et va ruiner la tension de votre fil de pêche."
                     ],
                     "pristine": [
                         "✨ Un spécimen de carpe absolument parfait, resplendissant sous le soleil !",
-                        "✨ Un mastodonte cuirassé d’écailles ambrées d'une régularité géométrique absolue, brillant sans la moindre imperfection comme un poisson sacré sorti d'un bassin impérial."
+                        "✨ Un mastodonte cuirassé d’écailles ambrées d'une régularité géométrique absolue, brillant sans la moindre imperfection comme un poisson sacré sorti d'un bassin impérial.",
+                        "✨ Intégrité dermique absolue des grands phanères, homochromie parfaite de la livrée ventro-dorsale et homogénéité du mucus de protection.",
+                        "✨ Un mastodonte cuirassé d’écailles ambrées d'une régularité géométrique absolue, brillant comme un poisson sacré sorti d'un bassin impérial.",
+                        "✨ Tellement parfait et étincelant qu'on dirait un faux poisson en plastique brillant acheté dans un magasin de farces et attrapes."
                     ]
                 },
+                "id": 6,
                 "price": 300,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -275,34 +315,49 @@
                     11,
                     12
                 ],
-                "fun_fact": "La carpe possède une mémoire associative à long terme impressionnante pour un poisson. Des études ont démontré qu'une carpe ayant mordu à un hameçon et ayant été relâchée est capable de se souvenir de cette expérience traumatisante pendant plus d'un an, modifiant radicalement son comportement alimentaire pour éviter les appâts suspects et les fils de pêche visibles.",
-                "time_restriction": null,
-                "id": 6
+                "fun_fact": "Symbole de persévérance, elle peut vivre plusieurs décennies dans les étangs paisibles.",
+                "time_restriction": null
             },
             {
                 "name": "Chevaine",
-                "size_min": 1.0,
-                "size_mean": 5.0,
-                "size_sigma": 1.5,
+                "size_min": 15.0,
+                "size_mean": 35.0,
+                "size_sigma": 8.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) chevaine en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) chevaine en piteux état, très abîmé par le combat.",
+                        "🔴 Un spécimen squelettique au corps déformé, dont la bouche est mutilée par des captures répétées et dont la peau perd ses écailles par plaques entières sous l'effet de parasites cutanés.",
+                        "🔴 On dirait un vieux reste de plastique gris et moisi échoué sur une berge boueuse, l'odeur de vase putride et de décomposition en bonus.",
+                        "🔴 Une chair totalement ramollie et gâtée par les bactéries, dégageant une odeur fétide insupportable qui exclut catégoriquement tout passage en cuisine."
                     ],
                     "damaged": [
-                        "🟠 Un(e) chevaine blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) chevaine blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Une déchirure visible sépare sa large lèvre supérieure et son flanc montre des éraflures causées par les griffes d'un prédateur aérien ou les dents d'un jeune carnassier.",
+                        "🟠 Il a tenté d'esquiver les dents d'un brochet avec sa silhouette fuselée, le résultat manque cruellement de style et sa queue est en lambeaux.",
+                        "🟠 Les chairs entourant les blessures de la lèvre et des flancs sont meurtries, obligeant à un parage sévère pour n'utiliser que le reste en terrine tamisée."
                     ],
                     "worn": [
-                        "🟡 Un(e) chevaine ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) chevaine ordinaire, un peu fatigué par le courant.",
+                        "🟡 Quelques reflets ternis sur le dos sombre et des écailles légèrement frottées près de la queue, signes d'une vie active passée à nager contre les courants des rivières et à raser les obstacles.",
+                        "🟡 Il a perdu son éclat de jeune premier, sa grosse tête est recouverte d'un mucus gluant et ses flancs argentés ressemblent à du vieux zinc fatigué.",
+                        "🟡 Sa chair reste ferme mais sa peau grise dégage une odeur de vase naissante, nécessitant de masquer ce goût avec une farce généreuse aux herbes."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique chevaine vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique chevaine vigoureux et très frais de pêche.",
+                        "🟢 Un poisson alerte et vigoureux, doté d'une large tête massive intacte et de nageoires inférieures teintées d'un rouge orangé vif bien marqué, prêtes pour une fuite explosive.",
+                        "🟢 Un poisson bien baraqué avec une tête énorme qui a clairement squatté le courant rapide, prêt à livrer un combat nerveux.",
+                        "🟢 Un spécimen sain aux nageoires rouges bien colorées, parfait pour être grillé entier au barbecue après avoir incisé la peau pour briser les arêtes fourchues."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de chevaine absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de chevaine absolument parfait, resplendissant sous le soleil !",
+                        "✨ Une silhouette fuselée parfaite aux grosses écailles argentées bordées de noir, formant un réseau de losanges impeccables sous une ligne latérale d'une netteté absolue.",
+                        "✨ Tellement propre et brillant avec sa grosse tête et ses losanges parfaits qu'on dirait un poisson de luxe sorti d'un catalogue de joaillerie fluviale.",
+                        "✨ Une chair blanche d'une fraîcheur absolue exhalant une saine odeur d'eau vive, idéale pour être levée en filets malgré la présence de nombreuses arêtes."
                     ]
                 },
+                "id": 7,
                 "price": 200,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -322,59 +377,53 @@
                     12
                 ],
                 "fun_fact": "Un poisson omnivore très méfiant qui peuple nos rivières calmes.",
-                "time_restriction": "before_22h",
-                "id": 7
-            },
-            {
-                "name": "Chevesne",
-                "size_min": 15.0,
-                "size_mean": 35.0,
-                "size_sigma": 8.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Ce chevesne a l'air d'avoir traversé une tempête."
-                    ],
-                    "damaged": [
-                        "🟠 Un poisson avec des marques d'usure sur son flanc."
-                    ],
-                    "worn": [
-                        "🟡 Un chevesne robuste, sans défaut majeur."
-                    ],
-                    "good": [
-                        "🟢 Une belle prise, vigoureuse et éclatante."
-                    ],
-                    "pristine": [
-                        "✨ Parfaitement intact, un chevesne digne des meilleures rivières."
-                    ]
-                },
-                "id": 8
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Chinchard",
-                "size_min": 5.0,
-                "size_mean": 12.0,
-                "size_sigma": 3.0,
+                "size_min": 15.0,
+                "size_mean": 25.0,
+                "size_sigma": 4.5,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) chinchard en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) chinchard en piteux état, très abîmé par le combat.",
+                        "🔴 Altérations dermiques majeures avec exposition des tissus musculaires, foyers de nécrose bactérienne et érosion sévère de l'appareil buccal.",
+                        "🔴 Un poisson en piteux état, presque coupé en deux par les morsures d'un céphalopode et dont la peau part en lambeaux sur les flancs.",
+                        "🔴 On dirait qu'il a été mâché puis recraché par un requin difficile, ou qu'il a passé trois jours coincé dans le tambour d'un lave-linge.",
+                        "🔴 Une chair ramollie et endommagée par les infections, totalement impropre à la consommation humaine qui finira directement comme appât dans une nasse à crabes."
                     ],
                     "damaged": [
-                        "🟠 Un(e) chinchard blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) chinchard blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Rupture de la ligne de scutelles osseux par choc mécanique externe et déchirures nettes des rayons mous des nageoires pectorales.",
+                        "🟠 Le poisson présente une large entaille sur le dos et plusieurs pointes de sa ligne latérale sont brisées après une attaque de prédateur.",
+                        "🟠 Il a tenté de faire un câlin à l'hélice d'un bateau ou aux dents d'un bar beaucoup trop grand pour lui, et le résultat manque de style.",
+                        "🟠 Les zones touchées par les chocs doivent être parées proprement en cuisine, mais le reste du corps fera une très bonne base pour une soupe de roche."
                     ],
                     "worn": [
-                        "🟡 Un(e) chinchard ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) chinchard ordinaire, un peu fatigué par le courant.",
+                        "🟡 Desquamation superficielle légère due aux frictions intra-banc et opacification bénigne de la cuticule externe du mucus protecteur.",
+                        "🟡 La couleur bleu-vert du dos commence à ternir et les flancs argentés montrent de légères marques d'usure suite aux frottements répétés.",
+                        "🟡 Ce spécimen a passé trop de temps coincé au milieu d'un banc surpeuplé, il a l'air aussi fatigué qu'un usager du métro aux heures de pointe.",
+                        "🟡 La peau manque d'éclat mais la chair reste de bonne qualité, excellente pour être marinée dans du vinaigre blanc, des oignons et des carottes."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique chinchard vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique chinchard vigoureux et très frais de pêche.",
+                        "🟢 Tonicité musculaire élevée lors de la préhension, opercules branchiaux sains sans signe d'hypoxie et intégrité fonctionnelle des nageoires.",
+                        "🟢 Un combattant nerveux en pleine forme, arborant sa ligne de pointes osseuses caractéristique sur le flanc et des reflets métalliques bien nets.",
+                        "🟢 Ce petit bolide des mers a de l'énergie à revendre et compte bien faire chanter le frein de votre moulinet en s'agitant dans tous les sens.",
+                        "🟢 Une chair ferme et riche en acides gras, parfaite pour être grillée entière à la planche avec un filet d'huile d'olive et du gros sel."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de chinchard absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de chinchard absolument parfait, resplendissant sous le soleil !",
+                        "✨ Diagnostic biologique optimal révélant une intégrité absolue de la carène de scutelles pointus, une homochromie pélagique parfaite et une absence de stress.",
+                        "✨ Un poisson fuselé aux flancs bleus et argentés éclatants, sans aucune marque de frottement sur sa peau hydrophile parfaitement lisse.",
+                        "✨ Il brille tellement qu'on pourrait l'utiliser comme miroir de poche pour refaire sa coiffure sur le bateau entre deux lancers de ligne.",
+                        "✨ Un poisson d'une fraîcheur absolue aux yeux bombés et translucides, idéal pour être dégusté cru en sashimi ou en tartare minute."
                     ]
                 },
+                "id": 8,
                 "price": 150,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -394,33 +443,53 @@
                     12
                 ],
                 "fun_fact": "Un poisson grégaire très commun, pêché en grande quantité à travers le monde.",
-                "time_restriction": null,
-                "id": 9
+                "time_restriction": null
             },
             {
                 "name": "Crapet",
                 "size_min": 7.0,
-                "size_mean": 15.0,
-                "size_sigma": 3.0,
+                "size_mean": 22.0,
+                "size_sigma": 5.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Le crapet semble avoir été malmené par d'autres poissons."
+                        "🔴 Le crapet semble avoir été malmené par d'autres poissons.",
+                        "🔴 Diagnostic pathologique critique avec ulcérations dermo-épidermiques étendues, destruction des rayons épineux et prolifération de saprolégniose masquant totalement les iridophores turquoise.",
+                        "🔴 Un pauvre poisson défiguré dont les couleurs orange et bleu vif ont totalement disparu sous un voile de moisissure blanche exhalant une forte odeur de pourriture sédimentaire.",
+                        "🔴 On dirait un vieux reste de fossile aplati qui a passé l'été coincé derrière un radiateur, la magnifique palette de couleurs rappelant un arc-en-ciel est définitivement ruinée et l'opercule noir est arraché.",
+                        "🔴 Une chair complètement ramollie par les infections cutanées et dégageant une odeur de vase putride insupportable qui masque le parfum habituel iodé des petits poissons d'eau douce."
                     ],
                     "damaged": [
-                        "🟠 Quelques marques visibles, mais il reste vigoureux."
+                        "🟠 Quelques marques visibles, mais il reste vigoureux.",
+                        "🟠 Solutions de continuité dermo-épidermiques avec perte d'écailles cténoïdes, déchirure de la membrane interradiale dorsale et décoloration de la tache rouge operculaire caractéristique.",
+                        "🟠 Ce crapet montre une vilaine entaille sur le flanc qui coupe ses zébrures turquoise et la petite collerette noire de son ouïe est à moitié arrachée.",
+                        "🟠 Quelqu'un a confondu ce poisson plat en forme de soucoupe avec un décapsuleur rustique, il a les flancs zébrés tout rayés et les piquants rigides de sa dorsale brisés net.",
+                        "🟠 Les chairs sont fortement meurtries autour de la blessure cutanée sanglante, ce qui gâche le petit filet blanc et oblige à amputer la moitié arrière de cette friture."
                     ],
                     "worn": [
-                        "🟡 Un crapet banal, mais en bonne condition."
+                        "🟡 Un crapet banal, mais en bonne condition.",
+                        "🟡 Érosion mécanique superficielle des squames ventrales due au frai sur le substrat et ternissement global des motifs bleus iridescents de la région céphalique.",
+                        "🟡 La couleur magique commence à passer, le point rouge vif sur l'oreille noire est bien pâle et son mucus protecteur dégage une odeur plus lourde d'eau stagnante.",
+                        "🟡 Il a perdu son éclat de boîte de nuit et ses marbrures orange fluo ressemblent désormais à un vieux jouet de bain décoloré par les UV et recouvert de vase mate.",
+                        "🟡 La chair reste comestible mais la peau jaune et verte très terne nécessite d'être soigneusement grattée pour éliminer une pellicule de vase odorante avant la cuisson."
                     ],
                     "good": [
-                        "🟢 Ses écailles brillent sous la lumière, un bel exemplaire."
+                        "🟢 Ses écailles brillent sous la lumière, un bel exemplaire.",
+                        "🟢 Spécimen sain présentant une livrée iridescente fonctionnelle, des lignes sinueuses bleues nettes sur les joues et une intégrité complète de la tache operculaire.",
+                        "🟢 Un crapet vigoureux avec son corps discoïde bien rebondi, arborant de superbes reflets turquoise et orange ainsi qu'un point rouge éclatant derrière la tête.",
+                        "🟢 Ce petit effronté n'est pas plus grand qu'une paume mais il dresse fièrement ses piquants dorsaux acérés et brille comme s'il était le roi tropical de la mare.",
+                        "🟢 Un petit poisson de friture bien ferme à la peau parée de motifs colorés intacts, dégageant une saine odeur de rivière et parfait pour être doré entier à la poêle."
                     ],
                     "pristine": [
-                        "✨ Un crapet éclatant, parfaitement proportionné."
+                        "✨ Un crapet éclatant, parfaitement proportionné.",
+                        "✨ Intégrité cutano-muqueuse absolue, homochromie parfaite de la tache rouge operculaire et alignement impeccable des rayons épineux de la nageoire dorsale.",
+                        "✨ Un poisson-soleil magnifique affichant des marbrures turquoise et orange éclatantes, rehaussées par un opercule noir de jais bordé d'un point rouge vif étincelant.",
+                        "✨ Il est tellement flashy avec ses lignes bleues électriques et ses points dorés qu'on dirait un poisson exotique d'aquarium échappé par miracle dans un ruisseau de campagne.",
+                        "✨ Une chair blanche très fine, ferme et exempte de défauts, exhalant une fraîche odeur d'eau vive qui donne envie de le préparer immédiatement en friture croustillante."
                     ]
                 },
+                "id": 9,
                 "price": 180,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -440,8 +509,7 @@
                     12
                 ],
                 "fun_fact": "Un petit poisson d'eau douce très combatif et coloré, originaire d'Amérique du Nord.",
-                "time_restriction": "before_22h",
-                "id": 10
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Ecrevisse",
@@ -452,21 +520,42 @@
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) ecrevisse en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) ecrevisse en piteux état, très abîmé par le combat.",
+                        "🔴 Nécrose cuticulaire foudroyante par aphanomycose, destruction complète des péréiopodes et lyse tissulaire de l'uropode exhalant une odeur putride.",
+                        "🔴 Un spécimen agonisant dont la carapace brune s'effrite par morceaux, amputé de ses deux pinces et couvert d'un duvet de moisissure grise nauséabonde.",
+                        "🔴 Cette pauvre bête ressemble à un vieux fossile aplati et desséché, ses antennes sont brisées à la base et sa queue en éventail tombe en lambeaux terreux.",
+                        "🔴 Une chair de queue totalement liquide, décomposée par les bactéries sous une carapace noircie et dégageant une odeur d'ammoniaque insupportable."
                     ],
                     "damaged": [
-                        "🟠 Un(e) ecrevisse blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) ecrevisse blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Brèche cuticulaire majeure sur le céphalothorax avec perte d'une pince préhensile et section asymétrique des antennes flagellées.",
+                        "🟠 Cette écrevisse a perdu sa grosse pince gauche lors d'une bagarre territoriale et son rostre pointu montre une vilaine fêlure noire.",
+                        "🟠 Amputée d'un bras articulé et avec une antenne cassée qui pendouille, elle a tenté de faire un bras de fer avec un héron et porte une cicatrice sur le dos.",
+                        "🟠 La chair sous la carapace brisée est légèrement brunie par un hématome, obligeant à éliminer la tête pour ne récupérer qu'un petit morceau de queue intact."
                     ],
                     "worn": [
-                        "🟡 Un(e) ecrevisse ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) ecrevisse ordinaire, un peu fatigué par le courant.",
+                        "🟡 Abrasion superficielle de la couche de chitine exhalant une odeur sédimentaire, usure des dactylopodes et prolifération discrète d'algues épibiontes sur l'abdomen.",
+                        "🟡 Ses pinces rugueuses sont émoussées et sa carapace marron a perdu de son éclat à force de creuser des galeries sous les pierres boueuses de la berge.",
+                        "🟡 Elle a des filaments d'algues vertes collés sur le dos et l'air si fatigué qu'on dirait une vieille brique de rivière marchant péniblement à reculons.",
+                        "🟡 Un crustacé à la carapace très dure et terreuse qui nécessite un châtrage méticuleux et un long dégorgement à l'eau claire pour atténuer son odeur de vase."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique ecrevisse vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique ecrevisse vigoureux et très frais de pêche.",
+                        "🟢 Exosquelette calcifié fonctionnel, intégrité des appendices locomoteurs et pigmentation homogène des segments abdominaux sans signe de stress parasitaire.",
+                        "🟢 Un beau crustacé bien vigoureux, brandissant fièrement ses deux pinces robustes et agitant ses longues antennes nerveuses au parfum d'eau vive.",
+                        "🟢 Ce petit chevalier en armure dresse ses bras armés dès qu'on l'approche, agitant ses petites pattes bleutées avec une énergie débordante.",
+                        "🟢 Une écrevisse bien charnue dont la queue ferme et les pinces bien pleines promettent une excellente cuisson à la nage dans un bouillon parfumé."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de ecrevisse absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de ecrevisse absolument parfait, resplendissant sous le soleil !",
+                        "✨ Intégrité morphologique absolue post-mue, cuticule lisse aux reflets bleutés ou rouge vif étincelants et absence totale de sédimentation sur les pléopodes.",
+                        "✨ Un spécimen splendide à la carapace d'un brun-vert éclatant et translucide, doté de pinces parfaites et de longues antennes d'une symétrie impeccable.",
+                        "✨ Tellement propre, brillante et symétrique qu'on dirait un bijou de haute joaillerie en cuivre poli sorti directement d'un écrin d'eau pure de montagne.",
+                        "✨ Une chair d'une blancheur nacrée exceptionnelle sous une carapace impeccable, d'une fermeté royale et exhalant une fraîche odeur de ruisseau sauvage."
                     ]
                 },
+                "id": 10,
                 "price": 200,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -480,70 +569,53 @@
                     9
                 ],
                 "fun_fact": "Ce petit crustacé d'eau douce adore se cacher sous les pierres des rivières.",
-                "time_restriction": null,
-                "id": 11
-            },
-            {
-                "name": "Eperlan",
-                "size_min": 5.0,
-                "size_mean": 12.0,
-                "size_sigma": 3.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {
-                    "badly damaged": [
-                        "🔴 Un(e) eperlan en piteux état, très abîmé par le combat."
-                    ],
-                    "damaged": [
-                        "🟠 Un(e) eperlan blessé(e) avec des marques d'écailles manquantes."
-                    ],
-                    "worn": [
-                        "🟡 Un(e) eperlan ordinaire, un peu fatigué par le courant."
-                    ],
-                    "good": [
-                        "🟢 Un(e) magnifique eperlan vigoureux et très frais de pêche."
-                    ],
-                    "pristine": [
-                        "✨ Un spécimen de eperlan absolument parfait, resplendissant sous le soleil !"
-                    ]
-                },
-                "price": 320,
-                "location": "Rivière",
-                "preferred_time": "Toute la journée",
-                "preferred_season": "Décembre - février",
-                "months": [
-                    12,
-                    1,
-                    2
-                ],
-                "fun_fact": "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais.",
-                "time_restriction": null,
-                "id": 12
+                "time_restriction": null
             },
             {
                 "name": "Fondule barré",
-                "size_min": 1.0,
-                "size_mean": 5.0,
+                "size_min": 4.0,
+                "size_mean": 7.5,
                 "size_sigma": 1.5,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) fondule barré en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) fondule barré en piteux état, très abîmé par le combat.",
+                        "🔴 Diagnostic pathologique terminal caractérisé par une lyse ulcéreuse totale des bandes verticales mélaniques et une desquamation nécrotique exhalant une odeur de sédiment putride.",
+                        "🔴 Un malheureux petit poisson au corps déformé dont les rayures noires caractéristiques sont effacées par des plaques de pourriture blanche nauséabonde.",
+                        "🔴 On dirait un vieux bout de cornichon frelaté et tout écrasé qui a traîné trois semaines au fond d'une mare asséchée, ses barres verticales ont complètement disparu.",
+                        "🔴 Une chair minuscule et décomposée par les infections bactériennes, dégageant une odeur d'œuf pourri qui rend ce micro-poisson totalement impropre à la moindre friture."
                     ],
                     "damaged": [
-                        "🟠 Un(e) fondule barré blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) fondule barré blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Traumatismes mécaniques profonds avec rupture de l'alignement des barres transversales, érosion caudale et altération de la lèvre supérieure protractile.",
+                        "🟠 Ce fondule a le flanc lacéré par un coup de bec d'oiseau, ce qui coupe sa jolie série de rayures sombres et laisse sa peau olive à nu.",
+                        "🟠 Ce minuscule nageur s'est frotté d'un peu trop près aux dents d'une perche, sa tête plate est amochée et sa queue ressemble à un vieux balai usé.",
+                        "🟠 Les chairs de ce petit poisson sont ensanglantées autour des rayures de l'abdomen déchirées, ruinant le seul minuscule filet exploitable pour une cuisson."
                     ],
                     "worn": [
-                        "🟡 Un(e) fondule barré ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) fondule barré ordinaire, un peu fatigué par le courant.",
+                        "🟡 Altération superficielle de la livrée par friction benthique, entraînant un pâlissement des barres verticales mélanophores et une opacification du mucus olfactif.",
+                        "🟡 Les flancs argentés sont devenus ternes et les fines zébrures sombres s'estompent sous une fine couche de vase odorante à force de fouiller les fonds.",
+                        "🟡 Il a visiblement passé trop de temps à raser la boue, ses rayures noires ressemblent à un tatouage raté et effacé par un mauvais soleil de marécage.",
+                        "🟡 Sa peau olive et mate dégage une odeur de marécage stagnante qui oblige à le rincer abondamment à l'eau vinaigrée avant d'espérer en faire un en-cas."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique fondule barré vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique fondule barré vigoureux et très frais de pêche.",
+                        "🟢 Index morphologique stable conforme à l'espèce, pigmentation des bandes verticales transversales bien définie et intégrité de la région céphalique aplatie.",
+                        "🟢 Un petit fondule vigoureux, présentant des flancs argentés bien nets zébrés de barres foncées et une bouche orientée vers le haut en parfait état.",
+                        "🟢 Pas plus grand qu'un doigt, ce mini-zèbre des étangs frétille comme s'il avait bu trop de café et pointe son nez plat vers la surface.",
+                        "🟢 Un spécimen sain au corps ferme et zébré, dégageant une bonne odeur d'herbiers aquatiques frais, idéal pour une petite friture croustillante."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de fondule barré absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de fondule barré absolument parfait, resplendissant sous le soleil !",
+                        "✨ Homochromie optimale de la livrée olive et argent, netteté absolue des barres verticales mélanophores et intégrité parfaite de la membrane operculaire.",
+                        "✨ Un poisson magnifique aux reflets argentés étincelants, arborant des rayures sombres d'une régularité parfaite sur un dos olive impeccablement lisse.",
+                        "✨ Il est tellement propre et magnifiquement zébré qu'on croirait une œuvre d'art miniature peinte au pinceau fin, tout droit sortie d'un aquarium de luxe.",
+                        "✨ Une chair blanche minuscule d'une fermeté royale, exhalant une fraîche odeur d'eau vive et de roseaux, parfaite pour être jetée entière dans l'huile bouillante."
                     ]
                 },
+                "id": 11,
                 "price": 300,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -556,8 +628,7 @@
                     8
                 ],
                 "fun_fact": "Un petit poisson rayé extrêmement tolérant aux variations de salinité.",
-                "time_restriction": null,
-                "id": 13
+                "time_restriction": null
             },
             {
                 "name": "Limande",
@@ -568,21 +639,42 @@
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) limande en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) limande en piteux état, très abîmé par le combat.",
+                        "🔴 Diagnostic pathologique terminal caractérisé par une lyse ulcéreuse totale de la face oculée brune, une destruction des nageoires marginales et une forte exhalaison d'odeur d'ammoniaque.",
+                        "🔴 Un pauvre reste de poisson plat en décomposition, dont la peau rugueuse marron part en lambeaux gluants sur une face aveugle devenue grisâtre et nauséabonde.",
+                        "🔴 Ce poisson ressemble à une vieille semelle de chaussure moisie et aplatie, repêchée dans la vase d'un port industriel et dégageant une odeur de marée basse putride.",
+                        "🔴 Une chair flasque totalement ramollie et gâtée par les bactéries, qui a perdu sa blancheur d'origine pour virer au grisâtre avec une odeur de poisson pourri repoussante."
                     ],
                     "damaged": [
-                        "🟠 Un(e) limande blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) limande blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Solutions de continuité dermo-épidermiques sur la face droite, érosion mécanique de la cambrure caractéristique de la ligne latérale et déchirure de la nageoire dorsale périphérique.",
+                        "🟠 Le poisson présente une profonde griffure sur son côté marron qui balafre ses points orangés, ses nageoires plates bordant le corps sont effilochées et sa face blanche est ensanglantée.",
+                        "🟠 On dirait qu'il a croisé la route d'un râteau de plage un peu trop pointu, son corps ovale est tout rayé et la ligne courbe au-dessus de sa nageoire pectorale est coupée net.",
+                        "🟠 Les chairs entourant la blessure sur la face oculée supérieure sont lacérées et sanguinolentes, obligeant à parer largement la limande pour sauver un unique filet exploitable."
                     ],
                     "worn": [
-                        "🟡 Un(e) limande ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) limande ordinaire, un peu fatigué par le courant.",
+                        "🟡 Altération superficielle de la face oculée par friction benthique chronique, entraînant une atténuation des ocelles jaunes et une opacification du mucus cutané olfactif.",
+                        "🟡 La couleur sable du dos commence à ternir, les petites taches orangées s'effacent et sa face blanche ventrale montre des traces grisâtres de sédiments terreux.",
+                        "🟡 À force de traîner à plat ventre sur le sable, ce poisson a les écailles râpeuses plus ternes que le paillasson d'un vieux bistrot de port et son odeur marine s'estompe.",
+                        "🟡 Sa peau beige rugueuse dégage une odeur de vase marine un peu lourde, nécessitant un dépouillement complet de la face supérieure avant la cuisson pour ne pas gâcher la chair."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique limande vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique limande vigoureux et très frais de pêche.",
+                        "🟢 Spécimen sain présentant une robe sable constellée de points jaunes clairs, une intégrité des nageoires périphériques et une saine odeur marine de marée fraîche.",
+                        "🟢 Un poisson plat bien portant aux petits yeux globuleux rapprochés sur le côté droit, avec une peau beige mouchetée et une face aveugle parfaitement propre.",
+                        "🟢 Il a le regard complètement de travers avec ses deux yeux collés du même côté de la tête, mais ses écailles rugueuses brillent bien sous le soleil du pont.",
+                        "🟢 Des filets fermes et fins à la bonne odeur iodée, parfaits pour être farinés entiers puis dorés à la poêle façon meunière avec un bon morceau de beurre."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de limande absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de limande absolument parfait, resplendissant sous le soleil !",
+                        "✨ Homochromie optimale de la face oculée brune aux ocelles orangés, intégrité de la courbure sus-pectorale de la ligne latérale et mucus olfactif d'une pureté absolue.",
+                        "✨ Une limande magnifique au corps plat impeccablement ovale, arborant des taches fauves bien nettes et une face aveugle d'un blanc de lait étincelant sans aucune égratignure.",
+                        "✨ Tellement plate, lisse et fraîchement parfumée par l'océan qu'on pourrait s'en servir comme dessous-de-plat design dans un grand restaurant gastronomique de la côte.",
+                        "✨ Une chair blanche nacrée d'une fermeté royale exhalant une subtile odeur d'iode frais, idéale pour être levée en fins filets et pochée délicatement au vin blanc."
                     ]
                 },
+                "id": 12,
                 "price": 300,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -597,33 +689,53 @@
                     4
                 ],
                 "fun_fact": "Un poisson plat camouflé dont les deux yeux sont situés du côté droit de sa tête.",
-                "time_restriction": null,
-                "id": 14
+                "time_restriction": null
             },
             {
                 "name": "Loche d'étang",
                 "size_min": 8.0,
-                "size_mean": 18.0,
+                "size_mean": 20.0,
                 "size_sigma": 4.0,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) loche d'étang en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) loche d'étang en piteux état, très abîmé par le combat.",
+                        "🔴 Diagnostic pathologique critique révélant une nécrose ulcéreuse étendue du derme, une destruction quasi-totale des dix barbillons et une prolifération fongique invasive masquant la livrée rayée.",
+                        "🔴 Une pauvre loche à l'agonie dont le long corps serpentiforme est recouvert d'une moisissure blanche nauséabonde qui étouffe complètement ses bandes noires longitudinales.",
+                        "🔴 Ce n'est plus un poisson moustachu, c'est un morceau de cordelette pourrie et poilue qui dégage une odeur de marécage en décomposition absolument abominable.",
+                        "🔴 Une chair molle et gâtée par les infections sous un épiderme rayé en décomposition, dégageant une odeur d'ammoniaque et de pourriture qui la rend totalement impropre à la consommation."
                     ],
                     "damaged": [
-                        "🟠 Un(e) loche d'étang blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) loche d'étang blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Solutions de continuité cutanées d'origine traumatique, section asymétrique des barbillons maxillaires et érosion partielle des membranes de la nageoire caudale arrondie.",
+                        "🟠 Ce poisson présente de profondes éraflures sur ses flancs qui coupent ses rayures marron longitudinales, et plusieurs de ses petits barbillons buccaux sont arrachés.",
+                        "🟠 On dirait que cette pauvre anguille miniature s'est battue avec un peigne acéré, son corps cylindrique est tout balafré et sa queue ronde est à moitié découpée.",
+                        "🟠 Les tissus musculaires entourant les lésions cutanées de la robe rayée sont fortement ecchymosés, obligeant à éliminer la moitié du corps allongé pour ne garder qu'une friture restreinte."
                     ],
                     "worn": [
-                        "🟡 Un(e) loche d'étang ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) loche d'étang ordinaire, un peu fatigué par le courant.",
+                        "🟡 Altération superficielle de la livrée par friction benthique chronique, entraînant un pâlissement des barres longitudinales mélaniques et une opacification du mucus olfactif sédimentaire.",
+                        "🟡 Les flancs dorés de cette loche ont perdu leur éclat et les rayures sombres commencent à pâlir sous un mucus épais qui sent un peu trop la vase d'étang stagnante.",
+                        "🟡 Ses dix barbillons moustachus sont emmêlés de débris végétaux et sa peau rayée est si terne qu'elle ressemble à une vieille saucisse oubliée dans la boue.",
+                        "🟡 Sa chair reste tout à fait saine sous la peau rayée devenue mate, mais le poisson exige un dégorgement prolongé en eau propre pour éliminer une odeur de sédiment tenace."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique loche d'étang vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique loche d'étang vigoureux et très frais de pêche.",
+                        "🟢 Morphologie benthique stable conforme à l'espèce, intégrité fonctionnelle des appendices tactiles péribuccaux et pigmentation caractéristique des bandes sombres latérales bien contrastée.",
+                        "🟢 Un spécimen bien vigoureux au long corps cylindrique, doté de barbillons intacts qui s'agitent nerveusement et d'un dos marron sain sans écorchure.",
+                        "🟢 Avec son corps allongé tout gluant et ses petits yeux ronds enfoncés, ce poisson a une tête de serpent ahuri mais il frétille avec une énergie folle dans la main.",
+                        "🟢 Une loche bien grasse au corps serpentiforme intact, dégageant un parfum discret de plantes aquatiques, parfaite pour être pochée entière dans un court-bouillon vinaigré."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de loche d'étang absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de loche d'étang absolument parfait, resplendissant sous le soleil !",
+                        "✨ Diagnostic biologique parfait, intégrité absolue des dix barbillons péribuccaux symétriques, livrée jaune-brun aux bandes longitudinales foncées d'une netteté optimale sous un mucus transparent.",
+                        "✨ Un magnifique poisson serpentiforme au corps cylindrique d'un brun doré éclatant, arborant cinq bandes noires impeccablement parallèles des ouïes jusqu'à la queue.",
+                        "✨ Il glisse tellement et possède tellement de moustaches autour de sa petite bouche qu'on dirait un croisement parfait entre une anguille lubrifiée et un mini-chat de gouttière.",
+                        "✨ Une chair extrêmement ferme et saine exhalant une pure odeur d'eau douce, traditionnellement prisée en Europe de l'Est pour être mijotée entière en ragoût épicé après retrait de sa fine peau rayée."
                     ]
                 },
+                "id": 13,
                 "price": 400,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -634,33 +746,53 @@
                     5
                 ],
                 "fun_fact": "Elle est sensible aux variations de pression atmosphérique, d'où son surnom de poisson météo.",
-                "time_restriction": null,
-                "id": 15
+                "time_restriction": null
             },
             {
                 "name": "Perche jaune",
                 "size_min": 8.0,
-                "size_mean": 18.0,
-                "size_sigma": 4.0,
+                "size_mean": 23.0,
+                "size_sigma": 4.5,
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {
                     "badly damaged": [
-                        "🔴 Un(e) perche jaune en piteux état, très abîmé par le combat."
+                        "🔴 Un(e) perche jaune en piteux état, très abîmé par le combat.",
+                        "🔴 Syndrome pathologique terminal caractérisé par une lyse complète des mélanophores des sept barres verticales, une desquamation des écailles cténoïdes rugueuses et une odeur d'ammoniaque prononcée.",
+                        "🔴 Une perche à l'agonie dont la belle robe jaune d'or est entièrement masquée par un voile de pourriture blanche dégageant une odeur de marécage putride.",
+                        "🔴 Ce poisson ressemble à un vieux citron moisi oublié sous un canapé, ses zébrures noires et ses nageoires orange vif ont totalement disparu sous ce désastre gluant.",
+                        "🔴 Une chair complètement liquéfiée par les bactéries sous une peau jaune en décomposition, dégageant une odeur fétide qui empêche tout prélèvement de filets pour la cuisine."
                     ],
                     "damaged": [
-                        "🟠 Un(e) perche jaune blessé(e) avec des marques d'écailles manquantes."
+                        "🟠 Un(e) perche jaune blessé(e) avec des marques d'écailles manquantes.",
+                        "🟠 Altérations dermo-épidermiques d'origine mécanique avec rupture des bandes verticales sombres, érosion des rayons épineux de la première dorsale et saignement operculaire.",
+                        "🟠 Ce spécimen montre une profonde griffure de prédateur sur ses flancs jaunes qui coupe ses rayures noires et déchire ses jolies nageoires ventrales orange.",
+                        "🟠 On dirait que cette perche a joué avec un chat en colère, ses rayures sombres sont toutes balafrées et ses piquants dorsaux acérés sont à moitié cassés net.",
+                        "🟠 Les tissus musculaires entourant les zébrures ensanglantées du dos sont lourdement meurtris, ce qui oblige à découper une grande partie de la chair jaune pour sauver un maigre morceau de filet."
                     ],
                     "worn": [
-                        "🟡 Un(e) perche jaune ordinaire, un peu fatigué par le courant."
+                        "🟡 Un(e) perche jaune ordinaire, un peu fatigué par le courant.",
+                        "🟡 Érosion mécanique superficielle des écailles cténoïdes par frottement benthique, entraînant un ternissement des ocelles dorés et une opacification du mucus olfactif sédimentaire.",
+                        "🟡 Les flancs jaune vif de cette perche virent au beige mat à force de nager dans les herbiers et sa peau rugueuse dégage une odeur de vase stagnante.",
+                        "🟡 Elle a perdu son éclat de star des lacs et ses rayures noires ressemblent à un vieux pyjama délavé qui aurait passé trop de temps dans une eau d'étang trouble.",
+                        "🟡 La peau dorée étant devenue très terne et chargée d'une odeur de sédiment, il est indispensable de peler soigneusement les filets avant de les cuire pour préserver la saveur."
                     ],
                     "good": [
-                        "🟢 Un(e) magnifique perche jaune vigoureux et très frais de pêche."
+                        "🟢 Un(e) magnifique perche jaune vigoureux et très frais de pêche.",
+                        "🟢 Index de condition corporelle optimal, pigmentation contrastée des six à huit barres verticales mélaniques et intégrité structurelle des nageoires pelviennes orange vif.",
+                        "🟢 Une perche jaune en pleine forme arborant une magnifique livrée dorée traversée par des zébrures noires bien nettes et des nageoires inférieures d'un rouge orangé éclatant.",
+                        "🟢 Ce petit tigre des herbiers dresse fièrement sa première nageoire dorsale ultra piquante et vous regarde de travers avec son œil cerclé d'or.",
+                        "🟢 Un poisson très sain aux écailles rugueuses intactes exhalant une bonne odeur de lac frais, idéal pour lever deux superbes filets blancs bien fermes."
                     ],
                     "pristine": [
-                        "✨ Un spécimen de perche jaune absolument parfait, resplendissant sous le soleil !"
+                        "✨ Un spécimen de perche jaune absolument parfait, resplendissant sous le soleil !",
+                        "✨ Homochromie parfaite de la livrée xanthique, netteté absolue des sept bandes transversales sombres et intégrité totale du mucus protecteur translucide exhalant une fraîcheur marine.",
+                        "✨ Un spécimen magnifique à la robe jaune d'or étincelante, rehaussée par des zébrures noires d'une régularité géométrique parfaite et des nageoires pelviennes couleur corail.",
+                        "✨ Elle est tellement flashy et impeccable avec ses couleurs de guêpe et ses nageoires orange fluo qu'on croirait un leurre de pêche haut de gamme tout juste sorti de sa boîte.",
+                        "✨ Une chair d'une blancheur nacrée exceptionnelle sous des écailles dorées parfaites, d'une fermeté absolue et exhalant une subtile odeur d'iode et d'eau vive idéale pour un aller-retour à la poêle."
                     ]
                 },
+                "id": 14,
                 "price": 300,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -674,8 +806,7 @@
                     3
                 ],
                 "fun_fact": "Reconnaissable à ses rayures sombres sur fond doré, elle adore les eaux calmes.",
-                "time_restriction": null,
-                "id": 16
+                "time_restriction": null
             },
             {
                 "name": "Perche Soleil",
@@ -701,7 +832,14 @@
                         "✨ Une perche magnifique, éclatante de couleurs vives."
                     ]
                 },
-                "id": 17
+                "id": 15,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Rotengle",
@@ -727,7 +865,14 @@
                         "✨ Ses nageoires rouges et son corps doré sont parfaits, une prise exceptionnelle."
                     ]
                 },
-                "id": 18
+                "id": 16,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Sardine",
@@ -737,7 +882,14 @@
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {},
-                "id": 19
+                "id": 17,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Têtard",
@@ -763,6 +915,7 @@
                         "✨ Un têtard d'exception ! On dirait la réincarnation d'un têtard ninja du Mont Myoboku prêt à invoquer Gamabunta ! 🌀🐸"
                     ]
                 },
+                "id": 18,
                 "price": 100,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -782,8 +935,7 @@
                     12
                 ],
                 "fun_fact": "Un futur ninja de l'étang qui rêve secrètement de maîtriser les techniques secrètes d'invocation !",
-                "time_restriction": null,
-                "id": 20
+                "time_restriction": null
             },
             {
                 "name": "Éperlan",
@@ -809,7 +961,18 @@
                         "✨ Un éperlan parfait, un vrai reflet d'argent dans l'eau."
                     ]
                 },
-                "id": 21
+                "id": 19,
+                "price": 320,
+                "location": "Rivière",
+                "preferred_time": "Toute la journée",
+                "preferred_season": "Décembre - février",
+                "months": [
+                    12,
+                    1,
+                    2
+                ],
+                "fun_fact": "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais.",
+                "time_restriction": null
             }
         ],
         "uncommon": [
@@ -837,6 +1000,7 @@
                         "✨ Un spécimen de anchois absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 20,
                 "price": 200,
                 "location": "Océan",
                 "preferred_time": "4h - 21h",
@@ -856,8 +1020,7 @@
                     12
                 ],
                 "fun_fact": "Se déplace en bancs immenses pour échapper aux prédateurs de l'océan.",
-                "time_restriction": "before_22h",
-                "id": 22
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Barbeau",
@@ -883,7 +1046,14 @@
                         "✨ Une prise parfaite, un barbeau digne des trophées."
                     ]
                 },
-                "id": 23
+                "id": 21,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Bouvière",
@@ -909,6 +1079,7 @@
                         "✨ Une bouvière éclatante, petite mais impressionnante."
                     ]
                 },
+                "id": 22,
                 "price": 900,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -921,8 +1092,7 @@
                     3
                 ],
                 "fun_fact": "Elle pond ses œufs à l'intérieur des moules d'eau douce pour les protéger.",
-                "time_restriction": null,
-                "id": 24
+                "time_restriction": null
             },
             {
                 "name": "Calmar",
@@ -948,6 +1118,7 @@
                         "✨ Un calmar parfait, une véritable beauté marine."
                     ]
                 },
+                "id": 23,
                 "price": 500,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -964,8 +1135,7 @@
                     8
                 ],
                 "fun_fact": "Il peut projeter un jet d'encre noire pour aveugler ses agresseurs et s'enfuir.",
-                "time_restriction": null,
-                "id": 25
+                "time_restriction": null
             },
             {
                 "name": "Cardeau",
@@ -991,6 +1161,7 @@
                         "✨ Un spécimen de cardeau absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 24,
                 "price": 800,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1010,8 +1181,7 @@
                     12
                 ],
                 "fun_fact": "Un maître du camouflage plat qui se fond parfaitement dans le sable marin.",
-                "time_restriction": null,
-                "id": 26
+                "time_restriction": null
             },
             {
                 "name": "Clione",
@@ -1037,6 +1207,7 @@
                         "✨ Un spécimen de clione absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 25,
                 "price": 1000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1048,8 +1219,7 @@
                     3
                 ],
                 "fun_fact": "Surnommé l'ange des mers, c'est en fait un minuscule prédateur mollusque sans coquille.",
-                "time_restriction": null,
-                "id": 27
+                "time_restriction": null
             },
             {
                 "name": "Dorade Grise",
@@ -1075,7 +1245,14 @@
                         "✨ Une dorade grise de concours, immaculée et brillante."
                     ]
                 },
-                "id": 28
+                "id": 26,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Gobie d'eau douce",
@@ -1101,6 +1278,7 @@
                         "✨ Un spécimen de gobie d'eau douce absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 27,
                 "price": 400,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -1120,8 +1298,7 @@
                     12
                 ],
                 "fun_fact": "Il utilise ses nageoires pelviennes comme ventouses pour s'accrocher aux rochers.",
-                "time_restriction": "after_22h",
-                "id": 29
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Grenouille",
@@ -1147,6 +1324,7 @@
                         "✨ Une grenouille ninja légendaire du mont Myoboku dotée d'une puissance incroyable et prête pour le mode ermite ! 🐸🔥🌀"
                     ]
                 },
+                "id": 28,
                 "price": 120,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -1158,8 +1336,7 @@
                     8
                 ],
                 "fun_fact": "Un amphibien bavard qui adore chanter sous la pluie d'été au bord de l'étang.",
-                "time_restriction": null,
-                "id": 30
+                "time_restriction": null
             },
             {
                 "name": "Guppy",
@@ -1185,6 +1362,7 @@
                         "✨ Un spécimen de guppy absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 29,
                 "price": 1300,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -1200,8 +1378,7 @@
                     11
                 ],
                 "fun_fact": "Un minuscule poisson tropical très populaire, célèbre pour ses queues colorées en éventail.",
-                "time_restriction": "before_22h",
-                "id": 31
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Hippocampe",
@@ -1227,6 +1404,7 @@
                         "✨ Un spécimen de hippocampe absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 30,
                 "price": 1100,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1242,8 +1420,7 @@
                     11
                 ],
                 "fun_fact": "Un poisson singulier où ce sont les mâles qui portent les œufs dans leur poche ventrale.",
-                "time_restriction": null,
-                "id": 32
+                "time_restriction": null
             },
             {
                 "name": "Murène ruban bleue",
@@ -1269,6 +1446,7 @@
                         "✨ Un spécimen de murène ruban bleue absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 31,
                 "price": 600,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1281,8 +1459,7 @@
                     10
                 ],
                 "fun_fact": "Elle change de sexe et de couleur au cours de sa vie, devenant d'un bleu électrique magnifique.",
-                "time_restriction": null,
-                "id": 33
+                "time_restriction": null
             },
             {
                 "name": "Néon bleu",
@@ -1308,6 +1485,7 @@
                         "✨ Un spécimen de néon bleu absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 32,
                 "price": 500,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -1323,8 +1501,7 @@
                     11
                 ],
                 "fun_fact": "Un petit poisson scintillant originaire d'Amazonie qui brille d'un éclat bleu et rouge.",
-                "time_restriction": "before_22h",
-                "id": 34
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Poisson arc-en-ciel",
@@ -1350,6 +1527,7 @@
                         "✨ Un spécimen de poisson arc-en-ciel absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 33,
                 "price": 800,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -1363,8 +1541,7 @@
                     10
                 ],
                 "fun_fact": "Ses reflets irisés changent de couleur selon l'angle de la lumière.",
-                "time_restriction": "before_22h",
-                "id": 35
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Poisson chirurgien",
@@ -1390,6 +1567,7 @@
                         "✨ Un spécimen de poisson chirurgien absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 34,
                 "price": 1000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1403,8 +1581,7 @@
                     9
                 ],
                 "fun_fact": "Il possède des scalpels tranchants à la base de sa queue pour se défendre.",
-                "time_restriction": null,
-                "id": 36
+                "time_restriction": null
             },
             {
                 "name": "Poisson Rouge",
@@ -1430,6 +1607,7 @@
                         "✨ Un magnifique spécimen, parfaitement sain et éclatant de couleurs."
                     ]
                 },
+                "id": 35,
                 "price": 1300,
                 "location": "Étang",
                 "preferred_time": "Toute la journée",
@@ -1449,8 +1627,7 @@
                     12
                 ],
                 "fun_fact": "Un compagnon domestique classique qui adore nager paisiblement dans les bassins.",
-                "time_restriction": null,
-                "id": 37
+                "time_restriction": null
             },
             {
                 "name": "Poisson-papillon",
@@ -1476,6 +1653,7 @@
                         "✨ Un spécimen de poisson-papillon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 36,
                 "price": 1000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1489,8 +1667,7 @@
                     9
                 ],
                 "fun_fact": "Ses motifs colorés imitent des yeux pour tromper et désorienter ses prédateurs.",
-                "time_restriction": null,
-                "id": 38
+                "time_restriction": null
             },
             {
                 "name": "Poisson-porc-épic",
@@ -1516,6 +1693,7 @@
                         "✨ Un spécimen de poisson-porc-épic absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 37,
                 "price": 250,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1526,8 +1704,7 @@
                     9
                 ],
                 "fun_fact": "Une variété de poisson-globe recouverte d'épines acérées qui se dressent lorsqu'il se gonfle.",
-                "time_restriction": null,
-                "id": 39
+                "time_restriction": null
             },
             {
                 "name": "Poisson-scorpion",
@@ -1553,6 +1730,7 @@
                         "✨ Un spécimen de poisson-scorpion absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 38,
                 "price": 500,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -1568,8 +1746,7 @@
                     11
                 ],
                 "fun_fact": "Il se fond parfaitement dans les rochers et possède des épines venimeuses redoutables.",
-                "time_restriction": null,
-                "id": 40
+                "time_restriction": null
             },
             {
                 "name": "Saumon",
@@ -1595,6 +1772,7 @@
                         "✨ Un spécimen de saumon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 39,
                 "price": 700,
                 "location": "Embouchure de rivière",
                 "preferred_time": "Toute la journée",
@@ -1603,8 +1781,7 @@
                     9
                 ],
                 "fun_fact": "Un voyageur infatigable qui remonte les rivières contre le courant pour aller pondre.",
-                "time_restriction": null,
-                "id": 41
+                "time_restriction": null
             },
             {
                 "name": "Saumon masou",
@@ -1630,6 +1807,7 @@
                         "✨ Un spécimen de saumon masou absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 40,
                 "price": 1000,
                 "location": "Rivière (falaise)",
                 "preferred_time": "16h - 9h",
@@ -1644,8 +1822,7 @@
                     11
                 ],
                 "fun_fact": "Un saumon sauvage très agile appréciant particulièrement les torrents de montagne.",
-                "time_restriction": "after_22h",
-                "id": 42
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Silure",
@@ -1671,6 +1848,7 @@
                         "✨ Un spécimen de silure absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 41,
                 "price": 800,
                 "location": "Étang",
                 "preferred_time": "16h - 9h",
@@ -1684,8 +1862,7 @@
                     10
                 ],
                 "fun_fact": "Ce géant d'eau douce sans écailles utilise ses longs barbillons pour s'orienter dans la vase.",
-                "time_restriction": "after_22h",
-                "id": 43
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Tanche",
@@ -1711,7 +1888,14 @@
                         "✨ Une tanche magnifique, parfaitement intacte et brillante."
                     ]
                 },
-                "id": 44
+                "id": 42,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Tilapia",
@@ -1737,6 +1921,7 @@
                         "✨ Un tilapia parfait, aux écailles éclatantes et bien proportionné."
                     ]
                 },
+                "id": 43,
                 "price": 800,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -1749,8 +1934,7 @@
                     10
                 ],
                 "fun_fact": "Un poisson robuste et adaptable, élevé depuis l'Antiquité en Égypte.",
-                "time_restriction": null,
-                "id": 45
+                "time_restriction": null
             },
             {
                 "name": "Truite Arc-en-Ciel",
@@ -1776,7 +1960,14 @@
                         "✨ Une truite parfaite, digne d'un trophée de pêche."
                     ]
                 },
-                "id": 46
+                "id": 44,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Vandoise",
@@ -1802,6 +1993,7 @@
                         "✨ Une vandoise éclatante, parfaite pour une photo."
                     ]
                 },
+                "id": 45,
                 "price": 240,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -1821,8 +2013,7 @@
                     12
                 ],
                 "fun_fact": "Un poisson vif et argenté qui adore gober les insectes à la surface des rivières.",
-                "time_restriction": "after_22h",
-                "id": 47
+                "time_restriction": "after_22h"
             }
         ],
         "rare": [
@@ -1850,6 +2041,7 @@
                         "✨ Un spécimen de bichir absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 46,
                 "price": 4000,
                 "location": "Rivière",
                 "preferred_time": "21h - 4h",
@@ -1861,8 +2053,7 @@
                     9
                 ],
                 "fun_fact": "Cette créature préhistorique possède des poumons primitifs lui permettant de ramper hors de l'eau.",
-                "time_restriction": "after_22h",
-                "id": 48
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Brochet",
@@ -1888,6 +2079,7 @@
                         "✨ Un spécimen de brochet absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 47,
                 "price": 1800,
                 "location": "Rivière",
                 "preferred_time": "Toute la journée",
@@ -1899,8 +2091,7 @@
                     12
                 ],
                 "fun_fact": "Un redoutable prédateur embusqué doté d'une mâchoire remplie de dents acérées.",
-                "time_restriction": null,
-                "id": 49
+                "time_restriction": null
             },
             {
                 "name": "Carangue grosse tête",
@@ -1926,6 +2117,7 @@
                         "✨ Un spécimen de carangue grosse tête absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 48,
                 "price": 4500,
                 "location": "Océan (ponton)",
                 "preferred_time": "Toute la journée",
@@ -1939,8 +2131,7 @@
                     10
                 ],
                 "fun_fact": "Un colosse de l'océan connu pour sa force brute phénoménale lors des combats.",
-                "time_restriction": null,
-                "id": 50
+                "time_restriction": null
             },
             {
                 "name": "Carpe koï",
@@ -1966,6 +2157,7 @@
                         "✨ Un spécimen de carpe koï absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 49,
                 "price": 4000,
                 "location": "Étang",
                 "preferred_time": "16h - 9h",
@@ -1985,8 +2177,7 @@
                     12
                 ],
                 "fun_fact": "Ces carpes ornementales japonaises sont admirées pour leurs motifs colorés uniques.",
-                "time_restriction": "after_22h",
-                "id": 51
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Combattant",
@@ -2012,6 +2203,7 @@
                         "✨ Un spécimen de combattant absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 50,
                 "price": 2500,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -2025,8 +2217,7 @@
                     10
                 ],
                 "fun_fact": "Les mâles de cette espèce sont extrêmement territoriaux et arborent de somptueux voiles.",
-                "time_restriction": "before_22h",
-                "id": 52
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Crabe chinois",
@@ -2052,6 +2243,7 @@
                         "✨ Un spécimen de crabe chinois absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 51,
                 "price": 2000,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -2071,8 +2263,7 @@
                     12
                 ],
                 "fun_fact": "Reconnaissable à ses pinces recouvertes de fourrure, il migre sur de longues distances.",
-                "time_restriction": "after_22h",
-                "id": 53
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Espadon",
@@ -2098,7 +2289,14 @@
                         "✨ Une prise de légende, immaculée et majestueuse."
                     ]
                 },
-                "id": 54
+                "id": 52,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Esturgeon Royal",
@@ -2124,7 +2322,14 @@
                         "✨ Une prise légendaire, parfaitement préservée."
                     ]
                 },
-                "id": 55
+                "id": 53,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Murène",
@@ -2150,6 +2355,7 @@
                         "✨ Un spécimen de murène absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 54,
                 "price": 2000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -2160,8 +2366,7 @@
                     10
                 ],
                 "fun_fact": "Un prédateur marin serpentiforme qui se cache dans les crevasses rocheuses.",
-                "time_restriction": null,
-                "id": 56
+                "time_restriction": null
             },
             {
                 "name": "Omble",
@@ -2187,6 +2392,7 @@
                         "✨ Un spécimen de omble absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 55,
                 "price": 3800,
                 "location": "Rivière (falaise)",
                 "preferred_time": "16h - 9h",
@@ -2201,8 +2407,7 @@
                     11
                 ],
                 "fun_fact": "Un poisson des eaux froides et pures de montagne, cousin du saumon.",
-                "time_restriction": "after_22h",
-                "id": 57
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Poisson docteur",
@@ -2228,6 +2433,7 @@
                         "✨ Un spécimen de poisson docteur absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 56,
                 "price": 1500,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h",
@@ -2247,8 +2453,7 @@
                     12
                 ],
                 "fun_fact": "Célèbre pour grignoter doucement les peaux mortes dans les sources thermales.",
-                "time_restriction": "before_22h",
-                "id": 58
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Poisson lanterne",
@@ -2274,6 +2479,7 @@
                         "✨ Un spécimen de poisson lanterne absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 57,
                 "price": 2500,
                 "location": "Océan",
                 "preferred_time": "16h - 9h",
@@ -2286,8 +2492,7 @@
                     3
                 ],
                 "fun_fact": "Il utilise un leurre lumineux suspendu au-dessus de sa tête pour attirer ses proies dans l'obscurité.",
-                "time_restriction": "after_22h",
-                "id": 59
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Poisson-ange",
@@ -2313,6 +2518,7 @@
                         "✨ Un spécimen de poisson-ange absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 58,
                 "price": 3000,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -2326,8 +2532,7 @@
                     10
                 ],
                 "fun_fact": "Un magnifique poisson plat et majestueux, très prisé des aquariophiles.",
-                "time_restriction": "after_22h",
-                "id": 60
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Raie",
@@ -2353,6 +2558,7 @@
                         "✨ Un spécimen de raie absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 59,
                 "price": 3000,
                 "location": "Océan",
                 "preferred_time": "4h - 21h",
@@ -2364,8 +2570,7 @@
                     11
                 ],
                 "fun_fact": "Elle glisse gracieusement dans l'eau comme si elle volait avec ses nageoires pectorales.",
-                "time_restriction": "before_22h",
-                "id": 61
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Rémora rayé",
@@ -2391,6 +2596,7 @@
                         "✨ Un spécimen de rémora rayé absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 60,
                 "price": 1500,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -2402,8 +2608,7 @@
                     9
                 ],
                 "fun_fact": "Il utilise sa ventouse crânienne pour s'accrocher aux requins et voyager sans effort.",
-                "time_restriction": null,
-                "id": 62
+                "time_restriction": null
             },
             {
                 "name": "Saumon Atlantique",
@@ -2413,7 +2618,14 @@
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {},
-                "id": 63
+                "id": 61,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Saumon roi",
@@ -2439,6 +2651,7 @@
                         "✨ Un spécimen de saumon roi absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 62,
                 "price": 1800,
                 "location": "Embouchure de rivière",
                 "preferred_time": "Toute la journée",
@@ -2447,8 +2660,7 @@
                     9
                 ],
                 "fun_fact": "Le plus grand et le plus noble des saumons du Pacifique, à la chair savoureuse.",
-                "time_restriction": null,
-                "id": 64
+                "time_restriction": null
             },
             {
                 "name": "Thon",
@@ -2474,6 +2686,7 @@
                         "✨ Un spécimen de thon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 63,
                 "price": 7000,
                 "location": "Océan (ponton)",
                 "preferred_time": "Toute la journée",
@@ -2493,8 +2706,7 @@
                     12
                 ],
                 "fun_fact": "Un nageur infatigable capable de traverser des océans entiers à une vitesse impressionnante.",
-                "time_restriction": null,
-                "id": 65
+                "time_restriction": null
             },
             {
                 "name": "Thon Rouge",
@@ -2504,6 +2716,7 @@
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {},
+                "id": 64,
                 "price": 11000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -2523,8 +2736,7 @@
                     12
                 ],
                 "fun_fact": "Un colosse marin ultra-rapide doté d'une régulation thermique unique pour les eaux froides.",
-                "time_restriction": null,
-                "id": 66
+                "time_restriction": null
             },
             {
                 "name": "Tortue trionyx",
@@ -2550,6 +2762,7 @@
                         "✨ Un spécimen de tortue trionyx absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 65,
                 "price": 3750,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -2559,8 +2772,7 @@
                     9
                 ],
                 "fun_fact": "Une tortue d'eau douce insolite au corps mou et au long nez en forme de tuba.",
-                "time_restriction": "after_22h",
-                "id": 67
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Vivaneau",
@@ -2586,6 +2798,7 @@
                         "✨ Un spécimen de vivaneau absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 66,
                 "price": 3000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -2605,8 +2818,7 @@
                     12
                 ],
                 "fun_fact": "Un poisson côtier apprécié pour sa chair ferme et sa belle couleur rouge orangé.",
-                "time_restriction": null,
-                "id": 68
+                "time_restriction": null
             }
         ],
         "veryrare": [
@@ -2634,7 +2846,14 @@
                         "✨ Une anguille parfaite, symbole de danger et de puissance."
                     ]
                 },
-                "id": 69
+                "id": 67,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Cyprin doré",
@@ -2660,6 +2879,7 @@
                         "✨ Un spécimen de cyprin doré absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 68,
                 "price": 1300,
                 "location": "Étang",
                 "preferred_time": "9h - 16h",
@@ -2679,8 +2899,7 @@
                     12
                 ],
                 "fun_fact": "Une variété rare et précieuse sélectionnée pour sa couleur orange vif étincelante.",
-                "time_restriction": "before_22h",
-                "id": 70
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Lune de mer",
@@ -2706,6 +2925,7 @@
                         "✨ Un spécimen de lune de mer absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 69,
                 "price": 4000,
                 "location": "Océan",
                 "preferred_time": "4h - 21h",
@@ -2716,8 +2936,7 @@
                     9
                 ],
                 "fun_fact": "Aussi appelée Mola Mola, ce géant insolite adore flotter sur le flanc pour bronzer au soleil.",
-                "time_restriction": "before_22h",
-                "id": 71
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Piranha",
@@ -2743,6 +2962,7 @@
                         "✨ Un piranha parfait, une véritable machine à tuer."
                     ]
                 },
+                "id": 70,
                 "price": 2500,
                 "location": "Rivière",
                 "preferred_time": "9h - 16h, 21h - 4h",
@@ -2754,8 +2974,7 @@
                     9
                 ],
                 "fun_fact": "Ce redoutable poisson d'eau douce possède des dents acérées comme des rasoirs.",
-                "time_restriction": null,
-                "id": 72
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Poisson-Lune",
@@ -2781,7 +3000,14 @@
                         "✨ Un poisson-lune immaculé, sa forme étrange et parfaite fascine."
                     ]
                 },
-                "id": 73
+                "id": 71,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Ranchu",
@@ -2807,6 +3033,7 @@
                         "✨ Un spécimen de ranchu absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 72,
                 "price": 4500,
                 "location": "Étang",
                 "preferred_time": "9h - 16h",
@@ -2826,8 +3053,7 @@
                     12
                 ],
                 "fun_fact": "Surnommé le roi des poissons rouges au Japon, il est dépourvu de nageoire dorsale.",
-                "time_restriction": "before_22h",
-                "id": 74
+                "time_restriction": "before_22h"
             }
         ],
         "epic": [
@@ -2855,6 +3081,7 @@
                         "✨ Un spécimen de arapaïma absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 73,
                 "price": 10000,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -2866,8 +3093,7 @@
                     9
                 ],
                 "fun_fact": "Un fossile vivant qui respire de l'air à la surface grâce à une vessie natatoire modifiée.",
-                "time_restriction": "after_22h",
-                "id": 75
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Arowana",
@@ -2893,6 +3119,7 @@
                         "✨ Un spécimen de arowana absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 74,
                 "price": 10000,
                 "location": "Rivière",
                 "preferred_time": "16h - 9h",
@@ -2904,18 +3131,7 @@
                     9
                 ],
                 "fun_fact": "Aussi appelé poisson-dragon, il est un symbole de chance et de prospérité en Asie.",
-                "time_restriction": "after_22h",
-                "id": 76
-            },
-            {
-                "name": "Coelacanthe",
-                "size_min": 100.0,
-                "size_mean": 180.0,
-                "size_sigma": 20.0,
-                "force_pristine": null,
-                "force_state": null,
-                "descriptions": {},
-                "id": 77
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Coryphène",
@@ -2941,6 +3157,7 @@
                         "✨ Un spécimen de coryphène absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 75,
                 "price": 6000,
                 "location": "Océan (ponton)",
                 "preferred_time": "Toute la journée",
@@ -2954,8 +3171,7 @@
                     10
                 ],
                 "fun_fact": "Aussi appelée Mahi-Mahi, elle est célèbre pour ses couleurs dorées et sa vitesse fulgurante.",
-                "time_restriction": null,
-                "id": 78
+                "time_restriction": null
             },
             {
                 "name": "Esturgeon",
@@ -2981,6 +3197,7 @@
                         "✨ Un spécimen de esturgeon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 76,
                 "price": 10000,
                 "location": "Embouchure de rivière",
                 "preferred_time": "Toute la journée",
@@ -2995,8 +3212,7 @@
                     3
                 ],
                 "fun_fact": "Ce géant des eaux est célèbre pour ses œufs précieux, le caviar.",
-                "time_restriction": null,
-                "id": 79
+                "time_restriction": null
             },
             {
                 "name": "Gar",
@@ -3022,6 +3238,7 @@
                         "✨ Un spécimen de gar absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 77,
                 "price": 6000,
                 "location": "Étang",
                 "preferred_time": "16h - 9h",
@@ -3033,8 +3250,7 @@
                     9
                 ],
                 "fun_fact": "Un poisson préhistorique doté d'un long bec et d'écailles dures comme des pierres.",
-                "time_restriction": "after_22h",
-                "id": 80
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Ishidai",
@@ -3060,6 +3276,7 @@
                         "✨ Un spécimen de ishidai absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 78,
                 "price": 5000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -3076,8 +3293,7 @@
                     11
                 ],
                 "fun_fact": "Reconnaissable à ses rayures noires et blanches, il possède un bec puissant pour briser les coquillages.",
-                "time_restriction": null,
-                "id": 81
+                "time_restriction": null
             },
             {
                 "name": "Marlin bleu",
@@ -3103,6 +3319,7 @@
                         "✨ Un spécimen de marlin bleu absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 79,
                 "price": 10000,
                 "location": "Océan (ponton)",
                 "preferred_time": "Toute la journée",
@@ -3119,8 +3336,7 @@
                     4
                 ],
                 "fun_fact": "L'un des poissons les plus rapides de l'océan, célèbre pour son rostre en forme d'épée.",
-                "time_restriction": null,
-                "id": 82
+                "time_restriction": null
             },
             {
                 "name": "Napoléon",
@@ -3146,6 +3362,7 @@
                         "✨ Un spécimen de napoléon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 80,
                 "price": 10000,
                 "location": "Océan",
                 "preferred_time": "4h - 21h",
@@ -3155,8 +3372,7 @@
                     8
                 ],
                 "fun_fact": "Ce géant des récifs coralliens arbore une bosse frontale caractéristique rappelant le bicorne de l'empereur.",
-                "time_restriction": "before_22h",
-                "id": 83
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Poisson-ballon",
@@ -3182,6 +3398,7 @@
                         "✨ Un spécimen de poisson-ballon absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 81,
                 "price": 5000,
                 "location": "Océan",
                 "preferred_time": "21h - 4h",
@@ -3193,8 +3410,7 @@
                     2
                 ],
                 "fun_fact": "Il se gonfle d'eau ou d'air pour effrayer ses prédateurs, et contient un poison mortel.",
-                "time_restriction": "after_22h",
-                "id": 84
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Poisson-Clown",
@@ -3220,6 +3436,7 @@
                         "✨ Un poisson-clown magnifique, aux couleurs vives et parfaites."
                     ]
                 },
+                "id": 82,
                 "price": 650,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -3233,8 +3450,7 @@
                     9
                 ],
                 "fun_fact": "Il vit en parfaite symbiose au milieu des tentacules urticants des anémones de mer.",
-                "time_restriction": null,
-                "id": 85
+                "time_restriction": null
             },
             {
                 "name": "Poisson-ruban",
@@ -3260,6 +3476,7 @@
                         "✨ Un spécimen de poisson-ruban absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 83,
                 "price": 9000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -3273,8 +3490,7 @@
                     5
                 ],
                 "fun_fact": "Un géant serpentiforme argenté qui peut atteindre des longueurs impressionnantes dans les abysses.",
-                "time_restriction": null,
-                "id": 86
+                "time_restriction": null
             },
             {
                 "name": "Requin Marteau",
@@ -3284,6 +3500,7 @@
                 "force_pristine": null,
                 "force_state": null,
                 "descriptions": {},
+                "id": 84,
                 "price": 8000,
                 "location": "Océan",
                 "preferred_time": "16h - 9h",
@@ -3295,8 +3512,7 @@
                     9
                 ],
                 "fun_fact": "La forme unique de sa tête en marteau lui offre une vision panoramique exceptionnelle à 360 degrés.",
-                "time_restriction": "after_22h",
-                "id": 87
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Tortue serpentine",
@@ -3322,6 +3538,7 @@
                         "✨ Un spécimen de tortue serpentine absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 85,
                 "price": 5000,
                 "location": "Rivière",
                 "preferred_time": "21h - 4h",
@@ -3336,8 +3553,7 @@
                     10
                 ],
                 "fun_fact": "Dotée d'une mâchoire puissante, elle ne doit pas être approchée de trop près !",
-                "time_restriction": "after_22h",
-                "id": 88
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Tête-de-serpent",
@@ -3363,6 +3579,7 @@
                         "✨ Un spécimen de tête-de-serpent absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 86,
                 "price": 5500,
                 "location": "Étang",
                 "preferred_time": "9h - 16h",
@@ -3373,8 +3590,7 @@
                     8
                 ],
                 "fun_fact": "Ce redoutable prédateur peut survivre hors de l'eau pendant plusieurs jours en respirant de l'air.",
-                "time_restriction": "before_22h",
-                "id": 89
+                "time_restriction": "before_22h"
             }
         ],
         "legendary": [
@@ -3402,6 +3618,7 @@
                         "✨ Un spécimen de cœlacanthe absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 87,
                 "price": 15000,
                 "location": "Océan (pluie)",
                 "preferred_time": "Toute la journée",
@@ -3421,8 +3638,7 @@
                     12
                 ],
                 "fun_fact": "Un véritable dinosaure vivant, que l'on croyait éteint depuis 65 millions d'années !",
-                "time_restriction": null,
-                "id": 90
+                "time_restriction": null
             },
             {
                 "name": "Dai yu",
@@ -3448,6 +3664,7 @@
                         "✨ Un spécimen de dai yu absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 88,
                 "price": 15000,
                 "location": "Rivière (falaise)",
                 "preferred_time": "16h - 9h",
@@ -3459,8 +3676,7 @@
                     3
                 ],
                 "fun_fact": "Un poisson légendaire des rivières de montagnes, extrêmement rare et mystérieux.",
-                "time_restriction": "after_22h",
-                "id": 91
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Dorado",
@@ -3486,6 +3702,7 @@
                         "✨ Un spécimen de dorado absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 89,
                 "price": 15000,
                 "location": "Rivière",
                 "preferred_time": "4h - 21h",
@@ -3497,8 +3714,7 @@
                     9
                 ],
                 "fun_fact": "Surnommé l'or des rivières en raison de ses écailles dorées éblouissantes.",
-                "time_restriction": "before_22h",
-                "id": 92
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Grand requin blanc",
@@ -3524,6 +3740,7 @@
                         "✨ Un spécimen de grand requin blanc absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 90,
                 "price": 15000,
                 "location": "Océan",
                 "preferred_time": "16h - 9h",
@@ -3535,8 +3752,7 @@
                     9
                 ],
                 "fun_fact": "Le plus grand prédateur marin de la planète, doté de plusieurs rangées de dents tranchantes !",
-                "time_restriction": "after_22h",
-                "id": 93
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Macropinna",
@@ -3562,6 +3778,7 @@
                         "✨ Un spécimen de macropinna absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 91,
                 "price": 15000,
                 "location": "Océan",
                 "preferred_time": "21h - 4h",
@@ -3581,8 +3798,7 @@
                     12
                 ],
                 "fun_fact": "Un poisson abyssal doté d'une tête transparente à travers laquelle on aperçoit ses yeux tubulaires verts !",
-                "time_restriction": "after_22h",
-                "id": 94
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Piranhator",
@@ -3608,6 +3824,7 @@
                         "✨ Un Piranhator flamboyant ! Ses implants chromés et ses yeux lasers brillent intensément ! 🤖🔥"
                     ]
                 },
+                "id": 92,
                 "price": 25000,
                 "location": "Rivière (falaise)",
                 "preferred_time": "22h - 4h",
@@ -3627,8 +3844,7 @@
                     12
                 ],
                 "fun_fact": "Moitié piranha, moitié machine à tuer, il patrouille dans les eaux tumultueuses avec ses yeux lasers.",
-                "time_restriction": "after_22h",
-                "id": 95
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Pristine Banana 1",
@@ -3644,7 +3860,14 @@
                         "✨🍌 Une banane si jaune qu'elle illumine le fond marin ! C'est la Pristine Banana !"
                     ]
                 },
-                "id": 96
+                "id": 93,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Pristine Banana 2",
@@ -3660,7 +3883,14 @@
                         "✨🍌 La légende disait vrai... La Pristine Banana 2 existe bel et bien !"
                     ]
                 },
-                "id": 97
+                "id": 94,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Requin scie",
@@ -3686,6 +3916,7 @@
                         "✨ Un spécimen de requin scie absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 95,
                 "price": 12000,
                 "location": "Océan",
                 "preferred_time": "16h - 9h",
@@ -3697,8 +3928,7 @@
                     9
                 ],
                 "fun_fact": "Son long rostre bordé de dents en scie lui sert à déterrer et couper ses proies.",
-                "time_restriction": "after_22h",
-                "id": 98
+                "time_restriction": "after_22h"
             },
             {
                 "name": "Requin-baleine",
@@ -3724,6 +3954,7 @@
                         "✨ Un spécimen de requin-baleine absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 96,
                 "price": 13000,
                 "location": "Océan",
                 "preferred_time": "Toute la journée",
@@ -3735,8 +3966,7 @@
                     9
                 ],
                 "fun_fact": "Le plus grand poisson vivant au monde, un géant pacifique qui se nourrit exclusivement de plancton.",
-                "time_restriction": null,
-                "id": 99
+                "time_restriction": null
             },
             {
                 "name": "Truite dorée",
@@ -3762,6 +3992,7 @@
                         "✨ Un spécimen de truite dorée absolument parfait, resplendissant sous le soleil !"
                     ]
                 },
+                "id": 97,
                 "price": 15000,
                 "location": "Rivière (falaise)",
                 "preferred_time": "16h - 9h",
@@ -3775,8 +4006,7 @@
                     11
                 ],
                 "fun_fact": "Un joyau scintillant des rivières cristallines, extrêmement recherché.",
-                "time_restriction": "after_22h",
-                "id": 100
+                "time_restriction": "after_22h"
             }
         ],
         "mythical": [
@@ -3804,7 +4034,14 @@
                         "✨ UNE GEMME VIP PARFAITE ! ✨ Son éclat est aveuglant ! (240 min VIP)"
                     ]
                 },
-                "id": 101
+                "id": 98,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             },
             {
                 "name": "Le Crabe Dictateur",
@@ -3830,6 +4067,7 @@
                         "👑 Le Crabe Dictateur brandissant sa pince en signe de domination absolue sur tout l'étang !"
                     ]
                 },
+                "id": 99,
                 "price": 45000,
                 "location": "Océan",
                 "preferred_time": "9h - 18h",
@@ -3840,8 +4078,7 @@
                     8
                 ],
                 "fun_fact": "Il règne sans partage sur les récifs, armé de sa pince autoritaire en uniforme d'amiral.",
-                "time_restriction": "before_22h",
-                "id": 102
+                "time_restriction": "before_22h"
             },
             {
                 "name": "Xénomorphe des Abysses",
@@ -3867,6 +4104,7 @@
                         "✨ Un Xénomorphe des Abysses absolument terrifiant d'éclat ! L'acide bout dans ses veines ! 👽☠️"
                     ]
                 },
+                "id": 100,
                 "price": 50000,
                 "location": "Océan",
                 "preferred_time": "21h - 5h",
@@ -3878,8 +4116,7 @@
                     3
                 ],
                 "fun_fact": "Une monstruosité noire née dans les profondeurs insondables de la mer noire. Son sang acide corrode tous les filets.",
-                "time_restriction": "after_22h",
-                "id": 103
+                "time_restriction": "after_22h"
             }
         ],
         "divin": [
@@ -3897,7 +4134,14 @@
                         "✨🎖️ L'objet ultime de tout collectionneur : La ✨Carte Postale✨ de MonsieurCotCot !"
                     ]
                 },
-                "id": 104
+                "id": 101,
+                "price": null,
+                "location": null,
+                "preferred_time": null,
+                "preferred_season": null,
+                "months": null,
+                "fun_fact": null,
+                "time_restriction": null
             }
         ]
     },

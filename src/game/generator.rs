@@ -42,25 +42,22 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
         let current_month = now.month() as i32;
         let current_hour = now.hour();
         
-        // 1. Filtrage saisonnier (mois actifs)
-        let mut seasonal_pool: Vec<&FishData> = item_list.iter().filter(|fish| {
-            match &fish.months {
-                Some(months) if !months.is_empty() => months.contains(&current_month),
-                _ => true
-            }
-        }).collect();
-        
-        if seasonal_pool.is_empty() {
-            seasonal_pool = item_list.iter().collect();
-        }
-        
-        // 2. Pondération horaire (Stream 20h - 00h, après 22h la logique s'inverse)
+        // Pondération horaire (Stream 20h - 00h, après 22h la logique s'inverse)
         // Considère après 22h entre 22h et 4h du matin (prolongation live)
         let is_after_22h = current_hour >= 22 || current_hour < 4;
         
         let mut weighted_pool = Vec::new();
-        for fish in seasonal_pool {
-            let weight = match &fish.time_restriction {
+        for fish in item_list {
+            // A. Pondération saisonnière : 5 si en saison (ou sans restriction), 1 si hors-saison (20% de probabilité)
+            let s_weight = match &fish.months {
+                Some(months) if !months.is_empty() => {
+                    if months.contains(&current_month) { 5 } else { 1 }
+                }
+                _ => 5,
+            };
+            
+            // B. Pondération horaire
+            let t_weight = match &fish.time_restriction {
                 Some(restriction) => {
                     if restriction == "before_22h" {
                         if is_after_22h { 1 } else { 5 }
@@ -72,7 +69,9 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
                 }
                 None => 5,
             };
-            weighted_pool.push((fish, weight));
+            
+            // Le poids combiné est le produit des deux pondérations
+            weighted_pool.push((fish, s_weight * t_weight));
         }
         
         let total_pool_weight: i32 = weighted_pool.iter().map(|(_, w)| w).sum();
