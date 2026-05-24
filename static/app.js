@@ -10,6 +10,9 @@ document.onkeydown = function(e) {
 
 let staticFishData = {};
 let flatFishList = [];
+let staticJunkData = {};
+let flatJunkList = [];
+let currentMuseumTab = 'fish'; // 'fish' or 'junk'
 let allCatches = [];
 let museumDiscoveries = [];
 let currentRarity = 'all';
@@ -51,15 +54,28 @@ async function loadFishData() {
                 });
             });
         }
-        // Trier les éléments du musée par ID (Pokédex style)
         flatFishList.sort((a, b) => (a.id || 0) - (b.id || 0));
+
+        // Fetch Junk Data
+        const junkResponse = await fetch('/api/junk_data');
+        staticJunkData = await junkResponse.json();
+        flatJunkList = [];
+        for (const rarity in staticJunkData) {
+            staticJunkData[rarity].forEach(junk => {
+                flatJunkList.push({
+                    ...junk,
+                    rarity: rarity
+                });
+            });
+        }
+        flatJunkList.sort((a, b) => (a.id || 0) - (b.id || 0));
         
         // Si le panneau du musée est déjà affiché (ex: fetchStats s'est terminé en premier), on le re-render
         if (document.getElementById('museumPane').style.display === 'block') {
             renderMuseum();
         }
     } catch (err) {
-        console.error("Failed to load fish data:", err);
+        console.error("Failed to load catalog data:", err);
     }
 }
 
@@ -621,7 +637,10 @@ document.getElementById('inventorySearch').addEventListener('input', () => {
 });
 
 function showFishDetails(fish, color) {
-    const staticInfo = flatFishList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
+    let staticInfo = flatFishList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
+    if (!staticInfo) {
+        staticInfo = flatJunkList.find(f => f.name.toLowerCase() === fish.name.toLowerCase());
+    }
     const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
     document.getElementById('modal-name').textContent = fish.name + idStr;
     document.getElementById('modal-name').style.color = color;
@@ -689,7 +708,10 @@ function showFishDetails(fish, color) {
 }
 
 function showMuseumDetails(pb) {
-    const staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+    let staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+    if (!staticInfo) {
+        staticInfo = flatJunkList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+    }
     const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
     const isUnlocked = pb.totalCaught > 0;
 
@@ -753,22 +775,41 @@ function showMuseumDetails(pb) {
     document.body.style.overflow = 'hidden';
 }
 
+function switchMuseumTab(tab) {
+    currentMuseumTab = tab;
+    
+    // Toggle active class on buttons
+    const btnFish = document.getElementById('btnMuseumFish');
+    const btnJunk = document.getElementById('btnMuseumJunk');
+    
+    if (tab === 'fish') {
+        btnFish.classList.add('active');
+        btnJunk.classList.remove('active');
+    } else {
+        btnFish.classList.remove('active');
+        btnJunk.classList.add('active');
+    }
+    
+    renderMuseum();
+}
+
 function renderMuseum() {
     const grid = document.getElementById('museumGrid');
     grid.innerHTML = '';
 
     let discoveredCount = 0;
-    const totalCount = flatFishList.length;
+    const activeList = currentMuseumTab === 'fish' ? flatFishList : flatJunkList;
+    const totalCount = activeList.length;
 
-    flatFishList.forEach(fish => {
-        const discovery = museumDiscoveries.find(d => d.fish_name.toLowerCase() === fish.name.toLowerCase());
+    activeList.forEach(item => {
+        const discovery = museumDiscoveries.find(d => d.fish_name.toLowerCase() === item.name.toLowerCase());
         const isUnlocked = !!discovery;
 
         const slot = document.createElement('div');
         slot.className = 'museum-slot';
 
         // Badge ID style Pokédex
-        const idStr = fish.id ? `#${String(fish.id).padStart(3, '0')}` : '#???';
+        const idStr = item.id ? `#${String(item.id).padStart(3, '0')}` : '#???';
         const idBadge = document.createElement('span');
         idBadge.className = 'id-badge';
         idBadge.textContent = idStr;
@@ -777,28 +818,49 @@ function renderMuseum() {
         const icon = document.createElement('span');
         icon.className = 'icon';
         
-        const nameLower = fish.name.toLowerCase();
-        if (nameLower.includes('banana')) {
-            icon.textContent = '🍌';
-        } else if (nameLower.includes('grenouille') || nameLower.includes('têtard')) {
-            icon.textContent = '🐸';
-        } else if (nameLower.includes('requin')) {
-            icon.textContent = '🦈';
-        } else if (nameLower.includes('anguille')) {
-            icon.textContent = '🐍';
-        } else if (nameLower.includes('calmar')) {
-            icon.textContent = '🦑';
-        } else if (nameLower.includes('piranha')) {
-            icon.textContent = '🐡';
-        } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
-            icon.textContent = '🍣';
+        const nameLower = item.name.toLowerCase();
+        
+        if (currentMuseumTab === 'junk') {
+            // Icon lookup for junk items
+            if (nameLower.includes('botte') || nameLower.includes('chaussure')) {
+                icon.textContent = '🥾';
+            } else if (nameLower.includes('canette') || nameLower.includes('soda')) {
+                icon.textContent = '🥫';
+            } else if (nameLower.includes('pneu')) {
+                icon.textContent = '⭕';
+            } else if (nameLower.includes('plastique') || nameLower.includes('sac')) {
+                icon.textContent = '🛍️';
+            } else if (nameLower.includes('algue')) {
+                icon.textContent = '🌿';
+            } else if (nameLower.includes('trésor') || nameLower.includes('coffre')) {
+                icon.textContent = '🏴‍☠️';
+            } else {
+                icon.textContent = '🗑️';
+            }
         } else {
-            icon.textContent = '🐟';
+            // Icon lookup for fish items
+            if (nameLower.includes('banana')) {
+                icon.textContent = '🍌';
+            } else if (nameLower.includes('grenouille') || nameLower.includes('têtard')) {
+                icon.textContent = '🐸';
+            } else if (nameLower.includes('requin')) {
+                icon.textContent = '🦈';
+            } else if (nameLower.includes('anguille')) {
+                icon.textContent = '🐍';
+            } else if (nameLower.includes('calmar')) {
+                icon.textContent = '🦑';
+            } else if (nameLower.includes('piranha')) {
+                icon.textContent = '🐡';
+            } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
+                icon.textContent = '🍣';
+            } else {
+                icon.textContent = '🐟';
+            }
         }
 
         const nameLabel = document.createElement('div');
         nameLabel.className = 'name-label';
-        nameLabel.textContent = fish.name;
+        nameLabel.textContent = item.name;
 
         const rarityColors = {
             'common': '#efeff1',
@@ -810,20 +872,20 @@ function renderMuseum() {
             'mythical': '#ff4f4f',
             'divin': '#ffffff'
         };
-        const color = rarityColors[fish.rarity.toLowerCase().replace(/\s/g, '')] || '#efeff1';
+        const color = rarityColors[item.rarity.toLowerCase().replace(/\s/g, '')] || '#efeff1';
 
         if (isUnlocked) {
             discoveredCount++;
             slot.classList.add('unlocked');
             slot.style.borderColor = color;
-            if (fish.rarity.toLowerCase() === 'divin') {
+            if (item.rarity.toLowerCase() === 'divin') {
                 slot.style.boxShadow = "0 0 8px #fff, inset 0 0 4px #fff";
             }
 
             const maxWeight = discovery.max_weight;
             const maxSize = discovery.max_size;
             const bestState = discovery.best_state;
-            const bestDescription = discovery.description || fish.fun_fact || "Un spécimen remarquable enregistré dans vos archives.";
+            const bestDescription = discovery.description || item.fun_fact || "Un spécimen remarquable enregistré dans vos archives.";
             const totalCaught = discovery.total_caught;
 
             slot.appendChild(icon);
@@ -857,8 +919,8 @@ function renderMuseum() {
 
             slot.onclick = () => {
                 showMuseumDetails({
-                    name: fish.name,
-                    rarity: fish.rarity,
+                    name: item.name,
+                    rarity: item.rarity,
                     color: color,
                     maxSize: maxSize,
                     maxWeight: maxWeight,
@@ -881,8 +943,8 @@ function renderMuseum() {
 
             slot.onclick = () => {
                 showMuseumDetails({
-                    name: fish.name,
-                    rarity: fish.rarity,
+                    name: item.name,
+                    rarity: item.rarity,
                     color: color,
                     maxSize: null,
                     maxWeight: null,

@@ -128,70 +128,77 @@ async fn main() -> Result<(), MyError> {
         tracing::info!("🧹 [Migration] Tables supprimées.");
     }
 
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS players (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE NOT NULL,
-            total_attempts INTEGER DEFAULT 0,
-            successful_attempts INTEGER DEFAULT 0,
-            failed_attempts INTEGER DEFAULT 0,
-            last_fishing_time DATETIME,
-            level INTEGER DEFAULT 1,
-            xp INTEGER DEFAULT 0,
-            vip_until DATETIME,
-            profile_image_url TEXT,
-            gold INTEGER DEFAULT 0
-        )"
-    ).execute(&pool).await?;
-
-    let _ = sqlx::query("ALTER TABLE players ADD COLUMN profile_image_url TEXT").execute(&pool).await;
-    let _ = sqlx::query("ALTER TABLE players ADD COLUMN gold INTEGER DEFAULT 0").execute(&pool).await;
-
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS catches (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER REFERENCES players(id),
-            fish_name TEXT NOT NULL,
-            rarity TEXT NOT NULL,
-            size REAL NOT NULL,
-            weight REAL DEFAULT 0,
-            state TEXT NOT NULL,
-            description TEXT,
-            stream_title TEXT,
-            caught_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            is_junk BOOLEAN DEFAULT 0
-        )"
-    ).execute(&pool).await?;
-
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS banana_kings_history (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER REFERENCES players(id),
-            username TEXT NOT NULL,
-            crowned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            dethroned_at DATETIME
-        )"
-    ).execute(&pool).await?;
-
-    sqlx::query(
-        "CREATE TABLE IF NOT EXISTS player_trophies (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
-            username TEXT NOT NULL,
-            season TEXT NOT NULL,
-            trophy_tier TEXT NOT NULL,
-            level INTEGER DEFAULT 1,
-            unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(player_id, season)
-        )"
-    ).execute(&pool).await?;
-
-    sqlx::query("CREATE INDEX IF NOT EXISTS idx_catches_player_id ON catches(player_id);").execute(&pool).await?;
-    sqlx::query("CREATE INDEX IF NOT EXISTS idx_players_username ON players(username);").execute(&pool).await?;
-    sqlx::query("CREATE INDEX IF NOT EXISTS idx_trophies_player_id ON player_trophies(player_id);").execute(&pool).await?;
+    // Exécution des migrations SQLx standardisées
+    sqlx::migrate!().run(&pool).await?;
 
     let repo = Arc::new(Repository::new(pool.clone()));
     
+    // Remplissage automatique du Musée si celui-ci est vide au démarrage
+    match repo.is_museum_empty().await {
+        Ok(true) => {
+            tracing::info!("🔮 [Museum] Le Musée est vide ! Démarrage du backfill des découvertes historiques...");
+            if let Err(e) = repo.backfill_museum().await {
+                tracing::error!("❌ [Museum] Échec du backfill : {}", e);
+            } else {
+                tracing::info!("✨ [Museum] Backfill des découvertes historiques terminé avec succès !");
+            }
+        }
+        Ok(false) => {
+            tracing::info!("✨ [Museum] Le Musée contient déjà des découvertes.");
+        }
+        Err(e) => {
+            tracing::error!("❌ [Museum] Impossible de vérifier l'état du Musée : {}", e);
+        }
+    }
+
+    // Correction et couronnement automatique des Rois Bananes actifs au démarrage
+    let active_king: Option<(i64, String)> = sqlx::query_as(
+        "SELECT player_id, username 
+         FROM catches c 
+         JOIN players p ON c.player_id = p.id 
+         WHERE fish_name IN ('Pristine Banana 1', 'Pristine Banana 2') 
+         GROUP BY player_id 
+         HAVING COUNT(DISTINCT fish_name) = 2"
+    )
+    .fetch_optional(&pool)
+    .await
+    .unwrap_or_default();
+
+    if let Some((p_id, u_name)) = active_king {
+        let has_active: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM banana_kings_history WHERE dethroned_at IS NULL")
+            .fetch_one(&pool)
+            .await
+            .unwrap_or_default();
+
+        if has_active == 0 {
+            tracing::info!("🍌 [Banana King] Aucun roi actif trouvé mais @{} possède les deux bananes. Couronnement automatique !", u_name);
+            let _ = sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
+                .bind(p_id)
+                .bind(&u_name)
+                .execute(&pool)
+                .await;
+        } else {
+            let current_active_id: Option<i64> = sqlx::query_scalar("SELECT player_id FROM banana_kings_history WHERE dethroned_at IS NULL")
+                .fetch_optional(&pool)
+                .await
+                .unwrap_or_default();
+
+            if current_active_id != Some(p_id) {
+                tracing::info!("🍌 [Banana King] Rectification de la couronne : @{} prend son titre légitime !", u_name);
+                let mut tx = pool.begin().await.unwrap();
+                let _ = sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
+                    .execute(&mut *tx)
+                    .await;
+                let _ = sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
+                    .bind(p_id)
+                    .bind(&u_name)
+                    .execute(&mut *tx)
+                    .await;
+                let _ = tx.commit().await;
+            }
+        }
+    }
+
     let client_id = env::var("TWITCH_CLIENT_ID").expect("TWITCH_CLIENT_ID must be set");
     let client_secret = env::var("TWITCH_CLIENT_SECRET").expect("TWITCH_CLIENT_SECRET must be set");
     let channel = env::var("TWITCH_CHANNEL").expect("TWITCH_CHANNEL must be set");
@@ -269,6 +276,7 @@ async fn main() -> Result<(), MyError> {
     }
 
     let app = Router::new()
+        .nest_service("/static", tower_http::services::ServeDir::new("static"))
         .route("/", get(|| async { Html(match tokio::fs::read_to_string("static/index.html").await { Ok(h) => h, Err(_) => "Erreur chargement index.html".to_string() }) }))
         .route("/player/{username}", get(|| async { Html(match tokio::fs::read_to_string("static/index.html").await { Ok(h) => h, Err(_) => "Erreur chargement index.html".to_string() }) }))
         .route("/admin-cotcot", get(api::admin_panel))
@@ -277,6 +285,7 @@ async fn main() -> Result<(), MyError> {
         .route("/api/stats/{username}", get(api::get_player_stats))
         .route("/api/leaderboard", get(api::get_leaderboard))
         .route("/api/fish_data", get(api::get_fish_data_api))
+        .route("/api/junk_data", get(api::get_junk_data_api))
         .route("/api/banana_kings", get(api::get_banana_kings))
         .fallback_service(ServeFile::new("static/index.html"))
         .layer(CorsLayer::permissive())

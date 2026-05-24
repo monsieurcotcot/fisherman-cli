@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fisherman Game - Stats</title>
-    <link rel="stylesheet" href="/static/style.css?v=1.0.13">
+    <link rel="stylesheet" href="/static/style.css?v=1.0.14">
 </head>
 <body>
     <canvas id="matrix-bg"></canvas>
@@ -178,6 +178,12 @@
             <div class="museum-pane" id="museumPane" style="display: none;">
                 <h2 style="margin-top: 0; color: #9146ff; display: flex; align-items: center; justify-content: center; gap: 8px;">📖 Ze Pristine Museum</h2>
                 
+                <!-- Museum Tabs -->
+                <div class="filter-bar" id="museumTabBar" style="margin-bottom: 1.5rem; justify-content: center;">
+                    <button class="filter-btn active" id="btnMuseumFish" onclick="switchMuseumTab('fish')">🐟 Poissons</button>
+                    <button class="filter-btn" id="btnMuseumJunk" onclick="switchMuseumTab('junk')">🗑️ Déchets</button>
+                </div>
+                
                 <!-- Progression bar for Ze Pristine Museum -->
                 <div style="margin-bottom: 1.5rem; text-align: left; background: rgba(38, 38, 44, 0.4); border: 1px solid rgba(58, 58, 61, 0.3); padding: 12px; border-radius: 8px;">
                     <div class="stat-item" style="border-bottom: none; padding-bottom: 0; margin: 0;">
@@ -195,7 +201,7 @@
             </div>
 
             <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
-                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">Beta V1.0.13</span></p>
+                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">Beta V1.0.14</span></p>
                 <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
                     <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
                     <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
@@ -247,6 +253,6 @@
     </div>
 
     <!-- Script principal de l'application -->
-    <script src="/static/app.js?v=1.0.13" defer></script>
+    <script src="/static/app.js?v=1.0.14" defer></script>
 </body>
 </html>

@@ -110,6 +110,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
         Ok(Some(p)) => {
             let catches = state.repo.get_player_catches(p.id.unwrap()).await.unwrap_or_default();
             let trophies = state.repo.get_player_trophies(p.id.unwrap()).await.unwrap_or_default();
+            let museum = state.repo.get_player_museum(p.id.unwrap()).await.unwrap_or_default();
             
             let mut profile_image_url = p.profile_image_url.clone();
             if profile_image_url.is_none() {
@@ -147,6 +148,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "is_vip": p.is_vip(),
                 "catches": catches,
                 "trophies": trophies,
+                "museum": museum,
                 "profile_image_url": profile_image_url,
                 "junk": p.junk_count,
                 "banana": p.banana_count,
@@ -161,6 +163,10 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
 
 pub async fn get_fish_data_api() -> impl IntoResponse {
     Json(crate::config::get_fish_data()).into_response()
+}
+
+pub async fn get_junk_data_api() -> impl IntoResponse {
+    Json(crate::config::get_junk_data()).into_response()
 }
 
 pub async fn get_leaderboard(State(state): State<Arc<AppState>>) -> impl IntoResponse {
