@@ -784,6 +784,7 @@ button:hover {
     background: rgba(31, 31, 35, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 8px;
+    cursor: pointer;
     transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 .leaderboard-item:hover {

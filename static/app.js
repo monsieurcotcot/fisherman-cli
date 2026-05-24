@@ -73,6 +73,13 @@ async function fetchLeaderboard() {
             const item = document.createElement('div');
             const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
             item.className = `leaderboard-item ${rankClass}`.trim();
+            item.style.cursor = 'pointer';
+            item.onclick = (e) => {
+                // If they clicked on the name link specifically, let the default anchor link navigation handle it
+                if (e.target.tagName !== 'A') {
+                    window.location.href = `/player/${p.username}`;
+                }
+            };
             
             // Header Row: Rank, Username, Level & Total Fish
             const headerRow = document.createElement('div');
