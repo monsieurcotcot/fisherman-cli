@@ -41,3 +41,6 @@ tracing-subscriber = "0.3"
 
 # UUID support
 uuid = { version = "1.7", features = ["v4", "serde"] }
+
+[build-dependencies]
+serde_json = "1.0"

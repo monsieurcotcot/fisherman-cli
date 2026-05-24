@@ -6,12 +6,6 @@ WORKDIR /app
 # Copie de tout le projet
 COPY . .
 
-# Installation de python3 pour l'enrichissement
-RUN apt-get update && apt-get install -y python3 && rm -rf /var/lib/apt/lists/*
-
-# Exécuter l'enrichissement des poissons avant la compilation
-RUN python3 enrich.py
-
 # Compilation
 RUN cargo build --release
 

@@ -9,7 +9,8 @@
 .env
 
 # Database
-/data
+/data/*
+!/data/game_data.json
 *.db
 *.db-journal
 tokens.json

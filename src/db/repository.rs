@@ -36,6 +36,21 @@ pub struct PlayerTrophy {
     pub unlocked_at: String,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct MuseumDiscovery {
+    pub id: Option<i64>,
+    pub player_id: i64,
+    pub username: String,
+    pub fish_name: String,
+    pub rarity: String,
+    pub max_size: f64,
+    pub max_weight: f64,
+    pub best_state: String,
+    pub description: Option<String>,
+    pub total_caught: i32,
+    pub unlocked_at: String,
+}
+
 pub struct Repository {
     pool: SqlitePool,
 }
@@ -337,8 +352,8 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
-        // Réinitialiser les stats du joueur
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL WHERE username = ?")
+        // Réinitialiser les stats du joueur (y compris les pièces d'or)
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0 WHERE username = ?")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
@@ -347,19 +362,161 @@ impl Repository {
         Ok(())
     }
 
+    pub async fn record_museum_discovery(&self, tx: &mut sqlx::SqliteConnection, player_id: i64, fish: &Fish) -> Result<(), sqlx::Error> {
+        let username: String = sqlx::query_scalar("SELECT username FROM players WHERE id = ?")
+            .bind(player_id)
+            .fetch_one(&mut *tx)
+            .await?;
+
+        let existing: Option<(i64, f64, f64, String, Option<String>, i32)> = sqlx::query_as(
+            "SELECT id, max_size, max_weight, best_state, description, total_caught FROM museum_discoveries WHERE player_id = ? AND fish_name = ?"
+        )
+        .bind(player_id)
+        .bind(&fish.name)
+        .fetch_optional(&mut *tx)
+        .await?;
+
+        if let Some((id, max_size, max_weight, best_state, description, total_caught)) = existing {
+            let new_max_size = if fish.size > max_size { fish.size } else { max_size };
+            let new_max_weight = if fish.weight > max_weight { fish.weight } else { max_weight };
+            
+            fn state_rank(s: &str) -> i32 {
+                match s.to_lowercase().as_str() {
+                    "badly damaged" => 1,
+                    "damaged" => 2,
+                    "worn" => 3,
+                    "good" => 4,
+                    "pristine" => 5,
+                    _ => 0,
+                }
+            }
+            
+            let is_better = state_rank(&fish.state) > state_rank(&best_state);
+            let new_best_state = if is_better {
+                fish.state.clone()
+            } else {
+                best_state.clone()
+            };
+            
+            let new_desc = if is_better {
+                fish.description.clone()
+            } else {
+                description.unwrap_or_default()
+            };
+
+            sqlx::query("UPDATE museum_discoveries SET max_size = ?, max_weight = ?, best_state = ?, description = ?, total_caught = ? WHERE id = ?")
+                .bind(new_max_size)
+                .bind(new_max_weight)
+                .bind(new_best_state)
+                .bind(new_desc)
+                .bind(total_caught + 1)
+                .bind(id)
+                .execute(&mut *tx)
+                .await?;
+        } else {
+            sqlx::query("INSERT INTO museum_discoveries (player_id, username, fish_name, rarity, max_size, max_weight, best_state, description, total_caught) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)")
+                .bind(player_id)
+                .bind(&username)
+                .bind(&fish.name)
+                .bind(serde_json::to_string(&fish.rarity).unwrap_or_default())
+                .bind(fish.size)
+                .bind(fish.weight)
+                .bind(&fish.state)
+                .bind(&fish.description)
+                .execute(&mut *tx)
+                .await?;
+        }
+        Ok(())
+    }
+
+    pub async fn get_player_museum(&self, player_id: i64) -> Result<Vec<MuseumDiscovery>, sqlx::Error> {
+        let rows = sqlx::query("SELECT id, player_id, username, fish_name, rarity, max_size, max_weight, best_state, description, total_caught, strftime('%Y-%m-%dT%H:%M:%SZ', unlocked_at) as unlocked_at FROM museum_discoveries WHERE player_id = ? ORDER BY unlocked_at DESC")
+            .bind(player_id)
+            .fetch_all(&self.pool)
+            .await?;
+
+        let discoveries = rows.into_iter().map(|row| {
+            MuseumDiscovery {
+                id: Some(row.get("id")),
+                player_id: row.get("player_id"),
+                username: row.get("username"),
+                fish_name: row.get("fish_name"),
+                rarity: row.get("rarity"),
+                max_size: row.get("max_size"),
+                max_weight: row.get("max_weight"),
+                best_state: row.get("best_state"),
+                description: row.get("description"),
+                total_caught: row.get("total_caught"),
+                unlocked_at: row.get("unlocked_at"),
+            }
+        }).collect();
+
+        Ok(discoveries)
+    }
+
+    pub async fn is_museum_empty(&self) -> Result<bool, sqlx::Error> {
+        let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM museum_discoveries")
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(count == 0)
+    }
+
+    pub async fn backfill_museum(&self) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+        
+        let rows = sqlx::query(
+            "SELECT c.player_id, c.fish_name, c.rarity, c.size, c.weight, c.state, c.description, c.stream_title 
+             FROM catches c 
+             WHERE c.is_junk = 0"
+        )
+        .fetch_all(&mut *tx)
+        .await?;
+
+        for row in rows {
+            let player_id: i64 = row.get("player_id");
+            let fish_name: String = row.get("fish_name");
+            let rarity_str: String = row.get("rarity");
+            let rarity: crate::config::Rarity = serde_json::from_str(&rarity_str).unwrap_or(crate::config::Rarity::Common);
+            
+            let fish = Fish {
+                id: None,
+                name: fish_name,
+                rarity,
+                size: row.get("size"),
+                weight: row.get("weight"),
+                state: row.get("state"),
+                description: row.get("description"),
+                stream_title: row.get("stream_title"),
+                caught_at: None,
+                is_junk: false,
+            };
+            
+            self.record_museum_discovery(&mut *tx, player_id, &fish).await?;
+        }
+
+        tx.commit().await?;
+        Ok(())
+    }
+
     pub async fn save_catch_only(&self, player_id: i64, fish: Fish) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+        
         sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .bind(player_id)
-            .bind(fish.name)
+            .bind(&fish.name)
             .bind(serde_json::to_string(&fish.rarity).unwrap_or_default())
             .bind(fish.size)
             .bind(fish.weight)
-            .bind(fish.state)
-            .bind(fish.description)
-            .bind(fish.stream_title)
+            .bind(&fish.state)
+            .bind(&fish.description)
+            .bind(&fish.stream_title)
             .bind(fish.is_junk)
-            .execute(&self.pool)
+            .execute(&mut *tx)
             .await?;
+
+        self.record_museum_discovery(&mut *tx, player_id, &fish).await?;
+
+        tx.commit().await?;
         Ok(())
     }
 
@@ -392,16 +549,18 @@ impl Repository {
                 .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
                 .bind(f.size)
                 .bind(f.weight)
-                .bind(f.state)
-                .bind(f.description)
-                .bind(f.stream_title)
+                .bind(&f.state)
+                .bind(&f.description)
+                .bind(&f.stream_title)
                 .bind(f.is_junk)
                 .execute(&mut *tx)
                 .await?;
 
+            self.record_museum_discovery(&mut *tx, player.id.unwrap(), &f).await?;
+
             if is_banana {
                 let banana_count: i64 = sqlx::query_scalar(
-                    "SELECT COUNT(*) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
+                    "SELECT COUNT(DISTINCT fish_name) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
                 )
                 .bind(player.id)
                 .fetch_one(&mut *tx)
@@ -462,11 +621,6 @@ impl Repository {
                 .execute(&mut *tx)
                 .await?;
 
-            sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE player_id = ? AND dethroned_at IS NULL")
-                .bind(old_player_id)
-                .execute(&mut *tx)
-                .await?;
-
             tx.commit().await?;
             Ok(Some(old_username))
         } else {
@@ -500,7 +654,7 @@ impl Repository {
             .await?;
 
         let count: i64 = sqlx::query_scalar(
-            "SELECT COUNT(*) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
+            "SELECT COUNT(DISTINCT fish_name) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
         )
         .bind(player_id)
         .fetch_one(&mut **tx)
@@ -527,12 +681,6 @@ impl Repository {
                     .execute(&mut **tx)
                     .await?;
             }
-        } else {
-            // If they are currently the active king, dethrone them
-            sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE player_id = ? AND dethroned_at IS NULL")
-                .bind(player_id)
-                .execute(&mut **tx)
-                .await?;
         }
         Ok(())
     }
@@ -671,9 +819,11 @@ impl Repository {
         sqlx::query("DROP INDEX IF EXISTS idx_catches_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP INDEX IF EXISTS idx_players_username").execute(&mut *tx).await?;
         sqlx::query("DROP INDEX IF EXISTS idx_trophies_player_id").execute(&mut *tx).await?;
+        sqlx::query("DROP INDEX IF EXISTS idx_museum_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS catches").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS banana_kings_history").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS player_trophies").execute(&mut *tx).await?;
+        sqlx::query("DROP TABLE IF EXISTS museum_discoveries").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS players").execute(&mut *tx).await?;
 
         // Supprimer toutes les entrées de sqlite_sequence
@@ -738,10 +888,29 @@ impl Repository {
             )"
         ).execute(&mut *tx).await?;
 
+        // Recréer la table museum_discoveries
+        sqlx::query(
+            "CREATE TABLE museum_discoveries (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
+                username TEXT NOT NULL,
+                fish_name TEXT NOT NULL,
+                rarity TEXT NOT NULL,
+                max_size REAL NOT NULL,
+                max_weight REAL DEFAULT 0,
+                best_state TEXT NOT NULL,
+                description TEXT,
+                total_caught INTEGER DEFAULT 1,
+                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(player_id, fish_name)
+            )"
+        ).execute(&mut *tx).await?;
+
         // Recréer les index
         sqlx::query("CREATE INDEX idx_catches_player_id ON catches(player_id);").execute(&mut *tx).await?;
         sqlx::query("CREATE INDEX idx_players_username ON players(username);").execute(&mut *tx).await?;
         sqlx::query("CREATE INDEX idx_trophies_player_id ON player_trophies(player_id);").execute(&mut *tx).await?;
+        sqlx::query("CREATE INDEX idx_museum_player_id ON museum_discoveries(player_id);").execute(&mut *tx).await?;
 
         tx.commit().await?;
 
@@ -786,8 +955,14 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
-        // 3. Réinitialiser les stats du joueur
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL WHERE username = ?")
+        // 3. Supprimer les découvertes du musée
+        sqlx::query("DELETE FROM museum_discoveries WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
+            .bind(&username_lower)
+            .execute(&mut *tx)
+            .await?;
+
+        // 4. Réinitialiser les stats du joueur (y compris les pièces d'or)
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0 WHERE username = ?")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
@@ -910,8 +1085,8 @@ impl Repository {
         sqlx::query("DELETE FROM catches").execute(&mut *tx).await?;
         sqlx::query("DELETE FROM banana_kings_history").execute(&mut *tx).await?;
 
-        // 7. Réinitialiser les statistiques actives des joueurs
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0")
+        // 7. Réinitialiser les statistiques actives des joueurs (y compris les pièces d'or)
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, gold = 0")
             .execute(&mut *tx)
             .await?;
 
@@ -977,6 +1152,35 @@ mod tests {
                 username TEXT NOT NULL,
                 crowned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 dethroned_at DATETIME
+            )"
+        ).execute(&pool).await.unwrap();
+
+        sqlx::query(
+            "CREATE TABLE museum_discoveries (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER REFERENCES players(id),
+                username TEXT NOT NULL,
+                fish_name TEXT NOT NULL,
+                rarity TEXT NOT NULL,
+                max_size REAL NOT NULL,
+                max_weight REAL DEFAULT 0,
+                best_state TEXT NOT NULL,
+                description TEXT,
+                total_caught INTEGER DEFAULT 1,
+                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )"
+        ).execute(&pool).await.unwrap();
+
+        sqlx::query(
+            "CREATE TABLE player_trophies (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
+                username TEXT NOT NULL,
+                season TEXT NOT NULL,
+                trophy_tier TEXT NOT NULL,
+                level INTEGER DEFAULT 1,
+                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(player_id, season)
             )"
         ).execute(&pool).await.unwrap();
 
@@ -1047,11 +1251,11 @@ mod tests {
         let stolen_from = repo.check_and_execute_banana_theft(p_b.id.unwrap(), "Pristine Banana 1").await.unwrap();
         assert_eq!(stolen_from, Some("player_a".to_string()));
 
-        // Player A should be dethroned now!
+        // Player A should NOT be dethroned now!
         let hist_2 = repo.get_banana_kings_history().await.unwrap();
         assert_eq!(hist_2.len(), 1);
         assert_eq!(hist_2[0].username, "player_a");
-        assert!(hist_2[0].dethroned_at.is_some());
+        assert!(hist_2[0].dethroned_at.is_none());
 
         // Player B saves their Pristine Banana 1 catch
         let b1_b = Fish::new("Pristine Banana 1".to_string(), Rarity::Divin, 21.0, 155.0, "pristine".to_string(), "Banana 1".to_string());
@@ -1125,5 +1329,45 @@ mod tests {
         assert_eq!(repo.count_players().await.unwrap(), 0);
         let players_after = repo.get_all_players().await.unwrap();
         assert_eq!(players_after.len(), 0);
+    }
+
+    #[tokio::test]
+    async fn test_reset_player_gold() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        // Restore Player A with 100 gold
+        let _p_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_a".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(100),
+        }).await.unwrap();
+
+        // 1. Soft Reset Player A
+        repo.reset_player("player_a").await.unwrap();
+        let player_a = repo.get_player("player_a").await.unwrap().unwrap();
+        assert_eq!(player_a.gold, 0);
+
+        // 2. Restore Player B with 200 gold
+        let _p_id_b = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_b".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(200),
+        }).await.unwrap();
+
+        // Hard Reset Player B
+        repo.reset_player_all("player_b").await.unwrap();
+        let player_b = repo.get_player("player_b").await.unwrap().unwrap();
+        assert_eq!(player_b.gold, 0);
     }
 }

@@ -11,7 +11,7 @@ use crate::{AppState, PendingSale, PendingTrade};
 use crate::game::{generate_fish, generate_junk};
 use crate::config::get_fail_attempt_reasons;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum SellArg {
     ConfirmYes,
     ConfirmNo,
@@ -21,6 +21,87 @@ pub enum SellArg {
         state: Option<String>,
         quantity: i64,
     },
+}
+
+/// Extrait l'état (éventuellement composé) et la quantité des tokens de commande.
+/// Gère l'ordre flexible : "Bar pristine 2" ou "Bar 2 pristine".
+fn extract_state_and_quantity(tokens: &mut Vec<&str>) -> (Option<String>, i64) {
+    let mut state = None;
+    let mut quantity = 1;
+
+    // 1. D'abord, regarder les deux derniers tokens pour les états composés (ex: "badly damaged")
+    let n = tokens.len();
+    if n >= 2 {
+        let last_two = format!("{} {}", tokens[n - 2], tokens[n - 1]).to_lowercase();
+        if last_two == "badly damaged" || last_two == "très endommagé" || last_two == "tres endommage" {
+            state = Some("badly damaged".to_string());
+            tokens.pop();
+            tokens.pop();
+        }
+    }
+
+    // Si pas d'état composé trouvé, regarder le dernier token
+    if state.is_none() && !tokens.is_empty() {
+        if let Some(&last) = tokens.last() {
+            let matched = match last.to_lowercase().as_str() {
+                "pristine" | "parfait" => Some("pristine".to_string()),
+                "good" | "bon" | "bonne" => Some("good".to_string()),
+                "worn" | "usé" | "use" => Some("worn".to_string()),
+                "damaged" | "endommagé" | "endommage" => Some("damaged".to_string()),
+                "badly" | "tres" | "très" => Some("badly damaged".to_string()),
+                _ => None,
+            };
+            if let Some(s) = matched {
+                state = Some(s);
+                tokens.pop();
+            }
+        }
+    }
+
+    // 2. Regarder si le nouveau dernier token est un nombre (quantité)
+    if !tokens.is_empty() {
+        if let Some(&last) = tokens.last() {
+            if let Ok(qty) = last.parse::<i64>() {
+                if qty > 0 {
+                    quantity = qty;
+                    tokens.pop();
+                }
+            }
+        }
+    }
+
+    // 3. Si on a trouvé une quantité mais pas encore d'état (ordre: "Bar pristine 2"),
+    // l'état se trouve alors juste avant la quantité !
+    if state.is_none() && !tokens.is_empty() {
+        let n = tokens.len();
+        if n >= 2 {
+            let last_two = format!("{} {}", tokens[n - 2], tokens[n - 1]).to_lowercase();
+            if last_two == "badly damaged" || last_two == "très endommagé" || last_two == "tres endommage" {
+                state = Some("badly damaged".to_string());
+                tokens.pop();
+                tokens.pop();
+            }
+        }
+        
+        if state.is_none() && !tokens.is_empty() {
+            if let Some(&last) = tokens.last() {
+                let matched = match last.to_lowercase().as_str() {
+                    "pristine" | "parfait" => Some("pristine".to_string()),
+                    "good" | "bon" | "bonne" => Some("good".to_string()),
+                    "worn" | "usé" | "use" => Some("worn".to_string()),
+                    "damaged" | "endommagé" | "endommage" => Some("damaged".to_string()),
+                    "badly" | "tres" | "très" => Some("badly damaged".to_string()),
+                    _ => None,
+                };
+                if let Some(s) = matched {
+                    state = Some(s);
+                    tokens.pop();
+                }
+            }
+        }
+    }
+
+    (state, quantity)
 }
 
 pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
@@ -40,6 +121,8 @@ pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
     if args_str.starts_with('#') {
         if let Ok(id) = args_str[1..].parse::<i64>() {
             return Some(SellArg::ById(id));
+        } else {
+            return None;
         }
     }
 
@@ -48,47 +131,7 @@ pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
         return None;
     }
 
-    let mut quantity = 1;
-    if let Some(&last_token) = tokens.last() {
-        if let Ok(qty) = last_token.parse::<i64>() {
-            if qty > 0 {
-                quantity = qty;
-                tokens.pop();
-            }
-        }
-    }
-
-    if tokens.is_empty() {
-        return None;
-    }
-
-    let mut state = None;
-    let n = tokens.len();
-    if n >= 2 {
-        let two_words = format!("{} {}", tokens[n - 2], tokens[n - 1]).to_lowercase();
-        if two_words == "badly damaged" || two_words == "très endommagé" || two_words == "tres endommage" {
-            state = Some("badly damaged".to_string());
-            tokens.pop();
-            tokens.pop();
-        }
-    }
-
-    if state.is_none() {
-        if let Some(&last_token) = tokens.last() {
-            let state_str = match last_token.to_lowercase().as_str() {
-                "pristine" | "parfait" => Some("pristine".to_string()),
-                "good" | "bon" | "bonne" => Some("good".to_string()),
-                "worn" | "usé" | "use" => Some("worn".to_string()),
-                "damaged" | "endommagé" | "endommage" => Some("damaged".to_string()),
-                "badly" | "tres" | "très" => Some("badly damaged".to_string()),
-                _ => None,
-            };
-            if let Some(s) = state_str {
-                state = Some(s);
-                tokens.pop();
-            }
-        }
-    }
+    let (state, quantity) = extract_state_and_quantity(&mut tokens);
 
     if tokens.is_empty() {
         return None;
@@ -111,7 +154,7 @@ pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
     })
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TradeArg {
     Accept,
     Cancel,
@@ -159,6 +202,21 @@ pub fn parse_trade_args(args_str: &str) -> Option<TradeArg> {
         let price = tokens[1].parse::<i64>().ok()?;
         let recipient = tokens[2].trim_start_matches('@').to_lowercase();
         return Some(TradeArg::Direct { catch_id, price, recipient });
+    }
+
+    // Gère le cas où l'utilisateur met par erreur des espaces superflus autour de l'ID ou de l'arobase
+    if tokens.len() > 3 {
+        // Recherche de la cible @destinataire à la fin
+        if let Some(&last_token) = tokens.last() {
+            if last_token.starts_with('@') || tokens[tokens.len() - 2] == "@" {
+                let recipient = last_token.trim_start_matches('@').to_lowercase();
+                // Essayer de voir si l'avant dernier token est le prix
+                if let Ok(price) = tokens[tokens.len() - 2].parse::<i64>() {
+                    return Some(TradeArg::Direct { catch_id, price, recipient });
+                }
+                return Some(TradeArg::Barter { catch_id, recipient });
+            }
+        }
     }
 
     None
@@ -1263,4 +1321,133 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
         }
     });
     *abort_lock = Some(handle);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_parse_sell_args_confirmations() {
+        assert_eq!(parse_sell_args("oui"), Some(SellArg::ConfirmYes));
+        assert_eq!(parse_sell_args("YES"), Some(SellArg::ConfirmYes));
+        assert_eq!(parse_sell_args("y"), Some(SellArg::ConfirmYes));
+        assert_eq!(parse_sell_args("non"), Some(SellArg::ConfirmNo));
+        assert_eq!(parse_sell_args("NO"), Some(SellArg::ConfirmNo));
+        assert_eq!(parse_sell_args("n"), Some(SellArg::ConfirmNo));
+    }
+
+    #[test]
+    fn test_parse_sell_args_by_id() {
+        assert_eq!(parse_sell_args("#123"), Some(SellArg::ById(123)));
+        assert_eq!(parse_sell_args("#999"), Some(SellArg::ById(999)));
+        assert_eq!(parse_sell_args("#abc"), None); // invalide
+    }
+
+    #[test]
+    fn test_parse_sell_args_by_name_states_and_quantities() {
+        // Cas classique : Nom simple
+        assert_eq!(
+            parse_sell_args("Bar"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: None, quantity: 1 })
+        );
+
+        // Nom avec espace
+        assert_eq!(
+            parse_sell_args("Grand requin blanc"),
+            Some(SellArg::ByName { name: "Grand requin blanc".to_string(), state: None, quantity: 1 })
+        );
+
+        // Nom + quantité
+        assert_eq!(
+            parse_sell_args("Bar 3"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: None, quantity: 3 })
+        );
+
+        // Nom + état
+        assert_eq!(
+            parse_sell_args("Bar pristine"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: Some("pristine".to_string()), quantity: 1 })
+        );
+
+        // Nom + état composé
+        assert_eq!(
+            parse_sell_args("Bar badly damaged"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: Some("badly damaged".to_string()), quantity: 1 })
+        );
+        assert_eq!(
+            parse_sell_args("Bar très endommagé"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: Some("badly damaged".to_string()), quantity: 1 })
+        );
+
+        // Ordre flexible : Nom + état + quantité
+        assert_eq!(
+            parse_sell_args("Bar pristine 5"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: Some("pristine".to_string()), quantity: 5 })
+        );
+
+        // Ordre flexible : Nom + quantité + état
+        assert_eq!(
+            parse_sell_args("Bar 5 pristine"),
+            Some(SellArg::ByName { name: "Bar".to_string(), state: Some("pristine".to_string()), quantity: 5 })
+        );
+
+        // Ordre flexible avec état composé et quantité
+        assert_eq!(
+            parse_sell_args("Grand requin blanc 3 badly damaged"),
+            Some(SellArg::ByName { name: "Grand requin blanc".to_string(), state: Some("badly damaged".to_string()), quantity: 3 })
+        );
+        assert_eq!(
+            parse_sell_args("Grand requin blanc badly damaged 3"),
+            Some(SellArg::ByName { name: "Grand requin blanc".to_string(), state: Some("badly damaged".to_string()), quantity: 3 })
+        );
+    }
+
+    #[test]
+    fn test_parse_sell_args_special_banana() {
+        assert_eq!(
+            parse_sell_args("pristine banana 1"),
+            Some(SellArg::ByName { name: "Pristine Banana 1".to_string(), state: None, quantity: 1 })
+        );
+        assert_eq!(
+            parse_sell_args("pristine banana 2"),
+            Some(SellArg::ByName { name: "Pristine Banana 2".to_string(), state: None, quantity: 1 })
+        );
+        // Cas où la banane a aussi un état supplémentaire
+        assert_eq!(
+            parse_sell_args("pristine banana 1 pristine"),
+            Some(SellArg::ByName { name: "Pristine Banana 1".to_string(), state: Some("pristine".to_string()), quantity: 1 })
+        );
+    }
+
+    #[test]
+    fn test_parse_trade_args() {
+        // Confirmations
+        assert_eq!(parse_trade_args("oui"), Some(TradeArg::Accept));
+        assert_eq!(parse_trade_args("accept"), Some(TradeArg::Accept));
+        assert_eq!(parse_trade_args("non"), Some(TradeArg::Cancel));
+        assert_eq!(parse_trade_args("cancel"), Some(TradeArg::Cancel));
+
+        // Troc (Barter)
+        assert_eq!(
+            parse_trade_args("#123 @monsieurcotcot"),
+            Some(TradeArg::Barter { catch_id: 123, recipient: "monsieurcotcot".to_string() })
+        );
+        // Sans l'arobase
+        assert_eq!(
+            parse_trade_args("#123 monsieurcotcot"),
+            Some(TradeArg::Barter { catch_id: 123, recipient: "monsieurcotcot".to_string() })
+        );
+
+        // Vente directe (Direct)
+        assert_eq!(
+            parse_trade_args("#123 500 @monsieurcotcot"),
+            Some(TradeArg::Direct { catch_id: 123, price: 500, recipient: "monsieurcotcot".to_string() })
+        );
+        // Avec espaces superflus
+        assert_eq!(
+            parse_trade_args("#123  500  @MonsieurCotCot"),
+            Some(TradeArg::Direct { catch_id: 123, price: 500, recipient: "monsieurcotcot".to_string() })
+        );
+    }
 }
