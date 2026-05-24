@@ -2,17 +2,17 @@ import json
 import os
 
 def run_enrichment():
-    json_path = '/opt/gitspace/fisherman-cli/data/game_data.json'
+    json_path = '/opt/gitspace/fisherman-cli/data/fish_data.json'
     
-    if not os.path.exists(json_path) and os.path.exists('data/game_data.json'):
-        json_path = 'data/game_data.json'
+    if not os.path.exists(json_path) and os.path.exists('data/fish_data.json'):
+        json_path = 'data/fish_data.json'
     
-    # 1. Charger le game_data.json existant
+    # 1. Charger le fish_data.json existant
     target_path = None
     if os.path.exists(json_path):
         target_path = json_path
     else:
-        print("Erreur : Aucun fichier game_data.json trouvé !")
+        print("Erreur : Aucun fichier fish_data.json trouvé !")
         return
 
     with open(target_path, 'r', encoding='utf-8') as f:
@@ -25,19 +25,15 @@ def run_enrichment():
 
     # Nettoyage des doublons/variantes invalides
     for r_key in ["epic"]:
-        if r_key in data.get("fish_data", {}):
-            data["fish_data"][r_key] = [f for f in data["fish_data"][r_key] if f["name"] != "Coelacanthe"]
+        if r_key in data:
+            data[r_key] = [f for f in data[r_key] if f["name"] != "Coelacanthe"]
     for r_key in ["common"]:
-        if r_key in data.get("fish_data", {}):
-            data["fish_data"][r_key] = [f for f in data["fish_data"][r_key] if f["name"] not in ["Eperlan", "Chevesne"]]
-
-    # S'assurer que fish_data est structuré
-    if "fish_data" not in data:
-        data["fish_data"] = {}
+        if r_key in data:
+            data[r_key] = [f for f in data[r_key] if f["name"] not in ["Eperlan", "Chevesne"]]
         
     for r in ["common", "uncommon", "rare", "veryrare", "epic", "legendary", "mythical", "divin"]:
-        if r not in data["fish_data"]:
-            data["fish_data"][r] = []
+        if r not in data:
+            data[r] = []
 
     # 2. Spécification de tous les poissons AC à intégrer/enrichir
     ac_fishes = [
@@ -205,7 +201,7 @@ def run_enrichment():
         existing_fish = None
         existing_rarity = None
         
-        for r_key, f_list in data["fish_data"].items():
+        for r_key, f_list in data.items():
             for f in f_list:
                 if f["name"].lower() == nom.lower():
                     existing_fish = f
@@ -282,16 +278,16 @@ def run_enrichment():
                     "pristine": [f"✨ Un spécimen de {nom.lower()} absolument parfait, resplendissant sous le soleil !"]
                 }
                 
-            data["fish_data"][rareté_cible].append(new_fish)
+            data[rareté_cible].append(new_fish)
 
     # 5.5 Attribuer des IDs séquentiels (Pokédex style) de 1 à N
     # Trier par niveau de rareté et par ordre alphabétique pour être déterministe
     rarity_order = ["common", "uncommon", "rare", "veryrare", "epic", "legendary", "mythical", "divin"]
     current_id = 1
     for r_key in rarity_order:
-        if r_key in data["fish_data"]:
-            data["fish_data"][r_key].sort(key=lambda x: x["name"].lower())
-            for fish in data["fish_data"][r_key]:
+        if r_key in data:
+            data[r_key].sort(key=lambda x: x["name"].lower())
+            for fish in data[r_key]:
                 fish["id"] = current_id
                 current_id += 1
 
@@ -302,7 +298,7 @@ def run_enrichment():
         "price", "location", "preferred_time", "preferred_season",
         "months", "fun_fact", "time_restriction"
     ]
-    for r_key, fishes in data["fish_data"].items():
+    for r_key, fishes in data.items():
         updated_fishes = []
         for fish in fishes:
             # Conversion automatique du prix s'il est sous forme de chaîne de caractères (évite les crashs de type)
@@ -322,7 +318,7 @@ def run_enrichment():
             for k in keys_order:
                 ordered_fish[k] = fish.get(k, None)
             updated_fishes.append(ordered_fish)
-        data["fish_data"][r_key] = updated_fishes
+        data[r_key] = updated_fishes
 
     # 6. Sauvegarder dans le fichier de destination
     os.makedirs(os.path.dirname(json_path), exist_ok=True)

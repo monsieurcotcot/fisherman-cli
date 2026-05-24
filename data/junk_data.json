@@ -1,0 +1,2006 @@
+{
+    "common": [
+        {
+            "id": 1,
+            "name": "Sac Plastique Vert",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un vulgaire sac en plastique vert, complètement déchiqueté..."
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "name": "Sac Plastique Bleu",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un pauvre sac en plastique bleu, il n'en reste presque rien."
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "name": "Sac Plastique Blanc",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Ca ressemble à un sac en plastique..."
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "name": "Bouchon de bouteille",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un petit pas pour l'homme, un grand pas pour la pollution."
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "name": "Paille en polypropylène",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 L'ennemi public numéro un des tortues."
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "name": "Mégot de cigarette",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Contient assez de poison pour une famille de crevettes."
+                ]
+            }
+        },
+        {
+            "id": 7,
+            "name": "Canette d'aluminium écrasée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Le vestige d'une soif étanchée."
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "name": "Emballage de snack",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Croustillant sous la dent, mortel sous l'eau."
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "name": "Tesson de verre vert",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Poli par les vagues, tranchant pour les doigts."
+                ]
+            }
+        },
+        {
+            "id": 10,
+            "name": "Fragment de polystyrène",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Ne coulera jamais, ne disparaîtra jamais."
+                ]
+            }
+        },
+        {
+            "id": 11,
+            "name": "Filet de pêche fantôme (lambeau)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Un piège invisible qui continue de chasser."
+                ]
+            }
+        },
+        {
+            "id": 12,
+            "name": "Hameçon rouillé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le tétanos au bout de la ligne."
+                ]
+            }
+        },
+        {
+            "id": 13,
+            "name": "Ligne de nylon emmêlée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un nœud gordien version maritime."
+                ]
+            }
+        },
+        {
+            "id": 14,
+            "name": "Gobelet en plastique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Souvenir d'une fête dont personne ne se rappelle."
+                ]
+            }
+        },
+        {
+            "id": 15,
+            "name": "Coton-tige usagé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Certaines choses ne devraient pas être pêchées."
+                ]
+            }
+        },
+        {
+            "id": 16,
+            "name": "Brosse à dents usée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Elle a brossé plus d'algues que de dents récemment."
+                ]
+            }
+        },
+        {
+            "id": 17,
+            "name": "Bouchon de liège synthétique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 L'élégance du plastique."
+                ]
+            }
+        },
+        {
+            "id": 18,
+            "name": "Élastique de bureau",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 A perdu toute son élasticité et son utilité."
+                ]
+            }
+        },
+        {
+            "id": 19,
+            "name": "Agrafe métallique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un micro-déchet pour un macro-problème."
+                ]
+            }
+        },
+        {
+            "id": 20,
+            "name": "Capsule de bière",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 L'archéologie du samedi soir."
+                ]
+            }
+        },
+        {
+            "id": 21,
+            "name": "Opercule de yaourt",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Brille comme de l'argent, vaut moins que rien."
+                ]
+            }
+        },
+        {
+            "id": 22,
+            "name": "Briquet jetable vide",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 La flamme est éteinte depuis bien longtemps."
+                ]
+            }
+        },
+        {
+            "id": 23,
+            "name": "Morceau de verre dépoli",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 La mer essaie de cacher nos erreurs en les polissant."
+                ]
+            }
+        },
+        {
+            "id": 24,
+            "name": "Papier aluminium froissé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un miroir pour poissons aveugles."
+                ]
+            }
+        },
+        {
+            "id": 25,
+            "name": "Confetti plastique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 La fête est finie depuis des décennies."
+                ]
+            }
+        },
+        {
+            "id": 26,
+            "name": "Gant en latex jetable",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Ressemble étrangement à une méduse toxique."
+                ]
+            }
+        },
+        {
+            "id": 27,
+            "name": "Masque chirurgical",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le fossile caractéristique des années 2020."
+                ]
+            }
+        },
+        {
+            "id": 28,
+            "name": "Bâtonnet de glace en bois",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le seul déchet presque biodégradable ici."
+                ]
+            }
+        },
+        {
+            "id": 29,
+            "name": "Étiquette de prix plastifiée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Indique 'Promotion', mais le coût écologique est plein tarif."
+                ]
+            }
+        },
+        {
+            "id": 30,
+            "name": "Fil de fer torsadé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Une structure complexe pour une utilité oubliée."
+                ]
+            }
+        },
+        {
+            "id": 31,
+            "name": "Morceau de pneu déchiqueté",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Du caoutchouc, du soufre et beaucoup de regret."
+                ]
+            }
+        },
+        {
+            "id": 32,
+            "name": "Débris de bois traité",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Imbibé de produits chimiques pour durer mille ans."
+                ]
+            }
+        },
+        {
+            "id": 33,
+            "name": "Cordelette en nylon",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Aura raison de n'importe quelle hélice."
+                ]
+            }
+        },
+        {
+            "id": 34,
+            "name": "Clou rouillé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 À éviter de toucher à mains nues."
+                ]
+            }
+        },
+        {
+            "id": 35,
+            "name": "Rivet en acier",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Lâché par une structure qui a fini par s'écrouler."
+                ]
+            }
+        },
+        {
+            "id": 36,
+            "name": "Morceau de carrelage cassé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un bout de salle de bain au milieu de l'océan."
+                ]
+            }
+        },
+        {
+            "id": 37,
+            "name": "Sachet de thé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 99% de microplastiques, 1% de thé."
+                ]
+            }
+        },
+        {
+            "id": 38,
+            "name": "Emballage de barre chocolatée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le sucre est parti, le plastique reste."
+                ]
+            }
+        },
+        {
+            "id": 39,
+            "name": "Couvercle de café à emporter",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Un matin pressé qui finit au fond de l'eau."
+                ]
+            }
+        },
+        {
+            "id": 40,
+            "name": "Tube de dentifrice vide",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Pressé jusqu'à la dernière goutte de dignité."
+                ]
+            }
+        },
+        {
+            "id": 41,
+            "name": "Pile bouton usagée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une petite bombe chimique prête à fuir."
+                ]
+            }
+        },
+        {
+            "id": 42,
+            "name": "Morceau de grillage",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Ne retient plus personne, sauf les algues."
+                ]
+            }
+        }
+    ],
+    "uncommon": [
+        {
+            "id": 43,
+            "name": "Botte en caoutchouc trouée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 L'accessoire de mode préféré des poissons-chats."
+                ]
+            }
+        },
+        {
+            "id": 44,
+            "name": "Chaussure de sport",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Marque célèbre, état déplorable."
+                ]
+            }
+        },
+        {
+            "id": 45,
+            "name": "Bidon d'huile moteur vide",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Laisse une trace irisée sur votre bateau."
+                ]
+            }
+        },
+        {
+            "id": 46,
+            "name": "Seau en plastique fendu",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Ne contient plus que des souvenirs amers."
+                ]
+            }
+        },
+        {
+            "id": 47,
+            "name": "Pelle de plage cassée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Un château de sable qui a mal tourné."
+                ]
+            }
+        },
+        {
+            "id": 48,
+            "name": "Jouet d'enfant (figurine)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le soldat de plastique a perdu sa guerre contre l'érosion."
+                ]
+            }
+        },
+        {
+            "id": 49,
+            "name": "Parapluie brisé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Inutile contre la pluie, encombrant pour la ligne."
+                ]
+            }
+        },
+        {
+            "id": 50,
+            "name": "Boîte de conserve scellée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Le contenu est probablement devenu une nouvelle forme de vie."
+                ]
+            }
+        },
+        {
+            "id": 51,
+            "name": "Ampoule à incandescence",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Une idée lumineuse qui a fini dans le noir."
+                ]
+            }
+        },
+        {
+            "id": 52,
+            "name": "Pile 9V oxydée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le goût du métal et du poison."
+                ]
+            }
+        },
+        {
+            "id": 53,
+            "name": "Câble USB sectionné",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Pas de charge, pas de données, juste du cuivre."
+                ]
+            }
+        },
+        {
+            "id": 54,
+            "name": "Télécommande sans piles",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Impossible de changer de chaîne ici."
+                ]
+            }
+        },
+        {
+            "id": 55,
+            "name": "Clavier d'ordinateur",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 La touche 'Echap' est bloquée. Quelle ironie."
+                ]
+            }
+        },
+        {
+            "id": 56,
+            "name": "Souris informatique filaire",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Ne clique plus, mais s'accroche bien au fond."
+                ]
+            }
+        },
+        {
+            "id": 57,
+            "name": "T-shirt en lambeaux",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Taille unique pour poisson-globe."
+                ]
+            }
+        },
+        {
+            "id": 58,
+            "name": "Pneu de vélo usé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 A parcouru trop de kilomètres avant de sombrer."
+                ]
+            }
+        },
+        {
+            "id": 59,
+            "name": "Jante de roue de secours",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 L'acier résiste, le pneu a disparu."
+                ]
+            }
+        },
+        {
+            "id": 60,
+            "name": "Brique de construction",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un bout de maison qui n'a jamais vu le jour."
+                ]
+            }
+        },
+        {
+            "id": 61,
+            "name": "Tuyau PVC sectionné",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 L'art moderne de la plomberie sous-marine."
+                ]
+            }
+        },
+        {
+            "id": 62,
+            "name": "Pot de peinture séchée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un monochrome de gris et de rouille."
+                ]
+            }
+        },
+        {
+            "id": 63,
+            "name": "Jerrican plastique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Vide de carburant, plein de vase."
+                ]
+            }
+        },
+        {
+            "id": 64,
+            "name": "Cartouche de gaz",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Un pique-nique qui a fini en naufrage."
+                ]
+            }
+        },
+        {
+            "id": 65,
+            "name": "Marteau à tête rouillée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'outil parfait pour ne rien réparer."
+                ]
+            }
+        },
+        {
+            "id": 66,
+            "name": "Tournevis à manche plastique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Tourne dans le vide, comme ce déchet."
+                ]
+            }
+        },
+        {
+            "id": 67,
+            "name": "Poêle de cuisine rayée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Revêtement anti-adhésif désormais dans l'estomac des poissons."
+                ]
+            }
+        },
+        {
+            "id": 68,
+            "name": "Passoire métallique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Filtre l'eau, mais laisse passer la pollution."
+                ]
+            }
+        },
+        {
+            "id": 69,
+            "name": "Poste radio à cassettes",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Nostalgie des années 80, version mouillée."
+                ]
+            }
+        },
+        {
+            "id": 70,
+            "name": "Lampe de poche",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 N'éclairera plus jamais votre chemin."
+                ]
+            }
+        },
+        {
+            "id": 71,
+            "name": "Batterie de smartphone gonflée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une bombe à retardement chimique."
+                ]
+            }
+        },
+        {
+            "id": 72,
+            "name": "Cintre en fil de fer",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Pratique pour suspendre votre deuil."
+                ]
+            }
+        }
+    ],
+    "rare": [
+        {
+            "id": 73,
+            "name": "Smartphone",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le dernier selfie était probablement celui du naufrage."
+                ]
+            }
+        },
+        {
+            "id": 74,
+            "name": "Tablette tactile HS",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Plus de batterie, plus d'écran, plus d'espoir."
+                ]
+            }
+        },
+        {
+            "id": 75,
+            "name": "Ordinateur portable",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le watercooling est allé un peu trop loin."
+                ]
+            }
+        },
+        {
+            "id": 76,
+            "name": "Batterie de voiture au plomb",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Lourde, toxique et parfaitement illégale."
+                ]
+            }
+        },
+        {
+            "id": 77,
+            "name": "Pneu de camion",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un habitat artificiel pour anguilles peu exigeantes."
+                ]
+            }
+        },
+        {
+            "id": 78,
+            "name": "Moteur de tondeuse",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'herbe ne sera plus jamais coupée avec ça."
+                ]
+            }
+        },
+        {
+            "id": 79,
+            "name": "Cadre de vélo rouillé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Manque les roues, la chaîne et le cycliste."
+                ]
+            }
+        },
+        {
+            "id": 80,
+            "name": "Chaise de bureau pivotante",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Pour travailler confortablement au fond des abysses."
+                ]
+            }
+        },
+        {
+            "id": 81,
+            "name": "Four micro-ondes",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Idéal pour irradier les planctons environnants."
+                ]
+            }
+        },
+        {
+            "id": 82,
+            "name": "Aspirateur traineau",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 A essayé d'aspirer l'océan, sans succès."
+                ]
+            }
+        },
+        {
+            "id": 83,
+            "name": "Perceuse électrique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un outil de précision devenu un bloc de rouille."
+                ]
+            }
+        },
+        {
+            "id": 84,
+            "name": "Téléviseur à tube",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Ne diffuse plus que de la neige statique."
+                ]
+            }
+        },
+        {
+            "id": 85,
+            "name": "Radiateur bain d'huile",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Réchauffe le climat, mais pas l'eau."
+                ]
+            }
+        },
+        {
+            "id": 86,
+            "name": "Jante en alliage",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Le luxe à 20 mètres de profondeur."
+                ]
+            }
+        },
+        {
+            "id": 87,
+            "name": "Évier en inox",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Il ne manque plus que le reste de la cuisine."
+                ]
+            }
+        },
+        {
+            "id": 88,
+            "name": "Cuvette de toilette",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le trône de l'Atlantide est plus décevant que prévu."
+                ]
+            }
+        },
+        {
+            "id": 89,
+            "name": "Panier de basket tordu",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Un dunk qui a fini dans le décor."
+                ]
+            }
+        },
+        {
+            "id": 90,
+            "name": "Panneau de signalisation",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Indique 'Stop', mais la pollution continue."
+                ]
+            }
+        },
+        {
+            "id": 91,
+            "name": "Extincteur à poudre",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Ironique de trouver ça entouré de tant d'eau."
+                ]
+            }
+        },
+        {
+            "id": 92,
+            "name": "Moteur hors-bord (petit)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 5 chevaux, 0 espoir de démarrage."
+                ]
+            }
+        }
+    ],
+    "veryrare": [
+        {
+            "id": 93,
+            "name": "Châssis de moto",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une carcasse d'acier qui ne rugira plus."
+                ]
+            }
+        },
+        {
+            "id": 94,
+            "name": "Réfrigérateur domestique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Le gaz fréon s'est échappé depuis longtemps."
+                ]
+            }
+        },
+        {
+            "id": 95,
+            "name": "Lave-linge",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le cycle 'essorage' a été un peu violent."
+                ]
+            }
+        },
+        {
+            "id": 96,
+            "name": "Baril de pétrole",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un cadeau empoisonné de l'industrie pétrochimique."
+                ]
+            }
+        },
+        {
+            "id": 97,
+            "name": "Caddie de supermarché",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 La roue avant est bloquée, même sous l'eau."
+                ]
+            }
+        },
+        {
+            "id": 98,
+            "name": "Carcasse de scooter électrique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 La mobilité douce finit parfois durement."
+                ]
+            }
+        },
+        {
+            "id": 99,
+            "name": "Panneau solaire brisé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Ne capte plus que l'obscurité des profondeurs."
+                ]
+            }
+        },
+        {
+            "id": 100,
+            "name": "Unité de climatisation",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un ventilateur pour poissons surchauffés."
+                ]
+            }
+        },
+        {
+            "id": 101,
+            "name": "Coffre de toit de voiture",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Aérodynamique, mais pas vraiment hydrodynamique."
+                ]
+            }
+        },
+        {
+            "id": 102,
+            "name": "Portière de berline",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Quelqu'un a claqué la porte un peu trop fort."
+                ]
+            }
+        }
+    ],
+    "epic": [
+        {
+            "id": 103,
+            "name": "Bloc moteur V6",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Des centaines de kilos de fonte inutile."
+                ]
+            }
+        },
+        {
+            "id": 104,
+            "name": "Transformateur électrique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un monolithe de métal et d'huile toxique."
+                ]
+            }
+        },
+        {
+            "id": 105,
+            "name": "Conteneur de transport",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Ce qu'il y a dedans est probablement perdu à jamais."
+                ]
+            }
+        },
+        {
+            "id": 106,
+            "name": "Jet-ski immergé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le jouet des mers est devenu la mer elle-même."
+                ]
+            }
+        },
+        {
+            "id": 107,
+            "name": "Ancre de cargo",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Elle a tenu un géant avant de lâcher prise."
+                ]
+            }
+        },
+        {
+            "id": 108,
+            "name": "Pylône métallique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Une structure monumentale dévorée par le sel."
+                ]
+            }
+        },
+        {
+            "id": 109,
+            "name": "Coffre-fort de bureau",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le secret qu'il contenait est désormais bien gardé."
+                ]
+            }
+        },
+        {
+            "id": 110,
+            "name": "Statue de jardin en béton",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Une nymphe érodée qui pleure sur l'écologie."
+                ]
+            }
+        },
+        {
+            "id": 111,
+            "name": "Épave de drone de livraison",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Votre colis ne sera pas livré aujourd'hui."
+                ]
+            }
+        },
+        {
+            "id": 112,
+            "name": "Touret de câble industriel",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Des kilomètres de cuivre perdus pour la science."
+                ]
+            }
+        }
+    ],
+    "legendary": [
+        {
+            "id": 113,
+            "name": "Réacteur d'avion",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Une merveille d'ingénierie devenue un récif de luxe."
+                ]
+            }
+        },
+        {
+            "id": 114,
+            "name": "Cabine téléphonique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Plus personne n'a de pièces, de toute façon."
+                ]
+            }
+        },
+        {
+            "id": 115,
+            "name": "Distributeur de billets",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Solde insuffisant pour la planète."
+                ]
+            }
+        },
+        {
+            "id": 116,
+            "name": "Satellite météo",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Il n'avait pas prévu sa propre chute."
+                ]
+            }
+        },
+        {
+            "id": 117,
+            "name": "Canon de char (WW2)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le silence après la fureur de l'acier."
+                ]
+            }
+        },
+        {
+            "id": 118,
+            "name": "Torpille d'exercice",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Inerte, mais terrifiante à remonter."
+                ]
+            }
+        },
+        {
+            "id": 119,
+            "name": "Scaphandre ancien",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un fantôme de cuivre et de laiton."
+                ]
+            }
+        },
+        {
+            "id": 120,
+            "name": "Cloche de navire",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Le dernier son qu'elle a produit était un glas."
+                ]
+            }
+        },
+        {
+            "id": 121,
+            "name": "Voiture de sport italienne",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le luxe ne flotte pas mieux que le reste."
+                ]
+            }
+        },
+        {
+            "id": 122,
+            "name": "Piano droit",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une mélodie muette pour poissons mélomanes."
+                ]
+            }
+        }
+    ],
+    "mythical": [
+        {
+            "id": 123,
+            "name": "Fragment de station spatiale",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 La pollution n'a plus de frontières célestes."
+                ]
+            }
+        },
+        {
+            "id": 124,
+            "name": "Prototype de robot",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'intelligence artificielle face à la bêtise naturelle."
+                ]
+            }
+        },
+        {
+            "id": 125,
+            "name": "Conteneur sécurisé",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Scellé magnétiquement. Qu'y a-t-il dedans ?"
+                ]
+            }
+        },
+        {
+            "id": 126,
+            "name": "Moteur-fusée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 A propulsé des rêves avant de couler dans la vase."
+                ]
+            }
+        },
+        {
+            "id": 127,
+            "name": "Sous-marin de poche",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 L'ironie d'un sous-marin qui ne peut plus remonter."
+                ]
+            }
+        },
+        {
+            "id": 128,
+            "name": "Radar de défense",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Il n'a rien vu venir."
+                ]
+            }
+        },
+        {
+            "id": 129,
+            "name": "Buste monumental",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un empereur oublié qui règne sur les algues."
+                ]
+            }
+        },
+        {
+            "id": 130,
+            "name": "Tourelle d'artillerie",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un vestige d'une époque plus violente."
+                ]
+            }
+        },
+        {
+            "id": 131,
+            "name": "Mine sous-marine",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Ne faites pas de mouvements brusques."
+                ]
+            }
+        },
+        {
+            "id": 132,
+            "name": "Tête de tunnelier",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 A creusé trop profond, ou pas au bon endroit."
+                ]
+            }
+        }
+    ],
+    "divin": [
+        {
+            "id": 133,
+            "name": "Sonde spatiale (Voyager)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 Un message pour les étoiles échoué dans la boue."
+                ]
+            }
+        },
+        {
+            "id": 134,
+            "name": "Cockpit de chasseur furtif",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Invisible au radar, mais pas à votre hameçon."
+                ]
+            }
+        },
+        {
+            "id": 135,
+            "name": "Cœur de réacteur (inerte)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Émet encore une chaleur résiduelle inquiétante."
+                ]
+            }
+        },
+        {
+            "id": 136,
+            "name": "Monolithe métallique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 On dirait qu'il vibre quand on le regarde."
+                ]
+            }
+        },
+        {
+            "id": 137,
+            "name": "Capsule de rentrée",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Brûlée par l'atmosphère, noyée par l'océan."
+                ]
+            }
+        },
+        {
+            "id": 138,
+            "name": "Moteur ionique",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 La technologie du futur, déjà obsolète."
+                ]
+            }
+        },
+        {
+            "id": 139,
+            "name": "Boîte noire (Vol MH370)",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 La fin d'un mystère, le début d'une légende."
+                ]
+            }
+        },
+        {
+            "id": 140,
+            "name": "Débris de la station MIR",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "badly damaged",
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un morceau d'histoire soviétique sous-marine."
+                ]
+            }
+        },
+        {
+            "id": 141,
+            "name": "Rover lunaire",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "worn",
+            "descriptions": {
+                "worn": [
+                    "🟡 On se demande comment il a fini ici."
+                ]
+            }
+        },
+        {
+            "id": 142,
+            "name": "Satellite militaire classifié",
+            "size_min": 0.0,
+            "size_mean": 0.0,
+            "size_sigma": 0.0,
+            "force_pristine": null,
+            "force_state": "damaged",
+            "descriptions": {
+                "damaged": [
+                    "🟠 Vous ne devriez probablement pas posséder ceci."
+                ]
+            }
+        }
+    ]
+}

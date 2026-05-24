@@ -10,7 +10,9 @@
 
 # Database
 /data/*
-!/data/game_data.json
+!/data/fish_data.json
+!/data/junk_data.json
+!/data/fail_messages.json
 *.db
 *.db-journal
 tokens.json

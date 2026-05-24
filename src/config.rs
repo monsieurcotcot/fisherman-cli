@@ -58,27 +58,48 @@ pub struct GameData {
 
 static GAME_DATA: OnceLock<GameData> = OnceLock::new();
 
+fn read_file_or_fallback(paths: &[&str], fallback: &str) -> String {
+    for path in paths {
+        if let Ok(content) = std::fs::read_to_string(path) {
+            tracing::info!("Loaded dynamic file from {}", path);
+            return content;
+        }
+    }
+    tracing::info!("Falling back to embedded content");
+    fallback.to_string()
+}
+
 pub fn get_game_data() -> &'static GameData {
     GAME_DATA.get_or_init(|| {
-        let paths = vec![
-            "/app/data/game_data.json",
-            "data/game_data.json",
-        ];
-        let mut json_str = None;
-        for path in paths {
-            if let Ok(content) = std::fs::read_to_string(path) {
-                tracing::info!("Loaded game_data.json dynamically from {}", path);
-                json_str = Some(content);
-                break;
-            }
+        // 1. Charger fish_data
+        let fish_content = read_file_or_fallback(
+            &["/app/data/fish_data.json", "data/fish_data.json"],
+            include_str!("../data/fish_data.json"),
+        );
+        let fish_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&fish_content)
+            .expect("Failed to parse fish_data.json");
+
+        // 2. Charger junk_data
+        let junk_content = read_file_or_fallback(
+            &["/app/data/junk_data.json", "data/junk_data.json"],
+            include_str!("../data/junk_data.json"),
+        );
+        let junk_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&junk_content)
+            .expect("Failed to parse junk_data.json");
+
+        // 3. Charger fail_messages
+        let fail_content = read_file_or_fallback(
+            &["/app/data/fail_messages.json", "data/fail_messages.json"],
+            include_str!("../data/fail_messages.json"),
+        );
+        let fail_messages: Vec<String> = serde_json::from_str(&fail_content)
+            .expect("Failed to parse fail_messages.json");
+
+        GameData {
+            fish_data,
+            junk_data,
+            fail_messages,
         }
-        
-        let content = json_str.unwrap_or_else(|| {
-            tracing::info!("Falling back to embedded game_data.json");
-            include_str!("../data/game_data.json").to_string()
-        });
-        
-        serde_json::from_str(&content).expect("Failed to parse game_data.json")
     })
 }
 
