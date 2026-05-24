@@ -14,8 +14,30 @@
 *.db-journal
 tokens.json
 
+*.db-shm
+*.db-wal
+
+.antigravitycli
+
 # Context
 GEMINI.md
 
 # Logs
 *.log
+
+/target_micka
+/target_user
+
+# Cache d'exécution Python (généré par enrich.py et fix.py)
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+/data_old
+
+fisherman_context.txt
+
+data_old/
+
+fix.py
