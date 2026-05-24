@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fisherman Game - Stats</title>
-    <link rel="stylesheet" href="/static/style.css?v=1.0.12">
+    <link rel="stylesheet" href="/static/style.css?v=1.0.13">
 </head>
 <body>
     <canvas id="matrix-bg"></canvas>
@@ -133,13 +133,19 @@
                 <div style="font-size: 0.82rem; line-height: 1.5; color: #efeff1; display: flex; flex-direction: column; gap: 12px; max-height: 280px; overflow-y: auto; padding-right: 4px;">
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🎣 Action principale</strong>
-                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!peche</code> : Tenter d'attraper un poisson ou un objet. Le cooldown diminue avec le niveau (50s à 30s) et est divisé par 2 pour les VIPs.
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!peche</code> : Tenter d'attraper un poisson ou un objet. Le cooldown diminue avec le niveau (50s à 30s) et est divisé par 2 pour les VIPs.<br>
+                        <em>🌟 VIP :</em> Pêchez la légendaire <strong style="color: #bf94ff;">Gemme VIP</strong> pour diviser votre cooldown par 2 (durée de 20 min à 4h selon l'état de la gemme !).
                     </div>
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">📊 Statistiques & Infos</strong>
                         <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish stats</code> : Affiche vos statistiques, vos médailles et votre solde d'or.<br>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish top</code> : Affiche le classement (Top 5) des meilleurs pêcheurs directement dans le chat Twitch.<br>
                         <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish list [id/nom]</code> : Liste vos poissons de cette espèce par état et prix. Supporte le Pokédex ID (ex: <code style="color: #ffd700;">#001</code>) ou le nom exact (ex: <code style="color: #ffd700;">Bar</code>).<br>
                         <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish info [id/nom]</code> : Affiche les records, la description et les infos de pêche. Supporte le Pokédex ID (ex: <code style="color: #ffd700;">!fish info #001</code>) ou le nom (ex: <code style="color: #ffd700;">!fish info Bar</code>).
+                    </div>
+                    <div>
+                        <strong style="color: #ffd700; display: flex; align-items: center; gap: 4px; margin-bottom: 2px;">👑 Quête des Bananes Divines</strong>
+                        Pêchez les mystiques <strong>Pristine Banana 1 & 2</strong> pour être couronné **Roi des Bananes** 👑 ! Attention, les bananes peuvent être **volées** par d'autres pêcheurs chanceux !
                     </div>
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">💰 Vente de Poisson (Serveur)</strong>
@@ -157,6 +163,11 @@
                         2. Le destinataire propose : <code style="color: #00ffff;">!fish trade #456 @lanceur</code><br>
                         3. Le lanceur valide par <code style="color: #00ff00;">!fish trade oui</code><br>
                         4. Le destinataire finalise par <code style="color: #00ff00;">!fish trade oui</code>.
+                    </div>
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">♻️ Réinitialisation de Compte</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish reset</code> : Lance un reset de vos statistiques actives de saison (trophées éternels conservés). Validez avec <code style="color: #ffd700;">!fish yes</code> sous 2 min.<br>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish reset all</code> : Lance un reset COMPLET et définitif (trophées et stats supprimés). Validez avec <code style="color: #ff4f4f;">!fish yes all</code> sous 2 min.
                     </div>
                 </div>
             </div>
@@ -184,7 +195,7 @@
             </div>
 
             <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
-                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">Beta V1.0.12</span></p>
+                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">Beta V1.0.13</span></p>
                 <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem;">
                     <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
                     <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
@@ -236,6 +247,6 @@
     </div>
 
     <!-- Script principal de l'application -->
-    <script src="/static/app.js?v=1.0.12" defer></script>
+    <script src="/static/app.js?v=1.0.13" defer></script>
 </body>
 </html>
