@@ -412,9 +412,44 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 "".to_string()
                             };
 
+                            // Calcul du taux de complétion du Musée (Poissons et Déchets)
+                            let mut fish_percent = 0;
+                            let mut junk_percent = 0;
+                            if let Ok(museum) = state_task.repo.get_player_museum(p.id.unwrap()).await {
+                                let fish_names: std::collections::HashSet<String> = crate::config::get_fish_data()
+                                    .values()
+                                    .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
+                                    .collect();
+                                let junk_names: std::collections::HashSet<String> = crate::config::get_junk_data()
+                                    .values()
+                                    .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
+                                    .collect();
+                                
+                                let total_fish = fish_names.len();
+                                let total_junk = junk_names.len();
+                                
+                                let mut discovered_fish = 0;
+                                let mut discovered_junk = 0;
+                                for item in museum {
+                                    let name_lower = item.fish_name.to_lowercase();
+                                    if fish_names.contains(&name_lower) {
+                                        discovered_fish += 1;
+                                    } else if junk_names.contains(&name_lower) {
+                                        discovered_junk += 1;
+                                    }
+                                }
+                                
+                                if total_fish > 0 {
+                                    fish_percent = (discovered_fish as f64 / total_fish as f64 * 100.0).round() as i32;
+                                }
+                                if total_junk > 0 {
+                                    junk_percent = (discovered_junk as f64 / total_junk as f64 * 100.0).round() as i32;
+                                }
+                            }
+
                             let msg_str = format!(
-                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🪙 | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
-                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), p.gold, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
+                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🪙 | 🏛️ Musée: 🐟 {}% • 🗑️ {}% | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
+                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), p.gold, fish_percent, junk_percent, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
                             );
                             let _ = client_msg.say(channel_login, msg_str).await;
                         }

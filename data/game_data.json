@@ -880,16 +880,16 @@
           ]
         },
         "id": 17,
-        "price": null,
-        "location": null,
-        "preferred_time": null,
-        "preferred_season": null,
-        "months": null,
-        "fun_fact": null,
+        "price": 190,
+        "location": "Océan Atlantique Nord-Est (de l'Islande au Sénégal), Mer Méditerranée, Mer Noire. Milieu pélagique côtier.",
+        "preferred_time": "20h - 04h",
+        "preferred_season": "Mai - Août",
+        "months": [5, 6, 7, 8],
+        "fun_fact": "Sardina pilchardus migre verticalement de 20h à 04h pour s'alimenter en surface à la faveur de l'obscurité. Sa capture optimale s'étend de Mai à Août, saison où elle accumule des réserves de graisse. Ce clupéidé communique de manière surprenante via des expulsions de gaz créant des bulles sonores pour maintenir la cohésion du banc. En mer, les éclats argentés de ses flancs s'éteignent instantanément après la capture. Sa chair grasse et riche en oméga-3 est idéale grillée au barbecue.",
         "time_restriction": null
       },
       {
-        "name": "Têtard",
+        "name": "Têtard de mer",
         "size_min": 0.1,
         "size_mean": 1.0,
         "size_sigma": 0.5,
@@ -897,28 +897,43 @@
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Un pauvre petit têtard tout égratigné. Jiraya n'aurait pas été fier."
-          ],
-          "damaged": [
-            "🟠 Un têtard abîmé. Son chakra semble complètement à plat."
-          ],
-          "worn": [
-            "🟡 Un têtard ordinaire. Il frétille doucement du bout de la queue."
-          ],
-          "good": [
-            "🟢 Un têtard vigoureux ! Il s'entraîne déjà à bondir de nénuphar en nénuphar."
-          ],
-          "pristine": [
-            "✨ Un têtard d'exception ! On dirait la réincarnation d'un têtard ninja du Mont Myoboku prêt à invoquer Gamabunta ! 🌀🐸"
-          ]
+                  "🔴 Altération nécrotique sévère de la masse corporelle gélatineuse et décollement de la ventouse ventrale.",
+                  "🔴 Le spécimen a perdu sa consistance, sa peau sans écailles est déchirée et laisse filtrer une odeur d'ammoniaque forte.",
+                  "🔴 On dirait un vieux chewing-gum mâché et oublié au fond d'un port qui sent le crabe pourri.",
+                  "🔴 Sa chair flasque est totalement dégradée et dégage un parfum fétide excluant toute tentative de cuisson."
+              ],
+              "damaged": [
+                  "🟠 Affaissement structurel du corps mou et opacification complète des petits yeux enfoncés.",
+                  "🟠 Ce têtard de mer présente des ecchymoses cutanées visibles et sa peau sécrète un mucus grisâtre et odorant.",
+                  "🟠 Il a une tête de têtard qui a raté sa métamorphose et qui commence doucement à fondre au soleil.",
+                  "🟠 La chair gélatineuse s'affaisse visiblement, rendant ce poisson impropre à toute manipulation en cuisine."
+              ],
+              "worn": [
+                  "🟡 Perte de la coloration brun-jaune striée caractéristique et relâchement de la force d'adhérence post-mortem de la ventouse.",
+                  "🟡 Le corps gélatineux est flasque, les bandes longitudinales sombres sur la peau commencent à s'estomper.",
+                  "🟡 Il ressemble à un gros têtard fatigué de nager qui commence à sentir doucement la vieille vase marine.",
+                  "🟡 Bien que sa chair soit naturellement très aqueuse, elle montre à l'œil un ramollissement sans odeur suspecte majeure."
+              ],
+              "good": [
+                  "🟢 Intégrité cutanée préservée, mucus protecteur translucide homogène et maintien de la morphologie têtardiforme.",
+                  "🟢 Le poisson est frais, sa peau lisse montre bien ses rayures brunes et sa ventouse ventrale est intacte.",
+                  "🟢 Il est tellement frais qu'on dirait un blob de mer tout juste sorti de son bain de vase.",
+                  "🟢 Une fraîcheur correcte, mais sa texture hautement gélatineuse à l'aspect de méduse n'offre aucun intérêt gastronomique."
+              ],
+              "pristine": [
+                  "✨ Spécimen d'une fraîcheur absolue, tonicité optimale du disque de succion pelvien et pigmentation striée parfaitement contrastée.",
+                  "✨ Ce têtard de mer arbore une peau luisante sans aucune lésion, dégageant une odeur pure d'algues fraîches et d'océan.",
+                  "✨ Une œuvre d'art de la nature : un têtard géant des profondeurs brillant de mille feux avec son nez busqué impeccable.",
+                  "✨ Qualité digne d'un laboratoire, sa chair gélatineuse translucide brille, bien qu'elle reste historiquement rejetée par les chefs."
+              ]
         },
         "id": 18,
-        "price": 100,
-        "location": "Étang",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Mars - juillet",
-        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        "fun_fact": "Un futur ninja de l'étang qui rêve secrètement de maîtriser les techniques secrètes d'invocation !",
+        "price": 300,
+        "location": "Océan Atlantique Nord, Mer du Nord, Manche, Mer Baltique, zones côtières rocheuses et herbiers de laminaires",
+        "preferred_time": "21h - 04h",
+        "preferred_season": "Novembre - Mars",
+        "months": [3, 4, 5, 6, 7],
+        "fun_fact": "Le Liparis liparis s'active de 21h - 04h pour traquer de petits crustacés benthiques sous le couvert de l'obscurité. Sa présence en zone intertidale culmine de Novembre - Mars environ, durant sa période de reproduction en eaux froides. Ce poisson possède un disque ventouse ventral issu de la modification de ses nageoires pelviennes pour adhérer aux roches battues par les vagues. Les biologistes l'observent souvent fixé sous les algues. Sa chair gélatineuse et fade limite son usage culinaire aux soupes locales.",
         "time_restriction": null
       },
       {
@@ -930,24 +945,43 @@
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Ce petit éperlan semble avoir eu une vie difficile."
+              "🔴 Altération enzymatique avancée avec putréfaction bactérienne éliminant le trans-2-nonénal.",
+              "🔴 Le poisson est écrasé, mou, sa peau argentée est totalement terne et déchirée.",
+              "🔴 Ce truc sent plus le vieux concombre pourri oublié derrière le frigo que le poisson de rivière.",
+              "🔴 Totalement impropre à la friture, la chair se décompose en bouillie informe."
           ],
           "damaged": [
-            "🟠 Quelques écailles manquent, mais il reste en bon état."
+              "🟠 Signes visibles d'oxydation lipidique cutanée et perte de la turgescence oculaire.",
+              "🟠 Les flancs argentés sont marqués de traînées de sang et l'odeur de concombre s'estompe.",
+              "🟠 On dirait qu'il a tenté de traverser l'estuaire à pied sec, il fait franchement peine à voir.",
+              "🟠 Les filets manquent de fermeté, réduisant drastiquement la qualité d'une friture homogène."
           ],
-          "worn": ["🟡 Un poisson correct, sans grande particularité."],
-          "good": ["🟢 Un bel éperlan, brillant et plein de vitalité."],
+          "worn": [
+              "🟡 Post-rigor mortis avancée entraînant un relâchement des tissus musculaires striés.",
+              "🟡 L'œil est légèrement opaque et la peau a perdu son éclat translucide caractéristique.",
+              "🟡 Il a perdu de sa superbe et commence doucement à embaumer la marée basse.",
+              "🟡 Encore utilisable en soupe de poissons mais sa texture sera trop molle pour être farinée."
+          ],
+          "good": [
+              "🟢 Spécimen en phase initiale de conservation, maintenant l'intégrité de la pigmentation argentée.",
+              "🟢 Corps ferme avec une odeur nette et fraîche rappelant le concombre fraîchement coupé.",
+              "🟢 Suffisamment frais pour qu'on se demande s'il ne vient pas d'un potager aquatique.",
+              "🟢 Idéal pour une friture rapide, la peau dorera parfaitement sans coller à la poêle."
+          ],
           "pristine": [
-            "✨ Un éperlan parfait, un vrai reflet d'argent dans l'eau."
+              "✨ Rigor mortis immédiate préservant l'intégrité cellulaire et la concentration maximale de trans-2-nonénal.",
+              "✨ Peau translucide, flancs d'un argent brillant et effluve intense de violette et de concombre.",
+              "✨ Si brillant et parfumé qu'on pourrait le confondre avec un déodorant bio haut de gamme.",
+              "✨ Qualité gastronomique absolue, parfait pour être frit entier et consommé avec les arêtes croustillantes."
           ]
         },
         "id": 19,
         "price": 320,
-        "location": "Rivière",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Décembre - février",
-        "months": [12, 1, 2],
-        "fun_fact": "Un petit poisson argenté qui dégage une odeur caractéristique de concombre frais.",
+        "location": "Fleuves, estuaires et zones côtières d'Europe du Nord et de l'Ouest (mer du Nord, mer Baltique, océan Atlantique)",
+        "preferred_time": "20h - 04h",
+        "preferred_season": "Novembre - Mai",
+        "months": [11, 12, 1, 2, 3, 4, 5],
+        "fun_fact": "Osmerus eperlanus s'active de 20h - 04h pour fuir les prédateurs en surface et migre de Mars à Mai en amont des estuaires pour frayer mais on peut également le trouver à partir de Novembre. Ce poisson émet une odeur saisissante de concombre frais due à une molécule volatile, le trans-2-nonénal. Sur le terrain, on repère les bancs à cette effluve caractéristique planant au-dessus de l'eau. En cuisine, sa chair fine et délicate se déguste traditionnellement entière, frite et croustillante, après un simple passage dans la farine.",
         "time_restriction": null
       }
     ],
@@ -960,143 +994,241 @@
         "force_pristine": null,
         "force_state": null,
         "descriptions": {
-          "badly damaged": [
-            "🔴 Un(e) anchois en piteux état, très abîmé par le combat."
-          ],
-          "damaged": [
-            "🟠 Un(e) anchois blessé(e) avec des marques d'écailles manquantes."
-          ],
-          "worn": [
-            "🟡 Un(e) anchois ordinaire, un peu fatigué par le courant."
-          ],
-          "good": [
-            "🟢 Un(e) magnifique anchois vigoureux et très frais de pêche."
-          ],
-          "pristine": [
-            "✨ Un spécimen de anchois absolument parfait, resplendissant sous le soleil !"
-          ]
+            "badly damaged": [
+              "🔴 Specimen présentant une lyse tissulaire avancée et une oxydation lipidique sévère des tissus musculaires.",
+              "🔴 Le corps de cet anchois est complètement écrasé, mou, et ses yeux sont totalement vitreux.",
+              "🔴 On dirait qu il a servi de projectile dans une bataille de mouettes avant d échouer ici.",
+              "🔴 Inutilisable en cuisine, l odeur d ammoniaque et de rance masque toute flaveur marine originale."
+            ],
+            "damaged": [
+              "🟠 Perte d intégrité structurelle avec décollement cutané partiel et éviscération post-mortem visible.",
+              "🟠 Les flancs argentés sont largement éraflés et le corps manque cruellement de rigidité.",
+              "🟠 Cet anchois a visiblement perdu un combat acharné contre le filet de pêche.",
+              "🟠 À consommer uniquement broyé en tapenade pour masquer les défauts physiques de sa chair ramollie."
+            ],
+            "worn": [
+              "🟡 Altération modérée des caractères organoleptiques et opacification du cristallin.",
+              "🟡 Les écailles de ce poisson bleu s enlèvent facilement et l éclat argenté commence à ternir.",
+              "🟡 Il a le regard aussi vide qu un lundi matin de pluie, mais il tient encore debout.",
+              "🟡 Idéal pour être préparé en friture bien saisie afin de masquer le léger manque de fermeté."
+            ],
+            "good": [
+              "🟢 Mucus cutané transparent et branchies affichant une coloration rouge brique saine.",
+              "🟢 L anchois présente une belle ligne longitudinale argentée et une odeur de marée fraîche.",
+              "🟢 Il est si frais qu on croirait presque l entendre chanter la Méditerranée.",
+              "🟢 Parfait pour des filets marinés au citron et à l huile d olive vierge."
+            ],
+            "pristine": [
+              "✨ Spécimen d une fraîcheur absolue au stade de rigor mortis avec iris parfaitement limpide.",
+              "✨ Le corps est rigide, l odeur rappelle l algue fraîche et les reflets bleus du dos sont intacts.",
+              "✨ Un chef-d œuvre océanique si brillant qu il pourrait servir de miroir de poche.",
+              "✨ Qualité gastronomique suprême, digne d un sashimi d anchois ou d une dégustation brute minute."
+            ]
         },
         "id": 20,
-        "price": 200,
-        "location": "Océan",
-        "preferred_time": "4h - 21h",
+        "price": 100,
+        "location": "Mer, océan (mer Méditerranée, mer Noire, océan Atlantique Est, de la Norvège jusqu'à l'Afrique du Sud)",
+        "preferred_time": "05h - 19h",
         "preferred_season": "Toute l'année",
         "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        "fun_fact": "Se déplace en bancs immenses pour échapper aux prédateurs de l'océan.",
+        "fun_fact": "Engraulis encrasicolus manifeste une activité alimentaire essentiellement diurne, se regroupant en bancs denses en profondeur durant le jour pour échapper aux prédateurs. La pêche ciblée exploite ces cycles de migration verticale, les bancs se dispersant souvent au crépuscule. Fait surprenant, son mode de vie est extrêmement plastique, passant de la filtration au prélèvement sélectif selon la densité de proies. Cuisiné frais, il offre une chair iodée et fine, très prisée en friture ou marinée, loin de l'excès de sel des conserves industrielles.",
         "time_restriction": "before_22h"
       },
       {
         "name": "Barbeau",
-        "size_min": 30.0,
+        "size_min": 20.0,
         "size_mean": 50.0,
-        "size_sigma": 10.0,
+        "size_sigma": 15.0,
         "force_pristine": null,
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Ce barbeau est marqué par les eaux tumultueuses où il vit."
-          ],
-          "damaged": ["🟠 Il a quelques éraflures, mais reste robuste."],
-          "worn": ["🟡 Un barbeau solide, prêt à être pêché."],
-          "good": ["🟢 Un superbe barbeau, brillant et vigoureux."],
-          "pristine": ["✨ Une prise parfaite, un barbeau digne des trophées."]
+                "🔴 Le spécimen de Barbus barbus présente une putréfaction avancée entraînant la liquéfaction des tissus cutanés et une odeur ammoniacale fétide.",
+                "🔴 Ce barbeau est dans un état déplorable, ses quatre barbillons sont sectionnés et ses flancs n'ont plus aucune écaille visible.",
+                "🔴 Un poisson tellement décomposé qu'on dirait qu'il a tenté de bloquer une hélice de turbine hydroélectrique avec son nez.",
+                "🔴 La chair est totalement déliquescente et dégage une odeur de vase pourrie, rendant ce poisson impropre à toute transformation culinaire."
+            ],
+            "damaged": [
+                "🟠 Altération cutanée visible de l'aspe anatomique avec une décoloration prononcée de la robe dorée et des opercules enfoncés.",
+                "🟠 Le barbeau est abîmé, ses nageoires pectorales sont déchirées et l'œil a perdu sa transparence d'origine.",
+                "🟠 Il a clairement perdu un combat de catch contre un silure affamé au fond du fleuve.",
+                "🟠 Les filets manquent de fermeté à la pression du doigt et la peau exhale une odeur de sédiment stagnant trop prononcée."
+            ],
+            "worn": [
+                "🟡 Spécimen fatigué montrant des signes d'abrasion sur la région ventrale et un mucus protecteur nettement aminci.",
+                "🟡 Ce barbeau est usé, ses écailles sous le ventre sont râpées par le frottement répété contre les graviers de la rivière.",
+                "🟡 Ce poisson a passé beaucoup trop de temps à frotter ses barbillons sur les cailloux du fond pour chercher des larves.",
+                "🟡 La texture de la chair reste acceptable pour une terrine après un parage minutieux des zones d'impact sur les flancs."
+            ],
+            "good": [
+                "🟢 Intégrité morphologique validée, opercules sains, robe olive-dorée caractéristique et barbillons sensoriels intacts.",
+                "🟢 Le poisson est frais, son corps est rigide et sa peau présente un éclat métallique normal avec une odeur d'eau douce.",
+                "🟢 Un fier représentant des fonds de rivières qui n'attend plus que sa photo sur les réseaux sociaux d'un pêcheur.",
+                "🟢 Ses filets fermes, associés à une fine odeur de rivière propre, sont parfaits pour être pochés au court-bouillon."
+            ],
+            "pristine": [
+                "✨ Spécimen d'une perfection biologique remarquable, mucus d'une transparence absolue et écaillure ventrale impeccablement nacrée.",
+                "✨ Ce barbeau est magnifique, sa robe brille de reflets d'or intenses et ses ouïes affichent un rouge sang d'une fraîcheur totale.",
+                "✨ Un poisson tellement parfait qu'il semble sortir tout juste d'un manuel d'ichtyologie pour donner une leçon aux autres cyprinidés.",
+                "✨ Qualité gastronomique suprême, la chair est idéalement ferme pour être valorisée en mousseline fine ou fumée à chaud."
+            ]
         },
         "id": 21,
-        "price": null,
-        "location": null,
-        "preferred_time": null,
-        "preferred_season": null,
-        "months": null,
-        "fun_fact": null,
+        "price": 50,
+        "location": "Rivières à courant rapide, zones à ombre et barbeau (Europe)",
+        "preferred_time": "18h - 06h",
+        "preferred_season": "Mai - Octobre",
+        "months": [5, 6, 7, 8, 9, 10],
+        "fun_fact": "Le Barbeau commun, Barbus barbus, se pêche idéalement de mai à octobre, entre 18h et 6h, lorsque son activité benthique nocturne bat son plein pour s'alimenter. Ce cyprinidé possède une adaptation surprenante : ses quatre barbillons charnus sont saturés de récepteurs chimiques lui permettant de détecter ses proies dans l'obscurité totale des sédiments. Sur le terrain, un expert remarquera que ses œufs sont hautement toxiques pour l'homme durant la fraie, provoquant de graves entérites. Vendu environ 5 euros le kilo, sa chair ferme mais truffée d'arêtes se prépare traditionnellement en terrine ou au court-bouillon.",
         "time_restriction": null
       },
       {
         "name": "Bouvière",
-        "size_min": 5.0,
-        "size_mean": 12.0,
+        "size_min": 2.0,
+        "size_mean": 6.0,
         "size_sigma": 2.0,
         "force_pristine": null,
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Cette petite bouvière est abîmée, mais toujours reconnaissable."
-          ],
-          "damaged": ["🟠 Une bouvière avec des marques, mais encore vive."],
-          "worn": ["🟡 Un poisson modeste, mais en bon état."],
-          "good": [
-            "🟢 Une belle bouvière, parfaite pour une prise en rivière."
-          ],
-          "pristine": [
-            "✨ Une bouvière éclatante, petite mais impressionnante."
-          ]
+                "🔴 Spécimen présentant une nécrose cutanée sévère et une desquamation totale, avec disparition des reflets irisés.",
+                "🔴 Le poisson est dans un état lamentable, couvert de vase et complètement décoloré.",
+                "🔴 Cet individu a confondu une hélice de bateau avec une moule géante et ne ressemble plus à rien.",
+                "🔴 Chair putréfiée exhalant une odeur d'ammoniac insoutenable, impropre à toute manipulation."
+            ],
+            "damaged": [
+                "🟠 Lacérations cutanées visibles au niveau des flancs et nageoires pectorales partiellement déchirées.",
+                "🟠 La bouvière a perdu plusieurs écailles et ses couleurs de frai sont devenues très ternes.",
+                "🟠 Un prédateur a tenté de la croquer, mais elle a réussi à s'enfuir de justesse avec un flanc râpé.",
+                "🟠 Les filets abîmés se détachent tout seuls, dégageant une odeur suspecte d'algue en décomposition."
+            ],
+            "worn": [
+                "🟡 Érosion marginale des nageoires et diminution de l'éclat de la ligne latérale bleu-vert.",
+                "🟡 Le poisson montre des signes de fatigue après la frai, ses écailles sont un peu ternies.",
+                "🟡 Ce grand-père des rivières a passé trop de temps à courtiser les anodontes et accuse le coup.",
+                "🟡 Le mucus cutané commence à s'épaissir, donnant une texture gluante et une odeur de marécage."
+            ],
+            "good": [
+                "🟢 Intégrité anatomique préservée avec opercules sains et fressure interne exempte de parasites.",
+                "🟢 Le poisson est en bonne santé, bien proportionné avec une coloration argentée homogène.",
+                "🟢 Une bouvière standard qui nage tranquillement à la recherche d'un bivalve célibataire.",
+                "🟢 Poisson frais à l'œil clair, mais sa chair reste naturellement amère et non commercialisable."
+            ],
+            "pristine": [
+                "✨ Robe nuptiale éclatante, ligne longitudinale bleu-vert resplendissante et ovipositeur parfaitement turgescent.",
+                "✨ Spécimen magnifique arborant des reflets roses et violets d'une netteté absolue sur les flancs.",
+                "✨ Un véritable mannequin des ruisseaux qui semble sortir tout juste d'un shooting pour un manuel d'ichtyologie.",
+                "✨ Fraîcheur optimale, l'animal dégage une saine odeur d'eau vive et de rivière propre."
+            ]
         },
         "id": 22,
         "price": 900,
-        "location": "Rivière",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Novembre - mars",
-        "months": [11, 12, 1, 2, 3],
-        "fun_fact": "Elle pond ses œufs à l'intérieur des moules d'eau douce pour les protéger.",
-        "time_restriction": null
+        "location": "Rivières lentes, canaux, étangs, bras morts et lacs riches en végétation et en sédiments. Présente en Europe (de l'est de la France jusqu'à l'Oural) et en Asie Mineure.",
+        "preferred_time": "06h00 - 21h00",
+        "preferred_season": "Avril - Août",
+        "months": [4, 5, 6, 7, 8],
+        "fun_fact": "La bouvière européenne (Rhodeus amarus) se pêche d'avril à août, durant sa reproduction, car les mâles arborent alors de splendides couleurs de frai pour attirer les femelles. Ce poisson maintient une relation de symbiose obligatoire avec les moules d'eau douce (comme les anodontes). La femelle développe un ovipositeur de plusieurs centimètres pour pondre directement ses œufs dans les branchies du bivalve. Vendu environ cinq euros en aquariophilie, ce poisson est protégé en France. Il possède une chair amère et très arêteuse qui le rend totalement impropre à la consommation culinaire.",
+        "time_restriction": "before_22h"
       },
       {
         "name": "Calmar",
         "size_min": 15.0,
-        "size_mean": 25.0,
+        "size_mean": 30.0,
         "size_sigma": 5.0,
         "force_pristine": null,
         "force_state": null,
         "descriptions": {
-          "badly damaged": [
-            "🔴 Un calmar avec des tentacules déchirés, il a vu des jours meilleurs."
-          ],
-          "damaged": [
-            "🟠 Ce calmar montre des marques de lutte, mais reste impressionnant."
-          ],
-          "worn": ["🟡 Un calmar ordinaire, avec quelques blessures."],
-          "good": ["🟢 Un calmar en pleine forme, ses tentacules brillent."],
-          "pristine": ["✨ Un calmar parfait, une véritable beauté marine."]
+            "badly damaged": [
+                "🔴 Spécimen présentant une lyse cellulaire avancée avec rupture complète de la poche à encre et siphons lacérés.",
+                "🔴 Le calmar est en morceaux, l'encre noire a maculé tout le corps et une odeur d'ammoniac agressive s'en dégage.",
+                "🔴 On dirait qu'il a servi de jouet à un grand requin blanc ou qu'il a survécu à un passage dans une hélice de cargo.",
+                "🔴 Totalement impropre à la consommation, la chair est molle, violacée et dégage des effluves de marée pourrie.",
+                "🔴 Tentacules arrachés, épiderme complètement dépigmenté et blanc translucide révélant un état de décomposition interne avancé."
+            ],
+            "damaged": [
+                "🟠 Perte d'intégrité structurelle des nageoires sagittales et lacérations superficielles sur le manteau.",
+                "🟠 Le calmar montre des déchirures cutanées visibles et les tentacules sélecteurs sont sectionnés à la base.",
+                "🟠 Ce céphalopode a visiblement perdu son duel contre un hameçon un peu trop affûté.",
+                "🟠 Les blancs de calmar seront difficiles à calibrer car le manteau est fendu et l'encre a séché sur la peau.",
+                "🟠 Présence de taches jaunâtres sur le manteau et disparition de l'aspect brillant des ventouses."
+            ],
+            "worn": [
+                "🟡 Altération chromatique des chromatophores induisant une décoloration cutanée post-mortem globale.",
+                "🟡 La peau a perdu son éclat d'origine, affichant une teinte mate et des ridules sur le siphon.",
+                "🟡 Il a l'air aussi fatigué qu'un calmar géant qui vient de remonter de trois mille mètres de profondeur.",
+                "🟡 La chair commence à ramollir, réduisant sa fermeté idéale pour une cuisson rapide à la plancha.",
+                "🟡 Les yeux sont vitreux et enfoncés dans les orbites, accompagnés d'une légère odeur de marée descendante."
+            ],
+            "good": [
+                "🟢 Épiderme intact avec chromatophores fonctionnels réagissant encore partiellement aux stimuli mécaniques.",
+                "🟢 Le calmar possède un corps ferme, des tentacules complets et une fine couche de mucus protecteur brillant.",
+                "🟢 Un très beau spécimen qui semble prêt à vous propulser un jet d'encre au visage au moindre faux mouvement.",
+                "🟢 Idéal pour des calamars à la romaine, le manteau est élastique et exhale une saine et fraîche odeur iodée.",
+                "🟢 Les yeux sont clairs et bombés, et les ventouses sur les bras armés sont encore bien adhérentes."
+            ],
+            "pristine": [
+                "✨ Iridescence cutanée maximale avec reflets métalliques rose-violet et intégrité anatomique absolue du gladius.",
+                "✨ Le calmar est parfaitement translucide, brillant, comme s'il venait tout juste d'être extrait de l'océan.",
+                "✨ Un chef-d'œuvre de la nature si parfait qu'on croirait qu'il va s'illuminer dans le noir d'un instant à l'autre.",
+                "✨ Qualité sashimi exceptionnelle, la chair est d'une blancheur nacrée éclatante et dégage un parfum marin subtil.",
+                "✨ Poche à encre intacte, chromatophores d'un rouge pourpre vif et ventouses impeccablement structurées sans aucune lésion."
+            ]
         },
         "id": 23,
-        "price": 500,
-        "location": "Océan",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Décembre - août",
-        "months": [12, 1, 2, 3, 4, 5, 6, 7, 8],
-        "fun_fact": "Il peut projeter un jet d'encre noire pour aveugler ses agresseurs et s'enfuir.",
+        "price": 470,
+        "location": "Mer Méditerranée, Océan Atlantique Est, Manche",
+        "preferred_time": "20h - 04h",
+        "preferred_season": "Septembre - Avril",
+        "months": [9, 10, 11, 12, 1, 2, 3, 4],
+        "fun_fact": "Le Calmar commun (Loligo vulgaris) se pêche principalement de nuit entre 20h et 4h, de septembre à avril, car il migre vers les eaux côtières peu profonde pour frayer et suit la lumière. Ce céphalopode possède trois cœurs et un sang bleu basé sur l'hémocyanine. En plongée nocturne, on l'observe modifier instantanément ses chromatophores pour se fondre dans le milieu. Vendu environ 17 euros le kilo aux grossistes, il est très recherché en gastronomie. Sa chair ferme et iodée devient incroyablement tendre lorsqu'elle est rapidement saisie à la plancha ou mijotée à l'encre.",
         "time_restriction": null
       },
       {
         "name": "Cardeau",
-        "size_min": 50.0,
+        "size_min": 30.0,
         "size_mean": 80.0,
         "size_sigma": 15.0,
         "force_pristine": null,
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Un(e) cardeau en piteux état, très abîmé par le combat."
-          ],
-          "damaged": [
-            "🟠 Un(e) cardeau blessé(e) avec des marques d'écailles manquantes."
-          ],
-          "worn": [
-            "🟡 Un(e) cardeau ordinaire, un peu fatigué par le courant."
-          ],
-          "good": [
-            "🟢 Un(e) magnifique cardeau vigoureux et très frais de pêche."
-          ],
-          "pristine": [
-            "✨ Un spécimen de cardeau absolument parfait, resplendissant sous le soleil !"
-          ]
+            "🔴 Spécimen présentant une nécrose cutanée avancée, une lyse musculaire sévère et une opacification totale des deux cornées situées sur le flanc gauche.",
+            "🔴 Le poisson est fortement mutilé, le côté aveugle est couvert de taches sombres et une odeur d'ammoniac fétide s'en dégage.",
+            "🔴 Ce cardeau a visiblement perdu son ultime duel contre l'hélice d'un chalutier et dégage un parfum digne d'une marée basse en plein soleil.",
+            "🔴 Chair en décomposition avancée, impropre à la consommation en raison du développement bactérien et de la texture rendue liquide."
+        ],
+        "damaged": [
+            "🟠 Altération de l'intégrité physique du derme avec perte significative d'écales cycloïdes et lacérations sur la nageoire dorsale continue.",
+            "🟠 Le corps aplati présente des entailles visibles et les deux yeux gauches commencent à s'enfoncer et à blanchir.",
+            "🟠 Un prédateur a tenté de croquer ce plat de bande avant nous, laissant des marques de dents nettes sur la face ocellée.",
+            "🟠 Les filets sont récupérables mais abîmés par les coupures, nécessitant un parage important qui réduit le rendement culinaire."
+        ],
+        "worn": [
+            "🟡 Flétrissement des rayons mous des nageoires et diminution de la lueur des cinq à quatorze ocelles caractéristiques de la face supérieure.",
+            "🟡 Le mucus protecteur a séché, rendant la peau rugueuse et terne, tandis que les ouïes virent au brun clair.",
+            "🟡 Ce poisson a passé un peu trop de temps à se dorer sur le sable sans crème solaire, ses motifs de camouflage sont tout délavés.",
+            "🟡 La fraîcheur est limite, la chair commence à perdre sa fermeté élastique et doit être cuisinée rapidement en friture pour masquer le manque de peps."
+        ],
+        "good": [
+            "🟢 Spécimen sain, rigidité cadavérique amorcée, opercules intacts protégeant des branchies d'une coloration rouge foncé homogène.",
+            "🟢 Le cardeau est frais, les ocelles sombres entourés d'un cercle plus clair sont bien nets sur le dos marron.",
+            "🟢 Un très beau gaucher qui n'attend que de glisser discrètement dans votre glacière après une partie de cache-cache réussie.",
+            "🟢 Chair ferme à l'état optimal pour la levée de filets fins, dégageant une odeur marine subtile d'algues fraîches."
+        ],
+        "pristine": [
+            "✨ Spécimen d'une fraîcheur absolue, cornées parfaitement limpides, intégrité stricte du mucus et ocelles dorsaux d'une netteté chromatographique maximale.",
+            "✨ Le poisson semble sortir de l'eau, sa peau est ultra-glissante, scintillante, et dégage une odeur iodée pure d'océan Atlantique.",
+            "✨ Ce plat de compétition est tellement parfait qu'on pourrait presque le voir changer de couleur pour imiter le fond du panier.",
+            "✨ Qualité gastronomique exceptionnelle, chair d'une blancheur nacrée divine, idéale pour un sashimi de Paralichthys dentatus ou une cuisson entière meunière."
+        ]
         },
         "id": 24,
-        "price": 800,
-        "location": "Océan",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Toute l'année",
-        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        "fun_fact": "Un maître du camouflage plat qui se fond parfaitement dans le sable marin.",
+        "price": 400,
+        "location": "Océan Atlantique Nord-Ouest, estuaires, baies, fonds sableux et vaseux (côte est des États-Unis et du Canada)",
+        "preferred_time": "06h00 - 18h00",
+        "preferred_season": "Mai - Octobre",
+        "months": [5, 6, 7, 8, 9, 10],
+        "fun_fact": "Le cardeau d'été (Paralichthys dentatus) se pêche activement de mai à octobre, de 06h00 à 18h00, car il migre vers les eaux côtières peu profondes pour se nourrir durant la saison chaude. Ce prédateur benthique possède une capacité de camouflage homochromique exceptionnelle, adaptant instantanément la couleur et les motifs de sa peau au substrat. En observant le spécimen sur le terrain, on remarque que ses yeux migrent tous deux sur le côté gauche de sa tête lors de sa métamorphose juvénile. Commercialisé autour de 15 euros le kilo, sa chair blanche, fine et ferme est idéale pour les filets pochés.",
         "time_restriction": null
       },
       {
@@ -1108,26 +1240,43 @@
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Un(e) clione en piteux état, très abîmé par le combat."
-          ],
-          "damaged": [
-            "🟠 Un(e) clione blessé(e) avec des marques d'écailles manquantes."
-          ],
-          "worn": ["🟡 Un(e) clione ordinaire, un peu fatigué par le courant."],
-          "good": [
-            "🟢 Un(e) magnifique clione vigoureux et très frais de pêche."
-          ],
-          "pristine": [
-            "✨ Un spécimen de clione absolument parfait, resplendissant sous le soleil !"
-          ]
+                "🔴 Altération structurelle majeure : lyse complète des parapodes et rupture des viscères visibles par transparence.",
+                "🔴 Le corps translucide est déchiré, l'enveloppe gélatineuse s'effondre et les organes internes orange vif sont expulsés.",
+                "🔴 Cet ange de mer a croisé un filet de chalut et ressemble désormais à un morceau de silicone mâché par un phoque.",
+                "🔴 Une bouillie informe de mucus et de tissus liquéfiés qui dégage une odeur d'ammoniaque prononcée, impropre à toute tentative de bouillon."
+            ],
+            "damaged": [
+                "🟠 Lacération des nageoires natatoires ptéropodes limitant la locomotion hydrodynamique du gastéropode.",
+                "🟠 Les ailes gélatineuses sont fendues et la pointe postérieure de la queue présente une nécrose visible.",
+                "🟠 Le clione a perdu ses ailes et ressemble à un vulgaire suppositoire orange transparent.",
+                "🟠 Consistance ramollie et perte de transparence du manteau, dégageant des effluves de marée descendante incompatibles avec un dressage soigné."
+            ],
+            "worn": [
+                "🟡 Érosion cutanée superficielle et opacification partielle du tégument translucide protecteur.",
+                "🟡 Le spécimen présente des zones blanchâtres et ses filaments buccaux peinent à se rétracter complètement.",
+                "🟡 Il a un peu trop nagé à contre-courant et commence à ressembler à un bonbon gélatineux périmé.",
+                "🟡 Chair légèrement flasque perdant de sa fermeté d'eau froide, nécessitant un pochage immédiat pour masquer les premiers signes de dégradation."
+            ],
+            "good": [
+                "🟢 Intégrité anatomique préservée, battement synchrone des parapodes et pigmentation orange des viscères bien définie.",
+                "🟢 Le corps est parfaitement transparent, laissant entrevoir le bloc viscéral coloré sans aucune métamorphose externe.",
+                "🟢 Prêt à battre des ailes dans son aquarium cryogénique comme s'il volait dans les eaux de l'Arctique.",
+                "🟢 Tissus fermes et translucides exhalant une odeur saline pure et iodée, idéal pour une présentation crue ultra-fraîche sur lit de glace."
+            ],
+            "pristine": [
+                "✨ Spécimen d'une perfection biologique absolue, aucune altération cellulaire, motilité optimale des structures natatoires.",
+                "✨ Translucidité cristalline parfaite et éclats rouge-orangé vifs des gonades et du système digestif sous la lumière.",
+                "✨ Un véritable chef-d'œuvre de la nature sous-marine, si pur qu'on croirait une sculpture de verre animée.",
+                "✨ Texture gélatineuse d'une fermeté exceptionnelle, capturant l'essence olfactive des glaces polaires, digne des tables d'avant-garde les plus exigeantes."
+            ]
         },
         "id": 25,
-        "price": 1000,
-        "location": "Océan",
-        "preferred_time": "Toute la journée",
-        "preferred_season": "Décembre - mars",
-        "months": [12, 1, 2, 3],
-        "fun_fact": "Surnommé l'ange des mers, c'est en fait un minuscule prédateur mollusque sans coquille.",
+        "price": 1500,
+        "location": "Océan Arctique, Océan Atlantique Nord, Océan Pacifique Nord (eaux froides et polaires, zone pélagique)",
+        "preferred_time": "00h - 24h",
+        "preferred_season": "Janvier - Décembre",
+        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "fun_fact": "Le clione ou Clione limacina se récolte de 00h à 24h de janvier à décembre car sa migration verticale et sa survie sur réserves de lipides le maintiennent actif toute l'année, jour et nuit, sous la banquise. Ce ptéropode déploie des crochets buccaux cachés pour dévorer d'autres mollusques. En observation de terrain, l'absence de sa coquille calcaire le rend translucide sous les projecteurs des submersibles. Non commercialisé pour la consommation humaine, sa texture gélatineuse et sa micro-taille le rendent totalement impropre à un usage culinaire ou gastronomique.",
         "time_restriction": null
       },
       {
@@ -1139,25 +1288,44 @@
         "force_state": null,
         "descriptions": {
           "badly damaged": [
-            "🔴 Une dorade malmenée, mais encore identifiable."
-          ],
-          "damaged": [
-            "🟠 Elle montre quelques cicatrices mais reste impressionnante."
-          ],
-          "worn": ["🟡 Une belle prise, même si elle n'est pas parfaite."],
-          "good": ["🟢 Une dorade élégante avec des reflets métalliques."],
-          "pristine": [
-            "✨ Une dorade grise de concours, immaculée et brillante."
-          ]
+                "🔴 Le spécimen de Spondyliosoma cantharus présente une liquéfaction avancée des globes oculaires et une décomposition bactérienne structurelle sévère.",
+                "🔴 Le poisson est complètement écrasé, ses écailles grises sont manquantes et les yeux sont totalement vitreux et enfoncés.",
+                "🔴 Cette dorade a croisé un hachoir de navire et dégage une odeur d'ammoniaque capable de réveiller un Poséidon mort.",
+                "🔴 Chair spongieuse en bouillie impropre à la consommation, l'odeur de marée putride rend toute tentative de filet impossible."
+            ],
+            "damaged": [
+                "🟠 Lacérations cutanées visibles et altération de la membrane operculaire réduisant l'intégrité morphologique de l'individu.",
+                "🟠 La peau grise a perdu son éclat argenté, montrant des égratignures profondes et des nageoires pectorales déchirées.",
+                "🟠 Un prédateur a confondu ce poisson avec un punching-ball, laissant des traces de dents nettes sur le flanc.",
+                "🟠 Les filets sont endommagés par les mailles du filet, mais la chair reste exploitable en soupe de poisson de roche."
+            ],
+            "worn": [
+                "🟡 Flétrissement des tissus cutanés et opacification partielle du cristallin indiquant un stockage post-mortem prolongé.",
+                "🟡 Les reflets bleutés caractéristiques des mâles ont totalement disparu pour laisser place un gris terne et uniforme.",
+                "🟡 Ce spécimen a clairement passé trop de temps à bronzer sur la glace du poissonnier, le regard las.",
+                "🟡 La peau commence à sécher et les ouïes virent au brun, préférez une cuisson en papillote bien relevée pour masquer le manque de fraîcheur."
+            ],
+            "good": [
+                "🟢 Spécimen sain possédant des opercules bien colorés, un mucus protecteur intact et une rigidité cadavérique satisfaisante.",
+                "🟢 Le corps est ferme, les lignes longitudinales jaunâtres sont encore visibles sur les flancs gris argentés du poisson.",
+                "🟢 Une dorade solide qui semble prête à repartir du stand si on lui rendait son océan.",
+                "🟢 Les yeux sont clairs et la chair résiste bien sous le doigt, parfaite pour une cuisson entière au barbecue avec des herbes."
+            ],
+            "pristine": [
+                "✨ Intégrité anatomique absolue avec livrée nuptiale sombre intacte, œil parfaitement convexe et brillant, absence totale de mucus dégradé.",
+                "✨ Le poisson arbore une robe gris de fer étincelante et dégage une odeur marine subtile et fraîche d'algues de roche.",
+                "✨ Tellement fraîche qu'on s'attend presque à la voir donner un coup de queue pour sauter hors du panier.",
+                "✨ Qualité iode exceptionnelle avec des ouïes d'un rouge sang éclatant, idéale pour être dégustée brute en sashimi ou en carpaccio."
+            ]
         },
         "id": 26,
-        "price": null,
-        "location": null,
-        "preferred_time": null,
-        "preferred_season": null,
-        "months": null,
-        "fun_fact": null,
-        "time_restriction": null
+        "price": 120,
+        "location": "Mer Méditerranée, Océan Atlantique Est (de la Norvège au Maroc), zones benthiques, fonds rocheux et herbiers de posidonies ou de zoostères.",
+        "preferred_time": "06h - 20h",
+        "preferred_season": "Avril - Octobre",
+        "months": [4, 5, 6, 7, 8, 9, 10],
+        "fun_fact": "La dorade grise, scientifiquement nommée Spondyliosoma cantharus, se pêche principalement d avril à octobre, durant ses périodes de reproduction et d alimentation intensive près des côtes, et préférentiellement à l aube ou au crépuscule (06h-09h / 17h-20h) lorsque son activité benthique culmine. Ce sparidé présente une particularité biologique remarquable : il est hermaphrodite protogynique, ce qui signifie que tous les individus naissent femelles avant que les plus grands ne se transforment en mâles, arborant alors une livrée nuptiale sombre presque noire traversée de bandes verticales bleu électrique. Les plongeurs experts observent souvent les mâles creuser frénétiquement des nids circulaires dans le sable avec leur queue pour y attirer les femelles, un comportement de nidification unique chez les sparidés européens. Commercialisé aux alentours de 12 euros le kilo selon la saison, ce poisson possède une chair blanche, fine et très digeste, idéale à cuire entière au four avec un filet d huile d olive.",
+        "time_restriction": "before_22h"
       },
       {
         "name": "Gobie d'eau douce",
