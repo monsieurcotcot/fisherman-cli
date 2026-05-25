@@ -63,3 +63,45 @@ Améliorer la réactivité du site web et garantir la fiabilité des mécaniques
 3.  **Nettoyage Infrastructure** :
     *   Purge complète des caches Docker (`builder prune -a`).
     *   **Espace libéré** : ~40 Go au total sur la session.
+
+---
+
+## 📅 Mai 2026 - Version 1.1.0-beta (Coût de pêche, Fidélité & Modularisation JSON)
+
+### 🚀 Objectif
+Faire évoluer le gameplay avec une économie plus engageante (coût de pêche, fidélité quotidienne) tout en modularisant la base de code pour faciliter l'enrichissement par IA et améliorer les performances.
+
+### 🛠️ Changements Majeurs
+
+1.  **Modularisation du Catalogue de Données (JSON)** :
+    *   **Séparation** : Scindé le fichier monolithique de 6000 lignes (`data/game_data.json`) en trois fichiers JSON spécialisés : `data/fish_data.json` (poissons), `data/junk_data.json` (déchets) et `data/fail_messages.json` (phrases d'échec).
+    *   **Validation au Build** : Réécriture de `build.rs` pour valider syntaxiquement les fichiers JSON à chaque compilation. Cargo recompile le projet si l'un d'eux change.
+    *   **Chargement Asynchrone & Fallback** : Chargement dynamique asynchrone des fichiers JSON au démarrage dans le `OnceLock`, avec un système de repli (`include_str!`) pour garantir la résilience du bot si les fichiers hôtes manquent.
+    *   **Script IA** : Adapté `enrich.py` pour cibler exclusivement `fish_data.json`.
+
+2.  **Lancer Payant & Anti-Négatif (Économie)** :
+    *   Chaque tentative de pêche (`!fish` / `!peche`) coûte désormais **10 pièces d'or**.
+    *   **Sécurité SQL** : Déduction directe en base de données via `gold = MAX(0, gold - 10)` pour éviter tout solde négatif.
+    *   **Blocage Gameplay** : Bloque automatiquement la commande si le solde du joueur est < 10 pièces d'or (hors administrateurs et grades `testvip`).
+
+3.  **Récompense Quotidienne de Fidélité (Loyauté)** :
+    *   Crédite automatiquement un bonus de pièces d'or lors du premier message de la journée de chaque joueur (UTC NaiveDate).
+    *   **Formule progressive** : `Gains = 200 + 50 * min(jours_consecutifs, 10) + 10 * jours_totaux`.
+    *   **Optimisation RAM** : Stockage du cache de réclamation dans un `RwLock<HashMap<String, NaiveDate>>` dans `AppState` pour éliminer les requêtes SQL redondantes à chaque message de chat Twitch.
+
+4.  **Version 1.1.0-beta & Cache Busting** :
+    *   Mise à jour de la version du paquet dans `Cargo.toml` à `1.1.0-beta`.
+    *   Mise à jour du site web (`static/index.html`) pour afficher la version `Beta V1.1.0`.
+    *   Busting automatique du cache navigateur en changeant les paramètres de version CSS et JS en `?v=1.1.0`.
+
+### ⚠️ Incident & Résolution (Permissions Docker & Re-compilation)
+*   **Problème** : Erreur `SqliteError: unable to open database file` et panic `index out of bounds: the len is 15 but the index is 15`.
+*   **Causes** :
+    1.  Conflit d'UID/GID hôte-conteneur : le conteneur démarrait sous l'UID `1000` par défaut alors que le répertoire hôte appartenait à l'utilisateur `1001` (micka).
+    2.  Le cache de build de Docker a réutilisé l'ancien binaire compilé avec le vieux schéma SQL à 11 colonnes (manquant les 3 nouvelles colonnes de fidélité quotidienne).
+*   **Solutions** :
+    *   Ajout permanent des variables de permissions dans le fichier de configuration `.env` de l'hôte (`FIX_UID=1001`, `FIX_GID=1001`).
+    *   Nettoyage et recréation du fichier de base de données `fisherman.db` sur l'hôte avec les permissions `644`.
+    *   Reconstruction complète du conteneur sans cache (`docker compose build --no-cache`) pour forcer Cargo à embarquer la nouvelle migration à 14 colonnes dans le binaire compilé.
+    *   Wipe de sécurité et réinitialisation de sauvegarde à blanc (tableau vide `[]`) pour démarrer le cycle V1.1.0 proprement.
+
