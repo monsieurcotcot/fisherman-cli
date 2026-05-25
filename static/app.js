@@ -304,6 +304,31 @@ async function fetchStats(u) {
             document.getElementById('res-stat-gem').textContent = data.gem || 0;
             document.getElementById('res-stat-postcard').textContent = data.postcard;
 
+            // Remplir les statistiques de Coinflip
+            const wins = data.coinflip_wins || 0;
+            const losses = data.coinflip_losses || 0;
+            const played = wins + losses;
+            const cfBox = document.getElementById('coinflipStatsBox');
+            if (played > 0) {
+                cfBox.style.display = 'block';
+                document.getElementById('web-cf-played').textContent = played;
+                document.getElementById('web-cf-wins').textContent = wins;
+                document.getElementById('web-cf-losses').textContent = losses;
+                
+                const netGold = (data.coinflip_gold_won_total || 0) - (data.coinflip_gold_lost_total || 0);
+                const netText = netGold >= 0 ? `+${netGold} po` : `${netGold} po`;
+                const netColor = netGold >= 0 ? '#00ff00' : '#ff4f4f';
+                
+                const netEl = document.getElementById('web-cf-net');
+                netEl.textContent = netText;
+                netEl.style.color = netColor;
+                
+                document.getElementById('web-cf-biggest-win').textContent = `+${data.coinflip_biggest_win || 0} po`;
+                document.getElementById('web-cf-biggest-loss').textContent = `-${data.coinflip_biggest_loss || 0} po`;
+            } else {
+                cfBox.style.display = 'none';
+            }
+
             // Stocker les captures
             allCatches = data.catches || [];
             museumDiscoveries = data.museum || [];
