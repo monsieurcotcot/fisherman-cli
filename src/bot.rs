@@ -630,7 +630,90 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         };
 
                         if arg.is_empty() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom exact du poisson ou son identifiant unique pour afficher ses infos, ex : !fish info Ayu ou !fish info #12", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom exact du poisson, son identifiant de capture unique ou son index de musée, ex : !fish info Ayu, !fish info #12 ou !fish info 1", username)).await;
+                            return;
+                        }
+
+                        // Check if searching by Museum ID
+                        let mut museum_id = None;
+                        let arg_lower = arg.to_lowercase();
+                        if let Ok(id) = arg_lower.parse::<i32>() {
+                            museum_id = Some(id);
+                        } else if arg_lower.starts_with('m') {
+                            if let Ok(id) = arg_lower[1..].trim().parse::<i32>() {
+                                museum_id = Some(id);
+                            }
+                        } else if arg_lower.starts_with("museum") {
+                            if let Ok(id) = arg_lower["museum".len()..].trim().parse::<i32>() {
+                                museum_id = Some(id);
+                            }
+                        } else if arg_lower.starts_with("musée") {
+                            if let Ok(id) = arg_lower["musée".len()..].trim().parse::<i32>() {
+                                museum_id = Some(id);
+                            }
+                        } else if arg_lower.starts_with("musee") {
+                            if let Ok(id) = arg_lower["musee".len()..].trim().parse::<i32>() {
+                                museum_id = Some(id);
+                            }
+                        }
+
+                        if let Some(m_id) = museum_id {
+                            let game_data = crate::config::get_game_data();
+                            let mut found_fish = None;
+
+                            for (_, fishes) in &game_data.fish_data {
+                                for fish in fishes {
+                                    if fish.id == Some(m_id) {
+                                        found_fish = Some(fish.clone());
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if found_fish.is_none() {
+                                for (_, junks) in &game_data.junk_data {
+                                    for junk in junks {
+                                        if junk.id == Some(m_id) {
+                                            found_fish = Some(junk.clone());
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if let Some(f) = found_fish {
+                                let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
+                                let hours = match f.time_restriction.as_deref() {
+                                    Some("before_22h") => "Avant 22h (Jour/Soirée)",
+                                    Some("after_22h") => "Après 22h (Nuit/Prolongation)",
+                                    _ => "Toutes heures",
+                                };
+                                let period = f.preferred_season.unwrap_or_else(|| "Toute l'année".to_string());
+                                let base_price = get_base_price(&f.name);
+
+                                // Count owned by current user
+                                let count = if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    state_task.repo.count_fish_owned_by_player(player.id.unwrap_or(0), &f.name).await.unwrap_or(0)
+                                } else {
+                                    0
+                                };
+
+                                let count_msg = if count > 0 {
+                                    format!("🎣 Tu possèdes {} exemplaire(s) dans ton inventaire.", count)
+                                } else {
+                                    "🎣 Tu n'en possèdes pas encore.".to_string()
+                                };
+
+                                let _ = client_msg.say(
+                                    channel_login,
+                                    format!(
+                                        "🔍 [Musée #{}] {} | Lieu: {} | Horaires: {} | Période: {} | Prix de base: {} po 🪙 | {}",
+                                        m_id, f.name, loc, hours, period, base_price, count_msg
+                                    )
+                                ).await;
+                            } else {
+                                let _ = client_msg.say(channel_login, format!("❌ @{}, aucun poisson ou objet avec l'index de musée #{} dans le catalogue.", username, m_id)).await;
+                            }
                             return;
                         }
 
@@ -696,6 +779,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             format!("Propriétaire actuel: @{} (Capturé par: @{})", owner_name, catcher_name)
                                         };
 
+                                        let museum_id_label = if let Some(f) = &found_fish {
+                                            if let Some(m_id) = f.id {
+                                                format!(" (Musée #{})", m_id)
+                                            } else {
+                                                "".to_string()
+                                            }
+                                        } else {
+                                            "".to_string()
+                                        };
+
                                         if let Some(f) = found_fish {
                                             let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
                                             let hours = match f.time_restriction.as_deref() {
@@ -708,8 +801,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             let _ = client_msg.say(
                                                 channel_login,
                                                 format!(
-                                                    "🔍 [Capture #{}] {} ({}, {}cm, {}kg, État: {}) | Valeur: {} po 🪙 (Base: {}) | Lieu: {} | Période: {} | Horaires: {} | {} | {}",
-                                                    catch_id, c.name, rarity_label, c.size, c.weight, c.state, estimated_value, base_price, loc, period, hours, owner_msg, count_msg
+                                                    "🔍 [Capture #{}] {}{} ({}, {}cm, {}kg, État: {}) | Valeur: {} po 🪙 (Base: {}) | Lieu: {} | Période: {} | Horaires: {} | {} | {}",
+                                                    catch_id, c.name, museum_id_label, rarity_label, c.size, c.weight, c.state, estimated_value, base_price, loc, period, hours, owner_msg, count_msg
                                                 )
                                             ).await;
                                         } else {
