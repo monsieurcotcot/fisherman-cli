@@ -517,9 +517,17 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 }
                             }
 
+                            let net_gold = p.coinflip_gold_won_total - p.coinflip_gold_lost_total;
+                            let sign = if net_gold >= 0 { "+" } else { "" };
+                            let gambling_str = if (p.coinflip_wins + p.coinflip_losses) > 0 {
+                                format!(" | 🎰 Coinflip : {}V/{}D (Bilan: {}{} po, Record: +{} po)", p.coinflip_wins, p.coinflip_losses, sign, net_gold, p.coinflip_biggest_win)
+                            } else {
+                                "".to_string()
+                            };
+
                             let msg_str = format!(
-                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🪙 | 🏛️ Musée: 🐟 {}% • 🗑️ {}% | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜 | Détails : {}/player/{}", 
-                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), p.gold, fish_percent, junk_percent, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, base_url, username
+                                "{}📊 @{} : Niv. {} (XP: {}/{}) | {} 🪙 | 🏛️ Musée: 🐟 {}% • 🗑️ {}% | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜{} | Détails : {}/player/{}", 
+                                badge_prefix, username, p.level, p.xp, p.xp_for_next_level(), p.gold, fish_percent, junk_percent, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count, gambling_str, base_url, username
                             );
                             let _ = client_msg.say(channel_login, msg_str).await;
                         }
@@ -535,6 +543,25 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 format!("#{}. {} (Niv. {} | {} 🪙 | {} 🐟 | {} 🗑️ | {} 🍌 | {} 💎 | {} 📜)", i + 1, p.username, p.level, p.gold, fish_count, p.junk_count, p.banana_count, p.gem_count, p.postcard_count)
                             }).collect();
                             let _ = client_msg.say(channel_login, format!("🏆 Top Pêcheurs : {}", list.join(" | "))).await;
+                        }
+                    });
+                } else if text == "!fish top cf" || text == "!peche top cf" || text == "!pêche top cf" ||
+                          text == "!fish top hasard" || text == "!peche top hasard" || text == "!pêche top hasard" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(players) = state_task.repo.get_gambling_leaderboard().await {
+                            let list: Vec<String> = players.iter().enumerate().map(|(i, p)| {
+                                let net_gold = p.coinflip_gold_won_total - p.coinflip_gold_lost_total;
+                                format!("#{}. {} ({:+} po 🎰 | {}V/{}D)", i + 1, p.username, net_gold, p.coinflip_wins, p.coinflip_losses)
+                            }).collect();
+                            
+                            if list.is_empty() {
+                                let _ = client_msg.say(channel_login, "🎰 Aucun joueur n'a encore pris de risque au Coinflip cette saison !".to_string()).await;
+                            } else {
+                                let _ = client_msg.say(channel_login, format!("🏆 Hall of Fame - Top Parieurs (Gains Nets) : {}", list.join(" | "))).await;
+                            }
                         }
                     });
                 } else if text.starts_with("!fish list") || text.starts_with("!peche list") || text.starts_with("!pêche list") || text.starts_with("!fish liste") || text.starts_with("!peche liste") || text.starts_with("!pêche liste") {
@@ -970,10 +997,9 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         // Tirage aléatoire (49% de chances de gagner)
                         use rand::Rng;
                         let win = rand::thread_rng().gen_range(0.0..100.0) <= 49.0;
-                        let delta = if win { wager_amount } else { -wager_amount };
 
                         // Mettre à jour l'or en DB de manière atomique
-                        match state_task.repo.update_player_gold(player.id.unwrap(), delta).await {
+                        match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, win).await {
                             Ok(new_gold) => {
                                 if win {
                                     let _ = client_msg.say(

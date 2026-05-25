@@ -21,6 +21,12 @@ pub struct Player {
     pub last_daily_reward_at: Option<DateTime<Utc>>,
     pub consecutive_days: i32,
     pub total_days: i32,
+    pub coinflip_wins: i64,
+    pub coinflip_losses: i64,
+    pub coinflip_biggest_win: i64,
+    pub coinflip_biggest_loss: i64,
+    pub coinflip_gold_won_total: i64,
+    pub coinflip_gold_lost_total: i64,
 }
 
 impl Player {
@@ -44,6 +50,12 @@ impl Player {
             last_daily_reward_at: None,
             consecutive_days: 0,
             total_days: 0,
+            coinflip_wins: 0,
+            coinflip_losses: 0,
+            coinflip_biggest_win: 0,
+            coinflip_biggest_loss: 0,
+            coinflip_gold_won_total: 0,
+            coinflip_gold_lost_total: 0,
         }
     }
 
