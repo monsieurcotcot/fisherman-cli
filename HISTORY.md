@@ -94,14 +94,20 @@ Faire évoluer le gameplay avec une économie plus engageante (coût de pêche, 
     *   Mise à jour du site web (`static/index.html`) pour afficher la version `Beta V1.1.0`.
     *   Busting automatique du cache navigateur en changeant les paramètres de version CSS et JS en `?v=1.1.0`.
 
-### ⚠️ Incident & Résolution (Permissions Docker & Re-compilation)
-*   **Problème** : Erreur `SqliteError: unable to open database file` et panic `index out of bounds: the len is 15 but the index is 15`.
-*   **Causes** :
-    1.  Conflit d'UID/GID hôte-conteneur : le conteneur démarrait sous l'UID `1000` par défaut alors que le répertoire hôte appartenait à l'utilisateur `1001` (micka).
-    2.  Le cache de build de Docker a réutilisé l'ancien binaire compilé avec le vieux schéma SQL à 11 colonnes (manquant les 3 nouvelles colonnes de fidélité quotidienne).
-*   **Solutions** :
-    *   Ajout permanent des variables de permissions dans le fichier de configuration `.env` de l'hôte (`FIX_UID=1001`, `FIX_GID=1001`).
-    *   Nettoyage et recréation du fichier de base de données `fisherman.db` sur l'hôte avec les permissions `644`.
-    *   Reconstruction complète du conteneur sans cache (`docker compose build --no-cache`) pour forcer Cargo à embarquer la nouvelle migration à 14 colonnes dans le binaire compilé.
-    *   Wipe de sécurité et réinitialisation de sauvegarde à blanc (tableau vide `[]`) pour démarrer le cycle V1.1.0 proprement.
+### ⚠️ Incidents & Résolutions (Permissions Docker & Purge SQL)
+*   **Incident 1 : Permissions & Caching Docker**
+    *   **Problème** : Erreur `SqliteError: unable to open database file` et panic `index out of bounds: the len is 15 but the index is 15` au démarrage.
+    *   **Causes** :
+        1.  Conflit d'UID/GID hôte-conteneur : le conteneur démarrait sous l'UID `1000` par défaut alors que le répertoire hôte appartenait à l'utilisateur `1001` (micka).
+        2.  Le cache de build de Docker a réutilisé l'ancien binaire compilé avec le vieux schéma SQL à 11 colonnes.
+    *   **Solutions** : Ajout des variables `FIX_UID=1001`/`FIX_GID=1001` dans `.env`, création de `fisherman.db` en `644`, et compilation `docker compose build --no-cache`.
+
+*   **Incident 2 : Crash du Bot après une commande `!fish purge` en direct**
+    *   **Problème** : Après l'envoi de `!fish purge` suivi de `!fish purge yes` par le streamer dans le chat Twitch, le bot a immédiatement planté dès qu'un joueur a tenté de pêcher (`ColumnNotFound("last_daily_reward_at")`).
+    *   **Cause** : La méthode de réinitialisation `purge_all_data()` (ainsi que la méthode de test `setup_db()`) dans `src/db/repository.rs` recréait la table `players` à l'aide d'une requête SQL `CREATE TABLE` **écrite en dur (hardcoded)**. Cette requête utilisait l'ancien schéma à 11 colonnes au lieu du nouveau schéma à 14 colonnes (manquant les colonnes de fidélité quotidienne).
+    *   **Solutions** : 
+        *   Mise à jour des requêtes `CREATE TABLE players` en dur dans `purge_all_data()` et `setup_db()` de `src/db/repository.rs` pour inclure les 14 colonnes de la V1.1.0.
+        *   Reconstruction complète du conteneur sans cache (`docker compose build --no-cache`) pour intégrer ces correctifs de code.
+        *   Nettoyage et réinitialisation de `fisherman.db` sur l'hôte.
+
 
