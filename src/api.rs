@@ -160,7 +160,11 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "coinflip_biggest_win": p.coinflip_biggest_win,
                 "coinflip_biggest_loss": p.coinflip_biggest_loss,
                 "coinflip_gold_won_total": p.coinflip_gold_won_total,
-                "coinflip_gold_lost_total": p.coinflip_gold_lost_total
+                "coinflip_gold_lost_total": p.coinflip_gold_lost_total,
+                "coinflip_current_win_streak": p.coinflip_current_win_streak,
+                "coinflip_current_loss_streak": p.coinflip_current_loss_streak,
+                "coinflip_max_win_streak": p.coinflip_max_win_streak,
+                "coinflip_max_loss_streak": p.coinflip_max_loss_streak
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),

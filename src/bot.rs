@@ -1000,23 +1000,26 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         // Mettre à jour l'or en DB de manière atomique
                         match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, win).await {
-                            Ok(new_gold) => {
+                            Ok(updated_player) => {
+                                let new_gold = updated_player.gold;
                                 if win {
-                                    let _ = client_msg.say(
-                                        channel_login,
-                                        format!(
-                                            "🪙 @{} lance une pièce... GAGNÉ ! 🔴 (+{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
-                                            username, wager_amount, new_gold
-                                        )
-                                    ).await;
+                                    let mut msg_text = format!(
+                                        "🪙 @{} lance une pièce... GAGNÉ ! 🔴 (+{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                        username, wager_amount, new_gold
+                                    );
+                                    if updated_player.coinflip_current_win_streak >= 3 {
+                                        msg_text.push_str(&format!(" 🔥 SÉRIE DE {} VICTOIRES D'AFFILÉE ! 🟥", updated_player.coinflip_current_win_streak));
+                                    }
+                                    let _ = client_msg.say(channel_login, msg_text).await;
                                 } else {
-                                    let _ = client_msg.say(
-                                        channel_login,
-                                        format!(
-                                            "🪙 @{} lance une pièce... PERDU ! ⚪ (-{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
-                                            username, wager_amount, new_gold
-                                        )
-                                    ).await;
+                                    let mut msg_text = format!(
+                                        "🪙 @{} lance une pièce... PERDU ! ⚪ (-{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                        username, wager_amount, new_gold
+                                    );
+                                    if updated_player.coinflip_current_loss_streak >= 3 {
+                                        msg_text.push_str(&format!(" 💀 SÉRIE DE {} DÉFAITES D'AFFILÉE... ⬜", updated_player.coinflip_current_loss_streak));
+                                    }
+                                    let _ = client_msg.say(channel_login, msg_text).await;
                                 }
                             }
                             Err(e) => {

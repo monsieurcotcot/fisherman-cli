@@ -95,6 +95,10 @@ impl Repository {
             coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
             coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
             coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
         }).collect();
 
         Ok(players)
@@ -181,6 +185,10 @@ impl Repository {
                 coinflip_biggest_loss: r.get("coinflip_biggest_loss"),
                 coinflip_gold_won_total: r.get("coinflip_gold_won_total"),
                 coinflip_gold_lost_total: r.get("coinflip_gold_lost_total"),
+                coinflip_current_win_streak: r.get("coinflip_current_win_streak"),
+                coinflip_current_loss_streak: r.get("coinflip_current_loss_streak"),
+                coinflip_max_win_streak: r.get("coinflip_max_win_streak"),
+                coinflip_max_loss_streak: r.get("coinflip_max_loss_streak"),
             }))
         } else {
             Ok(None)
@@ -219,6 +227,10 @@ impl Repository {
             coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
             coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
             coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
         }).collect())
     }
 
@@ -268,6 +280,10 @@ impl Repository {
                 coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
                 coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
                 coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+                coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+                coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+                coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+                coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -318,6 +334,10 @@ impl Repository {
             coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
             coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
             coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
         }).collect();
 
         Ok(players)
@@ -475,15 +495,18 @@ impl Repository {
         Ok(new_gold)
     }
 
-    pub async fn record_coinflip_result(&self, player_id: i64, wager: i64, win: bool) -> Result<i64, sqlx::Error> {
+    pub async fn record_coinflip_result(&self, player_id: i64, wager: i64, win: bool) -> Result<Player, sqlx::Error> {
         let mut tx = self.pool.begin().await?;
         if win {
             sqlx::query("UPDATE players SET \
-                         gold = gold + ?, \
-                         coinflip_wins = COALESCE(coinflip_wins, 0) + 1, \
-                         coinflip_gold_won_total = COALESCE(coinflip_gold_won_total, 0) + ?, \
-                         coinflip_biggest_win = MAX(COALESCE(coinflip_biggest_win, 0), ?) \
-                         WHERE id = ?")
+                          gold = gold + ?, \
+                          coinflip_wins = COALESCE(coinflip_wins, 0) + 1, \
+                          coinflip_gold_won_total = COALESCE(coinflip_gold_won_total, 0) + ?, \
+                          coinflip_biggest_win = MAX(COALESCE(coinflip_biggest_win, 0), ?), \
+                          coinflip_current_win_streak = COALESCE(coinflip_current_win_streak, 0) + 1, \
+                          coinflip_max_win_streak = MAX(COALESCE(coinflip_max_win_streak, 0), COALESCE(coinflip_current_win_streak, 0) + 1), \
+                          coinflip_current_loss_streak = 0 \
+                          WHERE id = ?")
                 .bind(wager)
                 .bind(wager)
                 .bind(wager)
@@ -492,11 +515,14 @@ impl Repository {
                 .await?;
         } else {
             sqlx::query("UPDATE players SET \
-                         gold = MAX(0, gold - ?), \
-                         coinflip_losses = COALESCE(coinflip_losses, 0) + 1, \
-                         coinflip_gold_lost_total = COALESCE(coinflip_gold_lost_total, 0) + ?, \
-                         coinflip_biggest_loss = MAX(COALESCE(coinflip_biggest_loss, 0), ?) \
-                         WHERE id = ?")
+                          gold = MAX(0, gold - ?), \
+                          coinflip_losses = COALESCE(coinflip_losses, 0) + 1, \
+                          coinflip_gold_lost_total = COALESCE(coinflip_gold_lost_total, 0) + ?, \
+                          coinflip_biggest_loss = MAX(COALESCE(coinflip_biggest_loss, 0), ?), \
+                          coinflip_current_loss_streak = COALESCE(coinflip_current_loss_streak, 0) + 1, \
+                          coinflip_max_loss_streak = MAX(COALESCE(coinflip_max_loss_streak, 0), COALESCE(coinflip_current_loss_streak, 0) + 1), \
+                          coinflip_current_win_streak = 0 \
+                          WHERE id = ?")
                 .bind(wager)
                 .bind(wager)
                 .bind(wager)
@@ -504,12 +530,49 @@ impl Repository {
                 .execute(&mut *tx)
                 .await?;
         }
-        let new_gold: i64 = sqlx::query_scalar("SELECT gold FROM players WHERE id = ?")
+        let row = sqlx::query("SELECT p.*, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND is_junk = 1) as junk_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Banana%') as banana_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Carte Postale%') as postcard_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Gemme%') as gem_count \
+            FROM players p WHERE p.id = ?")
             .bind(player_id)
             .fetch_one(&mut *tx)
             .await?;
+
+        let player = Player {
+            id: Some(row.get::<i64, _>("id")),
+            username: row.get("username"),
+            total_attempts: row.get("total_attempts"),
+            successful_attempts: row.get("successful_attempts"),
+            failed_attempts: row.get("failed_attempts"),
+            last_fishing_time: row.get::<Option<DateTime<Utc>>, _>("last_fishing_time"),
+            level: row.get("level"),
+            xp: row.get("xp"),
+            vip_until: row.get::<Option<DateTime<Utc>>, _>("vip_until"),
+            junk_count: row.get("junk_count"),
+            banana_count: row.get("banana_count"),
+            postcard_count: row.get("postcard_count"),
+            gem_count: row.get("gem_count"),
+            profile_image_url: row.get("profile_image_url"),
+            gold: row.get("gold"),
+            last_daily_reward_at: row.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+            consecutive_days: row.get("consecutive_days"),
+            total_days: row.get("total_days"),
+            coinflip_wins: row.get("coinflip_wins"),
+            coinflip_losses: row.get("coinflip_losses"),
+            coinflip_biggest_win: row.get("coinflip_biggest_win"),
+            coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
+            coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
+            coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+        };
+
         tx.commit().await?;
-        Ok(new_gold)
+        Ok(player)
     }
 
     pub async fn get_gambling_leaderboard(&self) -> Result<Vec<Player>, sqlx::Error> {
@@ -550,6 +613,10 @@ impl Repository {
             coinflip_biggest_loss: row.get("coinflip_biggest_loss"),
             coinflip_gold_won_total: row.get("coinflip_gold_won_total"),
             coinflip_gold_lost_total: row.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: row.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
         }).collect();
 
         Ok(players)
@@ -1076,7 +1143,11 @@ impl Repository {
                 coinflip_biggest_win INTEGER DEFAULT 0,
                 coinflip_biggest_loss INTEGER DEFAULT 0,
                 coinflip_gold_won_total INTEGER DEFAULT 0,
-                coinflip_gold_lost_total INTEGER DEFAULT 0
+                coinflip_gold_lost_total INTEGER DEFAULT 0,
+                coinflip_current_win_streak INTEGER DEFAULT 0,
+                coinflip_current_loss_streak INTEGER DEFAULT 0,
+                coinflip_max_win_streak INTEGER DEFAULT 0,
+                coinflip_max_loss_streak INTEGER DEFAULT 0
             )"
         ).execute(&mut *tx).await?;
 
@@ -1369,7 +1440,11 @@ mod tests {
                 coinflip_biggest_win INTEGER DEFAULT 0,
                 coinflip_biggest_loss INTEGER DEFAULT 0,
                 coinflip_gold_won_total INTEGER DEFAULT 0,
-                coinflip_gold_lost_total INTEGER DEFAULT 0
+                coinflip_gold_lost_total INTEGER DEFAULT 0,
+                coinflip_current_win_streak INTEGER DEFAULT 0,
+                coinflip_current_loss_streak INTEGER DEFAULT 0,
+                coinflip_max_win_streak INTEGER DEFAULT 0,
+                coinflip_max_loss_streak INTEGER DEFAULT 0
             )"
         ).execute(&pool).await.unwrap();
 
@@ -1682,8 +1757,11 @@ mod tests {
         }).await.unwrap();
 
         // 1. Player A wins a coinflip of 50 gold
-        let new_gold = repo.record_coinflip_result(p_id_a, 50, true).await.unwrap();
-        assert_eq!(new_gold, 150);
+        let p_res = repo.record_coinflip_result(p_id_a, 50, true).await.unwrap();
+        assert_eq!(p_res.gold, 150);
+        assert_eq!(p_res.coinflip_current_win_streak, 1);
+        assert_eq!(p_res.coinflip_max_win_streak, 1);
+        assert_eq!(p_res.coinflip_current_loss_streak, 0);
 
         let p_a = repo.get_player("gambler_a").await.unwrap().unwrap();
         assert_eq!(p_a.coinflip_wins, 1);
@@ -1691,17 +1769,27 @@ mod tests {
         assert_eq!(p_a.coinflip_gold_won_total, 50);
         assert_eq!(p_a.coinflip_gold_lost_total, 0);
         assert_eq!(p_a.coinflip_biggest_win, 50);
+        assert_eq!(p_a.coinflip_current_win_streak, 1);
+        assert_eq!(p_a.coinflip_max_win_streak, 1);
 
         // 2. Player A wins another coinflip of 100 gold
-        let _ = repo.record_coinflip_result(p_id_a, 100, true).await.unwrap();
+        let p_res2 = repo.record_coinflip_result(p_id_a, 100, true).await.unwrap();
+        assert_eq!(p_res2.coinflip_current_win_streak, 2);
+        assert_eq!(p_res2.coinflip_max_win_streak, 2);
+
         let p_a = repo.get_player("gambler_a").await.unwrap().unwrap();
         assert_eq!(p_a.coinflip_wins, 2);
         assert_eq!(p_a.coinflip_gold_won_total, 150);
         assert_eq!(p_a.coinflip_biggest_win, 100);
+        assert_eq!(p_a.coinflip_current_win_streak, 2);
+        assert_eq!(p_a.coinflip_max_win_streak, 2);
 
         // 3. Player B loses a coinflip of 40 gold
-        let new_gold = repo.record_coinflip_result(p_id_b, 40, false).await.unwrap();
-        assert_eq!(new_gold, 60);
+        let p_res_b = repo.record_coinflip_result(p_id_b, 40, false).await.unwrap();
+        assert_eq!(p_res_b.gold, 60);
+        assert_eq!(p_res_b.coinflip_current_loss_streak, 1);
+        assert_eq!(p_res_b.coinflip_max_loss_streak, 1);
+        assert_eq!(p_res_b.coinflip_current_win_streak, 0);
 
         let p_b = repo.get_player("gambler_b").await.unwrap().unwrap();
         assert_eq!(p_b.coinflip_wins, 0);
@@ -1709,6 +1797,9 @@ mod tests {
         assert_eq!(p_b.coinflip_gold_won_total, 0);
         assert_eq!(p_b.coinflip_gold_lost_total, 40);
         assert_eq!(p_b.coinflip_biggest_loss, 40);
+        assert_eq!(p_b.coinflip_current_loss_streak, 1);
+        assert_eq!(p_b.coinflip_max_loss_streak, 1);
+        assert_eq!(p_b.coinflip_current_win_streak, 0);
 
         // 4. Verify Leaderboard
         let lb = repo.get_gambling_leaderboard().await.unwrap();

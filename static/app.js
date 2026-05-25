@@ -325,6 +325,34 @@ async function fetchStats(u) {
                 
                 document.getElementById('web-cf-biggest-win').textContent = `+${data.coinflip_biggest_win || 0} po`;
                 document.getElementById('web-cf-biggest-loss').textContent = `-${data.coinflip_biggest_loss || 0} po`;
+
+                // Série en cours
+                const curWin = data.coinflip_current_win_streak || 0;
+                const curLoss = data.coinflip_current_loss_streak || 0;
+                let streakText = 'Aucune';
+                let streakColor = '#efeff1';
+                if (curWin > 0) {
+                    streakText = `${curWin} victoire${curWin > 1 ? 's' : ''} 🔥`;
+                    streakColor = '#00ff00';
+                } else if (curLoss > 0) {
+                    streakText = `${curLoss} défaite${curLoss > 1 ? 's' : ''} 💀`;
+                    streakColor = '#ff4f4f';
+                }
+                const streakEl = document.getElementById('web-cf-current-streak');
+                if (streakEl) {
+                    streakEl.textContent = streakText;
+                    streakEl.style.color = streakColor;
+                }
+
+                // Records de séries
+                const maxWinEl = document.getElementById('web-cf-max-win-streak');
+                if (maxWinEl) {
+                    maxWinEl.textContent = `${data.coinflip_max_win_streak || 0} V`;
+                }
+                const maxLossEl = document.getElementById('web-cf-max-loss-streak');
+                if (maxLossEl) {
+                    maxLossEl.textContent = `${data.coinflip_max_loss_streak || 0} D`;
+                }
             } else {
                 cfBox.style.display = 'none';
             }

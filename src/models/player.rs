@@ -27,6 +27,10 @@ pub struct Player {
     pub coinflip_biggest_loss: i64,
     pub coinflip_gold_won_total: i64,
     pub coinflip_gold_lost_total: i64,
+    pub coinflip_current_win_streak: i64,
+    pub coinflip_current_loss_streak: i64,
+    pub coinflip_max_win_streak: i64,
+    pub coinflip_max_loss_streak: i64,
 }
 
 impl Player {
@@ -56,6 +60,10 @@ impl Player {
             coinflip_biggest_loss: 0,
             coinflip_gold_won_total: 0,
             coinflip_gold_lost_total: 0,
+            coinflip_current_win_streak: 0,
+            coinflip_current_loss_streak: 0,
+            coinflip_max_win_streak: 0,
+            coinflip_max_loss_streak: 0,
         }
     }
 
