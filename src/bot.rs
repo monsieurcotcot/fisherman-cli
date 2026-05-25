@@ -436,7 +436,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
                         },
                         "coinflip" | "cf" => {
-                            "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Doublez vos pièces d'or avec 49% de chances de réussite. Mise minimale : 10 po 🪙.".to_string()
+                            "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Tentez de doubler vos pièces d'or sur un coup de pile ou face ! Mise minimale : 10 po 🪙.".to_string()
                         },
                         _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
                     };
