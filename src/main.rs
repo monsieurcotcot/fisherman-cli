@@ -241,12 +241,12 @@ async fn main() -> Result<(), MyError> {
                         let r: f64 = rand::random::<f64>();
                         if r < success_chance {
                             if let Some(fish) = generate_fish() {
-                                let _ = repo.save_catch_only(player_id, fish).await;
+                                let _ = repo.save_catch_only(player_id, fish, Some(&username)).await;
                                 success_count += 1;
                             }
                         } else if r < (success_chance + junk_chance) {
                             if let Some(junk) = generate_junk() {
-                                let _ = repo.save_catch_only(player_id, junk).await;
+                                let _ = repo.save_catch_only(player_id, junk, Some(&username)).await;
                                 success_count += 1;
                             }
                         } else {

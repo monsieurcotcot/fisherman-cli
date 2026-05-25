@@ -694,11 +694,12 @@ function showFishDetails(fish, color) {
         day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
     });
     const streamStr = fish.stream_title || "Hors live";
+    const catcherStr = fish.caught_by ? `<br>🎣 Pêché par : <span style="color: #bf94ff; font-weight: bold;">@${fish.caught_by}</span>` : '';
 
     document.getElementById('modal-meta-row').innerHTML = `
         <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
             📅 <span>${dateStr}</span><br>
-            🎥 <span>${streamStr}</span>
+            🎥 <span>${streamStr}</span>${catcherStr}
         </p>
     `;
 

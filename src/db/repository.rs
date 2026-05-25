@@ -318,7 +318,7 @@ impl Repository {
     }
 
     pub async fn get_player_catches(&self, player_id: i64) -> Result<Vec<Fish>, sqlx::Error> {
-        let rows = sqlx::query("SELECT id, fish_name, rarity, size, weight, state, description, stream_title, caught_at, is_junk FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
+        let rows = sqlx::query("SELECT id, fish_name, rarity, size, weight, state, description, stream_title, caught_at, is_junk, caught_by FROM catches WHERE player_id = ? ORDER BY caught_at DESC")
             .bind(player_id)
             .fetch_all(&self.pool)
             .await?;
@@ -358,6 +358,7 @@ impl Repository {
             fish.id = Some(row.get("id"));
             fish.stream_title = row.get("stream_title");
             fish.caught_at = row.get("caught_at");
+            fish.caught_by = row.get("caught_by");
             fish
         }).collect();
 
@@ -495,7 +496,7 @@ impl Repository {
         let mut tx = self.pool.begin().await?;
         
         let rows = sqlx::query(
-            "SELECT c.player_id, c.fish_name, c.rarity, c.size, c.weight, c.state, c.description, c.stream_title 
+            "SELECT c.player_id, c.fish_name, c.rarity, c.size, c.weight, c.state, c.description, c.stream_title, c.caught_by 
              FROM catches c 
              WHERE c.is_junk = 0"
         )
@@ -519,6 +520,7 @@ impl Repository {
                 stream_title: row.get("stream_title"),
                 caught_at: None,
                 is_junk: false,
+                caught_by: row.get("caught_by"),
             };
             
             self.record_museum_discovery(&mut *tx, player_id, &fish).await?;
@@ -528,10 +530,10 @@ impl Repository {
         Ok(())
     }
 
-    pub async fn save_catch_only(&self, player_id: i64, fish: Fish) -> Result<(), sqlx::Error> {
+    pub async fn save_catch_only(&self, player_id: i64, fish: Fish, caught_by: Option<&str>) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
         
-        sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
             .bind(player_id)
             .bind(&fish.name)
             .bind(serde_json::to_string(&fish.rarity).unwrap_or_default())
@@ -541,6 +543,7 @@ impl Repository {
             .bind(&fish.description)
             .bind(&fish.stream_title)
             .bind(fish.is_junk)
+            .bind(caught_by)
             .execute(&mut *tx)
             .await?;
 
@@ -573,7 +576,7 @@ impl Repository {
                     .execute(&mut *tx)
                     .await?;
             }
-            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
                 .bind(player.id)
                 .bind(&f.name)
                 .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
@@ -583,6 +586,7 @@ impl Repository {
                 .bind(&f.description)
                 .bind(&f.stream_title)
                 .bind(f.is_junk)
+                .bind(&player.username)
                 .execute(&mut *tx)
                 .await?;
 
@@ -892,7 +896,8 @@ impl Repository {
                 description TEXT,
                 stream_title TEXT,
                 caught_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                is_junk BOOLEAN DEFAULT 0
+                is_junk BOOLEAN DEFAULT 0,
+                caught_by TEXT
             )"
         ).execute(&mut *tx).await?;
 
@@ -1177,7 +1182,8 @@ mod tests {
                 description TEXT,
                 stream_title TEXT,
                 caught_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                is_junk BOOLEAN DEFAULT 0
+                is_junk BOOLEAN DEFAULT 0,
+                caught_by TEXT
             )"
         ).execute(&pool).await.unwrap();
 

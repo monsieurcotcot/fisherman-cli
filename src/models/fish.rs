@@ -15,6 +15,7 @@ pub struct Fish {
     pub stream_title: Option<String>,
     pub caught_at: Option<DateTime<Utc>>,
     pub is_junk: bool,
+    pub caught_by: Option<String>,
 }
 
 impl Fish {
@@ -30,6 +31,7 @@ impl Fish {
             stream_title: None,
             caught_at: None,
             is_junk: false,
+            caught_by: None,
         }
     }
 
@@ -45,6 +47,7 @@ impl Fish {
             stream_title: None,
             caught_at: None,
             is_junk: true,
+            caught_by: None,
         }
     }
 }

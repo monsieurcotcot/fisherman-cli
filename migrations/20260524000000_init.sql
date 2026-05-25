@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS catches (
     description TEXT,
     stream_title TEXT,
     caught_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_junk BOOLEAN DEFAULT 0
+    is_junk BOOLEAN DEFAULT 0,
+    caught_by TEXT
 );
 
 -- Index pour optimiser le chargement de l'inventaire d'un joueur

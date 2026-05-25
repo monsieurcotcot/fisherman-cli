@@ -1130,6 +1130,18 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         } else if args.len() >= 3 && username == "monsieurcotcot" {
                             let target = args[2].to_lowercase();
                             if let Ok(_) = state_task.repo.reset_player(&target).await {
+                                // Clear RAM cache for the target to allow claiming daily reward / resetting rate limit
+                                state_task.daily_reward_cache.write().await.remove(&target);
+                                state_task.rate_limiter.write().await.remove(&target);
+                                state_task.pending_sales.write().await.remove(&target);
+                                state_task.pending_trades.write().await.retain(|t| match t {
+                                    PendingTrade::Direct { seller_username, buyer_username, .. } => {
+                                        seller_username != &target && buyer_username != &target
+                                    }
+                                    PendingTrade::Barter { player_a_username, player_b_username, .. } => {
+                                        player_a_username != &target && player_b_username != &target
+                                    }
+                                });
                                 let _ = client_msg.say(channel_login, format!("♻️ @{}, l'inventaire de @{} a été réinitialisé par l'administrateur.", username, target)).await;
                             }
                         } else {
@@ -1146,6 +1158,18 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Some(time) = pending.get(&username) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.reset_player_all(&username).await {
+                                    // Clear RAM cache for the user to allow claiming daily reward again
+                                    state_task.daily_reward_cache.write().await.remove(&username);
+                                    state_task.rate_limiter.write().await.remove(&username);
+                                    state_task.pending_sales.write().await.remove(&username);
+                                    state_task.pending_trades.write().await.retain(|t| match t {
+                                        PendingTrade::Direct { seller_username, buyer_username, .. } => {
+                                            seller_username != &username && buyer_username != &username
+                                        }
+                                        PendingTrade::Barter { player_a_username, player_b_username, .. } => {
+                                            player_a_username != &username && player_b_username != &username
+                                        }
+                                    });
                                     let _ = client_msg.say(channel_login, format!("💥 @{}, reset total réussi ! Tous vos trophées éternels et statistiques actives ont été supprimés.", username)).await;
                                 }
                                 pending.remove(&username);
@@ -1161,6 +1185,18 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Some(time) = pending.get(&username) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.reset_player(&username).await {
+                                    // Clear RAM cache for the user to allow claiming daily reward again
+                                    state_task.daily_reward_cache.write().await.remove(&username);
+                                    state_task.rate_limiter.write().await.remove(&username);
+                                    state_task.pending_sales.write().await.remove(&username);
+                                    state_task.pending_trades.write().await.retain(|t| match t {
+                                        PendingTrade::Direct { seller_username, buyer_username, .. } => {
+                                            seller_username != &username && buyer_username != &username
+                                        }
+                                        PendingTrade::Barter { player_a_username, player_b_username, .. } => {
+                                            player_a_username != &username && player_b_username != &username
+                                        }
+                                    });
                                     let _ = client_msg.say(channel_login, format!("♻️ @{}, reset réussi ! Vos statistiques actives de saison ont été réinitialisées (trophées conservés).", username)).await;
                                 }
                                 pending.remove(&username);
@@ -1176,6 +1212,13 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if args.len() >= 3 {
                             let season_name = args[2..].join(" ");
                             if let Ok(_) = state_task.repo.archive_and_reset_season(&season_name).await {
+                                // Clear RAM caches
+                                state_task.daily_reward_cache.write().await.clear();
+                                state_task.rate_limiter.write().await.clear();
+                                state_task.pending_sales.write().await.clear();
+                                state_task.pending_trades.write().await.clear();
+                                state_task.pending_resets.write().await.clear();
+                                state_task.pending_resets_all.write().await.clear();
                                 let _ = client_msg.say(channel_login, format!("🏆 La Saison '{}' est close ! Les exploits ont été gravés éternellement, place à la nouvelle saison ! 🎣", season_name)).await;
                             } else {
                                 let _ = client_msg.say(channel_login, "❌ [Admin] Erreur lors de la réinitialisation de la saison.".to_string()).await;
@@ -1271,12 +1314,12 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             let r: f64 = rand::random::<f64>();
                                             if r < success_chance {
                                                 if let Some(fish) = generate_fish() {
-                                                    let _ = state_task.repo.save_catch_only(player_id, fish).await;
+                                                    let _ = state_task.repo.save_catch_only(player_id, fish, Some(&backup.username)).await;
                                                     success_count += 1;
                                                 }
                                             } else if r < (success_chance + junk_chance) {
                                                 if let Some(junk) = generate_junk() {
-                                                    let _ = state_task.repo.save_catch_only(player_id, junk).await;
+                                                    let _ = state_task.repo.save_catch_only(player_id, junk, Some(&backup.username)).await;
                                                     success_count += 1;
                                                 }
                                             } else {
@@ -1286,6 +1329,13 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         let _ = state_task.repo.update_player_stats_after_restore(player_id, success_count, fail_count).await;
                                     }
                                 }
+                                // Clear RAM caches after full restore to avoid stale caches
+                                state_task.daily_reward_cache.write().await.clear();
+                                state_task.rate_limiter.write().await.clear();
+                                state_task.pending_sales.write().await.clear();
+                                state_task.pending_trades.write().await.clear();
+                                state_task.pending_resets.write().await.clear();
+                                state_task.pending_resets_all.write().await.clear();
                                 let _ = client_msg.say(channel_login, "✅ [Admin] Restauration terminée.".to_string()).await;
                             }
                         }
@@ -1307,6 +1357,13 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Some(time) = pending.get(&username) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.purge_all_data().await {
+                                    // Clear all RAM caches to allow first-time daily rewards and remove stale states
+                                    state_task.daily_reward_cache.write().await.clear();
+                                    state_task.rate_limiter.write().await.clear();
+                                    state_task.pending_sales.write().await.clear();
+                                    state_task.pending_trades.write().await.clear();
+                                    state_task.pending_resets.write().await.clear();
+                                    state_task.pending_resets_all.write().await.clear();
                                     let _ = client_msg.say(channel_login, "🧹 [Admin] Base de données purgée ! Toutes les données ont été supprimées.".to_string()).await;
                                 } else {
                                     let _ = client_msg.say(channel_login, "❌ [Admin] Une erreur est survenue lors de la purge de la base de données.".to_string()).await;
