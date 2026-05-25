@@ -606,6 +606,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         }
                     });
                 } else if text.starts_with("!fish info") || text.starts_with("!peche info") || text.starts_with("!pêche info") || text.starts_with("!fish infos") || text.starts_with("!peche infos") || text.starts_with("!pêche infos") {
+                    let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
                     let raw_msg = msg.message_text.clone();
@@ -629,11 +630,104 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         };
 
                         if arg.is_empty() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom exact du poisson pour afficher ses infos, ex : !fish info Ayu", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, spécifie le nom exact du poisson ou son identifiant unique pour afficher ses infos, ex : !fish info Ayu ou !fish info #12", username)).await;
                             return;
                         }
 
-                        // Search in config game_data
+                        // Check if searching by unique capture ID
+                        if arg.starts_with('#') {
+                            if let Ok(catch_id) = arg[1..].parse::<i64>() {
+                                match state_task.repo.get_catch_by_id(catch_id).await {
+                                    Ok(Some(c)) => {
+                                        // Count owned by current user
+                                        let count = if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                            state_task.repo.count_fish_owned_by_player(player.id.unwrap_or(0), &c.name).await.unwrap_or(0)
+                                        } else {
+                                            0
+                                        };
+
+                                        // Try to find the species in catalog to get location/time/season
+                                        let game_data = crate::config::get_game_data();
+                                        let mut found_fish = None;
+                                        for (_, fishes) in &game_data.fish_data {
+                                            for fish in fishes {
+                                                if fish.name.to_lowercase() == c.name.to_lowercase() {
+                                                    found_fish = Some(fish.clone());
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if found_fish.is_none() {
+                                            for (_, junks) in &game_data.junk_data {
+                                                for junk in junks {
+                                                    if junk.name.to_lowercase() == c.name.to_lowercase() {
+                                                        found_fish = Some(junk.clone());
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        let rarity_label = match c.rarity {
+                                            crate::config::Rarity::Common => "Commun ⚪",
+                                            crate::config::Rarity::Uncommon => "Inhabituel 🟢",
+                                            crate::config::Rarity::Rare => "Rare 🔵",
+                                            crate::config::Rarity::VeryRare => "Très Rare 🟡",
+                                            crate::config::Rarity::Epic => "Épique 🟣",
+                                            crate::config::Rarity::Legendary => "Légendaire 🟠",
+                                            crate::config::Rarity::Mythical => "Mythique 🔴",
+                                            crate::config::Rarity::Divin => "Divin 👑",
+                                        };
+
+                                        let base_price = get_base_price(&c.name);
+                                        let mult = if c.is_junk { 1.0 } else { get_stored_state_multiplier(&c.state) };
+                                        let estimated_value = if c.is_junk { 10 } else { ((base_price as f64 * mult).round() as i64).max(1) };
+
+                                        let count_msg = if count > 0 {
+                                            format!("🎣 Tu possèdes {} exemplaire(s) dans ton inventaire.", count)
+                                        } else {
+                                            "🎣 Tu n'en possèdes pas encore.".to_string()
+                                        };
+
+                                        if let Some(f) = found_fish {
+                                            let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
+                                            let hours = match f.time_restriction.as_deref() {
+                                                Some("before_22h") => "Avant 22h (Jour/Soirée)",
+                                                Some("after_22h") => "Après 22h (Nuit/Prolongation)",
+                                                _ => "Toutes heures",
+                                            };
+                                            let period = f.preferred_season.unwrap_or_else(|| "Toute l'année".to_string());
+
+                                            let _ = client_msg.say(
+                                                channel_login,
+                                                format!(
+                                                    "🔍 [Capture #{}] {} ({}, {}cm, {}kg, État: {}) | Valeur: {} po 🪙 (Base: {}) | Lieu: {} | Période: {} | Horaires: {} | Capturé par: @{} | {}",
+                                                    catch_id, c.name, rarity_label, c.size, c.weight, c.state, estimated_value, base_price, loc, period, hours, c.caught_by.as_deref().unwrap_or("Inconnu"), count_msg
+                                                )
+                                            ).await;
+                                        } else {
+                                            let _ = client_msg.say(
+                                                channel_login,
+                                                format!(
+                                                    "🔍 [Capture #{}] {} (État: {}) | Valeur: {} po 🪙 | Capturé par: @{} | {}",
+                                                    catch_id, c.name, c.state, estimated_value, c.caught_by.as_deref().unwrap_or("Inconnu"), count_msg
+                                                )
+                                            ).await;
+                                        }
+                                    }
+                                    Ok(None) => {
+                                        let _ = client_msg.say(channel_login, format!("❌ @{}, la capture #{} est introuvable.", username, catch_id)).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to fetch catch: {}", e);
+                                        let _ = client_msg.say(channel_login, format!("❌ @{}, erreur lors de la recherche de la capture.", username)).await;
+                                    }
+                                }
+                                return;
+                            }
+                        }
+
+                        // Search in config game_data (by name)
                         let game_data = crate::config::get_game_data();
                         let mut found_fish = None;
 
@@ -659,10 +753,34 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         if let Some(f) = found_fish {
                             let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
-                            let hours = f.time_restriction.unwrap_or_else(|| "Toutes heures".to_string());
-                            let period = f.preferred_season.unwrap_or_else(|| "Toutes saisons".to_string());
+                            let hours = match f.time_restriction.as_deref() {
+                                Some("before_22h") => "Avant 22h (Jour/Soirée)",
+                                Some("after_22h") => "Après 22h (Nuit/Prolongation)",
+                                _ => "Toutes heures",
+                            };
+                            let period = f.preferred_season.unwrap_or_else(|| "Toute l'année".to_string());
                             let base_price = get_base_price(&f.name);
-                            let _ = client_msg.say(channel_login, format!("🔍 [{}] Lieu : {} | Horaires : {} | Période : {} | Prix de base : {} po 🪙", f.name, loc, hours, period, base_price)).await;
+
+                            // Count owned by current user
+                            let count = if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                state_task.repo.count_fish_owned_by_player(player.id.unwrap_or(0), &f.name).await.unwrap_or(0)
+                            } else {
+                                0
+                            };
+
+                            let count_msg = if count > 0 {
+                                format!("🎣 Tu possèdes {} exemplaire(s) dans ton inventaire.", count)
+                            } else {
+                                "🎣 Tu n'en possèdes pas encore.".to_string()
+                            };
+
+                            let _ = client_msg.say(
+                                channel_login,
+                                format!(
+                                    "🔍 [{}] Lieu : {} | Horaires : {} | Période : {} | Prix de base : {} po 🪙 | {}",
+                                    f.name, loc, hours, period, base_price, count_msg
+                                )
+                            ).await;
                         } else {
                             let _ = client_msg.say(channel_login, format!("❌ @{}, aucun objet ou poisson sous le nom '{}' dans le catalogue.", username, arg)).await;
                         }

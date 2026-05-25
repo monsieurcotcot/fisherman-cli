@@ -365,6 +365,64 @@ impl Repository {
         Ok(catches)
     }
 
+    pub async fn get_catch_by_id(&self, id: i64) -> Result<Option<Fish>, sqlx::Error> {
+        let row = sqlx::query("SELECT id, fish_name, rarity, size, weight, state, description, stream_title, caught_at, is_junk, caught_by FROM catches WHERE id = ?")
+            .bind(id)
+            .fetch_optional(&self.pool)
+            .await?;
+
+        if let Some(row) = row {
+            let rarity_str: String = row.get("rarity");
+            let cleaned_rarity = rarity_str.trim_matches('"');
+            let rarity = match cleaned_rarity.to_lowercase().as_str() {
+                "uncommon" => crate::config::Rarity::Uncommon,
+                "rare" => crate::config::Rarity::Rare,
+                "veryrare" | "very rare" => crate::config::Rarity::VeryRare,
+                "epic" => crate::config::Rarity::Epic,
+                "legendary" => crate::config::Rarity::Legendary,
+                "mythical" => crate::config::Rarity::Mythical,
+                "divin" => crate::config::Rarity::Divin,
+                _ => crate::config::Rarity::Common,
+            };
+            let mut fish = if row.get::<bool, _>("is_junk") {
+                Fish::new_junk(
+                    row.get("fish_name"),
+                    rarity,
+                    row.get("size"),
+                    row.get("weight"),
+                    row.get("state"),
+                    row.get("description"),
+                )
+            } else {
+                Fish::new(
+                    row.get("fish_name"),
+                    rarity,
+                    row.get("size"),
+                    row.get("weight"),
+                    row.get("state"),
+                    row.get("description"),
+                )
+            };
+            fish.id = Some(row.get("id"));
+            fish.stream_title = row.get("stream_title");
+            fish.caught_at = row.get("caught_at");
+            fish.caught_by = row.get("caught_by");
+            Ok(Some(fish))
+        } else {
+            Ok(None)
+        }
+    }
+
+    pub async fn count_fish_owned_by_player(&self, player_id: i64, fish_name: &str) -> Result<i64, sqlx::Error> {
+        let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM catches WHERE player_id = ? AND LOWER(fish_name) = LOWER(?)")
+            .bind(player_id)
+            .bind(fish_name)
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(count)
+    }
+
+
     pub async fn add_cooldown_penalty(&self, player_id: i64) -> Result<(), sqlx::Error> {
         sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+5 seconds') WHERE id = ?")
             .bind(player_id)
