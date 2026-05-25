@@ -638,7 +638,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if arg.starts_with('#') {
                             if let Ok(catch_id) = arg[1..].parse::<i64>() {
                                 match state_task.repo.get_catch_by_id(catch_id).await {
-                                    Ok(Some(c)) => {
+                                    Ok(Some((c, owner_name))) => {
                                         // Count owned by current user
                                         let count = if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
                                             state_task.repo.count_fish_owned_by_player(player.id.unwrap_or(0), &c.name).await.unwrap_or(0)
@@ -689,6 +689,13 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             "🎣 Tu n'en possèdes pas encore.".to_string()
                                         };
 
+                                        let catcher_name = c.caught_by.as_deref().unwrap_or("Inconnu");
+                                        let owner_msg = if owner_name.to_lowercase() == catcher_name.to_lowercase() {
+                                            format!("Propriétaire: @{}", owner_name)
+                                        } else {
+                                            format!("Propriétaire actuel: @{} (Capturé par: @{})", owner_name, catcher_name)
+                                        };
+
                                         if let Some(f) = found_fish {
                                             let loc = f.location.unwrap_or_else(|| "Inconnu".to_string());
                                             let hours = match f.time_restriction.as_deref() {
@@ -701,16 +708,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             let _ = client_msg.say(
                                                 channel_login,
                                                 format!(
-                                                    "🔍 [Capture #{}] {} ({}, {}cm, {}kg, État: {}) | Valeur: {} po 🪙 (Base: {}) | Lieu: {} | Période: {} | Horaires: {} | Capturé par: @{} | {}",
-                                                    catch_id, c.name, rarity_label, c.size, c.weight, c.state, estimated_value, base_price, loc, period, hours, c.caught_by.as_deref().unwrap_or("Inconnu"), count_msg
+                                                    "🔍 [Capture #{}] {} ({}, {}cm, {}kg, État: {}) | Valeur: {} po 🪙 (Base: {}) | Lieu: {} | Période: {} | Horaires: {} | {} | {}",
+                                                    catch_id, c.name, rarity_label, c.size, c.weight, c.state, estimated_value, base_price, loc, period, hours, owner_msg, count_msg
                                                 )
                                             ).await;
                                         } else {
                                             let _ = client_msg.say(
                                                 channel_login,
                                                 format!(
-                                                    "🔍 [Capture #{}] {} (État: {}) | Valeur: {} po 🪙 | Capturé par: @{} | {}",
-                                                    catch_id, c.name, c.state, estimated_value, c.caught_by.as_deref().unwrap_or("Inconnu"), count_msg
+                                                    "🔍 [Capture #{}] {} (État: {}) | Valeur: {} po 🪙 | {} | {}",
+                                                    catch_id, c.name, c.state, estimated_value, owner_msg, count_msg
                                                 )
                                             ).await;
                                         }

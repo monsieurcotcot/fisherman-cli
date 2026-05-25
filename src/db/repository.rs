@@ -365,11 +365,17 @@ impl Repository {
         Ok(catches)
     }
 
-    pub async fn get_catch_by_id(&self, id: i64) -> Result<Option<Fish>, sqlx::Error> {
-        let row = sqlx::query("SELECT id, fish_name, rarity, size, weight, state, description, stream_title, caught_at, is_junk, caught_by FROM catches WHERE id = ?")
-            .bind(id)
-            .fetch_optional(&self.pool)
-            .await?;
+    pub async fn get_catch_by_id(&self, id: i64) -> Result<Option<(Fish, String)>, sqlx::Error> {
+        let row = sqlx::query(
+            "SELECT c.id, c.fish_name, c.rarity, c.size, c.weight, c.state, c.description, \
+                    c.stream_title, c.caught_at, c.is_junk, c.caught_by, p.username as owner_name \
+             FROM catches c \
+             JOIN players p ON c.player_id = p.id \
+             WHERE c.id = ?"
+        )
+        .bind(id)
+        .fetch_optional(&self.pool)
+        .await?;
 
         if let Some(row) = row {
             let rarity_str: String = row.get("rarity");
@@ -407,7 +413,9 @@ impl Repository {
             fish.stream_title = row.get("stream_title");
             fish.caught_at = row.get("caught_at");
             fish.caught_by = row.get("caught_by");
-            Ok(Some(fish))
+            
+            let owner_name: String = row.get("owner_name");
+            Ok(Some((fish, owner_name)))
         } else {
             Ok(None)
         }
