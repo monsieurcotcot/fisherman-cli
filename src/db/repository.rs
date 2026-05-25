@@ -872,7 +872,10 @@ impl Repository {
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
                 profile_image_url TEXT,
-                gold INTEGER DEFAULT 0
+                gold INTEGER DEFAULT 0,
+                last_daily_reward_at DATETIME,
+                consecutive_days INTEGER DEFAULT 0,
+                total_days INTEGER DEFAULT 0
             )"
         ).execute(&mut *tx).await?;
 
@@ -1155,7 +1158,10 @@ mod tests {
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
                 profile_image_url TEXT,
-                gold INTEGER DEFAULT 0
+                gold INTEGER DEFAULT 0,
+                last_daily_reward_at DATETIME,
+                consecutive_days INTEGER DEFAULT 0,
+                total_days INTEGER DEFAULT 0
             )"
         ).execute(&pool).await.unwrap();
 
