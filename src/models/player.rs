@@ -18,6 +18,9 @@ pub struct Player {
     pub gem_count: i64,
     pub profile_image_url: Option<String>,
     pub gold: i64,
+    pub last_daily_reward_at: Option<DateTime<Utc>>,
+    pub consecutive_days: i32,
+    pub total_days: i32,
 }
 
 impl Player {
@@ -38,6 +41,9 @@ impl Player {
             gem_count: 0,
             profile_image_url: None,
             gold: 0,
+            last_daily_reward_at: None,
+            consecutive_days: 0,
+            total_days: 0,
         }
     }
 

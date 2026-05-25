@@ -352,6 +352,73 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 let text = msg.message_text.trim().to_lowercase();
                 let username = msg.sender.name.to_lowercase();
                 tracing::info!("[Chat] {} : {}", username, text);
+
+                let state_task_daily = Arc::clone(&state_clone);
+                let client_msg_daily = client.clone();
+                let channel_login_daily = msg.channel_login.clone();
+                let username_daily = username.clone();
+
+                tokio::spawn(async move {
+                    let today = chrono::Utc::now().date_naive();
+                    
+                    // 1. Check RAM cache first
+                    let already_claimed = {
+                        let cache = state_task_daily.daily_reward_cache.read().await;
+                        cache.get(&username_daily) == Some(&today)
+                    };
+
+                    if !already_claimed {
+                        // 2. Query/Create player in DB
+                        if let Ok(player) = state_task_daily.repo.get_or_create_player(&username_daily).await {
+                            let mut claim_needed = true;
+                            
+                            if let Some(last_time) = player.last_daily_reward_at {
+                                if last_time.date_naive() == today {
+                                    claim_needed = false;
+                                }
+                            }
+
+                            if claim_needed {
+                                let mut consecutive = player.consecutive_days;
+                                let mut total = player.total_days;
+
+                                if let Some(last_time) = player.last_daily_reward_at {
+                                    if last_time.date_naive() == today - chrono::Duration::days(1) {
+                                        // Streak continues
+                                        consecutive += 1;
+                                        total += 1;
+                                    } else {
+                                        // Streak broken
+                                        consecutive = 1;
+                                        total += 1;
+                                    }
+                                } else {
+                                    // First login reward
+                                    consecutive = 1;
+                                    total = 1;
+                                }
+
+                                // Capped multiplier at 10 days
+                                let consecutive_capped = consecutive.min(10);
+                                let reward_gold = 200 + 50 * consecutive_capped as i64 + 10 * total as i64;
+
+                                if let Ok(_) = state_task_daily.repo.claim_daily_reward(player.id.unwrap(), consecutive, total, reward_gold).await {
+                                    let _ = client_msg_daily.say(
+                                        channel_login_daily,
+                                        format!(
+                                            "🎁 @{} vient de se connecter ! Il reçoit son bonus quotidien de {} po 🪙 (Série : {} jours d'affilée 🔥, Cumul : {} jours total) !",
+                                            username_daily, reward_gold, consecutive, total
+                                        )
+                                    ).await;
+                                }
+                            }
+
+                            // 3. Populate RAM cache
+                            let mut cache = state_task_daily.daily_reward_cache.write().await;
+                            cache.insert(username_daily, today);
+                        }
+                    }
+                });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
                     let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> <état> <qté> | sell oui/non | trade #id <prix> @pseudo (vente directe) | trade #id_A @pseudo (troc) | Tape !fish help sell ou !fish help trade pour les détails".to_string();
@@ -1259,6 +1326,19 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             let is_admin = username == "monsieurcotcot";
+                            
+                            // Vérification du coût en or (10 po requis)
+                            if player.gold < 10 && !is_admin && !is_test {
+                                let _ = client_msg.say(
+                                    channel_login,
+                                    format!(
+                                        "⚠️ @{}, tu n'as pas assez de pièces d'or pour pêcher (requis: 10 po, tu as {} po). Écris un message sur le live demain pour obtenir ton bonus quotidien ou vends des poissons via !fish sell !",
+                                        username, player.gold
+                                    )
+                                ).await;
+                                return;
+                            }
+
                             if player.can_fish() || is_test || is_admin {
                                 let level_factor = (player.level as f64 - 1.0) / 199.0;
                                 let success_rate = 0.35 + (level_factor * 0.20);

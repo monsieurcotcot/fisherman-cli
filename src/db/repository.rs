@@ -86,6 +86,9 @@ impl Repository {
             gem_count: row.get("gem_count"),
             profile_image_url: row.get("profile_image_url"),
             gold: row.get("gold"),
+            last_daily_reward_at: row.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+            consecutive_days: row.get("consecutive_days"),
+            total_days: row.get("total_days"),
         }).collect();
 
         Ok(players)
@@ -163,6 +166,9 @@ impl Repository {
                 gem_count: r.get("gem_count"),
                 profile_image_url: r.get("profile_image_url"),
                 gold: r.get("gold"),
+                last_daily_reward_at: r.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+                consecutive_days: r.get("consecutive_days"),
+                total_days: r.get("total_days"),
             }))
         } else {
             Ok(None)
@@ -192,6 +198,9 @@ impl Repository {
             gem_count: 0,
             profile_image_url: row.get("profile_image_url"),
             gold: row.get("gold"),
+            last_daily_reward_at: row.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+            consecutive_days: row.get("consecutive_days"),
+            total_days: row.get("total_days"),
         }).collect())
     }
 
@@ -232,6 +241,9 @@ impl Repository {
                 gem_count: row.get("gem_count"),
                 profile_image_url: row.get("profile_image_url"),
                 gold: row.get("gold"),
+                last_daily_reward_at: row.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+                consecutive_days: row.get("consecutive_days"),
+                total_days: row.get("total_days"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -273,6 +285,9 @@ impl Repository {
             gem_count: row.get("gem_count"),
             profile_image_url: row.get("profile_image_url"),
             gold: row.get("gold"),
+            last_daily_reward_at: row.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+            consecutive_days: row.get("consecutive_days"),
+            total_days: row.get("total_days"),
         }).collect();
 
         Ok(players)
@@ -284,6 +299,21 @@ impl Repository {
             .bind(player_id)
             .execute(&self.pool)
             .await?;
+        Ok(())
+    }
+
+    pub async fn claim_daily_reward(&self, player_id: i64, consecutive: i32, total: i32, reward_gold: i64) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        sqlx::query("UPDATE players SET last_daily_reward_at = CURRENT_TIMESTAMP, consecutive_days = ?, total_days = ?, gold = gold + ? WHERE id = ?")
+            .bind(consecutive)
+            .bind(total)
+            .bind(reward_gold)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
         Ok(())
     }
 
@@ -523,7 +553,7 @@ impl Repository {
     pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
-        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ?, vip_until = ? WHERE id = ?")
+        sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ?, vip_until = ?, gold = MAX(0, gold - 10) WHERE id = ?")
             .bind(if success { 1 } else { 0 })
             .bind(if success { 0 } else { 1 })
             .bind(Utc::now())

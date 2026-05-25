@@ -1,0 +1,14 @@
+target/
+target_micka/
+target_user/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/players_backup.json
+data/tokens.json
+data/streamer_tokens.json
+*.db
+*.db-shm
+*.db-wal
+.git/
+.env

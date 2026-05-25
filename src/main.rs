@@ -82,6 +82,7 @@ pub struct AppState {
     pub rate_limiter: RwLock<HashMap<String, (u32, Option<DateTime<Utc>>)>>,
     pub pending_sales: RwLock<HashMap<String, PendingSale>>,
     pub pending_trades: RwLock<Vec<PendingTrade>>,
+    pub daily_reward_cache: RwLock<HashMap<String, chrono::NaiveDate>>,
 }
 
 use bot::start_bot;
@@ -218,6 +219,7 @@ async fn main() -> Result<(), MyError> {
         rate_limiter: RwLock::new(HashMap::new()),
         pending_sales: RwLock::new(HashMap::new()),
         pending_trades: RwLock::new(Vec::new()),
+        daily_reward_cache: RwLock::new(HashMap::new()),
     });
 
     tasks::start_vip_cleanup_task(Arc::clone(&state));
