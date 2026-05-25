@@ -430,6 +430,21 @@ impl Repository {
         Ok(count)
     }
 
+    pub async fn update_player_gold(&self, player_id: i64, amount: i64) -> Result<i64, sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+        sqlx::query("UPDATE players SET gold = MAX(0, gold + ?) WHERE id = ?")
+            .bind(amount)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?;
+        let new_gold: i64 = sqlx::query_scalar("SELECT gold FROM players WHERE id = ?")
+            .bind(player_id)
+            .fetch_one(&mut *tx)
+            .await?;
+        tx.commit().await?;
+        Ok(new_gold)
+    }
+
 
     pub async fn add_cooldown_penalty(&self, player_id: i64) -> Result<(), sqlx::Error> {
         sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+5 seconds') WHERE id = ?")
@@ -1477,5 +1492,41 @@ mod tests {
         repo.reset_player_all("player_b").await.unwrap();
         let player_b = repo.get_player("player_b").await.unwrap().unwrap();
         assert_eq!(player_b.gold, 0);
+    }
+
+    #[tokio::test]
+    async fn test_update_player_gold() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        // Restore Player with 100 gold
+        let p_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_gold_test".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(100),
+        }).await.unwrap();
+
+        // 1. Add 50 gold
+        let new_gold = repo.update_player_gold(p_id, 50).await.unwrap();
+        assert_eq!(new_gold, 150);
+        let player = repo.get_player("player_gold_test").await.unwrap().unwrap();
+        assert_eq!(player.gold, 150);
+
+        // 2. Subtract 80 gold
+        let new_gold = repo.update_player_gold(p_id, -80).await.unwrap();
+        assert_eq!(new_gold, 70);
+        let player = repo.get_player("player_gold_test").await.unwrap().unwrap();
+        assert_eq!(player.gold, 70);
+
+        // 3. Try to subtract more than current (e.g. -100 gold), check it clamps at 0
+        let new_gold = repo.update_player_gold(p_id, -100).await.unwrap();
+        assert_eq!(new_gold, 0);
+        let player = repo.get_player("player_gold_test").await.unwrap().unwrap();
+        assert_eq!(player.gold, 0);
     }
 }

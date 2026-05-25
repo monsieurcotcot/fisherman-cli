@@ -421,7 +421,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> <état> <qté> | sell oui/non | trade #id <prix> @pseudo (vente directe) | trade #id_A @pseudo (troc) | Tape !fish help sell ou !fish help trade pour les détails".to_string();
+                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | trade #id | coinflip <montant> | Tape !fish help sell ou !fish help trade ou !fish help coinflip pour les détails".to_string();
                     if username == "monsieurcotcot" {
                         help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !admin season_reset <nom_saison> | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
@@ -435,7 +435,10 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         "trade" | "echange" | "échanger" | "echanger" => {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
                         },
-                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' pour plus de détails.")
+                        "coinflip" | "cf" => {
+                            "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Doublez vos pièces d'or avec 49% de chances de réussite. Mise minimale : 10 po 🪙.".to_string()
+                        },
+                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
                     };
                     let _ = client.say(msg.channel_login.clone(), reply).await;
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
@@ -883,6 +886,120 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             ).await;
                         } else {
                             let _ = client_msg.say(channel_login, format!("❌ @{}, aucun objet ou poisson sous le nom '{}' dans le catalogue.", username, arg)).await;
+                        }
+                    });
+                } else if text.starts_with("!fish coinflip") || text.starts_with("!fish cf") ||
+                          text.starts_with("!peche coinflip") || text.starts_with("!peche cf") ||
+                          text.starts_with("!pêche coinflip") || text.starts_with("!pêche cf") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish coinflip") {
+                            raw_msg["!fish coinflip".len()..].trim()
+                        } else if text_trim.starts_with("!fish cf") {
+                            raw_msg["!fish cf".len()..].trim()
+                        } else if text_trim.starts_with("!peche coinflip") {
+                            raw_msg["!peche coinflip".len()..].trim()
+                        } else if text_trim.starts_with("!peche cf") {
+                            raw_msg["!peche cf".len()..].trim()
+                        } else if text_trim.starts_with("!pêche coinflip") {
+                            raw_msg["!pêche coinflip".len()..].trim()
+                        } else if text_trim.starts_with("!pêche cf") {
+                            raw_msg["!pêche cf".len()..].trim()
+                        } else {
+                            ""
+                        }.to_string();
+
+                        if arg.is_empty() {
+                            let _ = client_msg.say(
+                                channel_login,
+                                format!("⚠️ @{}, usage : !fish coinflip [montant] ou !fish coinflip all (mise min: 10 po 🪙).", username)
+                            ).await;
+                            return;
+                        }
+
+                        // Récupérer le joueur
+                        let player = match state_task.repo.get_or_create_player(&username).await {
+                            Ok(p) => p,
+                            Err(e) => {
+                                tracing::error!("Failed to get/create player for coinflip: {:?}", e);
+                                return;
+                            }
+                        };
+
+                        let player_gold = player.gold;
+
+                        // Analyser le montant misé
+                        let wager_amount = if arg.eq_ignore_ascii_case("all") || arg.eq_ignore_ascii_case("tout") {
+                            player_gold
+                        } else {
+                            match arg.parse::<i64>() {
+                                Ok(val) if val > 0 => val,
+                                _ => {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!("⚠️ @{}, montant invalide ! Utilise un nombre entier supérieur ou égal à 10, ou \"all\".", username)
+                                    ).await;
+                                    return;
+                                }
+                            }
+                        };
+
+                        // Validation de la mise minimale
+                        if wager_amount < 10 {
+                            let _ = client_msg.say(
+                                channel_login,
+                                format!("⚠️ @{}, la mise minimale est de 10 pièces d'or 🪙.", username)
+                            ).await;
+                            return;
+                        }
+
+                        // Validation du solde
+                        if player_gold < wager_amount {
+                            let _ = client_msg.say(
+                                channel_login,
+                                format!("⚠️ @{}, tu n'as pas assez de pièces d'or ! Tu possèdes actuellement {} po 🪙.", username, player_gold)
+                            ).await;
+                            return;
+                        }
+
+                        // Tirage aléatoire (49% de chances de gagner)
+                        use rand::Rng;
+                        let win = rand::thread_rng().gen_range(0.0..100.0) <= 49.0;
+                        let delta = if win { wager_amount } else { -wager_amount };
+
+                        // Mettre à jour l'or en DB de manière atomique
+                        match state_task.repo.update_player_gold(player.id.unwrap(), delta).await {
+                            Ok(new_gold) => {
+                                if win {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!(
+                                            "🪙 @{} lance une pièce... GAGNÉ ! 🔴 (+{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                            username, wager_amount, new_gold
+                                        )
+                                    ).await;
+                                } else {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!(
+                                            "🪙 @{} lance une pièce... PERDU ! ⚪ (-{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                            username, wager_amount, new_gold
+                                        )
+                                    ).await;
+                                }
+                            }
+                            Err(e) => {
+                                tracing::error!("Failed to update player gold in coinflip: {:?}", e);
+                                let _ = client_msg.say(
+                                    channel_login,
+                                    format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
+                                ).await;
+                            }
                         }
                     });
                 } else if text.starts_with("!fish sell") || text.starts_with("!fish vend") || text.starts_with("!fish vendre") || text.starts_with("!fish vends") || text.starts_with("!peche sell") || text.starts_with("!peche vend") || text.starts_with("!peche vendre") || text.starts_with("!peche vends") || text.starts_with("!pêche sell") || text.starts_with("!pêche vend") || text.starts_with("!pêche vendre") || text.starts_with("!pêche vends") {
