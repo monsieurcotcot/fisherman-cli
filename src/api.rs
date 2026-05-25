@@ -154,7 +154,13 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "banana": p.banana_count,
                 "postcard": p.postcard_count,
                 "gem": p.gem_count,
-                "gold": p.gold
+                "gold": p.gold,
+                "coinflip_wins": p.coinflip_wins,
+                "coinflip_losses": p.coinflip_losses,
+                "coinflip_biggest_win": p.coinflip_biggest_win,
+                "coinflip_biggest_loss": p.coinflip_biggest_loss,
+                "coinflip_gold_won_total": p.coinflip_gold_won_total,
+                "coinflip_gold_lost_total": p.coinflip_gold_lost_total
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),
