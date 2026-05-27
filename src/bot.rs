@@ -1603,36 +1603,18 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         tokio::spawn(async move {
                             tracing::info!("[Admin] Simulation de {} lancers pour {}", count, target_user);
-                            if let Ok(mut player) = state_task.repo.get_or_create_player(&target_user).await {
-                                let mut success_count = 0;
-                                let mut junk_count = 0;
-                                let mut fail_count = 0;
-
-                                for _ in 0..count {
-                                    let level_factor = (player.level as f64 - 1.0) / 199.0;
-                                    let success_rate = 0.35 + (level_factor * 0.20);
-                                    let junk_rate = 0.05;
-                                    let roll = rand::random::<f64>();
-
-                                    if roll < success_rate {
-                                        if let Some(fish) = generate_fish() {
-                                            success_count += 1;
-                                            player.add_xp(25);
-                                            let _ = state_task.repo.save_attempt(&player, true, Some(fish)).await;
+                            if let Ok(player) = state_task.repo.get_or_create_player(&target_user).await {
+                                if let Some(player_id) = player.id {
+                                    match state_task.repo.execute_simulation(player_id, &target_user, count).await {
+                                        Ok((success_count, junk_count, fail_count, final_level)) => {
+                                            let _ = client_msg.say(channel_login, format!("✅ Simulation terminée pour @{} : {} poissons, {} déchets, {} échecs. Niv. {}", target_user, success_count, junk_count, fail_count, final_level)).await;
                                         }
-                                    } else if roll < success_rate + junk_rate {
-                                        if let Some(junk) = generate_junk() {
-                                            junk_count += 1;
-                                            player.add_xp(5);
-                                            let _ = state_task.repo.save_attempt(&player, true, Some(junk)).await;
+                                        Err(e) => {
+                                            tracing::error!("❌ Erreur de simulation pour @{} : {}", target_user, e);
+                                            let _ = client_msg.say(channel_login, format!("❌ Erreur de simulation pour @{} : {}", target_user, e)).await;
                                         }
-                                    } else {
-                                        fail_count += 1;
-                                        player.add_xp(5);
-                                        let _ = state_task.repo.save_attempt(&player, false, None).await;
                                     }
                                 }
-                                let _ = client_msg.say(channel_login, format!("✅ Simulation terminée pour @{} : {} poissons, {} déchets, {} échecs. Niv. {}", target_user, success_count, junk_count, fail_count, player.level)).await;
                             }
                         });
                     }
@@ -1806,7 +1788,11 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                              let other_banana = if fish.name == "Pristine Banana 1" { "Pristine Banana 2" } else { "Pristine Banana 1" };
                                              if let Ok(has_other) = state_task.repo.has_caught_banana(player_id, other_banana).await {
                                                  if has_other {
-                                                     resp.push_str(&format!(" 👑 @{} devient le nouveau ROI DES BANANES ! 👑", username));
+                                                     if let Ok(already_king) = state_task.repo.is_active_king(player_id).await {
+                                                         if !already_king {
+                                                             resp.push_str(&format!(" 👑 @{} devient le nouveau ROI DES BANANES ! 👑", username));
+                                                         }
+                                                     }
                                                  }
                                              }
                                          }

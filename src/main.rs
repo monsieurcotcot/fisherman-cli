@@ -154,12 +154,12 @@ async fn main() -> Result<(), MyError> {
 
     // Correction et couronnement automatique des Rois Bananes actifs au démarrage
     let active_king: Option<(i64, String)> = sqlx::query_as(
-        "SELECT player_id, username 
-         FROM catches c 
-         JOIN players p ON c.player_id = p.id 
-         WHERE fish_name IN ('Pristine Banana 1', 'Pristine Banana 2') 
-         GROUP BY player_id 
-         HAVING COUNT(DISTINCT fish_name) = 2"
+        "SELECT c1.player_id, p.username \
+         FROM catches c1 \
+         JOIN catches c2 ON c1.player_id = c2.player_id \
+         JOIN players p ON c1.player_id = p.id \
+         WHERE c1.id = (SELECT id FROM catches WHERE fish_name = 'Pristine Banana 1' ORDER BY id DESC LIMIT 1) \
+           AND c2.id = (SELECT id FROM catches WHERE fish_name = 'Pristine Banana 2' ORDER BY id DESC LIMIT 1)"
     )
     .fetch_optional(&pool)
     .await
@@ -197,6 +197,18 @@ async fn main() -> Result<(), MyError> {
                     .await;
                 let _ = tx.commit().await;
             }
+        }
+    } else {
+        // Dethrone any active King since no single player currently holds both latest bananas
+        let has_active: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM banana_kings_history WHERE dethroned_at IS NULL")
+            .fetch_one(&pool)
+            .await
+            .unwrap_or_default();
+        if has_active > 0 {
+            tracing::info!("🍌 [Banana King] Aucun joueur ne possède les deux dernières bananes. Détrônement de l'ancien Roi.");
+            let _ = sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
+                .execute(&pool)
+                .await;
         }
     }
 
@@ -263,11 +275,17 @@ async fn main() -> Result<(), MyError> {
     tasks::start_backup_task(Arc::clone(&state));
 
     if let Some(mut tokens) = auth_manager.load_tokens() {
-        if tokens.expires_at < Utc::now() {
+        let is_valid = auth_manager.validate_token(&tokens.access_token).await;
+        
+        if tokens.expires_at < Utc::now() || !is_valid {
+            if !is_valid {
+                tracing::warn!("⚠️ [Auth] Le token de session du Bot est invalide à distance. Lancement d'un rafraîchissement forcé...");
+            }
             match auth_manager.refresh_tokens(&tokens.refresh_token).await {
                 Ok(new_tokens) => {
                     let _ = auth_manager.save_tokens(&new_tokens);
                     tokens = new_tokens;
+                    tracing::info!("✅ [Auth] Token du Bot rafraîchi avec succès.");
                 }
                 Err(e) => {
                     tracing::error!("Failed to refresh bot tokens: {}", e);

@@ -135,9 +135,15 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                     }
                 }
             }
+            let is_banana_king = state.repo.is_active_king(p.id.unwrap()).await.unwrap_or(false);
+            let has_banana_1 = state.repo.has_caught_banana(p.id.unwrap(), "Pristine Banana 1").await.unwrap_or(false);
+            let has_banana_2 = state.repo.has_caught_banana(p.id.unwrap(), "Pristine Banana 2").await.unwrap_or(false);
 
             Json(serde_json::json!({
                 "username": p.username,
+                "is_banana_king": is_banana_king,
+                "has_banana_1": has_banana_1,
+                "has_banana_2": has_banana_2,
                 "total": p.total_attempts,
                 "success": p.successful_attempts,
                 "failed": p.failed_attempts,
@@ -164,7 +170,9 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "coinflip_current_win_streak": p.coinflip_current_win_streak,
                 "coinflip_current_loss_streak": p.coinflip_current_loss_streak,
                 "coinflip_max_win_streak": p.coinflip_max_win_streak,
-                "coinflip_max_loss_streak": p.coinflip_max_loss_streak
+                "coinflip_max_loss_streak": p.coinflip_max_loss_streak,
+                "gold_given_total": p.gold_given_total,
+                "max_gold_held": p.max_gold_held
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),

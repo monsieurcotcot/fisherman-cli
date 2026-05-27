@@ -373,9 +373,9 @@ async function fetchStats(u) {
             }
 
             // Logique "Roi des Bananes" & Couronne
-            const hasBanana1 = allCatches.some(c => c.name === "Pristine Banana 1");
-            const hasBanana2 = allCatches.some(c => c.name === "Pristine Banana 2");
-            const isBananaKing = hasBanana1 && hasBanana2;
+            const hasBanana1 = data.has_banana_1;
+            const hasBanana2 = data.has_banana_2;
+            const isBananaKing = data.is_banana_king;
 
             document.getElementById('res-crown').style.display = isBananaKing ? 'block' : 'none';
             document.getElementById('res-banana-king-badge').style.display = isBananaKing ? 'inline' : 'none';
@@ -404,6 +404,9 @@ async function fetchStats(u) {
             } else {
                 bananaShowcase.classList.remove('active');
             }
+
+            // Rendre les Médailles & Hauts Faits
+            renderMedals(data);
 
             // Rendre les Trophées Éternels
             const trophiesSection = document.getElementById('trophiesSection');
@@ -1067,3 +1070,172 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+
+function renderMedals(data) {
+    const medalsBox = document.getElementById('medalsBox');
+    const medalsList = document.getElementById('medalsList');
+    if (!medalsBox || !medalsList) return;
+
+    medalsList.innerHTML = '';
+    medalsBox.style.display = 'block';
+
+    // Calculer le pourcentage de complétion du Pokédex (Musée)
+    let totalSpecies = (flatFishList.length || 0) + (flatJunkList.length || 0);
+    if (totalSpecies === 0) {
+        totalSpecies = 243; // Repli statique sur le catalogue de 243 espèces du jeu
+    }
+    const discoveredSpecies = (data.museum || []).length;
+    const pokedexPercentage = totalSpecies > 0 ? Math.round((discoveredSpecies / totalSpecies) * 100) : 0;
+
+    const medalConfigs = [
+        {
+            name: "Magnat de l'Or",
+            desc: "Maximum d'or détenu historiquement",
+            val: data.max_gold_held || 0,
+            icon: "🪙",
+            tiers: [
+                { name: "Bronze", val: 100000, class: "tier-bronze" },
+                { name: "Argent", val: 400000, class: "tier-argent" },
+                { name: "Or", val: 1000000, class: "tier-or" },
+                { name: "Platine", val: 3000000, class: "tier-platine" },
+                { name: "Diamant", val: 10000000, class: "tier-diamant" },
+                { name: "Obsidienne", val: 100000000, class: "tier-obsidienne" }
+            ],
+            isGold: true
+        },
+        {
+            name: "Grand Pêcheur",
+            desc: "Nombre total de poissons réels capturés",
+            val: data.success || 0,
+            icon: "🎣",
+            tiers: [
+                { name: "Bronze", val: 100, class: "tier-bronze" },
+                { name: "Argent", val: 400, class: "tier-argent" },
+                { name: "Or", val: 1000, class: "tier-or" },
+                { name: "Platine", val: 3000, class: "tier-platine" },
+                { name: "Diamant", val: 5000, class: "tier-diamant" },
+                { name: "Obsidienne", val: 10000, class: "tier-obsidienne" }
+            ]
+        },
+        {
+            name: "Le Plus Généreux",
+            desc: "Or total donné via !fish give",
+            val: data.gold_given_total || 0,
+            icon: "🎁",
+            tiers: [
+                { name: "Bronze", val: 500, class: "tier-bronze" },
+                { name: "Argent", val: 2000, class: "tier-argent" },
+                { name: "Or", val: 4000, class: "tier-or" },
+                { name: "Platine", val: 10000, class: "tier-platine" },
+                { name: "Diamant", val: 50000, class: "tier-diamant" },
+                { name: "Obsidienne", val: 200000, class: "tier-obsidienne" }
+            ],
+            isGold: true
+        },
+        {
+            name: "Flambeur Éternel",
+            desc: "Série maximale de victoires consécutives au Coinflip",
+            val: data.coinflip_max_win_streak || 0,
+            icon: "🎰",
+            tiers: [
+                { name: "Bronze", val: 3, class: "tier-bronze" },
+                { name: "Argent", val: 5, class: "tier-argent" },
+                { name: "Or", val: 7, class: "tier-or" },
+                { name: "Platine", val: 9, class: "tier-platine" },
+                { name: "Diamant", val: 11, class: "tier-diamant" },
+                { name: "Obsidienne", val: 12, class: "tier-obsidienne" }
+            ]
+        },
+        {
+            name: "Chat Noir",
+            desc: "Série maximale de défaites consécutives au Coinflip",
+            val: data.coinflip_max_loss_streak || 0,
+            icon: "💀",
+            tiers: [
+                { name: "Bronze", val: 3, class: "tier-bronze" },
+                { name: "Argent", val: 5, class: "tier-argent" },
+                { name: "Or", val: 7, class: "tier-or" },
+                { name: "Platine", val: 9, class: "tier-platine" },
+                { name: "Diamant", val: 11, class: "tier-diamant" },
+                { name: "Obsidienne", val: 12, class: "tier-obsidienne" }
+            ]
+        },
+        {
+            name: "Conservateur du Musée",
+            desc: "Complétion globale du Pokédex (Poissons et Déchets)",
+            val: pokedexPercentage,
+            icon: "📖",
+            tiers: [
+                { name: "Bronze", val: 15, class: "tier-bronze" },
+                { name: "Argent", val: 30, class: "tier-argent" },
+                { name: "Or", val: 50, class: "tier-or" },
+                { name: "Platine", val: 70, class: "tier-platine" },
+                { name: "Diamant", val: 90, class: "tier-diamant" },
+                { name: "Obsidienne", val: 100, class: "tier-obsidienne" }
+            ],
+            isPercent: true
+        }
+    ];
+
+    medalConfigs.forEach(m => {
+        let currentTier = null;
+        let nextTier = null;
+
+        for (let i = 0; i < m.tiers.length; i++) {
+            if (m.val >= m.tiers[i].val) {
+                currentTier = m.tiers[i];
+                nextTier = m.tiers[i + 1] || null;
+            } else {
+                if (!currentTier && !nextTier) {
+                    nextTier = m.tiers[i];
+                }
+                break;
+            }
+        }
+
+        const item = document.createElement('div');
+        
+        if (!currentTier) {
+            item.className = 'medal-item locked';
+            item.innerHTML = '🔒';
+            item.title = '??? (Verrouillé)';
+        } else {
+            item.className = `medal-item ${currentTier.class}`;
+            item.innerHTML = m.icon;
+            
+            const formatValue = (v) => {
+                if (m.isGold) {
+                    return v.toLocaleString('fr-FR') + ' po';
+                }
+                if (m.isPercent) {
+                    return v + '%';
+                }
+                return v.toLocaleString('fr-FR');
+            };
+
+            let tooltipText = `${m.name} - Palier ${currentTier.name}\n`;
+            tooltipText += `${m.desc}\n`;
+            tooltipText += `Statistique actuelle : ${formatValue(m.val)}\n`;
+            
+            if (nextTier) {
+                tooltipText += `Prochain palier (${nextTier.name}) : ${formatValue(m.val)} / ${formatValue(nextTier.val)}`;
+            } else {
+                tooltipText += `🏆 Palier maximum atteint !`;
+            }
+            
+            item.title = tooltipText;
+            
+            let glowColor = '#efeff1';
+            if (currentTier.name === 'Bronze') glowColor = '#cd7f32';
+            else if (currentTier.name === 'Argent') glowColor = '#bdc3c7';
+            else if (currentTier.name === 'Or') glowColor = '#ffd700';
+            else if (currentTier.name === 'Platine') glowColor = '#1abc9c';
+            else if (currentTier.name === 'Diamant') glowColor = '#3498db';
+            else if (currentTier.name === 'Obsidienne') glowColor = '#ffffff';
+            
+            item.style.color = glowColor;
+        }
+
+        medalsList.appendChild(item);
+    });
+}

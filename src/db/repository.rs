@@ -99,6 +99,8 @@ impl Repository {
             coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
             coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+            gold_given_total: row.get("gold_given_total"),
+            max_gold_held: row.get("max_gold_held"),
         }).collect();
 
         Ok(players)
@@ -189,6 +191,8 @@ impl Repository {
                 coinflip_current_loss_streak: r.get("coinflip_current_loss_streak"),
                 coinflip_max_win_streak: r.get("coinflip_max_win_streak"),
                 coinflip_max_loss_streak: r.get("coinflip_max_loss_streak"),
+                gold_given_total: r.get("gold_given_total"),
+                max_gold_held: r.get("max_gold_held"),
             }))
         } else {
             Ok(None)
@@ -231,6 +235,8 @@ impl Repository {
             coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
             coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+            gold_given_total: row.get("gold_given_total"),
+            max_gold_held: row.get("max_gold_held"),
         }).collect())
     }
 
@@ -284,6 +290,8 @@ impl Repository {
                 coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
                 coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
                 coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+                gold_given_total: row.get("gold_given_total"),
+                max_gold_held: row.get("max_gold_held"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -338,6 +346,8 @@ impl Repository {
             coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
             coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+            gold_given_total: row.get("gold_given_total"),
+            max_gold_held: row.get("max_gold_held"),
         }).collect();
 
         Ok(players)
@@ -355,9 +365,10 @@ impl Repository {
     pub async fn claim_daily_reward(&self, player_id: i64, consecutive: i32, total: i32, reward_gold: i64) -> Result<(), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
-        sqlx::query("UPDATE players SET last_daily_reward_at = CURRENT_TIMESTAMP, consecutive_days = ?, total_days = ?, gold = gold + ? WHERE id = ?")
+        sqlx::query("UPDATE players SET last_daily_reward_at = CURRENT_TIMESTAMP, consecutive_days = ?, total_days = ?, gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
             .bind(consecutive)
             .bind(total)
+            .bind(reward_gold)
             .bind(reward_gold)
             .bind(player_id)
             .execute(&mut *tx)
@@ -482,7 +493,8 @@ impl Repository {
 
     pub async fn update_player_gold(&self, player_id: i64, amount: i64) -> Result<i64, sqlx::Error> {
         let mut tx = self.pool.begin().await?;
-        sqlx::query("UPDATE players SET gold = MAX(0, gold + ?) WHERE id = ?")
+        sqlx::query("UPDATE players SET gold = MAX(0, gold + ?), max_gold_held = MAX(max_gold_held, MAX(0, gold + ?)) WHERE id = ?")
+            .bind(amount)
             .bind(amount)
             .bind(player_id)
             .execute(&mut *tx)
@@ -500,6 +512,7 @@ impl Repository {
         if win {
             sqlx::query("UPDATE players SET \
                           gold = gold + ?, \
+                          max_gold_held = MAX(max_gold_held, gold + ?), \
                           coinflip_wins = COALESCE(coinflip_wins, 0) + 1, \
                           coinflip_gold_won_total = COALESCE(coinflip_gold_won_total, 0) + ?, \
                           coinflip_biggest_win = MAX(COALESCE(coinflip_biggest_win, 0), ?), \
@@ -507,6 +520,7 @@ impl Repository {
                           coinflip_max_win_streak = MAX(COALESCE(coinflip_max_win_streak, 0), COALESCE(coinflip_current_win_streak, 0) + 1), \
                           coinflip_current_loss_streak = 0 \
                           WHERE id = ?")
+                .bind(wager)
                 .bind(wager)
                 .bind(wager)
                 .bind(wager)
@@ -569,6 +583,8 @@ impl Repository {
             coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
             coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+            gold_given_total: row.get("gold_given_total"),
+            max_gold_held: row.get("max_gold_held"),
         };
 
         tx.commit().await?;
@@ -617,6 +633,8 @@ impl Repository {
             coinflip_current_loss_streak: row.get("coinflip_current_loss_streak"),
             coinflip_max_win_streak: row.get("coinflip_max_win_streak"),
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
+            gold_given_total: row.get("gold_given_total"),
+            max_gold_held: row.get("max_gold_held"),
         }).collect();
 
         Ok(players)
@@ -646,6 +664,9 @@ impl Repository {
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
+
+        // Mettre à jour le statut du Roi des Bananes
+        Self::check_and_update_banana_king_status(&mut tx, 0).await?;
 
         tx.commit().await?;
         Ok(())
@@ -827,13 +848,8 @@ impl Repository {
 
         if let Some(f) = fish {
             let is_banana = f.name == "Pristine Banana 1" || f.name == "Pristine Banana 2";
-            if is_banana {
-                sqlx::query("DELETE FROM catches WHERE fish_name = ? AND player_id != ?")
-                    .bind(&f.name)
-                    .bind(player.id)
-                    .execute(&mut *tx)
-                    .await?;
-            }
+            
+            // Bananas are now always inserted as new rows (no unique skip)
             sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
                 .bind(player.id)
                 .bind(&f.name)
@@ -851,35 +867,7 @@ impl Repository {
             self.record_museum_discovery(&mut *tx, player.id.unwrap(), &f).await?;
 
             if is_banana {
-                let banana_count: i64 = sqlx::query_scalar(
-                    "SELECT COUNT(DISTINCT fish_name) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
-                )
-                .bind(player.id)
-                .fetch_one(&mut *tx)
-                .await?;
-
-                if banana_count == 2 {
-                    let is_already_king: i64 = sqlx::query_scalar(
-                        "SELECT COUNT(*) FROM banana_kings_history WHERE player_id = ? AND dethroned_at IS NULL"
-                    )
-                    .bind(player.id)
-                    .fetch_one(&mut *tx)
-                    .await?;
-
-                    if is_already_king == 0 {
-                        // Dethrone any existing active King
-                        sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
-                            .execute(&mut *tx)
-                            .await?;
-
-                        // Insert new King record
-                        sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
-                            .bind(player.id)
-                            .bind(&player.username)
-                            .execute(&mut *tx)
-                            .await?;
-                    }
-                }
+                Self::check_and_update_banana_king_status(&mut tx, player.id.unwrap()).await?;
             }
         }
 
@@ -892,14 +880,12 @@ impl Repository {
         current_player_id: i64,
         banana_name: &str,
     ) -> Result<Option<String>, sqlx::Error> {
-        let mut tx = self.pool.begin().await?;
-
+        // Find the owner of the latest catch of banana_name
         let row: Option<sqlx::sqlite::SqliteRow> = sqlx::query(
-            "SELECT p.id, p.username FROM catches c JOIN players p ON c.player_id = p.id WHERE c.fish_name = ? AND p.id != ?"
+            "SELECT p.id, p.username FROM catches c JOIN players p ON c.player_id = p.id WHERE c.fish_name = ? ORDER BY c.id DESC LIMIT 1"
         )
         .bind(banana_name)
-        .bind(current_player_id)
-        .fetch_optional(&mut *tx)
+        .fetch_optional(&self.pool)
         .await?;
 
         if let Some(r) = row {
@@ -907,74 +893,209 @@ impl Repository {
             let old_player_id: i64 = r.get("id");
             let old_username: String = r.get("username");
             
-            sqlx::query("DELETE FROM catches WHERE fish_name = ? AND player_id = ?")
-                .bind(banana_name)
-                .bind(old_player_id)
-                .execute(&mut *tx)
-                .await?;
-
-            tx.commit().await?;
-            Ok(Some(old_username))
+            if old_player_id != current_player_id {
+                Ok(Some(old_username))
+            } else {
+                Ok(None)
+            }
         } else {
-            sqlx::query("DELETE FROM catches WHERE fish_name = ? AND player_id != ?")
-                .bind(banana_name)
-                .bind(current_player_id)
-                .execute(&mut *tx)
-                .await?;
-
-            tx.commit().await?;
             Ok(None)
         }
     }
 
     pub async fn has_caught_banana(&self, player_id: i64, banana_name: &str) -> Result<bool, sqlx::Error> {
-        let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM catches WHERE player_id = ? AND fish_name = ?")
-            .bind(player_id)
-            .bind(banana_name)
-            .fetch_one(&self.pool)
-            .await?;
+        let latest_owner: Option<i64> = sqlx::query_scalar(
+            "SELECT player_id FROM catches WHERE fish_name = ? ORDER BY id DESC LIMIT 1"
+        )
+        .bind(banana_name)
+        .fetch_optional(&self.pool)
+        .await?;
+        Ok(latest_owner == Some(player_id))
+    }
+
+    pub async fn is_active_king(&self, player_id: i64) -> Result<bool, sqlx::Error> {
+        let count: i64 = sqlx::query_scalar(
+            "SELECT COUNT(*) FROM banana_kings_history WHERE player_id = ? AND dethroned_at IS NULL"
+        )
+        .bind(player_id)
+        .fetch_one(&self.pool)
+        .await?;
         Ok(count > 0)
     }
 
     async fn check_and_update_banana_king_status(
         tx: &mut sqlx::Transaction<'_, sqlx::Sqlite>,
-        player_id: i64,
+        _player_id: i64,
     ) -> Result<(), sqlx::Error> {
-        let username: String = sqlx::query_scalar("SELECT username FROM players WHERE id = ?")
-            .bind(player_id)
-            .fetch_one(&mut **tx)
-            .await?;
-
-        let count: i64 = sqlx::query_scalar(
-            "SELECT COUNT(DISTINCT fish_name) FROM catches WHERE player_id = ? AND (fish_name = 'Pristine Banana 1' OR fish_name = 'Pristine Banana 2')"
+        // Find the owner of the latest catch of Pristine Banana 1
+        let latest_b1_owner: Option<i64> = sqlx::query_scalar(
+            "SELECT player_id FROM catches WHERE fish_name = 'Pristine Banana 1' ORDER BY id DESC LIMIT 1"
         )
-        .bind(player_id)
-        .fetch_one(&mut **tx)
+        .fetch_optional(&mut **tx)
         .await?;
 
-        if count == 2 {
-            let is_already_king: i64 = sqlx::query_scalar(
-                "SELECT COUNT(*) FROM banana_kings_history WHERE player_id = ? AND dethroned_at IS NULL"
-            )
-            .bind(player_id)
-            .fetch_one(&mut **tx)
-            .await?;
+        // Find the owner of the latest catch of Pristine Banana 2
+        let latest_b2_owner: Option<i64> = sqlx::query_scalar(
+            "SELECT player_id FROM catches WHERE fish_name = 'Pristine Banana 2' ORDER BY id DESC LIMIT 1"
+        )
+        .fetch_optional(&mut **tx)
+        .await?;
 
-            if is_already_king == 0 {
-                // Dethrone any existing active King
-                sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
-                    .execute(&mut **tx)
+        match (latest_b1_owner, latest_b2_owner) {
+            (Some(owner1), Some(owner2)) if owner1 == owner2 => {
+                // One single player owns the latest catch of both bananas!
+                let username: String = sqlx::query_scalar("SELECT username FROM players WHERE id = ?")
+                    .bind(owner1)
+                    .fetch_one(&mut **tx)
                     .await?;
 
-                // Insert new King record
-                sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
-                    .bind(player_id)
-                    .bind(&username)
+                let is_already_king: i64 = sqlx::query_scalar(
+                    "SELECT COUNT(*) FROM banana_kings_history WHERE player_id = ? AND dethroned_at IS NULL"
+                )
+                .bind(owner1)
+                .fetch_one(&mut **tx)
+                .await?;
+
+                if is_already_king == 0 {
+                    // Dethrone any existing active King
+                    sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
+                        .execute(&mut **tx)
+                        .await?;
+
+                    // Insert new King record
+                    sqlx::query("INSERT INTO banana_kings_history (player_id, username, dethroned_at) VALUES (?, ?, NULL)")
+                        .bind(owner1)
+                        .bind(&username)
+                        .execute(&mut **tx)
+                        .await?;
+                }
+            }
+            _ => {
+                // No player owns both latest bananas.
+                // Dethrone any active King if one exists.
+                sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
                     .execute(&mut **tx)
                     .await?;
             }
         }
         Ok(())
+    }
+
+    pub async fn execute_simulation(
+        &self,
+        player_id: i64,
+        username: &str,
+        count: u32,
+    ) -> Result<(u32, u32, u32, i32), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // Load current player state
+        let r = sqlx::query("SELECT p.*, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND is_junk = 1) as junk_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Banana%') as banana_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Carte Postale%') as postcard_count, \
+            (SELECT COUNT(*) FROM catches WHERE player_id = p.id AND fish_name LIKE '%Gemme%') as gem_count \
+            FROM players p WHERE p.id = ?")
+            .bind(player_id)
+            .fetch_one(&mut *tx)
+            .await?;
+
+        let mut player = Player {
+            id: Some(r.get::<i64, _>("id")),
+            username: r.get("username"),
+            total_attempts: r.get("total_attempts"),
+            successful_attempts: r.get("successful_attempts"),
+            failed_attempts: r.get("failed_attempts"),
+            last_fishing_time: r.get::<Option<DateTime<Utc>>, _>("last_fishing_time"),
+            level: r.get("level"),
+            xp: r.get("xp"),
+            vip_until: r.get::<Option<DateTime<Utc>>, _>("vip_until"),
+            junk_count: r.get("junk_count"),
+            banana_count: r.get("banana_count"),
+            postcard_count: r.get("postcard_count"),
+            gem_count: r.get("gem_count"),
+            profile_image_url: r.get("profile_image_url"),
+            gold: r.get("gold"),
+            last_daily_reward_at: r.get::<Option<DateTime<Utc>>, _>("last_daily_reward_at"),
+            consecutive_days: r.get("consecutive_days"),
+            total_days: r.get("total_days"),
+            coinflip_wins: r.get("coinflip_wins"),
+            coinflip_losses: r.get("coinflip_losses"),
+            coinflip_biggest_win: r.get("coinflip_biggest_win"),
+            coinflip_biggest_loss: r.get("coinflip_biggest_loss"),
+            coinflip_gold_won_total: r.get("coinflip_gold_won_total"),
+            coinflip_gold_lost_total: r.get("coinflip_gold_lost_total"),
+            coinflip_current_win_streak: r.get("coinflip_current_win_streak"),
+            coinflip_current_loss_streak: r.get("coinflip_current_loss_streak"),
+            coinflip_max_win_streak: r.get("coinflip_max_win_streak"),
+            coinflip_max_loss_streak: r.get("coinflip_max_loss_streak"),
+            gold_given_total: r.get("gold_given_total"),
+            max_gold_held: r.get("max_gold_held"),
+        };
+
+        let mut success_count = 0;
+        let mut junk_count = 0;
+        let mut fail_count = 0;
+
+        for _ in 0..count {
+            let level_factor = (player.level as f64 - 1.0) / 199.0;
+            let success_rate = 0.35 + (level_factor * 0.20);
+            let junk_rate = 0.05;
+            let roll = rand::random::<f64>();
+
+            let (success, fish) = if roll < success_rate {
+                success_count += 1;
+                player.add_xp(25);
+                (true, crate::game::generate_fish())
+            } else if roll < success_rate + junk_rate {
+                junk_count += 1;
+                player.add_xp(5);
+                (true, crate::game::generate_junk())
+            } else {
+                fail_count += 1;
+                player.add_xp(5);
+                (false, None)
+            };
+
+            // Update player in DB
+            sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ?, vip_until = ?, gold = MAX(0, gold - 10) WHERE id = ?")
+                .bind(if success { 1 } else { 0 })
+                .bind(if success { 0 } else { 1 })
+                .bind(Utc::now())
+                .bind(player.level)
+                .bind(player.xp)
+                .bind(player.vip_until)
+                .bind(player.id)
+                .execute(&mut *tx)
+                .await?;
+
+            if let Some(f) = fish {
+                let is_banana = f.name == "Pristine Banana 1" || f.name == "Pristine Banana 2";
+                
+                sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    .bind(player.id)
+                    .bind(&f.name)
+                    .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
+                    .bind(f.size)
+                    .bind(f.weight)
+                    .bind(&f.state)
+                    .bind(&f.description)
+                    .bind(&f.stream_title)
+                    .bind(f.is_junk)
+                    .bind(username)
+                    .execute(&mut *tx)
+                    .await?;
+
+                self.record_museum_discovery(&mut *tx, player.id.unwrap(), &f).await?;
+                
+                if is_banana {
+                    Self::check_and_update_banana_king_status(&mut tx, player.id.unwrap()).await?;
+                }
+            }
+        }
+
+        tx.commit().await?;
+        Ok((success_count, junk_count, fail_count, player.level))
     }
 
     pub async fn execute_gold_sale(
@@ -993,13 +1114,48 @@ impl Repository {
                 .await?;
         }
 
-        sqlx::query("UPDATE players SET gold = gold + ? WHERE id = ?")
+        sqlx::query("UPDATE players SET gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
+            .bind(gold_earned)
             .bind(gold_earned)
             .bind(seller_id)
             .execute(&mut *tx)
             .await?;
 
         Self::check_and_update_banana_king_status(&mut tx, seller_id).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn execute_gold_transfer(
+        &self,
+        giver_id: i64,
+        receiver_id: i64,
+        amount: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // 1. Déduction avec vérification atomique de solde suffisant
+        let rows_affected = sqlx::query("UPDATE players SET gold = gold - ?, gold_given_total = gold_given_total + ? WHERE id = ? AND gold >= ?")
+            .bind(amount)
+            .bind(amount)
+            .bind(giver_id)
+            .bind(amount)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+
+        if rows_affected == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        // 2. Crédit au receveur
+        sqlx::query("UPDATE players SET gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
+            .bind(amount)
+            .bind(amount)
+            .bind(receiver_id)
+            .execute(&mut *tx)
+            .await?;
 
         tx.commit().await?;
         Ok(())
@@ -1034,7 +1190,8 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
-        sqlx::query("UPDATE players SET gold = gold + ? WHERE id = ?")
+        sqlx::query("UPDATE players SET gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
+            .bind(price)
             .bind(price)
             .bind(seller_id)
             .execute(&mut *tx)
@@ -1147,7 +1304,9 @@ impl Repository {
                 coinflip_current_win_streak INTEGER DEFAULT 0,
                 coinflip_current_loss_streak INTEGER DEFAULT 0,
                 coinflip_max_win_streak INTEGER DEFAULT 0,
-                coinflip_max_loss_streak INTEGER DEFAULT 0
+                coinflip_max_loss_streak INTEGER DEFAULT 0,
+                gold_given_total INTEGER DEFAULT 0,
+                max_gold_held INTEGER DEFAULT 0
             )"
         ).execute(&mut *tx).await?;
 
@@ -1272,6 +1431,9 @@ impl Repository {
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
+
+        // Mettre à jour le statut du Roi des Bananes
+        Self::check_and_update_banana_king_status(&mut tx, 0).await?;
 
         tx.commit().await?;
         Ok(())
@@ -1444,7 +1606,9 @@ mod tests {
                 coinflip_current_win_streak INTEGER DEFAULT 0,
                 coinflip_current_loss_streak INTEGER DEFAULT 0,
                 coinflip_max_win_streak INTEGER DEFAULT 0,
-                coinflip_max_loss_streak INTEGER DEFAULT 0
+                coinflip_max_loss_streak INTEGER DEFAULT 0,
+                gold_given_total INTEGER DEFAULT 0,
+                max_gold_held INTEGER DEFAULT 0
             )"
         ).execute(&pool).await.unwrap();
 
@@ -1571,22 +1735,21 @@ mod tests {
         let stolen_from = repo.check_and_execute_banana_theft(p_b.id.unwrap(), "Pristine Banana 1").await.unwrap();
         assert_eq!(stolen_from, Some("player_a".to_string()));
 
-        // Player A should NOT be dethroned now!
-        let hist_2 = repo.get_banana_kings_history().await.unwrap();
-        assert_eq!(hist_2.len(), 1);
-        assert_eq!(hist_2[0].username, "player_a");
-        assert!(hist_2[0].dethroned_at.is_none());
-
-        // Player B saves their Pristine Banana 1 catch
+        // Save B's Banana 1 catch!
         let b1_b = Fish::new("Pristine Banana 1".to_string(), Rarity::Divin, 21.0, 155.0, "pristine".to_string(), "Banana 1".to_string());
         repo.save_attempt(&p_b, true, Some(b1_b)).await.unwrap();
 
-        // Verify Player A lost banana 1 but retains banana 2
+        // Player A should now be dethroned because Player B has the latest Banana 1 catch!
+        let hist_2 = repo.get_banana_kings_history().await.unwrap();
+        assert_eq!(hist_2.len(), 1);
+        assert_eq!(hist_2[0].username, "player_a");
+        assert!(hist_2[0].dethroned_at.is_some());
+
+        // Verify Player A still has their original catches in database, but Player B has their new catch
         let catches_a_after = repo.get_player_catches(p_a.id.unwrap()).await.unwrap();
-        assert!(!catches_a_after.iter().any(|c| c.name == "Pristine Banana 1"));
+        assert!(catches_a_after.iter().any(|c| c.name == "Pristine Banana 1"));
         assert!(catches_a_after.iter().any(|c| c.name == "Pristine Banana 2"));
 
-        // Verify Player B has banana 1
         let catches_b = repo.get_player_catches(p_b.id.unwrap()).await.unwrap();
         assert!(catches_b.iter().any(|c| c.name == "Pristine Banana 1"));
 
@@ -1598,7 +1761,7 @@ mod tests {
         let b2_b = Fish::new("Pristine Banana 2".to_string(), Rarity::Divin, 22.0, 160.0, "pristine".to_string(), "Banana 2".to_string());
         repo.save_attempt(&p_b, true, Some(b2_b)).await.unwrap();
 
-        // Verify Player B has both
+        // Verify Player B has both latest captures!
         let has_b1 = repo.has_caught_banana(p_b.id.unwrap(), "Pristine Banana 1").await.unwrap();
         let has_b2 = repo.has_caught_banana(p_b.id.unwrap(), "Pristine Banana 2").await.unwrap();
         assert!(has_b1);
@@ -1725,6 +1888,49 @@ mod tests {
         assert_eq!(new_gold, 0);
         let player = repo.get_player("player_gold_test").await.unwrap().unwrap();
         assert_eq!(player.gold, 0);
+    }
+
+    #[tokio::test]
+    async fn test_execute_gold_transfer() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let p_id_a = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_a".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(100),
+        }).await.unwrap();
+
+        let p_id_b = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_b".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(50),
+        }).await.unwrap();
+
+        // 1. Transfert valide de 40 gold de A vers B
+        repo.execute_gold_transfer(p_id_a, p_id_b, 40).await.unwrap();
+        let player_a = repo.get_player("player_a").await.unwrap().unwrap();
+        let player_b = repo.get_player("player_b").await.unwrap().unwrap();
+        assert_eq!(player_a.gold, 60);
+        assert_eq!(player_b.gold, 90);
+
+        // 2. Transfert invalide de 70 gold de A vers B (solde insuffisant, car A n'a plus que 60 gold)
+        let res = repo.execute_gold_transfer(p_id_a, p_id_b, 70).await;
+        assert!(res.is_err());
+        let player_a_after = repo.get_player("player_a").await.unwrap().unwrap();
+        let player_b_after = repo.get_player("player_b").await.unwrap().unwrap();
+        assert_eq!(player_a_after.gold, 60); // Inchangé
+        assert_eq!(player_b_after.gold, 90); // Inchangé
     }
 
     #[tokio::test]

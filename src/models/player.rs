@@ -31,6 +31,8 @@ pub struct Player {
     pub coinflip_current_loss_streak: i64,
     pub coinflip_max_win_streak: i64,
     pub coinflip_max_loss_streak: i64,
+    pub gold_given_total: i64,
+    pub max_gold_held: i64,
 }
 
 impl Player {
@@ -64,6 +66,8 @@ impl Player {
             coinflip_current_loss_streak: 0,
             coinflip_max_win_streak: 0,
             coinflip_max_loss_streak: 0,
+            gold_given_total: 0,
+            max_gold_held: 0,
         }
     }
 

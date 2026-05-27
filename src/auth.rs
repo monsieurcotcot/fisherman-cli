@@ -190,6 +190,19 @@ impl AuthManager {
         })
     }
 
+    pub async fn validate_token(&self, access_token: &str) -> bool {
+        let client = Client::new();
+        let res = client.get("https://id.twitch.tv/oauth2/validate")
+            .header("Authorization", format!("OAuth {}", access_token.replace("oauth:", "").trim()))
+            .send()
+            .await;
+
+        match res {
+            Ok(r) => r.status().is_success(),
+            Err(_) => false,
+        }
+    }
+
     pub async fn refresh_tokens(&self, refresh_token: &str) -> Result<TwitchTokens, MyError> {
         let client = Client::new();
         let params = [
