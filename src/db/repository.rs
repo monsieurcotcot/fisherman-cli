@@ -649,11 +649,31 @@ impl Repository {
 
 
     pub async fn add_cooldown_penalty(&self, player_id: i64) -> Result<(), sqlx::Error> {
-        sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+5 seconds') WHERE id = ?")
+        sqlx::query("UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+20 seconds'), gold = MAX(0, gold - 20) WHERE id = ?")
             .bind(player_id)
             .execute(&self.pool)
             .await?;
         Ok(())
+    }
+
+    pub async fn record_stream_live_date(&self, date: chrono::NaiveDate) -> Result<(), sqlx::Error> {
+        let date_str = date.to_string();
+        sqlx::query("INSERT OR IGNORE INTO stream_live_dates (live_date) VALUES (?)")
+            .bind(&date_str)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn count_stream_days_between(&self, start: chrono::NaiveDate, end: chrono::NaiveDate) -> Result<i64, sqlx::Error> {
+        let start_str = start.to_string();
+        let end_str = end.to_string();
+        let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM stream_live_dates WHERE live_date > ? AND live_date < ?")
+            .bind(&start_str)
+            .bind(&end_str)
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(count)
     }
 
     pub async fn reset_player(&self, username: &str) -> Result<(), sqlx::Error> {
@@ -1688,6 +1708,12 @@ mod tests {
             )"
         ).execute(&pool).await.unwrap();
 
+        sqlx::query(
+            "CREATE TABLE stream_live_dates (
+                live_date TEXT PRIMARY KEY
+            )"
+        ).execute(&pool).await.unwrap();
+
         pool
     }
 
@@ -1911,6 +1937,39 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn test_add_cooldown_penalty() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let p_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_penalty_test".to_string(),
+            total_attempts: 10,
+            successful_attempts: 5,
+            failed_attempts: 5,
+            level: 3,
+            xp: 250,
+            vip_until: None,
+            gold: Some(100),
+        }).await.unwrap();
+
+        let initial_player = repo.get_player("player_penalty_test").await.unwrap().unwrap();
+        assert_eq!(initial_player.gold, 100);
+
+        // Apply penalty (adds 20s and deducts 20 gold)
+        repo.add_cooldown_penalty(p_id).await.unwrap();
+
+        let updated_player = repo.get_player("player_penalty_test").await.unwrap().unwrap();
+        assert_eq!(updated_player.gold, 80);
+        assert!(updated_player.last_fishing_time.is_some());
+
+        // Apply another penalty when player has less than 20 gold
+        let _ = repo.update_player_gold(p_id, -70).await.unwrap(); // gold set to 10
+        repo.add_cooldown_penalty(p_id).await.unwrap();
+        let final_player = repo.get_player("player_penalty_test").await.unwrap().unwrap();
+        assert_eq!(final_player.gold, 0); // clamped at 0
+    }
+
+    #[tokio::test]
     async fn test_execute_gold_transfer() {
         let pool = setup_db().await;
         let repo = Repository::new(pool);
@@ -2033,5 +2092,34 @@ mod tests {
         // Player A has net +150, Player B has net -40. A should be #1.
         assert_eq!(lb[0].username, "gambler_a");
         assert_eq!(lb[1].username, "gambler_b");
+    }
+
+    #[tokio::test]
+    async fn test_stream_live_dates() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let d1 = chrono::NaiveDate::from_ymd_opt(2026, 5, 25).unwrap(); // Monday
+        let d2 = chrono::NaiveDate::from_ymd_opt(2026, 5, 26).unwrap(); // Tuesday
+        let d3 = chrono::NaiveDate::from_ymd_opt(2026, 5, 27).unwrap(); // Wednesday
+
+        // Initially no stream days
+        let count = repo.count_stream_days_between(d1, d3).await.unwrap();
+        assert_eq!(count, 0);
+
+        // Record a stream day on Tuesday
+        repo.record_stream_live_date(d2).await.unwrap();
+
+        // Should find 1 stream day between Monday and Wednesday
+        let count = repo.count_stream_days_between(d1, d3).await.unwrap();
+        assert_eq!(count, 1);
+
+        // Monday to Tuesday (exclusive) should have 0 stream days
+        let count_d1_d2 = repo.count_stream_days_between(d1, d2).await.unwrap();
+        assert_eq!(count_d1_d2, 0);
+
+        // Tuesday to Wednesday (exclusive) should have 0 stream days
+        let count_d2_d3 = repo.count_stream_days_between(d2, d3).await.unwrap();
+        assert_eq!(count_d2_d3, 0);
     }
 }

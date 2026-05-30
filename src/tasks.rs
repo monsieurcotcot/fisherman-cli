@@ -54,3 +54,13 @@ pub fn start_backup_task(state: Arc<AppState>) {
         }
     });
 }
+
+pub fn start_stream_monitor_task(state: Arc<AppState>) {
+    tokio::spawn(async move {
+        loop {
+            // Check every 5 minutes (300 seconds)
+            sleep(Duration::from_secs(300)).await;
+            let _ = crate::bot::is_stream_online(&state).await;
+        }
+    });
+}

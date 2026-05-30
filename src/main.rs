@@ -244,6 +244,7 @@ async fn main() -> Result<(), MyError> {
     });
 
     tasks::start_vip_cleanup_task(Arc::clone(&state));
+    tasks::start_stream_monitor_task(Arc::clone(&state));
 
     if let Ok(0) = repo.count_players().await {
         if let Ok(data) = tokio::fs::read_to_string("data/players_backup.json").await {

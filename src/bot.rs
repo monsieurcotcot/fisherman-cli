@@ -429,14 +429,27 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 let mut total = player.total_days;
 
                                 if let Some(last_time) = player.last_daily_reward_at {
-                                    if last_time.date_naive() == today - chrono::Duration::days(1) {
-                                        // Streak continues
-                                        consecutive += 1;
-                                        total += 1;
-                                    } else {
-                                        // Streak broken
-                                        consecutive = 1;
-                                        total += 1;
+                                    let last_date = last_time.date_naive();
+                                    match state_task_daily.repo.count_stream_days_between(last_date, today).await {
+                                        Ok(count) => {
+                                            if count > 0 {
+                                                // Stream was online at least once since last reward, and viewer missed it -> Streak broken!
+                                                consecutive = 1;
+                                            } else {
+                                                // No stream days were missed -> Streak continues!
+                                                consecutive += 1;
+                                            }
+                                            total += 1;
+                                        }
+                                        Err(_) => {
+                                            // Fallback
+                                            if last_date == today - chrono::Duration::days(1) {
+                                                consecutive += 1;
+                                            } else {
+                                                consecutive = 1;
+                                            }
+                                            total += 1;
+                                        }
                                     }
                                 } else {
                                     // First login reward
@@ -2039,9 +2052,9 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 let rem = player.get_remaining_cooldown();
                                 if let Some(id) = player.id { let _ = state_task.repo.add_cooldown_penalty(id).await; }
                                 let msg_str = if use_english {
-                                    format!("⏳ @{}, wait another {}s! (+5s penalty) ⚠️", username, rem + 5)
+                                    format!("⏳ @{}, wait another {}s! (+20s and -20 gold penalty) ⚠️", username, rem + 20)
                                 } else {
-                                    format!("⏳ @{}, attends encore {}s ! (+5s penalty) ⚠️", username, rem + 5)
+                                    format!("⏳ @{}, attends encore {}s ! (+20s et pénalité de 20 gold) ⚠️", username, rem + 20)
                                 };
                                 let _ = client_msg.say(channel_login, msg_str).await;
                             }
@@ -2079,6 +2092,14 @@ pub async fn is_stream_online(state: &AppState) -> bool {
     {
         let mut cache = state.stream_live_cache.write().await;
         *cache = Some((is_live, now));
+    }
+    
+    if is_live {
+        let repo = Arc::clone(&state.repo);
+        let today = now.date_naive();
+        tokio::spawn(async move {
+            let _ = repo.record_stream_live_date(today).await;
+        });
     }
     
     is_live
