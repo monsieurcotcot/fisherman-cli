@@ -84,6 +84,9 @@ pub struct AppState {
     pub pending_sales: RwLock<HashMap<String, PendingSale>>,
     pub pending_trades: RwLock<Vec<PendingTrade>>,
     pub daily_reward_cache: RwLock<HashMap<String, chrono::NaiveDate>>,
+    pub offline_attempts: RwLock<HashMap<String, u32>>,
+    pub offline_bypassed: RwLock<std::collections::HashSet<String>>,
+    pub stream_live_cache: RwLock<Option<(bool, DateTime<Utc>)>>,
 }
 
 use bot::start_bot;
@@ -235,6 +238,9 @@ async fn main() -> Result<(), MyError> {
         pending_sales: RwLock::new(HashMap::new()),
         pending_trades: RwLock::new(Vec::new()),
         daily_reward_cache: RwLock::new(HashMap::new()),
+        offline_attempts: RwLock::new(HashMap::new()),
+        offline_bypassed: RwLock::new(std::collections::HashSet::new()),
+        stream_live_cache: RwLock::new(None),
     });
 
     tasks::start_vip_cleanup_task(Arc::clone(&state));

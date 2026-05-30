@@ -523,6 +523,43 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         }
                     });
+                } else if text == "buble" || text == "!fish buble" || text == "!peche buble" || text == "!pêche buble" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            let attempts = {
+                                let att = state_task.offline_attempts.read().await;
+                                att.get(&username).copied().unwrap_or(0)
+                            };
+
+                            let use_english = match &player.language {
+                                Some(l) => l == "en",
+                                None => text.starts_with("!fish") || text == "buble",
+                            };
+
+                            if attempts >= 3 {
+                                // Reset attempts
+                                {
+                                    let mut att = state_task.offline_attempts.write().await;
+                                    att.remove(&username);
+                                }
+                                // Grant access
+                                {
+                                    let mut bypassed = state_task.offline_bypassed.write().await;
+                                    bypassed.insert(username.clone());
+                                }
+
+                                let msg_str = if use_english {
+                                    format!("🔑 @{}, access granted! You can now fish offline! 🌊", username)
+                                } else {
+                                    format!("🔑 @{}, accès autorisé ! Tu peux désormais pêcher hors-ligne ! 🌊", username)
+                                };
+                                let _ = client_msg.say(channel_login, msg_str).await;
+                            }
+                        }
+                    });
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -1796,7 +1833,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, "⚠️ @monsieurcotcot, aucune purge en attente. Tape !fish purge d'abord.".to_string()).await;
                         }
                     });
-                } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester")) {
+                } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "katouch51" || username == "ze_fisherman" || username == "ze_tester")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -1805,6 +1842,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             let is_admin = username == "monsieurcotcot";
+                            let is_bypass_user = username == "monsieurcotcot" || username == "katouch51" || username == "ze_fisherman" || username == "ze_tester";
                             
                             // Détermination de la langue de retour :
                             // 1. Préférence utilisateur en base si définie.
@@ -1813,6 +1851,37 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 Some(lang) => lang == "en",
                                 None => text.starts_with("!fish"),
                             };
+
+                            // Vérification du statut live du stream (sauf pour l'admin ou en mode test)
+                            let is_live = is_stream_online(&state_task).await;
+                            let is_bypassed = {
+                                let bypassed = state_task.offline_bypassed.read().await;
+                                bypassed.contains(&username)
+                            };
+
+                            if !is_live && !is_bypassed && !is_bypass_user && !is_test {
+                                let attempts;
+                                {
+                                    let mut att = state_task.offline_attempts.write().await;
+                                    let entry = att.entry(username.clone()).or_insert(0);
+                                    *entry += 1;
+                                    attempts = *entry;
+                                }
+
+                                if attempts >= 3 {
+                                    let msg_str = if use_english {
+                                        format!("🤐 @{}, you really insist... Give me the secret password to unlock offline fishing!", username)
+                                    } else {
+                                        format!("🤐 @{}, tu insistes vraiment... Donne-moi le mot de passe secret pour déverrouiller la pêche hors-ligne !", username)
+                                    };
+                                    let _ = client_msg.say(channel_login, msg_str).await;
+                                } else {
+                                    let phrases = get_offline_phrases(use_english);
+                                    let phrase = phrases.choose(&mut rand::thread_rng()).unwrap_or(&"Offline!");
+                                    let _ = client_msg.say(channel_login, format!("@{}, {}", username, phrase)).await;
+                                }
+                                return;
+                            }
 
                             // Vérification du coût en or (10 po requis)
                             if player.gold < 10 && !is_admin && !is_test {
@@ -1985,6 +2054,106 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
     *abort_lock = Some(handle);
 }
 
+pub async fn is_stream_online(state: &AppState) -> bool {
+    let now = Utc::now();
+    
+    // Check cache
+    {
+        let cache = state.stream_live_cache.read().await;
+        if let Some((is_live, last_checked)) = *cache {
+            if now.signed_duration_since(last_checked).num_seconds() < 30 {
+                return is_live;
+            }
+        }
+    }
+    
+    // Cache expired or empty, fetch from Twitch API
+    let tokens = state.auth.load_tokens();
+    let is_live = if let Some(t) = tokens {
+        state.auth.get_stream_info(&state.channel, &t.access_token).await.is_some()
+    } else {
+        false
+    };
+    
+    // Write cache
+    {
+        let mut cache = state.stream_live_cache.write().await;
+        *cache = Some((is_live, now));
+    }
+    
+    is_live
+}
+
+fn get_offline_phrases(use_english: bool) -> Vec<&'static str> {
+    if use_english {
+        vec![
+            "Hey you! monsieurcotcot's stream is offline, what on earth are you doing here? 🧐",
+            "Shh... The fish are sleeping, and so is the streamer. Come back when we are live! 🤫",
+            "You are fishing in complete darkness, friend. The stream is turned off! 🌑",
+            "No stream, no fish. That's the law of nature (and Twitch). 🚫",
+            "The lake is closed for nightly maintenance. Move along! 🚧",
+            "Uh, you are talking to a bot. The boss has gone to sleep. 🤖",
+            "Offline fishing? That's like trying to catch the wind with a sieve. 💨",
+            "Intrusion alert! A clandestine fisherman spotted on the offline channel! 🚨",
+            "Even the seasonal fish refuses to bite if monsieurcotcot isn't here to cast. 🎤",
+            "Sorry, the fishing customs office is closed. Go home! 🛂",
+            "Hey! Trying to sneak a catch while nobody is watching? 😉",
+            "The pufferfish is staring at you with judging eyes. 🐡",
+            "There is no audience to applaud your divine catch. What's the point? 🤷",
+            "The gamekeeper kikettebot is patrolling... Watch out or you might get banned! 👮",
+            "The hooks have been locked in the garage. Come back later! 🔑",
+            "Offline fishing? You've got big plans, but it's a no. ❌",
+            "The fish took advantage of the streamer's absence to host a pool party. 🏖️",
+            "Say, shouldn't you be doing homework instead of spamming an offline channel? 📚",
+            "The water is freezing and the chat is empty. Nothing will bite here. ❄️",
+            "Hey there! Poaching is severely punished by the poney law. 🐴",
+            "But... are you all alone in the dark on the lake shore? That's a bit creepy. 👻",
+            "The fish have migrated to another server while waiting for the stream. 💻",
+            "Halt! Fishing without an audience is a poetic offense. 🎭",
+            "The stream's water level is at 0%. Refilling next stream! 🚰",
+            "Patience is a virtue, but fishing offline is just a waste of bait. 🪱",
+            "A wild error appeared: Stream is 404. Fish not found! 🔌",
+            "Are you trying to level up in secret? We see you! 👀",
+            "The bait has gone on strike until monsieurcotcot starts the live. ✊",
+            "Go grab a coffee, watch a replay, and wait for the live! ☕",
+            "No live, no glory! Reconnect when the green light is on. 🟢",
+        ]
+    } else {
+        vec![
+            "Hey oh toi là ! Le stream de monsieurcotcot n'est pas en ligne, qu'est-ce que tu fous là ? 🧐",
+            "Chut... Les poissons dorment et le streameur aussi. Reviens quand ce sera en ligne ! 🤫",
+            "Tu pêches dans le noir complet là, l'ami. Le live est éteint ! 🌑",
+            "Pas de live, pas de poissons. C'est la loi de la nature (et de Twitch). 🚫",
+            "Le lac est fermé pour maintenance nocturne. Circulez ! 🚧",
+            "Euh, tu parles à un bot là. Le patron est parti dormir. 🤖",
+            "Pêcher hors-live ? C'est comme essayer de chasser le vent avec une passoire. 💨",
+            "Alerte intrusion ! Un pêcheur clandestin repéré sur le canal hors-ligne ! 🚨",
+            "Même le poisson de la saison refuse de mordre si monsieurcotcot n'est pas là pour commenter. 🎤",
+            "Désolé, la douane de la pêche est fermée. Rentrez chez vous ! 🛂",
+            "Hé ! Tu essaies de resquiller pendant que personne ne regarde ? 😉",
+            "Le poisson-globe t'observe avec un air de jugement désapprobateur. 🐡",
+            "Il n'y a pas de spectateurs pour applaudir ta prise divine. À quoi bon ? 🤷",
+            "Le garde-pêche kikettebot rôde... Fais gaffe à ne pas te faire ban ! 👮",
+            "Les hameçons ont été rangés au garage. Revenez plus tard ! 🔑",
+            "Pêcher hors-ligne ? Tu as de grands projets, toi. Mais c'est non. ❌",
+            "Les poissons ont profité de l'absence du streameur pour organiser une pool party. 🏖️",
+            "Dis donc, tu n'aurais pas des devoirs à faire au lieu de spammer un canal éteint ? 📚",
+            "L'eau est gelée et le chat est désert. Rien ne mordra ici. ❄️",
+            "Hé ho ! La pêche clandestine est sévèrement punie par la loi du poney. 🐴",
+            "Mais... tu es tout seul dans le noir sur la rive du lac ? C'est un peu flippant. 👻",
+            "Les poissons ont migré vers un autre serveur en attendant le début du live. 💻",
+            "Halte-là ! La pêche sans public est un délit poétique. 🎭",
+            "Le niveau d'eau du live est à 0%. Remplissage au prochain stream ! 🚰",
+            "La patience est une vertu, mais pêcher hors-live est juste un gaspillage d'appât. 🪱",
+            "Une erreur sauvage est apparue : Stream est 404. Poissons introuvables ! 🔌",
+            "Tu essaies de monter de niveau en cachette ? On te voit ! 👀",
+            "Les appâts se sont mis en grève en attendant que monsieurcotcot lance le live. ✊",
+            "Va prendre un café, regarde un replay, et attends le direct ! ☕",
+            "Pas de live, pas de gloire ! Reconnecte-toi quand le voyant est vert. 🟢",
+        ]
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2111,5 +2280,29 @@ mod tests {
             parse_trade_args("#123  500  @MonsieurCotCot"),
             Some(TradeArg::Direct { catch_id: 123, price: 500, recipient: "monsieurcotcot".to_string() })
         );
+    }
+
+    #[test]
+    fn test_offline_phrases_count() {
+        let fr_phrases = get_offline_phrases(false);
+        let en_phrases = get_offline_phrases(true);
+        assert_eq!(fr_phrases.len(), 30, "French phrases count must be exactly 30");
+        assert_eq!(en_phrases.len(), 30, "English phrases count must be exactly 30");
+
+        // Verify that some phrases contain monsieurcotcot
+        assert!(fr_phrases[0].contains("monsieurcotcot"));
+        assert!(en_phrases[0].contains("monsieurcotcot"));
+    }
+
+    #[test]
+    fn test_bypass_users() {
+        let bypass_users = vec!["monsieurcotcot", "katouch51", "ze_fisherman", "ze_tester"];
+        for u in bypass_users {
+            let is_bypass = u == "monsieurcotcot" || u == "katouch51" || u == "ze_fisherman" || u == "ze_tester";
+            assert!(is_bypass);
+        }
+        let normal_user = "someone_else";
+        let is_bypass = normal_user == "monsieurcotcot" || normal_user == "katouch51" || normal_user == "ze_fisherman" || normal_user == "ze_tester";
+        assert!(!is_bypass);
     }
 }
