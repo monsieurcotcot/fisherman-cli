@@ -101,6 +101,7 @@ impl Repository {
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
+            language: row.get("language"),
         }).collect();
 
         Ok(players)
@@ -193,6 +194,7 @@ impl Repository {
                 coinflip_max_loss_streak: r.get("coinflip_max_loss_streak"),
                 gold_given_total: r.get("gold_given_total"),
                 max_gold_held: r.get("max_gold_held"),
+                language: r.get("language"),
             }))
         } else {
             Ok(None)
@@ -237,6 +239,7 @@ impl Repository {
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
+            language: row.get("language"),
         }).collect())
     }
 
@@ -292,6 +295,7 @@ impl Repository {
                 coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
                 gold_given_total: row.get("gold_given_total"),
                 max_gold_held: row.get("max_gold_held"),
+                language: row.get("language"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -348,6 +352,7 @@ impl Repository {
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
+            language: row.get("language"),
         }).collect();
 
         Ok(players)
@@ -585,6 +590,7 @@ impl Repository {
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
+            language: row.get("language"),
         };
 
         tx.commit().await?;
@@ -635,6 +641,7 @@ impl Repository {
             coinflip_max_loss_streak: row.get("coinflip_max_loss_streak"),
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
+            language: row.get("language"),
         }).collect();
 
         Ok(players)
@@ -1032,6 +1039,7 @@ impl Repository {
             coinflip_max_loss_streak: r.get("coinflip_max_loss_streak"),
             gold_given_total: r.get("gold_given_total"),
             max_gold_held: r.get("max_gold_held"),
+            language: r.get("language"),
         };
 
         let mut success_count = 0;
@@ -1307,7 +1315,8 @@ impl Repository {
                 coinflip_max_win_streak INTEGER DEFAULT 0,
                 coinflip_max_loss_streak INTEGER DEFAULT 0,
                 gold_given_total INTEGER DEFAULT 0,
-                max_gold_held INTEGER DEFAULT 0
+                max_gold_held INTEGER DEFAULT 0,
+                language TEXT DEFAULT NULL
             )"
         ).execute(&mut *tx).await?;
 
@@ -1566,6 +1575,15 @@ impl Repository {
 
         Ok(())
     }
+
+    pub async fn update_player_language(&self, player_id: i64, language: Option<String>) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE players SET language = ? WHERE id = ?")
+            .bind(language)
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
 }
 
 #[cfg(test)]
@@ -1609,7 +1627,8 @@ mod tests {
                 coinflip_max_win_streak INTEGER DEFAULT 0,
                 coinflip_max_loss_streak INTEGER DEFAULT 0,
                 gold_given_total INTEGER DEFAULT 0,
-                max_gold_held INTEGER DEFAULT 0
+                max_gold_held INTEGER DEFAULT 0,
+                language TEXT DEFAULT NULL
             )"
         ).execute(&pool).await.unwrap();
 

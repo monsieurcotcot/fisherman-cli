@@ -467,7 +467,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | trade #id | coinflip <montant> | Tape !fish help sell ou !fish help trade ou !fish help coinflip pour les détails".to_string();
+                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | trade #id | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, trade, coinflip ou lang".to_string();
                     if username == "monsieurcotcot" {
                         help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !admin season_reset <nom_saison> | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
@@ -484,9 +484,45 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         "coinflip" | "cf" => {
                             "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Tentez de doubler vos pièces d'or sur un coup de pile ou face ! Mise minimale : 10 po 🪙.".to_string()
                         },
+                        "lang" | "language" | "langue" => {
+                            "🌐 Langue : '!fish lang fr' pour passer en Français, '!fish lang en' pour l'Anglais, ou '!fish lang reset' pour la langue automatique par défaut (anglais sur !fish, français sur !peche).".to_string()
+                        },
                         _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
                     };
                     let _ = client.say(msg.channel_login.clone(), reply).await;
+                } else if text == "!fish lang fr" || text == "!peche lang fr" || text == "!pêche lang fr" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            if let Ok(_) = state_task.repo.update_player_language(player.id.unwrap(), Some("fr".to_string())).await {
+                                let _ = client_msg.say(channel_login, format!("🌐 @{}, ton jeu est désormais configuré en Français ! 🇫🇷", username)).await;
+                            }
+                        }
+                    });
+                } else if text == "!fish lang en" || text == "!peche lang en" || text == "!pêche lang en" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            if let Ok(_) = state_task.repo.update_player_language(player.id.unwrap(), Some("en".to_string())).await {
+                                let _ = client_msg.say(channel_login, format!("🌐 @{}, your game is now configured in English! 🇬🇧", username)).await;
+                            }
+                        }
+                    });
+                } else if text == "!fish lang reset" || text == "!peche lang reset" || text == "!pêche lang reset" || text == "!fish lang default" || text == "!peche lang default" || text == "!pêche lang default" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    tokio::spawn(async move {
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            if let Ok(_) = state_task.repo.update_player_language(player.id.unwrap(), None).await {
+                                let _ = client_msg.say(channel_login, format!("🌐 @{}, préférence de langue réinitialisée (défaut automatique) ! ⚙️", username)).await;
+                            }
+                        }
+                    });
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -1770,15 +1806,28 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             let is_admin = username == "monsieurcotcot";
                             
+                            // Détermination de la langue de retour :
+                            // 1. Préférence utilisateur en base si définie.
+                            // 2. Sinon, anglais par défaut pour les commandes !fish, français pour !peche/!pêche.
+                            let use_english = match &player.language {
+                                Some(lang) => lang == "en",
+                                None => text.starts_with("!fish"),
+                            };
+
                             // Vérification du coût en or (10 po requis)
                             if player.gold < 10 && !is_admin && !is_test {
-                                let _ = client_msg.say(
-                                    channel_login,
+                                let msg_str = if use_english {
+                                    format!(
+                                        "⚠️ @{}, you don't have enough gold coins to fish (requires: 10 gold, you have {} gold). Chat in the stream tomorrow to claim your daily bonus or sell fish via !fish sell!",
+                                        username, player.gold
+                                    )
+                                } else {
                                     format!(
                                         "⚠️ @{}, tu n'as pas assez de pièces d'or pour pêcher (requis: 10 po, tu as {} po). Écris un message sur le live demain pour obtenir ton bonus quotidien ou vends des poissons via !fish sell !",
                                         username, player.gold
                                     )
-                                ).await;
+                                };
+                                let _ = client_msg.say(channel_login, msg_str).await;
                                 return;
                             }
 
@@ -1790,7 +1839,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                                 if is_test || roll < success_rate {
                                     let mut fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
-                                                   else { match generate_fish(state_task.use_english) { Some(f) => f, None => return } };
+                                                   else { match generate_fish(use_english) { Some(f) => f, None => return } };
 
                                     let leveled_up = player.add_xp(25);
                                     if fish.name == "Gemme VIP" || is_test {
@@ -1813,16 +1862,30 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             }
                                         });
                                     }
-                                     let mut resp = format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description);
+                                     
+                                     let mut resp = if use_english {
+                                         format!("🐟 @{} caught a {} ({} cm)! {}", username, fish.name, fish.size, fish.description)
+                                     } else {
+                                         format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description)
+                                     };
+
                                      if fish.name == "Gemme VIP" || is_test { 
                                          let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "4H", "good" => "80 MIN", "worn" => "60 MIN", "damaged" => "40 MIN", _ => "20 MIN" } };
-                                         resp.push_str(&format!(" 🌟 TU ES VIP PENDANT {} ! 🌟", d)); 
+                                         if use_english {
+                                             resp.push_str(&format!(" 🌟 YOU ARE VIP FOR {}! 🌟", d));
+                                         } else {
+                                             resp.push_str(&format!(" 🌟 TU ES VIP PENDANT {} ! 🌟", d));
+                                         }
                                      }
                                      if fish.name == "Pristine Banana 1" || fish.name == "Pristine Banana 2" {
                                          if let Some(player_id) = player.id {
                                              if let Ok(stolen_from) = state_task.repo.check_and_execute_banana_theft(player_id, &fish.name).await {
                                                  if let Some(old_user) = stolen_from {
-                                                     resp.push_str(&format!(" 🍌 @{} a VOLÉ la {} à @{} ! 🤫", username, fish.name, old_user));
+                                                     if use_english {
+                                                         resp.push_str(&format!(" 🍌 @{} STOLE the {} from @{}! 🤫", username, fish.name, old_user));
+                                                     } else {
+                                                         resp.push_str(&format!(" 🍌 @{} a VOLÉ la {} à @{} ! 🤫", username, fish.name, old_user));
+                                                     }
                                                  }
                                              }
                                              let other_banana = if fish.name == "Pristine Banana 1" { "Pristine Banana 2" } else { "Pristine Banana 1" };
@@ -1830,14 +1893,24 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                                  if has_other {
                                                      if let Ok(already_king) = state_task.repo.is_active_king(player_id).await {
                                                          if !already_king {
-                                                             resp.push_str(&format!(" 👑 @{} devient le nouveau ROI DES BANANES ! 👑", username));
+                                                             if use_english {
+                                                                 resp.push_str(&format!(" 👑 @{} becomes the new BANANA KING! 👑", username));
+                                                             } else {
+                                                                 resp.push_str(&format!(" 👑 @{} devient le nouveau ROI DES BANANES ! 👑", username));
+                                                             }
                                                          }
                                                      }
                                                  }
                                              }
                                          }
                                      }
-                                     if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                     if leveled_up {
+                                         if use_english {
+                                             resp.push_str(&format!(" ✨ LEVEL UP! Lvl. {}!", player.level));
+                                         } else {
+                                             resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
+                                         }
+                                     }
                                      let _ = client_msg.say(channel_login.clone(), resp).await;
 
                                     let state_bg = state_task.clone();
@@ -1847,12 +1920,28 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         let _ = state_bg.repo.save_attempt(&player, true, Some(fish)).await;
                                     });
                                 } else if roll < success_rate + junk_rate {
-                                    if let Some(mut junk) = generate_junk(state_task.use_english) {
+                                    if let Some(mut junk) = generate_junk(use_english) {
                                         let leveled_up = player.add_xp(5);
-                                        let mut resp = format!("🗑️ @{} a remonté un déchet : {} ! {}", username, junk.name, junk.description);
-                                        if junk.rarity != crate::config::Rarity::Common { resp.push_str(&format!(" (Rareté: {:?})", junk.rarity)); }
+                                        let mut resp = if use_english {
+                                            format!("🗑️ @{} reeled in some trash: {}! {}", username, junk.name, junk.description)
+                                        } else {
+                                            format!("🗑️ @{} a remonté un déchet : {} ! {}", username, junk.name, junk.description)
+                                        };
+                                        if junk.rarity != crate::config::Rarity::Common {
+                                            if use_english {
+                                                resp.push_str(&format!(" (Rarity: {:?})", junk.rarity));
+                                            } else {
+                                                resp.push_str(&format!(" (Rareté: {:?})", junk.rarity));
+                                            }
+                                        }
 
-                                        if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                        if leveled_up {
+                                            if use_english {
+                                                resp.push_str(&format!(" ✨ LEVEL UP! Lvl. {}!", player.level));
+                                            } else {
+                                                resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
+                                            }
+                                        }
                                         let _ = client_msg.say(channel_login.clone(), resp).await;
 
                                         let state_bg = state_task.clone();
@@ -1863,18 +1952,29 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         });
                                     }
                                 } else {
-                                    let reasons = get_fail_attempt_reasons(state_task.use_english);
+                                    let reasons = get_fail_attempt_reasons(use_english);
                                     let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !").replace("#viewer_name#", &username);
                                     let leveled_up = player.add_xp(5);
                                     let mut resp = reason;
-                                    if leveled_up { resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level)); }
+                                    if leveled_up {
+                                        if use_english {
+                                            resp.push_str(&format!(" ✨ LEVEL UP! Lvl. {}!", player.level));
+                                        } else {
+                                            resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
+                                        }
+                                    }
                                     let _ = client_msg.say(channel_login, resp).await;
                                     let _ = state_task.repo.save_attempt(&player, false, None).await;
                                 }
                             } else {
                                 let rem = player.get_remaining_cooldown();
                                 if let Some(id) = player.id { let _ = state_task.repo.add_cooldown_penalty(id).await; }
-                                let _ = client_msg.say(channel_login, format!("⏳ @{}, attends encore {}s ! (+5s penalty) ⚠️", username, rem + 5)).await;
+                                let msg_str = if use_english {
+                                    format!("⏳ @{}, wait another {}s! (+5s penalty) ⚠️", username, rem + 5)
+                                } else {
+                                    format!("⏳ @{}, attends encore {}s ! (+5s penalty) ⚠️", username, rem + 5)
+                                };
+                                let _ = client_msg.say(channel_login, msg_str).await;
                             }
                         }
                     });
