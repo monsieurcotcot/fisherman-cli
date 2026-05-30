@@ -231,8 +231,9 @@ pub fn get_base_price(name: &str) -> i64 {
         return 50000;
     }
 
-    let game_data = crate::config::get_game_data();
-    for (rarity, fishes) in &game_data.fish_data {
+    // 1. Try French catalog
+    let game_data_fr = crate::config::get_game_data(false);
+    for (rarity, fishes) in &game_data_fr.fish_data {
         for fish in fishes {
             if fish.name.to_lowercase() == name.to_lowercase() {
                 if let Some(p) = fish.price {
@@ -240,15 +241,10 @@ pub fn get_base_price(name: &str) -> i64 {
                         return p as i64;
                     }
                 }
-                
-                // Fallback to a deterministic unique price based on the species' name!
-                // This ensures each fish has a fixed, unique price forever (like its name/desc).
                 let mut hash = 0u32;
                 for c in fish.name.bytes() {
                     hash = hash.wrapping_add(c as u32).wrapping_mul(31);
                 }
-                
-                // Map the hash to a realistic unique price range based on Rarity
                 let (min_p, max_p) = match rarity {
                     crate::config::Rarity::Common => (40, 95),
                     crate::config::Rarity::Uncommon => (100, 220),
@@ -259,22 +255,59 @@ pub fn get_base_price(name: &str) -> i64 {
                     crate::config::Rarity::Mythical => (5000, 12000),
                     crate::config::Rarity::Divin => (15000, 45000),
                 };
-                
                 let range = max_p - min_p + 1;
                 let offset = (hash % range as u32) as i64;
-                
-                // If the fish has preferred active hours or restrictions, apply a premium multiplier
                 let mut time_multiplier = 1.0;
                 if fish.preferred_time.is_some() || fish.time_restriction.is_some() {
                     time_multiplier = 1.3;
                 }
-                
                 return ((min_p + offset) as f64 * time_multiplier).round() as i64;
             }
         }
     }
-    
-    for (_, junks) in &game_data.junk_data {
+    for (_, junks) in &game_data_fr.junk_data {
+        for junk in junks {
+            if junk.name.to_lowercase() == name.to_lowercase() {
+                return 10;
+            }
+        }
+    }
+
+    // 2. Try English catalog
+    let game_data_en = crate::config::get_game_data(true);
+    for (rarity, fishes) in &game_data_en.fish_data {
+        for fish in fishes {
+            if fish.name.to_lowercase() == name.to_lowercase() {
+                if let Some(p) = fish.price {
+                    if p > 0 {
+                        return p as i64;
+                    }
+                }
+                let mut hash = 0u32;
+                for c in fish.name.bytes() {
+                    hash = hash.wrapping_add(c as u32).wrapping_mul(31);
+                }
+                let (min_p, max_p) = match rarity {
+                    crate::config::Rarity::Common => (40, 95),
+                    crate::config::Rarity::Uncommon => (100, 220),
+                    crate::config::Rarity::Rare => (230, 480),
+                    crate::config::Rarity::VeryRare => (500, 950),
+                    crate::config::Rarity::Epic => (1000, 2400),
+                    crate::config::Rarity::Legendary => (2500, 4800),
+                    crate::config::Rarity::Mythical => (5000, 12000),
+                    crate::config::Rarity::Divin => (15000, 45000),
+                };
+                let range = max_p - min_p + 1;
+                let offset = (hash % range as u32) as i64;
+                let mut time_multiplier = 1.0;
+                if fish.preferred_time.is_some() || fish.time_restriction.is_some() {
+                    time_multiplier = 1.3;
+                }
+                return ((min_p + offset) as f64 * time_multiplier).round() as i64;
+            }
+        }
+    }
+    for (_, junks) in &game_data_en.junk_data {
         for junk in junks {
             if junk.name.to_lowercase() == name.to_lowercase() {
                 return 10;
@@ -308,8 +341,21 @@ pub fn get_state_weight(state: &str) -> i32 {
 }
 
 pub fn get_size_multiplier(name: &str, size: f64) -> f64 {
-    let game_data = crate::config::get_game_data();
-    for (_, fishes) in &game_data.fish_data {
+    // Try French catalog first
+    let game_data_fr = crate::config::get_game_data(false);
+    for (_, fishes) in &game_data_fr.fish_data {
+        for fish in fishes {
+            if fish.name.to_lowercase() == name.to_lowercase() {
+                let mean = fish.size_mean;
+                if mean > 0.0 {
+                    return (size / mean).clamp(0.5, 1.8);
+                }
+            }
+        }
+    }
+    // Try English catalog second
+    let game_data_en = crate::config::get_game_data(true);
+    for (_, fishes) in &game_data_en.fish_data {
         for fish in fishes {
             if fish.name.to_lowercase() == name.to_lowercase() {
                 let mean = fish.size_mean;
@@ -486,14 +532,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let mut fish_percent = 0;
                             let mut junk_percent = 0;
                             if let Ok(museum) = state_task.repo.get_player_museum(p.id.unwrap()).await {
-                                let fish_names: std::collections::HashSet<String> = crate::config::get_fish_data()
-                                    .values()
-                                    .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
-                                    .collect();
-                                let junk_names: std::collections::HashSet<String> = crate::config::get_junk_data()
-                                    .values()
-                                    .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
-                                    .collect();
+                                let fish_names = crate::config::get_fish_names_lower(state_task.use_english);
+                                let junk_names = crate::config::get_junk_names_lower(state_task.use_english);
                                 
                                 let total_fish = fish_names.len();
                                 let total_junk = junk_names.len();
@@ -688,7 +728,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         }
 
                         if let Some(m_id) = museum_id {
-                            let game_data = crate::config::get_game_data();
+                            let game_data = crate::config::get_game_data(state_task.use_english);
                             let mut found_fish = None;
 
                             for (_, fishes) in &game_data.fish_data {
@@ -760,7 +800,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         };
 
                                         // Try to find the species in catalog to get location/time/season
-                                        let game_data = crate::config::get_game_data();
+                                        let game_data = crate::config::get_game_data(state_task.use_english);
                                         let mut found_fish = None;
                                         for (_, fishes) in &game_data.fish_data {
                                             for fish in fishes {
@@ -858,7 +898,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         }
 
                         // Search in config game_data (by name)
-                        let game_data = crate::config::get_game_data();
+                        let game_data = crate::config::get_game_data(state_task.use_english);
                         let mut found_fish = None;
 
                         for (_, fishes) in &game_data.fish_data {
@@ -1605,7 +1645,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             tracing::info!("[Admin] Simulation de {} lancers pour {}", count, target_user);
                             if let Ok(player) = state_task.repo.get_or_create_player(&target_user).await {
                                 if let Some(player_id) = player.id {
-                                    match state_task.repo.execute_simulation(player_id, &target_user, count).await {
+                                    match state_task.repo.execute_simulation(player_id, &target_user, count, state_task.use_english).await {
                                         Ok((success_count, junk_count, fail_count, final_level)) => {
                                             let _ = client_msg.say(channel_login, format!("✅ Simulation terminée pour @{} : {} poissons, {} déchets, {} échecs. Niv. {}", target_user, success_count, junk_count, fail_count, final_level)).await;
                                         }
@@ -1659,12 +1699,12 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             let junk_chance = 0.05;
                                             let r: f64 = rand::random::<f64>();
                                             if r < success_chance {
-                                                if let Some(fish) = generate_fish() {
+                                                if let Some(fish) = generate_fish(state_task.use_english) {
                                                     let _ = state_task.repo.save_catch_only(player_id, fish, Some(&backup.username)).await;
                                                     success_count += 1;
                                                 }
                                             } else if r < (success_chance + junk_chance) {
-                                                if let Some(junk) = generate_junk() {
+                                                if let Some(junk) = generate_junk(state_task.use_english) {
                                                     let _ = state_task.repo.save_catch_only(player_id, junk, Some(&backup.username)).await;
                                                     success_count += 1;
                                                 }
@@ -1750,7 +1790,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                                 if is_test || roll < success_rate {
                                     let mut fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
-                                                   else { match generate_fish() { Some(f) => f, None => return } };
+                                                   else { match generate_fish(state_task.use_english) { Some(f) => f, None => return } };
 
                                     let leveled_up = player.add_xp(25);
                                     if fish.name == "Gemme VIP" || is_test {
@@ -1807,7 +1847,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         let _ = state_bg.repo.save_attempt(&player, true, Some(fish)).await;
                                     });
                                 } else if roll < success_rate + junk_rate {
-                                    if let Some(mut junk) = generate_junk() {
+                                    if let Some(mut junk) = generate_junk(state_task.use_english) {
                                         let leveled_up = player.add_xp(5);
                                         let mut resp = format!("🗑️ @{} a remonté un déchet : {} ! {}", username, junk.name, junk.description);
                                         if junk.rarity != crate::config::Rarity::Common { resp.push_str(&format!(" (Rareté: {:?})", junk.rarity)); }
@@ -1823,7 +1863,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         });
                                     }
                                 } else {
-                                    let reasons = get_fail_attempt_reasons();
+                                    let reasons = get_fail_attempt_reasons(state_task.use_english);
                                     let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !").replace("#viewer_name#", &username);
                                     let leveled_up = player.add_xp(5);
                                     let mut resp = reason;

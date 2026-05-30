@@ -986,6 +986,7 @@ impl Repository {
         player_id: i64,
         username: &str,
         count: u32,
+        use_english: bool,
     ) -> Result<(u32, u32, u32, i32), sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
@@ -1046,11 +1047,11 @@ impl Repository {
             let (success, fish) = if roll < success_rate {
                 success_count += 1;
                 player.add_xp(25);
-                (true, crate::game::generate_fish())
+                (true, crate::game::generate_fish(use_english))
             } else if roll < success_rate + junk_rate {
                 junk_count += 1;
                 player.add_xp(5);
-                (true, crate::game::generate_junk())
+                (true, crate::game::generate_junk(use_english))
             } else {
                 fail_count += 1;
                 player.add_xp(5);

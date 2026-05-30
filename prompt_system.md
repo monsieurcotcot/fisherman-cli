@@ -45,5 +45,3 @@ Pour chaque modification, n'hésite pas à créer un commit et push.
 ### Première instruction :
 Analyse la base de code actuelle, les logs avec `docker compose log`, les derniers commits git.
 Lance `docker system prune -a -f` ssi la mémoire est proche de 100% (`df -h`)
-
-Ensuite trouve une amélioration pour "🏆 Top 10 Pêcheurs", actuellement chaque ligne affiche par exemple : "#1 monsieurcotcot 2137 🐟 🪙 0 292 🗑️ 10 🍌 1 💎 0 📜", la ligne est parfois trop longue donc il y a des retous à la ligne non souhaités.

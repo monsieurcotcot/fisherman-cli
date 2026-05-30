@@ -1,18 +1,18 @@
 use rand::seq::SliceRandom;
 use rand::Rng;
 use rand_distr::{Distribution, Normal};
-use crate::config::{get_fish_data, get_junk_data, Rarity, FishData};
+use crate::config::{get_fish_ref, get_junk_ref, Rarity, FishData};
 use crate::models::Fish;
 
-pub fn generate_fish() -> Option<Fish> {
-    generate_item(false)
+pub fn generate_fish(use_english: bool) -> Option<Fish> {
+    generate_item(false, use_english)
 }
 
-pub fn generate_junk() -> Option<Fish> {
-    generate_item(true)
+pub fn generate_junk(use_english: bool) -> Option<Fish> {
+    generate_item(true, use_english)
 }
 
-fn generate_item(is_junk: bool) -> Option<Fish> {
+fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
     let mut rng = rand::thread_rng();
     
     // Choose rarity based on odds
@@ -29,7 +29,7 @@ fn generate_item(is_junk: bool) -> Option<Fish> {
         choice -= weight;
     }
     
-    let all_data = if is_junk { get_junk_data() } else { get_fish_data() };
+    let all_data = if is_junk { get_junk_ref(use_english) } else { get_fish_ref(use_english) };
     let item_list = all_data.get(&selected_rarity)?;
     
     let item_data: &FishData = if is_junk {
@@ -163,8 +163,8 @@ mod tests {
 
     #[test]
     fn test_generate_fish() {
-        // Since get_fish_data reads from game_data.json, this test also validates the JSON structure.
-        let fish = generate_fish();
+        // Since get_fish_ref reads from game_data.json, this test also validates the JSON structure.
+        let fish = generate_fish(false);
         assert!(fish.is_some(), "Should generate at least one fish");
         let f = fish.unwrap();
         assert!(!f.name.is_empty(), "Fish name should not be empty");
@@ -174,7 +174,7 @@ mod tests {
 
     #[test]
     fn test_generate_junk() {
-        let junk = generate_junk();
+        let junk = generate_junk(false);
         assert!(junk.is_some(), "Should generate at least one junk");
         let j = junk.unwrap();
         assert!(!j.name.is_empty(), "Junk name should not be empty");

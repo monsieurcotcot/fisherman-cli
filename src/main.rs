@@ -75,6 +75,7 @@ pub struct AppState {
     pub auth: Arc<AuthManager>,
     pub twitch_client: RwLock<Option<TwitchClient>>,
     pub channel: String,
+    pub use_english: bool,
     pub pending_resets: RwLock<HashMap<String, DateTime<Utc>>>,
     pub pending_resets_all: RwLock<HashMap<String, DateTime<Utc>>>,
     pub pending_purges: RwLock<HashMap<String, DateTime<Utc>>>,
@@ -216,6 +217,7 @@ async fn main() -> Result<(), MyError> {
     let client_secret = env::var("TWITCH_CLIENT_SECRET").expect("TWITCH_CLIENT_SECRET must be set");
     let channel = env::var("TWITCH_CHANNEL").expect("TWITCH_CHANNEL must be set");
     let redirect_uri = env::var("REDIRECT_URI").expect("REDIRECT_URI must be set");
+    let use_english = env::var("USE_ENGLISH").map(|s| s.to_lowercase() == "true").unwrap_or(false);
 
     let auth_manager = Arc::new(AuthManager::new(client_id, client_secret, redirect_uri));
     
@@ -224,6 +226,7 @@ async fn main() -> Result<(), MyError> {
         auth: Arc::clone(&auth_manager),
         twitch_client: RwLock::new(None),
         channel: channel.clone(),
+        use_english,
         pending_resets: RwLock::new(HashMap::new()),
         pending_resets_all: RwLock::new(HashMap::new()),
         pending_purges: RwLock::new(HashMap::new()),
@@ -252,12 +255,12 @@ async fn main() -> Result<(), MyError> {
                         
                         let r: f64 = rand::random::<f64>();
                         if r < success_chance {
-                            if let Some(fish) = generate_fish() {
+                            if let Some(fish) = generate_fish(use_english) {
                                 let _ = repo.save_catch_only(player_id, fish, Some(&username)).await;
                                 success_count += 1;
                             }
                         } else if r < (success_chance + junk_chance) {
-                            if let Some(junk) = generate_junk() {
+                            if let Some(junk) = generate_junk(use_english) {
                                 let _ = repo.save_catch_only(player_id, junk, Some(&username)).await;
                                 success_count += 1;
                             }

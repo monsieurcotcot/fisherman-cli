@@ -875,21 +875,25 @@ button:hover {
     color: #00ff00;
 }
 .leaderboard-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 4px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-top: 6px;
 }
 .l-stat {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 3px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 2px 5px;
+    padding: 2px 4px;
     border-radius: 4px;
     font-size: 0.72rem;
     color: #adadb8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .l-stat strong {
     color: #efeff1;
@@ -900,6 +904,12 @@ button:hover {
 .l-stat.banana strong { color: #ffd700; }
 .l-stat.gem strong { color: #00ffff; }
 .l-stat.postcard strong { color: #ffffff; }
+
+@media (max-width: 380px) {
+    .leaderboard-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
 /* --- VITRINE DES MEDAILLES & HAUTS FAITS --- */
 .medal-item {
