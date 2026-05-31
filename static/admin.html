@@ -2,45 +2,498 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Fisherman Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisherman Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; background: #0e0e10; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: #18181b; padding: 2rem; border-radius: 10px; text-align: center; border: 1px solid #9146ff; width: 450px; }
-        .btn { display: block; text-decoration: none; padding: 12px; margin: 15px 0; border-radius: 4px; font-weight: bold; cursor: pointer; border: none; width: 100%; font-size: 1rem; }
-        .btn-bot { background: #9146ff; color: white; }
-        .btn-streamer { background: #00e6ff; color: #0e0e10; }
-        .info { color: #adadb8; font-size: 0.8rem; margin-top: 10px; }
+        :root {
+            --bg-color: #0c0c0e;
+            --container-bg: rgba(20, 20, 25, 0.7);
+            --primary: #9146ff;
+            --primary-hover: #772ce8;
+            --accent-streamer: #00f0ff;
+            --accent-streamer-hover: #00d8e6;
+            --text-main: #f5f5f7;
+            --text-muted: #adadb8;
+            --border-color: rgba(145, 70, 255, 0.25);
+            --danger: #ff4f4f;
+            --success: #00ff88;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(145, 70, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 240, 255, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Glassmorphism containers */
+        .glass-card {
+            background: var(--container-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 480px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card.wide {
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-self: stretch;
+            height: 90vh;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #adadb8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Forms & Inputs */
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        input[type="password"], select, textarea {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        input[type="password"]:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(145, 70, 255, 0.2);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease-in-out;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(145, 70, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-accent {
+            background: var(--accent-streamer);
+            color: #0c0c0e;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-streamer-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Alert Banners */
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+            display: none;
+        }
+
+        .alert-danger {
+            background: rgba(255, 79, 79, 0.15);
+            border: 1px solid rgba(255, 79, 79, 0.3);
+            color: var(--danger);
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: var(--success);
+        }
+
+        /* Dashboard layout */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .admin-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .admin-title-group h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .twitch-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .editor-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .editor-controls select {
+            width: auto;
+            min-width: 150px;
+        }
+
+        /* Editor Area */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 10px;
+            min-height: 400px;
+        }
+
+        textarea.code-editor {
+            flex-grow: 1;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: rgba(0, 0, 0, 0.5);
+            color: #00ff88;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            resize: none;
+            padding: 16px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card.wide {
+                height: auto;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .twitch-buttons {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔐 Panel Admin</h1>
-        <p style="color: #adadb8; font-size: 0.9rem;">Cliquez pour vous authentifier. (Version Forcée)</p>
+
+    <!-- 1. LOGIN CARD -->
+    <div id="loginCard" class="glass-card">
+        <h1>🔐 Fisherman Admin</h1>
+        <p class="subtitle">Veuillez entrer le mot de passe administrateur pour accéder à la gestion des données du jeu.</p>
         
-        <div id="links">
-            <button onclick="auth('bot')" class="btn btn-bot">🤖 Connecter le Bot</button>
-            <button onclick="auth('streamer')" class="btn btn-streamer">👑 Connecter le Streameur</button>
+        <div id="loginAlert" class="alert alert-danger"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="password">Mot de passe de sécurité :</label>
+                <input type="password" id="password" placeholder="••••••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+        </form>
+    </div>
+
+    <!-- 2. WIDE EDITOR CARD (DASHBOARD) -->
+    <div id="dashboardCard" class="glass-card wide" style="display: none;">
+        <div class="admin-header">
+            <div class="admin-title-group">
+                <h2>🎣 Ze_Fisherman Admin Panel</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Modification dynamique des catalogues et des messages d'échec.</p>
+            </div>
+            <div class="twitch-buttons">
+                <button onclick="authTwitch('bot')" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem; width: auto;">🤖 Liaison Bot</button>
+                <button onclick="authTwitch('streamer')" class="btn btn-accent" style="padding: 8px 16px; font-size: 0.88rem; width: auto; color: #000;">👑 Liaison Streameur</button>
+                <button onclick="handleLogout()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.88rem; width: auto;">Déconnexion</button>
+            </div>
+        </div>
+
+        <div id="dashboardAlert" class="alert"></div>
+
+        <div class="editor-controls">
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <label style="font-size: 0.85rem;">Fichier :</label>
+                <select id="fileSelect" onchange="loadJsonFile()">
+                    <option value="fish_data">🐟 Catalogue des Poissons (fish_data)</option>
+                    <option value="junk_data">🗑️ Catalogue des Déchets (junk_data)</option>
+                    <option value="fail_messages">❌ Phrases d'échecs (fail_messages)</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <label style="font-size: 0.85rem;">Langue :</label>
+                <select id="langSelect" onchange="loadJsonFile()">
+                    <option value="fr">🇫🇷 Français (fr)</option>
+                    <option value="en">🇬🇧 Anglais (en)</option>
+                </select>
+            </div>
+
+            <button onclick="saveJsonFile()" class="btn btn-primary" style="width: auto; margin-left: auto; padding: 10px 24px;">💾 Sauvegarder &amp; Hot-Reload</button>
+        </div>
+
+        <div class="editor-container">
+            <label for="jsonTextarea" style="font-size: 0.85rem; display: flex; justify-content: space-between;">
+                <span>Éditeur de code JSON :</span>
+                <span id="validationStatus" style="color: var(--text-muted); font-size: 0.8rem;">Modifications non enregistrées</span>
+            </label>
+            <textarea id="jsonTextarea" class="code-editor" spellcheck="false" oninput="validateJsonInput()"></textarea>
         </div>
     </div>
 
     <script>
         const CLIENT_ID = "8ibsok6lg0nn4kqartpsf7i0bc1h3s";
 
-        function auth(type) {
-            // Construction manuelle STRRICTE sans encodage pour matcher le test manuel
+        // Autocomplete/Verify local token on page load
+        window.addEventListener('load', () => {
+            const token = sessionStorage.getItem('admin_token');
+            if (token) {
+                showDashboard();
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginCard').style.display = 'none';
+            document.getElementById('dashboardCard').style.display = 'flex';
+            loadJsonFile();
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('admin_token');
+            document.getElementById('dashboardCard').style.display = 'none';
+            document.getElementById('loginCard').style.display = 'block';
+            document.getElementById('password').value = '';
+            showAlert('loginAlert', '', false);
+        }
+
+        // Login rate limiter handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const alertDiv = document.getElementById('loginAlert');
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    sessionStorage.setItem('admin_token', data.token);
+                    showDashboard();
+                } else {
+                    showAlert('loginAlert', data.error || 'Erreur d\'authentification', true);
+                }
+            } catch (err) {
+                showAlert('loginAlert', 'Impossible de se connecter au serveur API.', true);
+            }
+        }
+
+        // Load JSON Content
+        async function loadJsonFile() {
+            const file = document.getElementById('fileSelect').value;
+            const lang = document.getElementById('langSelect').value;
+            const token = sessionStorage.getItem('admin_token');
+
+            try {
+                const response = await fetch(`/api/admin/json?file=${file}&lang=${lang}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.status === 401) {
+                    handleLogout();
+                    return;
+                }
+
+                if (response.ok) {
+                    const content = await response.text();
+                    // Pretty-print JSON
+                    try {
+                        const parsed = JSON.parse(content);
+                        document.getElementById('jsonTextarea').value = JSON.stringify(parsed, null, 4);
+                    } catch {
+                        document.getElementById('jsonTextarea').value = content;
+                    }
+                    document.getElementById('validationStatus').innerText = "Fichier chargé avec succès";
+                    document.getElementById('validationStatus').style.color = "var(--success)";
+                    showAlert('dashboardAlert', '', false);
+                } else {
+                    const err = await response.text();
+                    showAlert('dashboardAlert', `Erreur lors de la lecture : ${err}`, true);
+                }
+            } catch (err) {
+                showAlert('dashboardAlert', 'Erreur réseau lors de la récupération du fichier.', true);
+            }
+        }
+
+        // Save JSON Content (Hot-Reload)
+        async function saveJsonFile() {
+            const file = document.getElementById('fileSelect').value;
+            const lang = document.getElementById('langSelect').value;
+            const content = document.getElementById('jsonTextarea').value;
+            const token = sessionStorage.getItem('admin_token');
+
+            // 1. Client-side validation
+            try {
+                JSON.parse(content);
+            } catch (err) {
+                showAlert('dashboardAlert', `Erreur de syntaxe JSON locale : ${err.message}`, true);
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/admin/json', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ file, lang, content })
+                });
+
+                if (response.status === 401) {
+                    handleLogout();
+                    return;
+                }
+
+                const resText = await response.text();
+                if (response.ok) {
+                    showAlert('dashboardAlert', '✨ Configuration enregistrée et rechargée à chaud avec succès ! Les modifications sont actives de suite.', false);
+                    document.getElementById('validationStatus').innerText = "Enregistré avec succès";
+                    document.getElementById('validationStatus').style.color = "var(--success)";
+                } else {
+                    showAlert('dashboardAlert', `❌ Échec de l'enregistrement : ${resText}`, true);
+                }
+            } catch (err) {
+                showAlert('dashboardAlert', 'Erreur réseau lors de la sauvegarde.', true);
+            }
+        }
+
+        function validateJsonInput() {
+            const textarea = document.getElementById('jsonTextarea');
+            const status = document.getElementById('validationStatus');
+            try {
+                JSON.parse(textarea.value);
+                status.innerText = "JSON Valide (Non enregistré)";
+                status.style.color = "var(--accent-streamer)";
+            } catch (err) {
+                status.innerText = `JSON Invalide: ${err.message}`;
+                status.style.color = "var(--danger)";
+            }
+        }
+
+        function showAlert(divId, message, isError) {
+            const alertDiv = document.getElementById(divId);
+            if (!message) {
+                alertDiv.style.display = 'none';
+                return;
+            }
+
+            alertDiv.innerText = message;
+            alertDiv.className = `alert ${isError ? 'alert-danger' : 'alert-success'}`;
+            alertDiv.style.display = 'block';
+        }
+
+        function authTwitch(type) {
+            // Keep original Twitch connection redirects
             const url = "https://id.twitch.tv/oauth2/authorize" +
                         "?client_id=" + CLIENT_ID +
                         "&redirect_uri=https://fisherman-cli.monsieurcotcot.com/auth/callback" +
                         "&response_type=code" +
                         "&scope=chat:read+chat:edit+channel:manage:vips" +
                         "&state=" + type;
-            
             window.location.href = url;
-        }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.get('token')) {
-            document.getElementById('links').innerHTML = "<p style='color:red;'>⚠️ Token d'accès manquant !</p>";
         }
     </script>
 </body>

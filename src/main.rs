@@ -317,6 +317,8 @@ async fn main() -> Result<(), MyError> {
         .route("/api/fish_data", get(api::get_fish_data_api))
         .route("/api/junk_data", get(api::get_junk_data_api))
         .route("/api/banana_kings", get(api::get_banana_kings))
+        .route("/api/admin/login", axum::routing::post(api::admin_login))
+        .route("/api/admin/json", get(api::get_admin_json).post(api::save_admin_json))
         .fallback_service(ServeFile::new("static/index.html"))
         .layer(CorsLayer::permissive())
         .layer(SetResponseHeaderLayer::if_not_present(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.jtvnw.net https://*.twitch.tv; connect-src 'self';")))

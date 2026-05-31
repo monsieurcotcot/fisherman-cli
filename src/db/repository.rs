@@ -1136,11 +1136,15 @@ impl Repository {
         let mut tx = self.pool.begin().await?;
 
         for &id in catch_ids {
-            sqlx::query("DELETE FROM catches WHERE id = ? AND player_id = ?")
+            let rows_affected = sqlx::query("DELETE FROM catches WHERE id = ? AND player_id = ?")
                 .bind(id)
                 .bind(seller_id)
                 .execute(&mut *tx)
-                .await?;
+                .await?
+                .rows_affected();
+            if rows_affected == 0 {
+                return Err(sqlx::Error::RowNotFound);
+            }
         }
 
         sqlx::query("UPDATE players SET gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
@@ -1212,12 +1216,18 @@ impl Repository {
             return Err(sqlx::Error::RowNotFound);
         }
 
-        // 2. Transfer gold
-        sqlx::query("UPDATE players SET gold = gold - ? WHERE id = ?")
+        // 2. Transfer gold (atomic deduction checking if buyer has enough gold)
+        let gold_rows_affected = sqlx::query("UPDATE players SET gold = gold - ? WHERE id = ? AND gold >= ?")
             .bind(price)
             .bind(buyer_id)
+            .bind(price)
             .execute(&mut *tx)
-            .await?;
+            .await?
+            .rows_affected();
+
+        if gold_rows_affected == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
 
         sqlx::query("UPDATE players SET gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
             .bind(price)
@@ -1296,11 +1306,9 @@ impl Repository {
         // Supprimer d'abord les index et tables existantes
         sqlx::query("DROP INDEX IF EXISTS idx_catches_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP INDEX IF EXISTS idx_players_username").execute(&mut *tx).await?;
-        sqlx::query("DROP INDEX IF EXISTS idx_trophies_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP INDEX IF EXISTS idx_museum_player_id").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS catches").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS banana_kings_history").execute(&mut *tx).await?;
-        sqlx::query("DROP TABLE IF EXISTS player_trophies").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS museum_discoveries").execute(&mut *tx).await?;
         sqlx::query("DROP TABLE IF EXISTS players").execute(&mut *tx).await?;
 
@@ -1369,20 +1377,6 @@ impl Repository {
             )"
         ).execute(&mut *tx).await?;
 
-        // Recréer la table player_trophies
-        sqlx::query(
-            "CREATE TABLE player_trophies (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
-                username TEXT NOT NULL,
-                season TEXT NOT NULL,
-                trophy_tier TEXT NOT NULL,
-                level INTEGER DEFAULT 1,
-                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(player_id, season)
-            )"
-        ).execute(&mut *tx).await?;
-
         // Recréer la table museum_discoveries
         sqlx::query(
             "CREATE TABLE museum_discoveries (
@@ -1404,7 +1398,6 @@ impl Repository {
         // Recréer les index
         sqlx::query("CREATE INDEX idx_catches_player_id ON catches(player_id);").execute(&mut *tx).await?;
         sqlx::query("CREATE INDEX idx_players_username ON players(username);").execute(&mut *tx).await?;
-        sqlx::query("CREATE INDEX idx_trophies_player_id ON player_trophies(player_id);").execute(&mut *tx).await?;
         sqlx::query("CREATE INDEX idx_museum_player_id ON museum_discoveries(player_id);").execute(&mut *tx).await?;
 
         tx.commit().await?;
@@ -1415,48 +1408,27 @@ impl Repository {
         Ok(())
     }
 
-    pub async fn get_player_trophies(&self, player_id: i64) -> Result<Vec<PlayerTrophy>, sqlx::Error> {
-        let rows = sqlx::query("SELECT id, player_id, username, season, trophy_tier, level, strftime('%Y-%m-%dT%H:%M:%SZ', unlocked_at) as unlocked_at FROM player_trophies WHERE player_id = ? ORDER BY unlocked_at DESC")
-            .bind(player_id)
-            .fetch_all(&self.pool)
-            .await?;
-
-        let trophies = rows.into_iter().map(|row| PlayerTrophy {
-            id: Some(row.get("id")),
-            player_id: row.get("player_id"),
-            username: row.get("username"),
-            season: row.get("season"),
-            trophy_tier: row.get("trophy_tier"),
-            level: row.get("level"),
-            unlocked_at: row.get("unlocked_at"),
-        }).collect();
-
-        Ok(trophies)
+    pub async fn get_player_trophies(&self, _player_id: i64) -> Result<Vec<PlayerTrophy>, sqlx::Error> {
+        Ok(Vec::new())
     }
 
     pub async fn reset_player_all(&self, username: &str) -> Result<(), sqlx::Error> {
         let username_lower = username.to_lowercase();
         let mut tx = self.pool.begin().await?;
 
-        // 1. Supprimer ses trophées éternels
-        sqlx::query("DELETE FROM player_trophies WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
-            .bind(&username_lower)
-            .execute(&mut *tx)
-            .await?;
-
-        // 2. Supprimer les poissons capturés
+        // 1. Supprimer les poissons capturés
         sqlx::query("DELETE FROM catches WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
 
-        // 3. Supprimer les découvertes du musée
+        // 2. Supprimer les découvertes du musée
         sqlx::query("DELETE FROM museum_discoveries WHERE player_id IN (SELECT id FROM players WHERE username = ?)")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
 
-        // 4. Réinitialiser les stats du joueur (y compris les pièces d'or)
+        // 3. Réinitialiser les stats du joueur (y compris les pièces d'or)
         sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0 WHERE username = ?")
             .bind(&username_lower)
             .execute(&mut *tx)
@@ -1466,133 +1438,6 @@ impl Repository {
         Self::check_and_update_banana_king_status(&mut tx, 0).await?;
 
         tx.commit().await?;
-        Ok(())
-    }
-
-    pub async fn archive_and_reset_season(&self, season_name: &str) -> Result<(), sqlx::Error> {
-        let mut tx = self.pool.begin().await?;
-
-        // 1. Calculer et enregistrer les trophées de niveau pour tous les joueurs avec level >= 10
-        let players = sqlx::query("SELECT id, username, level FROM players WHERE level >= 10")
-            .fetch_all(&self.pool)
-            .await?;
-
-        for p in players {
-            let player_id: i64 = p.get("id");
-            let username: String = p.get("username");
-            let level: i32 = p.get("level");
-
-            let tier = if level >= 150 {
-                "Obsidienne"
-            } else if level >= 100 {
-                "Diamant"
-            } else if level >= 70 {
-                "Platinium"
-            } else if level >= 40 {
-                "Or"
-            } else if level >= 20 {
-                "Argent"
-            } else {
-                "Bronze"
-            };
-
-            // Insérer ou remplacer le trophée de niveau
-            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
-                .bind(player_id)
-                .bind(&username)
-                .bind(season_name)
-                .bind(tier)
-                .bind(level)
-                .execute(&mut *tx)
-                .await;
-        }
-
-        // 2. Calculer le Trophée de la Night 🌙
-        // Le joueur avec le plus de prises réussies après 22h (entre 22h et 4h)
-        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 0 AND (strftime('%H', caught_at) >= '22' OR strftime('%H', caught_at) < '04') GROUP BY player_id ORDER BY c DESC LIMIT 1")
-            .fetch_optional(&self.pool)
-            .await 
-        {
-            let player_id: i64 = row.get("player_id");
-            let username: String = row.get("username");
-            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
-                .bind(player_id)
-                .bind(&username)
-                .bind(format!("{} (Night 🌙)", season_name))
-                .bind("Night")
-                .bind(0)
-                .execute(&mut *tx)
-                .await;
-        }
-
-        // 3. Calculer le Trophée Roi des Voleurs 🍌
-        // Le joueur avec le plus de dethronements
-        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM banana_kings_history GROUP BY player_id ORDER BY c DESC LIMIT 1")
-            .fetch_optional(&self.pool)
-            .await 
-        {
-            let player_id: i64 = row.get("player_id");
-            let username: String = row.get("username");
-            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
-                .bind(player_id)
-                .bind(&username)
-                .bind(format!("{} (Voleur 🍌)", season_name))
-                .bind("Voleur")
-                .bind(0)
-                .execute(&mut *tx)
-                .await;
-        }
-
-        // 4. Calculer le Trophée Éboueur des Mers 🧹
-        // Le joueur avec le plus de déchets
-        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 1 GROUP BY player_id ORDER BY c DESC LIMIT 1")
-            .fetch_optional(&self.pool)
-            .await 
-        {
-            let player_id: i64 = row.get("player_id");
-            let username: String = row.get("username");
-            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
-                .bind(player_id)
-                .bind(&username)
-                .bind(format!("{} (Éboueur 🧹)", season_name))
-                .bind("Eboueur")
-                .bind(0)
-                .execute(&mut *tx)
-                .await;
-        }
-
-        // 5. Calculer le Trophée Pêcheur Divin 👑
-        // Le joueur avec le plus de poissons rares/divins
-        if let Ok(Some(row)) = sqlx::query("SELECT player_id, username, COUNT(*) as c FROM catches JOIN players ON catches.player_id = players.id WHERE is_junk = 0 AND rarity IN ('divin', 'mythical', 'legendary') GROUP BY player_id ORDER BY c DESC LIMIT 1")
-            .fetch_optional(&self.pool)
-            .await 
-        {
-            let player_id: i64 = row.get("player_id");
-            let username: String = row.get("username");
-            let _ = sqlx::query("INSERT OR REPLACE INTO player_trophies (player_id, username, season, trophy_tier, level) VALUES (?, ?, ?, ?, ?)")
-                .bind(player_id)
-                .bind(&username)
-                .bind(format!("{} (Pêcheur Divin 👑)", season_name))
-                .bind("Divin")
-                .bind(0)
-                .execute(&mut *tx)
-                .await;
-        }
-
-        // 6. Purger toutes les captures et historique de bananes actives
-        sqlx::query("DELETE FROM catches").execute(&mut *tx).await?;
-        sqlx::query("DELETE FROM banana_kings_history").execute(&mut *tx).await?;
-
-        // 7. Réinitialiser les statistiques actives des joueurs (y compris les pièces d'or)
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, gold = 0")
-            .execute(&mut *tx)
-            .await?;
-
-        tx.commit().await?;
-
-        // Supprimer le fichier de sauvegarde backup pour éviter l'auto-restauration
-        let _ = std::fs::remove_file("data/players_backup.json");
-
         Ok(())
     }
 
@@ -1692,19 +1537,6 @@ mod tests {
                 description TEXT,
                 total_caught INTEGER DEFAULT 1,
                 unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )"
-        ).execute(&pool).await.unwrap();
-
-        sqlx::query(
-            "CREATE TABLE player_trophies (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                player_id INTEGER REFERENCES players(id) ON DELETE CASCADE,
-                username TEXT NOT NULL,
-                season TEXT NOT NULL,
-                trophy_tier TEXT NOT NULL,
-                level INTEGER DEFAULT 1,
-                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(player_id, season)
             )"
         ).execute(&pool).await.unwrap();
 
@@ -2121,5 +1953,104 @@ mod tests {
         // Tuesday to Wednesday (exclusive) should have 0 stream days
         let count_d2_d3 = repo.count_stream_days_between(d2, d3).await.unwrap();
         assert_eq!(count_d2_d3, 0);
+    }
+
+    #[tokio::test]
+    async fn test_gold_sale_vulnerability_fix() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        // 1. Create a player and save a catch
+        let p_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "seller".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(20),
+        }).await.unwrap();
+
+        let fish = Fish::new("Daurade".to_string(), Rarity::Common, 10.0, 1.0, "worn".to_string(), "Fish desc".to_string());
+        repo.save_attempt(&repo.get_player("seller").await.unwrap().unwrap(), true, Some(fish)).await.unwrap();
+
+        let catches = repo.get_player_catches(p_id).await.unwrap();
+        assert_eq!(catches.len(), 1);
+        let catch_id = catches[0].id.unwrap();
+
+        // 2. First sale succeeds
+        let res_first = repo.execute_gold_sale(p_id, &[catch_id], 50).await;
+        assert!(res_first.is_ok());
+
+        let player_after = repo.get_player("seller").await.unwrap().unwrap();
+        assert_eq!(player_after.gold, 60); // 10 + 50 = 60 po
+
+        let catches_after = repo.get_player_catches(p_id).await.unwrap();
+        assert_eq!(catches_after.len(), 0);
+
+        // 3. Second sale with the same (already deleted) catch MUST fail (preventing duplication!)
+        let res_second = repo.execute_gold_sale(p_id, &[catch_id], 50).await;
+        assert!(res_second.is_err()); // MUST be Err since the catch is deleted
+
+        // Gold must remain unchanged
+        let player_final = repo.get_player("seller").await.unwrap().unwrap();
+        assert_eq!(player_final.gold, 60);
+    }
+
+    #[tokio::test]
+    async fn test_direct_trade_race_condition_fix() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        // 1. Create seller and buyer
+        let seller_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "seller".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(0),
+        }).await.unwrap();
+
+        let buyer_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "buyer".to_string(),
+            total_attempts: 0,
+            successful_attempts: 0,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(50), // Buyer has only 50 gold!
+        }).await.unwrap();
+
+        // 2. Save a catch to seller
+        let fish = Fish::new("Turbot".to_string(), Rarity::Rare, 15.0, 2.0, "good".to_string(), "Fish desc".to_string());
+        repo.save_attempt(&repo.get_player("seller").await.unwrap().unwrap(), true, Some(fish)).await.unwrap();
+
+        let catches = repo.get_player_catches(seller_id).await.unwrap();
+        assert_eq!(catches.len(), 1);
+        let catch_id = catches[0].id.unwrap();
+
+        // 3. Direct trade price is 100 gold. Since buyer has only 50 gold, trade must fail!
+        let trade_res = repo.execute_direct_trade(catch_id, seller_id, buyer_id, 100).await;
+        assert!(trade_res.is_err()); // Must fail due to atomic gold constraint
+
+        // 4. Verify balances remain unchanged
+        let buyer_after = repo.get_player("buyer").await.unwrap().unwrap();
+        assert_eq!(buyer_after.gold, 50); // Gold did not go negative
+
+        let seller_after = repo.get_player("seller").await.unwrap().unwrap();
+        assert_eq!(seller_after.gold, 0);
+
+        // Verify catch ownership did not transfer
+        let catches_seller = repo.get_player_catches(seller_id).await.unwrap();
+        assert_eq!(catches_seller.len(), 1);
+        assert_eq!(catches_seller[0].id.unwrap(), catch_id);
+
+        let catches_buyer = repo.get_player_catches(buyer_id).await.unwrap();
+        assert_eq!(catches_buyer.len(), 0);
     }
 }

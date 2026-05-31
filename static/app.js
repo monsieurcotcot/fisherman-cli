@@ -408,74 +408,7 @@ async function fetchStats(u) {
             // Rendre les Médailles & Hauts Faits
             renderMedals(data);
 
-            // Rendre les Trophées Éternels
-            const trophiesSection = document.getElementById('trophiesSection');
-            const trophiesContainer = document.getElementById('trophiesContainer');
-            const trophies = data.trophies || [];
-            
-            if (trophies.length > 0) {
-                trophiesSection.style.display = 'block';
-                trophiesContainer.innerHTML = '';
-                
-                const emojiMap = {
-                    'Bronze': '🥉',
-                    'Argent': '🥈',
-                    'Or': '🥇',
-                    'Platinium': '💎',
-                    'Diamant': '❄️',
-                    'Obsidienne': '🌌',
-                    'Night': '🌙',
-                    'Voleur': '🍌',
-                    'Eboueur': '🧹',
-                    'Divin': '👑'
-                };
-                
-                trophies.forEach(t => {
-                    const badge = document.createElement('div');
-                    const tierClass = t.trophy_tier.toLowerCase()
-                        .replace('bronze', 'trophy-bronze')
-                        .replace('argent', 'trophy-argent')
-                        .replace('or', 'trophy-or')
-                        .replace('platinium', 'trophy-platinium')
-                        .replace('diamant', 'trophy-diamant')
-                        .replace('obsidienne', 'trophy-obsidienne')
-                        .replace('night', 'trophy-night')
-                        .replace('voleur', 'trophy-voleur')
-                        .replace('eboueur', 'trophy-eboueur')
-                        .replace('divin', 'trophy-divin-special');
-                        
-                    badge.className = `trophy-badge ${tierClass}`;
-                    
-                    const emoji = emojiMap[t.trophy_tier] || '🏆';
-                    
-                    const dateUnlocked = new Date(t.unlocked_at);
-                    const dateStr = dateUnlocked.toLocaleDateString('fr-FR', {
-                        day: 'numeric', month: 'short', year: 'numeric'
-                    });
-                    
-                    let displayName = t.trophy_tier;
-                    if (t.trophy_tier === 'Night') displayName = 'Trophée de la Night';
-                    if (t.trophy_tier === 'Voleur') displayName = 'Roi des Voleurs';
-                    if (t.trophy_tier === 'Eboueur') displayName = 'Éboueur des Mers';
-                    if (t.trophy_tier === 'Divin') displayName = 'Pêcheur Divin';
-                    
-                    badge.innerHTML = `
-                        <span class="trophy-emoji">${emoji}</span>
-                        <span class="trophy-season">${t.season.split(' ')[0]}</span>
-                        <span class="trophy-tier-name">${displayName}</span>
-                        <div class="trophy-tooltip">
-                            <strong>🏆 ${displayName}</strong><br>
-                            Saison : ${t.season}<br>
-                            ${t.level > 0 ? `Niveau Final : ${t.level}<br>` : ''}
-                            Débloqué le : ${dateStr}
-                        </div>
-                    `;
-                    
-                    trophiesContainer.appendChild(badge);
-                });
-            } else {
-                trophiesSection.style.display = 'none';
-            }
+
 
             // Rendre le Musée
             renderMuseum();

@@ -43,7 +43,6 @@ pub async fn check_rate_limit(state: &AppState, ip: &str) -> bool {
 pub async fn admin_panel(
     ConnectInfo(addr): ConnectInfo<SocketAddr>,
     headers: HeaderMap,
-    Query(params): Query<HashMap<String, String>>,
     State(state): State<Arc<AppState>>,
 ) -> impl IntoResponse {
     let client_ip = headers
@@ -56,12 +55,10 @@ pub async fn admin_panel(
         return (axum::http::StatusCode::TOO_MANY_REQUESTS, "Accès temporairement bloqué pour spam").into_response();
     }
 
-    let secret = std::env::var("ADMIN_TOKEN").unwrap_or_else(|_| "change-me".to_string());
-    if params.get("token") == Some(&secret) {
-        Html(match tokio::fs::read_to_string("static/admin.html").await { Ok(h) => h, Err(_) => "Erreur chargement admin.html".to_string() }).into_response()
-    } else {
-        (axum::http::StatusCode::FORBIDDEN, "Accès refusé").into_response()
-    }
+    Html(match tokio::fs::read_to_string("static/admin.html").await {
+        Ok(h) => h,
+        Err(_) => "Erreur chargement admin.html".to_string()
+    }).into_response()
 }
 
 pub async fn login_redirect(
@@ -199,4 +196,262 @@ pub async fn get_banana_kings(State(state): State<Arc<AppState>>) -> impl IntoRe
         Ok(history) => Json(serde_json::json!({ "history": history })).into_response(),
         Err(_) => Json(serde_json::json!({ "error": "Error fetching banana kings history" })).into_response()
     }
+}
+
+use std::sync::RwLock as StdRwLock;
+use std::collections::HashMap as StdHashMap;
+use chrono::{DateTime, Duration};
+
+#[derive(Clone, Debug)]
+pub struct FailedLoginState {
+    pub attempt_count: u32,
+    pub banned_until: Option<DateTime<Utc>>,
+    pub is_permabanned: bool,
+}
+
+static FAILED_LOGINS: StdRwLock<Option<StdHashMap<String, FailedLoginState>>> = StdRwLock::new(None);
+static VALID_SESSIONS: StdRwLock<Option<StdHashMap<String, DateTime<Utc>>>> = StdRwLock::new(None);
+
+pub fn check_login_ban(ip: &str) -> Result<(), String> {
+    let logins = FAILED_LOGINS.read().unwrap();
+    if let Some(map) = &*logins {
+        if let Some(state) = map.get(ip) {
+            if state.is_permabanned {
+                return Err("Banni de façon permanente".to_string());
+            }
+            if let Some(until) = state.banned_until {
+                let now = Utc::now();
+                if now < until {
+                    let diff = until.signed_duration_since(now).num_seconds();
+                    return Err(format!("Accès bloqué. Réessayez dans {} secondes", diff));
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
+pub fn record_failed_login(ip: &str) -> String {
+    let mut logins = FAILED_LOGINS.write().unwrap();
+    let map = logins.get_or_insert_with(StdHashMap::new);
+    let state = map.entry(ip.to_string()).or_insert(FailedLoginState {
+        attempt_count: 0,
+        banned_until: None,
+        is_permabanned: false,
+    });
+
+    state.attempt_count += 1;
+    
+    match state.attempt_count {
+        1 | 2 => {
+            format!("Mot de passe incorrect (Tentative {}/3 avant blocage)", state.attempt_count)
+        }
+        3 => {
+            state.banned_until = Some(Utc::now() + Duration::seconds(30));
+            "Mot de passe incorrect. IP bloquée pour 30 secondes.".to_string()
+        }
+        4 => {
+            state.banned_until = Some(Utc::now() + Duration::minutes(1));
+            "Mot de passe incorrect. IP bloquée pour 1 minute.".to_string()
+        }
+        5 => {
+            state.banned_until = Some(Utc::now() + Duration::minutes(5));
+            "Mot de passe incorrect. IP bloquée pour 5 minutes.".to_string()
+        }
+        6 => {
+            state.banned_until = Some(Utc::now() + Duration::hours(1));
+            "Mot de passe incorrect. IP bloquée pour 1 heure.".to_string()
+        }
+        _ => {
+            state.is_permabanned = true;
+            "Mot de passe incorrect. IP BANNIE DE FAÇON PERMANENTE !".to_string()
+        }
+    }
+}
+
+pub fn record_successful_login(ip: &str) {
+    let mut logins = FAILED_LOGINS.write().unwrap();
+    if let Some(map) = &mut *logins {
+        map.remove(ip);
+    }
+}
+
+pub fn generate_session_token() -> String {
+    let token = uuid::Uuid::new_v4().to_string();
+    let mut sessions = VALID_SESSIONS.write().unwrap();
+    let map = sessions.get_or_insert_with(StdHashMap::new);
+    map.insert(token.clone(), Utc::now() + Duration::hours(2));
+    token
+}
+
+pub fn is_session_valid(token: &str) -> bool {
+    let sessions = VALID_SESSIONS.read().unwrap();
+    if let Some(map) = &*sessions {
+        if let Some(expiry) = map.get(token) {
+            return Utc::now() < *expiry;
+        }
+    }
+    false
+}
+
+#[derive(serde::Deserialize)]
+pub struct LoginPayload {
+    pub password: String,
+}
+
+#[derive(serde::Serialize)]
+pub struct LoginResponse {
+    pub success: bool,
+    pub token: Option<String>,
+    pub error: Option<String>,
+}
+
+pub async fn admin_login(
+    headers: HeaderMap,
+    ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    Json(payload): Json<LoginPayload>,
+) -> impl IntoResponse {
+    let client_ip = headers
+        .get("CF-Connecting-IP")
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.to_string())
+        .unwrap_or_else(|| addr.ip().to_string());
+
+    // 1. Check if IP is banned
+    if let Err(ban_msg) = check_login_ban(&client_ip) {
+        return Json(LoginResponse {
+            success: false,
+            token: None,
+            error: Some(ban_msg),
+        }).into_response();
+    }
+
+    let required_pwd = std::env::var("ADMIN_PASSWORD")
+        .or_else(|_| std::env::var("ADMIN_TOKEN"))
+        .unwrap_or_else(|_| "admin123".to_string());
+
+    if payload.password == required_pwd {
+        record_successful_login(&client_ip);
+        let token = generate_session_token();
+        Json(LoginResponse {
+            success: true,
+            token: Some(token),
+            error: None,
+        }).into_response()
+    } else {
+        let err_msg = record_failed_login(&client_ip);
+        Json(LoginResponse {
+            success: false,
+            token: None,
+            error: Some(err_msg),
+        }).into_response()
+    }
+}
+
+#[derive(serde::Deserialize)]
+pub struct GetJsonQuery {
+    pub file: String, // "fail_messages", "fish_data", "junk_data"
+    pub lang: String, // "fr" or "en"
+}
+
+pub async fn get_admin_json(
+    headers: HeaderMap,
+    Query(params): Query<GetJsonQuery>,
+) -> impl IntoResponse {
+    // 1. Authenticate session token
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    // 2. Select file path
+    let path = match (params.file.as_str(), params.lang.as_str()) {
+        ("fail_messages", "en") => "data/fail_messages_en.json",
+        ("fail_messages", _) => "data/fail_messages.json",
+        ("fish_data", "en") => "data/fish_data_en.json",
+        ("fish_data", _) => "data/fish_data.json",
+        ("junk_data", "en") => "data/junk_data_en.json",
+        ("junk_data", _) => "data/junk_data.json",
+        _ => "data/fish_data.json",
+    };
+
+    let actual_path = if std::path::Path::new(path).exists() {
+        path
+    } else {
+        // Fallback to non-en file if English file doesn't exist
+        match params.file.as_str() {
+            "fail_messages" => "data/fail_messages.json",
+            "fish_data" => "data/fish_data.json",
+            "junk_data" => "data/junk_data.json",
+            _ => return (axum::http::StatusCode::BAD_REQUEST, "Fichier inconnu").into_response(),
+        }
+    };
+
+    match tokio::fs::read_to_string(actual_path).await {
+        Ok(content) => (axum::http::StatusCode::OK, content).into_response(),
+        Err(e) => (axum::http::StatusCode::INTERNAL_SERVER_ERROR, format!("Erreur de lecture: {}", e)).into_response(),
+    }
+}
+
+#[derive(serde::Deserialize)]
+pub struct SaveJsonPayload {
+    pub file: String, // "fail_messages", "fish_data", "junk_data"
+    pub lang: String, // "fr" or "en"
+    pub content: String,
+}
+
+pub async fn save_admin_json(
+    headers: HeaderMap,
+    Json(payload): Json<SaveJsonPayload>,
+) -> impl IntoResponse {
+    // 1. Authenticate session token
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    // 2. Validate JSON syntax and structure
+    match payload.file.as_str() {
+        "fail_messages" => {
+            if serde_json::from_str::<Vec<String>>(&payload.content).is_err() {
+                return (axum::http::StatusCode::BAD_REQUEST, "Format JSON invalide (doit être un tableau de chaînes de caractères)").into_response();
+            }
+        }
+        "fish_data" | "junk_data" => {
+            if serde_json::from_str::<HashMap<crate::config::Rarity, Vec<crate::config::FishData>>>(&payload.content).is_err() {
+                return (axum::http::StatusCode::BAD_REQUEST, "Format JSON invalide (structure du catalogue de poissons incorrecte)").into_response();
+            }
+        }
+        _ => return (axum::http::StatusCode::BAD_REQUEST, "Fichier inconnu").into_response(),
+    }
+
+    // 3. File path selection
+    let path = match (payload.file.as_str(), payload.lang.as_str()) {
+        ("fail_messages", "en") => "data/fail_messages_en.json",
+        ("fail_messages", _) => "data/fail_messages.json",
+        ("fish_data", "en") => "data/fish_data_en.json",
+        ("fish_data", _) => "data/fish_data.json",
+        ("junk_data", "en") => "data/junk_data_en.json",
+        ("junk_data", _) => "data/junk_data.json",
+        _ => "data/fish_data.json",
+    };
+
+    // Ensure parent directory exists
+    if let Some(parent) = std::path::Path::new(path).parent() {
+        let _ = tokio::fs::create_dir_all(parent).await;
+    }
+
+    // 4. Save to disk
+    if let Err(e) = tokio::fs::write(path, &payload.content).await {
+        return (axum::http::StatusCode::INTERNAL_SERVER_ERROR, format!("Échec de l'écriture: {}", e)).into_response();
+    }
+
+    // 5. Trigger static hot-reload of game configuration!
+    if let Err(reload_err) = crate::config::reload_all_game_data() {
+        return (axum::http::StatusCode::INTERNAL_SERVER_ERROR, format!("Fichier enregistré mais échec du rechargement dynamique: {}", reload_err)).into_response();
+    }
+
+    (axum::http::StatusCode::OK, "Fichier sauvegardé et rechargé avec succès").into_response()
 }
