@@ -656,6 +656,18 @@ impl Repository {
         Ok(())
     }
 
+    pub async fn apply_extra_fail_penalty(&self, player_id: i64, gold_penalty: i64, cooldown_penalty_secs: i64) -> Result<(), sqlx::Error> {
+        let query = format!(
+            "UPDATE players SET last_fishing_time = DATETIME(COALESCE(last_fishing_time, CURRENT_TIMESTAMP), '+{} seconds'), gold = MAX(0, gold - {}) WHERE id = ?",
+            cooldown_penalty_secs, gold_penalty
+        );
+        sqlx::query(&query)
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
     pub async fn record_stream_live_date(&self, date: chrono::NaiveDate) -> Result<(), sqlx::Error> {
         let date_str = date.to_string();
         sqlx::query("INSERT OR IGNORE INTO stream_live_dates (live_date) VALUES (?)")

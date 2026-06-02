@@ -50,10 +50,24 @@ pub struct FishData {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+#[serde(untagged)]
+pub enum FailMessageEntry {
+    Simple(String),
+    Detailed(DetailedFailMessage),
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct DetailedFailMessage {
+    pub text: String,
+    pub gold_penalty: Option<i64>,
+    pub cooldown_penalty: Option<i64>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct GameData {
     pub fish_data: HashMap<Rarity, Vec<FishData>>,
     pub junk_data: HashMap<Rarity, Vec<FishData>>,
-    pub fail_messages: Vec<String>,
+    pub fail_messages: Vec<FailMessageEntry>,
 }
 
 static GAME_DATA_FR: std::sync::RwLock<Option<&'static GameData>> = std::sync::RwLock::new(None);
@@ -94,7 +108,7 @@ fn load_game_data_fr() -> GameData {
         &["/app/data/fail_messages.json", "data/fail_messages.json"],
         include_str!("../data/fail_messages.json"),
     );
-    let fail_messages: Vec<String> = serde_json::from_str(&fail_content)
+    let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
         .expect("Failed to parse fail_messages.json");
 
     GameData {
@@ -123,7 +137,7 @@ fn load_game_data_en() -> GameData {
         &["/app/data/fail_messages_en.json", "data/fail_messages_en.json"],
         include_str!("../data/fail_messages.json"), // Fallback embedding FR if EN file missing
     );
-    let fail_messages: Vec<String> = serde_json::from_str(&fail_content)
+    let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
         .expect("Failed to parse fail_messages_en.json");
 
     GameData {
@@ -207,8 +221,8 @@ pub fn get_junk_data() -> HashMap<Rarity, Vec<FishData>> {
     get_game_data_fr().junk_data.clone()
 }
 
-pub fn get_fail_attempt_reasons_old() -> Vec<&'static str> {
-    get_game_data_fr().fail_messages.iter().map(|s| s.as_str()).collect()
+pub fn get_fail_attempt_reasons_old() -> Vec<&'static FailMessageEntry> {
+    get_game_data_fr().fail_messages.iter().collect()
 }
 
 // Direct static reference methods to avoid cloning completely
@@ -228,9 +242,9 @@ pub fn get_junk_ref(use_english: bool) -> &'static HashMap<Rarity, Vec<FishData>
     }
 }
 
-pub fn get_fail_attempt_reasons(use_english: bool) -> Vec<&'static str> {
+pub fn get_fail_attempt_reasons(use_english: bool) -> Vec<&'static FailMessageEntry> {
     let data = if use_english { get_game_data_en() } else { get_game_data_fr() };
-    data.fail_messages.iter().map(|s| s.as_str()).collect()
+    data.fail_messages.iter().collect()
 }
 
 // Caching and thread-safe OnceLock helper getters for lowercase sets

@@ -9,7 +9,7 @@ use twitch_irc::SecureTCPTransport;
 
 use crate::{AppState, PendingSale, PendingTrade};
 use crate::game::{generate_fish, generate_junk};
-use crate::config::get_fail_attempt_reasons;
+use crate::config::{get_fail_attempt_reasons, FailMessageEntry};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum SellArg {
@@ -217,6 +217,31 @@ pub fn parse_trade_args(args_str: &str) -> Option<TradeArg> {
                 return Some(TradeArg::Barter { catch_id, recipient });
             }
         }
+    }
+
+    None
+}
+
+pub fn parse_give_args(args_str: &str) -> Option<(i64, String)> {
+    let args_str = args_str.trim();
+    if args_str.is_empty() {
+        return None;
+    }
+    let tokens: Vec<&str> = args_str.split_whitespace().collect();
+    if tokens.len() != 2 {
+        return None;
+    }
+
+    // Try format: <amount> <recipient>
+    if let Ok(amount) = tokens[0].parse::<i64>() {
+        let recipient = tokens[1].trim_start_matches('@').to_lowercase();
+        return Some((amount, recipient));
+    }
+
+    // Try format: <recipient> <amount>
+    if let Ok(amount) = tokens[1].parse::<i64>() {
+        let recipient = tokens[0].trim_start_matches('@').to_lowercase();
+        return Some((amount, recipient));
     }
 
     None
@@ -542,35 +567,28 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let channel_login = msg.channel_login.clone();
                     tokio::spawn(async move {
                         if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
-                            let attempts = {
-                                let att = state_task.offline_attempts.read().await;
-                                att.get(&username).copied().unwrap_or(0)
-                            };
-
                             let use_english = match &player.language {
                                 Some(l) => l == "en",
                                 None => text.starts_with("!fish") || text == "buble",
                             };
 
-                            if attempts >= 3 {
-                                // Reset attempts
-                                {
-                                    let mut att = state_task.offline_attempts.write().await;
-                                    att.remove(&username);
-                                }
-                                // Grant access
-                                {
-                                    let mut bypassed = state_task.offline_bypassed.write().await;
-                                    bypassed.insert(username.clone());
-                                }
-
-                                let msg_str = if use_english {
-                                    format!("🔑 @{}, access granted! You can now fish offline! 🌊", username)
-                                } else {
-                                    format!("🔑 @{}, accès autorisé ! Tu peux désormais pêcher hors-ligne ! 🌊", username)
-                                };
-                                let _ = client_msg.say(channel_login, msg_str).await;
+                            // Reset attempts
+                            {
+                                let mut att = state_task.offline_attempts.write().await;
+                                att.remove(&username);
                             }
+                            // Grant access
+                            {
+                                let mut bypassed = state_task.offline_bypassed.write().await;
+                                bypassed.insert(username.clone());
+                            }
+
+                            let msg_str = if use_english {
+                                format!("🔑 @{}, access granted! You can now fish offline! 🌊", username)
+                            } else {
+                                format!("🔑 @{}, accès autorisé ! Tu peux désormais pêcher hors-ligne ! 🌊", username)
+                            };
+                            let _ = client_msg.say(channel_login, msg_str).await;
                         }
                     });
                 } else if text == "!fish stats" || text == "!fish stat" || text == "!peche stats" || text == "!pêche stats" {
@@ -1575,6 +1593,96 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         }
                     });
+                } else if text.starts_with("!fish give") || text.starts_with("!peche give") || text.starts_with("!pêche give") ||
+                           text.starts_with("!fish don")  || text.starts_with("!peche don")  || text.starts_with("!pêche don")  ||
+                           text.starts_with("!fish donner") || text.starts_with("!peche donner") || text.starts_with("!pêche donner") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish give") {
+                            raw_msg["!fish give".len()..].trim()
+                        } else if text_trim.starts_with("!peche give") {
+                            raw_msg["!peche give".len()..].trim()
+                        } else if text_trim.starts_with("!pêche give") {
+                            raw_msg["!pêche give".len()..].trim()
+                        } else if text_trim.starts_with("!fish don") {
+                            raw_msg["!fish don".len()..].trim()
+                        } else if text_trim.starts_with("!peche don") {
+                            raw_msg["!peche don".len()..].trim()
+                        } else if text_trim.starts_with("!pêche don") {
+                            raw_msg["!pêche don".len()..].trim()
+                        } else if text_trim.starts_with("!fish donner") {
+                            raw_msg["!fish donner".len()..].trim()
+                        } else if text_trim.starts_with("!peche donner") {
+                            raw_msg["!peche donner".len()..].trim()
+                        } else if text_trim.starts_with("!pêche donner") {
+                            raw_msg["!pêche donner".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        let parsed = parse_give_args(arg);
+                        if parsed.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish give [montant] @[destinataire]", username)).await;
+                            return;
+                        }
+
+                        let (amount, recipient) = parsed.unwrap();
+
+                        if recipient == username {
+                            let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas te donner de l'or à toi-même.", username)).await;
+                            return;
+                        }
+
+                        if amount <= 0 {
+                            let _ = client_msg.say(channel_login, format!("❌ @{}, le montant doit être supérieur à 0.", username)).await;
+                            return;
+                        }
+
+                        // Retrieve giver player info
+                        let giver = match state_task.repo.get_or_create_player(&username).await {
+                            Ok(g) => g,
+                            Err(e) => {
+                                tracing::error!("Failed to retrieve giver player: {:?}", e);
+                                return;
+                            }
+                        };
+
+                        if giver.gold < amount {
+                            let _ = client_msg.say(channel_login, format!("❌ @{}, tu n'as pas assez de pièces d'or (requis: {} po, tu as {} po).", username, amount, giver.gold)).await;
+                            return;
+                        }
+
+                        // Retrieve recipient player info
+                        let receiver = match state_task.repo.get_player(&recipient).await {
+                            Ok(Some(r)) => r,
+                            Ok(None) => {
+                                let _ = client_msg.say(channel_login, format!("❌ @{}, le joueur @{} n'a pas encore de compte de pêche.", username, recipient)).await;
+                                return;
+                            }
+                            Err(e) => {
+                                tracing::error!("Failed to retrieve recipient player: {:?}", e);
+                                return;
+                            }
+                        };
+
+                        let giver_id = giver.id.unwrap_or(0);
+                        let receiver_id = receiver.id.unwrap_or(0);
+
+                        match state_task.repo.execute_gold_transfer(giver_id, receiver_id, amount).await {
+                            Ok(_) => {
+                                let _ = client_msg.say(channel_login, format!("🪙 @{} a donné {} pièces d'or à @{} ! 🤝", username, amount, recipient)).await;
+                            }
+                            Err(e) => {
+                                tracing::error!("Failed to execute gold transfer: {:?}", e);
+                                let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors du transfert de pièces d'or.", username)).await;
+                            }
+                        }
+                    });
                 } else if text.starts_with("!fish reset") || text.starts_with("!peche reset") || text.starts_with("!pêche reset") {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -1790,7 +1898,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let _ = client_msg.say(channel_login, "⚠️ @monsieurcotcot, aucune purge en attente. Tape !fish purge d'abord.".to_string()).await;
                         }
                     });
-                } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "katouch51" || username == "ze_fisherman" || username == "ze_tester")) {
+                } else if text == "!fish" || text == "!peche" || text == "!pêche" || (text == "!fish testvip" && (username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester")) {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();
@@ -1799,7 +1907,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     tokio::spawn(async move {
                         if let Ok(mut player) = state_task.repo.get_or_create_player(&username).await {
                             let is_admin = username == "monsieurcotcot";
-                            let is_bypass_user = username == "monsieurcotcot" || username == "katouch51" || username == "ze_fisherman" || username == "ze_tester";
+                            let is_bypass_user = username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester";
                             
                             // Détermination de la langue de retour :
                             // 1. Préférence utilisateur en base si définie.
@@ -1811,6 +1919,10 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                             // Vérification du statut live du stream (sauf pour l'admin ou en mode test)
                             let is_live = is_stream_online(&state_task).await;
+                            if is_live {
+                                let mut att = state_task.offline_attempts.write().await;
+                                att.remove(&username);
+                            }
                             let is_bypassed = {
                                 let bypassed = state_task.offline_bypassed.read().await;
                                 bypassed.contains(&username)
@@ -1979,9 +2091,20 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
                                 } else {
                                     let reasons = get_fail_attempt_reasons(use_english);
-                                    let reason = reasons.choose(&mut rand::thread_rng()).unwrap_or(&"Pas de chance !").replace("#viewer_name#", &username);
+                                    let default_entry = FailMessageEntry::Simple("Pas de chance !".to_string());
+                                    let entry = reasons.choose(&mut rand::thread_rng()).copied().unwrap_or(&default_entry);
+
+                                    let (text, gold_pen, cooldown_pen) = match entry {
+                                        FailMessageEntry::Simple(t) => (t.clone(), 0, 0),
+                                        FailMessageEntry::Detailed(det) => {
+                                            (det.text.clone(), det.gold_penalty.unwrap_or(0), det.cooldown_penalty.unwrap_or(0))
+                                        }
+                                    };
+
+                                    let formatted_text = text.replace("#viewer_name#", &username);
                                     let leveled_up = player.add_xp(5);
-                                    let mut resp = reason;
+                                    let mut resp = formatted_text;
+
                                     if leveled_up {
                                         if use_english {
                                             resp.push_str(&format!(" ✨ LEVEL UP! Lvl. {}!", player.level));
@@ -1991,6 +2114,12 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
                                     let _ = client_msg.say(channel_login, resp).await;
                                     let _ = state_task.repo.save_attempt(&player, false, None).await;
+
+                                    if gold_pen > 0 || cooldown_pen > 0 {
+                                        if let Some(pid) = player.id {
+                                            let _ = state_task.repo.apply_extra_fail_penalty(pid, gold_pen, cooldown_pen).await;
+                                        }
+                                    }
                                 }
                             } else {
                                 let rem = player.get_remaining_cooldown();
@@ -2025,9 +2154,31 @@ pub async fn is_stream_online(state: &AppState) -> bool {
     }
     
     // Cache expired or empty, fetch from Twitch API
-    let tokens = state.auth.load_tokens();
-    let is_live = if let Some(t) = tokens {
-        state.auth.get_stream_info(&state.channel, &t.access_token).await.is_some()
+    let tokens_opt = state.auth.load_tokens();
+    let is_live = if let Some(t) = tokens_opt {
+        if state.auth.get_stream_info(&state.channel, &t.access_token).await.is_some() {
+            true
+        } else {
+            // It could be that the stream is offline, OR the token is invalid.
+            // Let's validate the token.
+            if !state.auth.validate_token(&t.access_token).await {
+                tracing::warn!("⚠️ [Auth] Bot token is invalid during stream status check. Attempting refresh...");
+                match state.auth.refresh_tokens(&t.refresh_token).await {
+                    Ok(new_t) => {
+                        let _ = state.auth.save_tokens(&new_t);
+                        // Retry stream check with new token
+                        state.auth.get_stream_info(&state.channel, &new_t.access_token).await.is_some()
+                    }
+                    Err(e) => {
+                        tracing::error!("❌ [Auth] Failed to refresh bot tokens: {}", e);
+                        false
+                    }
+                }
+            } else {
+                // Token is valid, so the stream is actually offline!
+                false
+            }
+        }
     } else {
         false
     };
@@ -2248,6 +2399,17 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_give_args() {
+        assert_eq!(parse_give_args("100 @monsieurcotcot"), Some((100, "monsieurcotcot".to_string())));
+        assert_eq!(parse_give_args("@MonsieurCotCot 250"), Some((250, "monsieurcotcot".to_string())));
+        assert_eq!(parse_give_args("50 monsieurcotcot"), Some((50, "monsieurcotcot".to_string())));
+        assert_eq!(parse_give_args("monsieurcotcot 500"), Some((500, "monsieurcotcot".to_string())));
+        assert_eq!(parse_give_args("100"), None);
+        assert_eq!(parse_give_args("abc @monsieurcotcot"), None);
+        assert_eq!(parse_give_args(""), None);
+    }
+
+    #[test]
     fn test_offline_phrases_count() {
         let fr_phrases = get_offline_phrases(false);
         let en_phrases = get_offline_phrases(true);
@@ -2261,13 +2423,13 @@ mod tests {
 
     #[test]
     fn test_bypass_users() {
-        let bypass_users = vec!["monsieurcotcot", "katouch51", "ze_fisherman", "ze_tester"];
+        let bypass_users = vec!["monsieurcotcot", "ze_fisherman", "ze_tester"];
         for u in bypass_users {
-            let is_bypass = u == "monsieurcotcot" || u == "katouch51" || u == "ze_fisherman" || u == "ze_tester";
+            let is_bypass = u == "monsieurcotcot" || u == "ze_fisherman" || u == "ze_tester";
             assert!(is_bypass);
         }
         let normal_user = "someone_else";
-        let is_bypass = normal_user == "monsieurcotcot" || normal_user == "katouch51" || normal_user == "ze_fisherman" || normal_user == "ze_tester";
+        let is_bypass = normal_user == "monsieurcotcot" || normal_user == "ze_fisherman" || normal_user == "ze_tester";
         assert!(!is_bypass);
     }
 }

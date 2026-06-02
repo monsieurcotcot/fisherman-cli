@@ -961,5 +961,18 @@
   "🪈👀 @#viewer_name# a accroché une flûte mignonne avec une note à l'intérieur disant 'Pas de banane ici !'. Lilypeach a encore tenté de jouer de la flûte sous l'eau. Silly Lily :D",
   "🪈👀 @#viewer_name# a trouvé une GRANDE flûte avec une note à l'intérieur disant 'Pas de banane ici, désolé désolé !'. Lilypeach a essayé de jouer cette GRANDE flûte sous l'eau mais... Silly Lily :P",
   "🎒😂 @#viewer_name# a remonté un Gros Sac :O hmmmm on peut lire 'Ashxra' sur l'étiquette. On fait quoi @kikettebot ??",
-  "😫🤢 @#viewer_name# non mais WTF, tu viens de remonter un emballage chelou avec des reste de 'trippes cuisinée à la mode de Caen'. Appelle @Nigntube kikettebot vite !!"
+  "😫🤢 @#viewer_name# non mais WTF, tu viens de remonter un emballage chelou avec des reste de 'trippes cuisinée à la mode de Caen'. Appelle @Nigntube kikettebot vite !!",
+  {
+    "text": "⚠️ Oups @#viewer_name#, ta ligne s'est emmêlée dans des algues ! Tu prends une pénalité de +30s de cooldown.",
+    "cooldown_penalty": 30
+  },
+  {
+    "text": "💸 Oh non @#viewer_name#, ton hameçon s'est cassé sur un rocher. Remplacer le matériel te coûte 15 pièces d'or supplémentaires !",
+    "gold_penalty": 15
+  },
+  {
+    "text": "🦶 @#viewer_name# a glissé dans la boue en tirant trop fort ! Pénalité : -10 po et +20s de cooldown.",
+    "gold_penalty": 10,
+    "cooldown_penalty": 20
+  }
 ]
