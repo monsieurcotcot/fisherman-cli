@@ -53,6 +53,15 @@
                         <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
                         <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
                         <div class="stat-item" style="margin-top: 5px;"><span>Pièces d'Or:</span> <strong style="color: #ffd700; display: inline-flex; align-items: center; gap: 3px;">🪙 <span id="res-stat-gold">0</span> po</strong></div>
+                        <div class="stat-item" style="margin-top: 5px; display: flex; align-items: center; justify-content: space-between;">
+                            <span>Notoriété Écolo:</span>
+                            <div style="display: flex; align-items: center; gap: 8px; flex-grow: 1; max-width: 140px; margin-left: 10px;">
+                                <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; height: 12px; width: 100%; overflow: hidden; position: relative;">
+                                    <div id="res-eco-fill" style="background: linear-gradient(90deg, #4caf50, #8bc34a); height: 100%; width: 50%; transition: width 0.3s ease;"></div>
+                                </div>
+                                <strong id="res-eco-value" style="font-size: 0.85rem; color: #4caf50;">1000</strong>
+                            </div>
+                        </div>
                         <div style="display: flex; gap: 8px; margin-top: 12px; padding: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; justify-content: space-around; font-size: 0.85rem;">
                             <span title="Poissons" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-fish">0</strong> 🐟</span>
                             <span title="Déchets" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-junk">0</strong> 🗑️</span>

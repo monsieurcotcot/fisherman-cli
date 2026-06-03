@@ -297,6 +297,24 @@ async function fetchStats(u) {
             document.getElementById('res-failed').textContent = data.failed;
             document.getElementById('res-stat-gold').textContent = data.gold || 0;
 
+            const ecoNotoriety = data.eco_notoriety !== undefined ? data.eco_notoriety : 1000;
+            document.getElementById('res-eco-value').textContent = ecoNotoriety;
+            const ecoPercent = Math.min(100, Math.max(0, (ecoNotoriety / 2000) * 100));
+            document.getElementById('res-eco-fill').style.width = `${ecoPercent}%`;
+            
+            const ecoValElem = document.getElementById('res-eco-value');
+            const ecoFillElem = document.getElementById('res-eco-fill');
+            if (ecoNotoriety >= 1200) {
+                ecoValElem.style.color = '#4caf50';
+                ecoFillElem.style.background = 'linear-gradient(90deg, #4caf50, #8bc34a)';
+            } else if (ecoNotoriety >= 800) {
+                ecoValElem.style.color = '#ff9800';
+                ecoFillElem.style.background = 'linear-gradient(90deg, #ff9800, #ffc107)';
+            } else {
+                ecoValElem.style.color = '#f44336';
+                ecoFillElem.style.background = 'linear-gradient(90deg, #f44336, #ff5722)';
+            }
+
             const fishCount = data.success - data.junk - data.banana - data.postcard - (data.gem || 0);
             document.getElementById('res-stat-fish').textContent = fishCount;
             document.getElementById('res-stat-junk').textContent = data.junk;

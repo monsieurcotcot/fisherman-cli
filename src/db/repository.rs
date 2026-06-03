@@ -14,6 +14,8 @@ pub struct PlayerBackup {
     pub vip_until: Option<DateTime<Utc>>,
     #[serde(default)]
     pub gold: Option<i64>,
+    #[serde(default)]
+    pub eco_notoriety: Option<i64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -102,6 +104,7 @@ impl Repository {
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
+            eco_notoriety: row.get("eco_notoriety"),
         }).collect();
 
         Ok(players)
@@ -116,8 +119,9 @@ impl Repository {
 
     pub async fn restore_player(&self, backup: &PlayerBackup) -> Result<i64, sqlx::Error> {
         let gold_val = backup.gold.unwrap_or(0);
-        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until, gold) \
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?) \
+        let eco_val = backup.eco_notoriety.unwrap_or(1000);
+        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until, gold, eco_notoriety) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) \
             ON CONFLICT(username) DO UPDATE SET \
             total_attempts = excluded.total_attempts, \
             successful_attempts = excluded.successful_attempts, \
@@ -125,7 +129,8 @@ impl Repository {
             level = excluded.level, \
             xp = excluded.xp, \
             vip_until = excluded.vip_until, \
-            gold = excluded.gold")
+            gold = excluded.gold, \
+            eco_notoriety = excluded.eco_notoriety")
             .bind(&backup.username.to_lowercase())
             .bind(backup.total_attempts)
             .bind(backup.successful_attempts)
@@ -134,6 +139,7 @@ impl Repository {
             .bind(backup.xp)
             .bind(backup.vip_until)
             .bind(gold_val)
+            .bind(eco_val)
             .execute(&self.pool)
             .await?
             .last_insert_rowid();
@@ -195,6 +201,7 @@ impl Repository {
                 gold_given_total: r.get("gold_given_total"),
                 max_gold_held: r.get("max_gold_held"),
                 language: r.get("language"),
+                eco_notoriety: r.get("eco_notoriety"),
             }))
         } else {
             Ok(None)
@@ -240,6 +247,7 @@ impl Repository {
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
+            eco_notoriety: row.get("eco_notoriety"),
         }).collect())
     }
 
@@ -296,6 +304,7 @@ impl Repository {
                 gold_given_total: row.get("gold_given_total"),
                 max_gold_held: row.get("max_gold_held"),
                 language: row.get("language"),
+                eco_notoriety: row.get("eco_notoriety"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -353,6 +362,7 @@ impl Repository {
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
+            eco_notoriety: row.get("eco_notoriety"),
         }).collect();
 
         Ok(players)
@@ -591,6 +601,7 @@ impl Repository {
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
+            eco_notoriety: row.get("eco_notoriety"),
         };
 
         tx.commit().await?;
@@ -642,6 +653,7 @@ impl Repository {
             gold_given_total: row.get("gold_given_total"),
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
+            eco_notoriety: row.get("eco_notoriety"),
         }).collect();
 
         Ok(players)
@@ -699,7 +711,7 @@ impl Repository {
             .await?;
 
         // Réinitialiser les stats du joueur (y compris les pièces d'or)
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0 WHERE username = ?")
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0, eco_notoriety = 1000 WHERE username = ?")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
@@ -1072,6 +1084,7 @@ impl Repository {
             gold_given_total: r.get("gold_given_total"),
             max_gold_held: r.get("max_gold_held"),
             language: r.get("language"),
+            eco_notoriety: r.get("eco_notoriety"),
         };
 
         let mut success_count = 0;
@@ -1171,6 +1184,35 @@ impl Repository {
         tx.commit().await?;
         Ok(())
     }
+
+    pub async fn execute_recycling(
+        &self,
+        player_id: i64,
+        catch_id: i64,
+        notoriety_change: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        let rows_affected = sqlx::query("DELETE FROM catches WHERE id = ? AND player_id = ?")
+            .bind(catch_id)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+        if rows_affected == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        sqlx::query("UPDATE players SET eco_notoriety = MAX(0, eco_notoriety + ?) WHERE id = ?")
+            .bind(notoriety_change)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
 
     pub async fn execute_gold_transfer(
         &self,
@@ -1356,7 +1398,8 @@ impl Repository {
                 coinflip_max_loss_streak INTEGER DEFAULT 0,
                 gold_given_total INTEGER DEFAULT 0,
                 max_gold_held INTEGER DEFAULT 0,
-                language TEXT DEFAULT NULL
+                language TEXT DEFAULT NULL,
+                eco_notoriety INTEGER DEFAULT 1000
             )"
         ).execute(&mut *tx).await?;
 
@@ -1441,7 +1484,7 @@ impl Repository {
             .await?;
 
         // 3. Réinitialiser les stats du joueur (y compris les pièces d'or)
-        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0 WHERE username = ?")
+        sqlx::query("UPDATE players SET total_attempts = 0, successful_attempts = 0, failed_attempts = 0, last_fishing_time = NULL, level = 1, xp = 0, vip_until = NULL, gold = 0, eco_notoriety = 1000 WHERE username = ?")
             .bind(&username_lower)
             .execute(&mut *tx)
             .await?;
@@ -1456,6 +1499,15 @@ impl Repository {
     pub async fn update_player_language(&self, player_id: i64, language: Option<String>) -> Result<(), sqlx::Error> {
         sqlx::query("UPDATE players SET language = ? WHERE id = ?")
             .bind(language)
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn update_player_eco_notoriety(&self, player_id: i64, eco_notoriety: i64) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE players SET eco_notoriety = ? WHERE id = ?")
+            .bind(eco_notoriety)
             .bind(player_id)
             .execute(&self.pool)
             .await?;
@@ -1505,7 +1557,8 @@ mod tests {
                 coinflip_max_loss_streak INTEGER DEFAULT 0,
                 gold_given_total INTEGER DEFAULT 0,
                 max_gold_held INTEGER DEFAULT 0,
-                language TEXT DEFAULT NULL
+                language TEXT DEFAULT NULL,
+                eco_notoriety INTEGER DEFAULT 1000
             )"
         ).execute(&pool).await.unwrap();
 
@@ -1683,6 +1736,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(0),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         let fish = Fish::new("Brochet".to_string(), Rarity::Common, 12.5, 2.4, "state".to_string(), "desc".to_string());
@@ -1719,6 +1773,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // 1. Soft Reset Player A
@@ -1736,6 +1791,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(200),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // Hard Reset Player B
@@ -1759,6 +1815,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // 1. Add 50 gold
@@ -1794,6 +1851,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         let initial_player = repo.get_player("player_penalty_test").await.unwrap().unwrap();
@@ -1827,6 +1885,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         let p_id_b = repo.restore_player(&crate::db::PlayerBackup {
@@ -1838,6 +1897,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(50),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // 1. Transfert valide de 40 gold de A vers B
@@ -1871,6 +1931,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // Restore Player B with 100 gold
@@ -1883,6 +1944,7 @@ mod tests {
             xp: 250,
             vip_until: None,
             gold: Some(100),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // 1. Player A wins a coinflip of 50 gold
@@ -1982,6 +2044,7 @@ mod tests {
             xp: 0,
             vip_until: None,
             gold: Some(20),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         let fish = Fish::new("Daurade".to_string(), Rarity::Common, 10.0, 1.0, "worn".to_string(), "Fish desc".to_string());
@@ -2025,6 +2088,7 @@ mod tests {
             xp: 0,
             vip_until: None,
             gold: Some(0),
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         let buyer_id = repo.restore_player(&crate::db::PlayerBackup {
@@ -2036,6 +2100,7 @@ mod tests {
             xp: 0,
             vip_until: None,
             gold: Some(50), // Buyer has only 50 gold!
+            eco_notoriety: Some(1000),
         }).await.unwrap();
 
         // 2. Save a catch to seller
@@ -2064,5 +2129,38 @@ mod tests {
 
         let catches_buyer = repo.get_player_catches(buyer_id).await.unwrap();
         assert_eq!(catches_buyer.len(), 0);
+    }
+
+    #[tokio::test]
+    async fn test_execute_recycling() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let p_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "recycler_tester".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(0),
+            eco_notoriety: Some(1000),
+        }).await.unwrap();
+
+        let junk = Fish::new_junk("Sac Plastique Vert".to_string(), Rarity::Common, 0.5, 0.1, "worn".to_string(), "Junk desc".to_string());
+        repo.save_attempt(&repo.get_player("recycler_tester").await.unwrap().unwrap(), true, Some(junk)).await.unwrap();
+
+        let catches = repo.get_player_catches(p_id).await.unwrap();
+        assert_eq!(catches.len(), 1);
+        let catch_id = catches[0].id.unwrap();
+
+        repo.execute_recycling(p_id, catch_id, -20).await.unwrap();
+
+        let catches_after = repo.get_player_catches(p_id).await.unwrap();
+        assert_eq!(catches_after.len(), 0);
+
+        let player = repo.get_player("recycler_tester").await.unwrap().unwrap();
+        assert_eq!(player.eco_notoriety, 980);
     }
 }

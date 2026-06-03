@@ -106,8 +106,11 @@ fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
     };
     
     // Generate state
-    let states = vec!["badly damaged", "damaged", "worn", "good", "pristine"];
-    let weights = vec![10, 30, 40, 30, 10];
+    let (states, weights) = if is_junk {
+        (vec!["badly damaged", "damaged", "worn"], vec![30, 40, 30])
+    } else {
+        (vec!["badly damaged", "damaged", "worn", "good", "pristine"], vec![10, 30, 40, 30, 10])
+    };
     
     let state = if let Some(s) = &item_data.force_state {
         s.clone()

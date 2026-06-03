@@ -34,6 +34,7 @@ pub struct Player {
     pub gold_given_total: i64,
     pub max_gold_held: i64,
     pub language: Option<String>,
+    pub eco_notoriety: i64,
 }
 
 impl Player {
@@ -70,6 +71,7 @@ impl Player {
             gold_given_total: 0,
             max_gold_held: 0,
             language: None,
+            eco_notoriety: 1000,
         }
     }
 

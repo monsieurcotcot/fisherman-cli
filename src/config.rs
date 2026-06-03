@@ -47,6 +47,9 @@ pub struct FishData {
     pub months: Option<Vec<i32>>,
     pub fun_fact: Option<String>,
     pub time_restriction: Option<String>,
+    pub bin: Option<String>,
+    pub recycling_notoriety_bonus: Option<i64>,
+    pub recycling_notoriety_malus: Option<i64>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

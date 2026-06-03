@@ -122,6 +122,7 @@ async fn main() -> Result<(), MyError> {
                 xp: p.xp,
                 vip_until: p.vip_until,
                 gold: Some(p.gold),
+                eco_notoriety: Some(p.eco_notoriety),
             }).collect();
             if let Ok(json) = serde_json::to_string_pretty(&backups) {
                 let _ = tokio::fs::write("data/players_backup.json", json).await;

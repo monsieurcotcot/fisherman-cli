@@ -791,7 +791,7 @@
   "🎭 @#viewer_name#, un masque comédie/tragédie ? Eh bien, ce voyage de pêche est un peu des deux ! 4Head",
   "🌂 @#viewer_name#, un parapluie ? Il ne pleut même pas ! NotLikeThis",
   "🚁 @#viewer_name#, un hélicoptère jouet ? Les poissons ont amélioré leur voyage ! WutFace",
-  " cassette VHS ? Peut-être que c'est un tutoriel sur la manière de pêcher correctement ! LUL",
+  "📼 @#viewer_name#, une cassette VHS ? Peut-être que c'est un tutoriel sur la manière de pêcher correctement ! LUL",
   "💾 @#viewer_name#, une disquette ? Vous pêchez dans une capsule temporelle technologique ! Kappa",
   "🐔 @#viewer_name#, un flotteur poulet ? Mauvais type d'oiseau ! FailFish",
   "🍼 @#viewer_name# vient de pêcher un biberon ? 'Alix' est écrit dessus. Ce n'est pas une garderie ! FailFish",
@@ -974,5 +974,49 @@
     "text": "🦶 @#viewer_name# a glissé dans la boue en tirant trop fort ! Pénalité : -10 po et +20s de cooldown.",
     "gold_penalty": 10,
     "cooldown_penalty": 20
+  },
+  {
+    "text": "😵‍💫 @#viewer_name# a eu le vertige en regardant le bouchon et s'est écroulé dans l'herbe. Repos forcé de 45 secondes !",
+    "cooldown_penalty": 45
+  },
+  {
+    "text": "🧦 Mouillé ! @#viewer_name# a voulu récupérer son flotteur et a pris l'eau dans ses bottes. Séchage obligatoire (+30s de cooldown).",
+    "cooldown_penalty": 30
+  },
+  {
+    "text": "🐝 Oh la gaffe ! @#viewer_name# a confondu un nid de guêpes avec un buisson et doit courir pour sa vie ! Cooldown +60s.",
+    "cooldown_penalty": 60
+  },
+  {
+    "text": "😴 En plein rêve, @#viewer_name# s'est assoupi sur sa chaise de camping. Le poisson est parti avec la canne. Temps de réveil : 90 secondes.",
+    "cooldown_penalty": 90
+  },
+  {
+    "text": "🎣💥 Aïe ! Le moulinet de @#viewer_name# a explosé dans un nuage de fumée. Démêlage et réparation : +120s de cooldown !",
+    "cooldown_penalty": 120
+  },
+  {
+    "text": "🦆 Attaque de canard ! Un canard colvert en colère a volé le casse-croûte de @#viewer_name#, provoquant une course-poursuite de 40 secondes.",
+    "cooldown_penalty": 40
+  },
+  {
+    "text": "🦀 Pincé ! En fouillant la vase, @#viewer_name# s'est fait pincer le doigt par un crabe farceur. Soins de premier secours : +25s.",
+    "cooldown_penalty": 25
+  },
+  {
+    "text": "🦟 Attaque de moustiques ! @#viewer_name# doit agiter les bras pour survivre à l'essaim. Impossible de pêcher pendant 50 secondes.",
+    "cooldown_penalty": 50
+  },
+  {
+    "text": "🍌 Glissade ! @#viewer_name# a marché sur une peau de banane (sûrement laissée par Lilypeach) et a glissé par terre. Pénalité de 80s.",
+    "cooldown_penalty": 80
+  },
+  {
+    "text": "🤠 @#viewer_name# a tenté une pose stylée pour impressionner le chat du streamer, mais est tombé dans les orties. Cooldown +70s !",
+    "cooldown_penalty": 70
+  },
+  {
+    "text": "📱 Plouf ! Le téléphone de @#viewer_name# est tombé dans l'eau. Il faut attendre 110 secondes qu'il sèche dans du riz.",
+    "cooldown_penalty": 110
   }
 ]

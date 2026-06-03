@@ -169,7 +169,8 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "coinflip_max_win_streak": p.coinflip_max_win_streak,
                 "coinflip_max_loss_streak": p.coinflip_max_loss_streak,
                 "gold_given_total": p.gold_given_total,
-                "max_gold_held": p.max_gold_held
+                "max_gold_held": p.max_gold_held,
+                "eco_notoriety": p.eco_notoriety
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),

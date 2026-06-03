@@ -43,6 +43,7 @@ pub fn start_backup_task(state: Arc<AppState>) {
                     xp: p.xp,
                     vip_until: p.vip_until,
                     gold: Some(p.gold),
+                    eco_notoriety: Some(p.eco_notoriety),
                 }).collect();
                 
                 if let Ok(json) = serde_json::to_string_pretty(&backups) {

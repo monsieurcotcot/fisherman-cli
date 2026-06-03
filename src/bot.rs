@@ -104,6 +104,35 @@ fn extract_state_and_quantity(tokens: &mut Vec<&str>) -> (Option<String>, i64) {
     (state, quantity)
 }
 
+pub fn normalize_bin_name(name: &str) -> Option<&'static str> {
+    match name.to_lowercase().as_str() {
+        "bleu" | "blue" => Some("bleu"),
+        "jaune" | "yellow" => Some("jaune"),
+        "vert" | "green" => Some("vert"),
+        "marron" | "brown" => Some("marron"),
+        "gris" | "gray" | "grey" => Some("gris"),
+        "decharge" | "décharge" | "landfill" | "scrapyard" | "dump" | "scrap" => Some("decharge"),
+        _ => None,
+    }
+}
+
+pub fn parse_recycle_args(args_str: &str) -> Option<(i64, String)> {
+    let parts: Vec<&str> = args_str.split_whitespace().collect();
+    if parts.len() < 2 {
+        return None;
+    }
+    
+    let id_str = parts[0].trim();
+    let id = if id_str.starts_with('#') {
+        id_str[1..].parse::<i64>().ok()?
+    } else {
+        id_str.parse::<i64>().ok()?
+    };
+    
+    let bin_str = parts[1].trim().to_lowercase();
+    Some((id, bin_str))
+}
+
 pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
     let args_str = args_str.trim();
     if args_str.is_empty() {
@@ -505,7 +534,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | trade #id | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, trade, coinflip ou lang".to_string();
+                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | recycle #id poubelle | trade #id | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, recycle, trade, coinflip ou lang".to_string();
                     if username == "monsieurcotcot" {
                         help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
@@ -516,6 +545,9 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         "sell" | "vendre" | "vends" | "vend" => {
                             "💰 Vente : !fish sell <nom/id_poisson> [état] [qté]. Ex : '!fish sell bar pristine 1' ou '!fish sell #42'. Si l'état est omis, vend les plus abîmés en premier. Confirme par '!fish sell oui' (durée 1m).".to_string()
                         },
+                        "recycle" | "recycler" => {
+                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu (papier/carton), jaune (plastiques/métaux), vert (verre), marron (organique), gris (e-waste/ampoules), decharge (autres).".to_string()
+                        },
                         "trade" | "echange" | "échanger" | "echanger" => {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
                         },
@@ -525,7 +557,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         "lang" | "language" | "langue" => {
                             "🌐 Langue : '!fish lang fr' pour passer en Français, '!fish lang en' pour l'Anglais, ou '!fish lang reset' pour la langue automatique par défaut (anglais sur !fish, français sur !peche).".to_string()
                         },
-                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
+                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help recycle' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
                     };
                     let _ = client.say(msg.channel_login.clone(), reply).await;
                 } else if text == "!fish lang fr" || text == "!peche lang fr" || text == "!pêche lang fr" {
@@ -1297,6 +1329,128 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                         }
                     });
+                } else if text.starts_with("!fish recycle") || text.starts_with("!fish recycler") ||
+                           text.starts_with("!peche recycle") || text.starts_with("!peche recycler") ||
+                           text.starts_with("!pêche recycle") || text.starts_with("!pêche recycler") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish recycler") {
+                            raw_msg["!fish recycler".len()..].trim()
+                        } else if text_trim.starts_with("!fish recycle") {
+                            raw_msg["!fish recycle".len()..].trim()
+                        } else if text_trim.starts_with("!peche recycler") {
+                            raw_msg["!peche recycler".len()..].trim()
+                        } else if text_trim.starts_with("!peche recycle") {
+                            raw_msg["!peche recycle".len()..].trim()
+                        } else if text_trim.starts_with("!pêche recycler") {
+                            raw_msg["!pêche recycler".len()..].trim()
+                        } else if text_trim.starts_with("!pêche recycle") {
+                            raw_msg["!pêche recycle".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        let parsed = parse_recycle_args(arg);
+                        if parsed.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish recycle #[id_capture] [poubelle] (ex : !fish recycle #42 jaune). Poubelles : bleu, jaune, vert, marron, gris, decharge.", username)).await;
+                            return;
+                        }
+
+                        let (catch_id, bin_name) = parsed.unwrap();
+                        let normalized_bin = normalize_bin_name(&bin_name);
+                        if normalized_bin.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, poubelle '{}' inconnue. Poubelles valides : bleu, jaune, vert, marron, gris, decharge.", username, bin_name)).await;
+                            return;
+                        }
+                        let normalized_bin = normalized_bin.unwrap();
+
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            let use_english = player.language.as_deref() == Some("en") || (player.language.is_none() && text_trim.starts_with("!fish"));
+                            
+                            if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                let target = catches.into_iter().find(|c| c.id == Some(catch_id));
+                                if let Some(c) = target {
+                                    if !c.is_junk {
+                                        let msg = if use_english {
+                                            format!("❌ @{}, you cannot recycle '{}' (#{}) because it is not a junk item! Only junk items can be recycled.", username, c.name, catch_id)
+                                        } else {
+                                            format!("❌ @{}, tu ne peux pas recycler '{}' (#{}) car ce n'est pas un déchet ! Seuls les déchets peuvent être recyclés.", username, c.name, catch_id)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                        return;
+                                    }
+
+                                    let junk_ref = crate::config::get_junk_ref(use_english);
+                                    let mut correct_bin = "decharge";
+                                    let mut bonus = 10;
+                                    let mut malus = 20;
+
+                                    let mut found_config = false;
+                                    for list in junk_ref.values() {
+                                        if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
+                                            correct_bin = config_item.bin.as_deref().unwrap_or("decharge");
+                                            bonus = config_item.recycling_notoriety_bonus.unwrap_or(10);
+                                            malus = config_item.recycling_notoriety_malus.unwrap_or(20);
+                                            found_config = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if !found_config {
+                                        let junk_ref_fr = crate::config::get_junk_ref(false);
+                                        for list in junk_ref_fr.values() {
+                                            if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
+                                                correct_bin = config_item.bin.as_deref().unwrap_or("decharge");
+                                                bonus = config_item.recycling_notoriety_bonus.unwrap_or(10);
+                                                malus = config_item.recycling_notoriety_malus.unwrap_or(20);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    let is_correct = normalized_bin == correct_bin;
+                                    let change = if is_correct { bonus } else { -malus };
+                                    let total_notoriety = (player.eco_notoriety + change).max(0);
+
+                                    if let Ok(_) = state_task.repo.execute_recycling(player.id.unwrap(), catch_id, change).await {
+                                        let msg = if is_correct {
+                                            if use_english {
+                                                format!("♻️ @{} successfully recycled '{}' (#{}) in the {} bin! Eco notoriety: +{} (Total: {}).", username, c.name, catch_id, bin_name, bonus, total_notoriety)
+                                            } else {
+                                                format!("♻️ @{} a recyclé avec succès '{}' (#{}) dans la poubelle {} ! Notoriété écolo : +{} (Total : {}).", username, c.name, catch_id, bin_name, bonus, total_notoriety)
+                                            }
+                                        } else {
+                                            if use_english {
+                                                format!("🚯 @{} put '{}' (#{}) in the wrong bin (used {}, belonged in {})! Eco notoriety: -{} (Total: {}).", username, c.name, catch_id, bin_name, correct_bin, malus, total_notoriety)
+                                            } else {
+                                                format!("🚯 @{} a mis '{}' (#{}) dans la mauvaise poubelle (utilisé {}, requis {}) ! Notoriété écolo : -{} (Total : {}).", username, c.name, catch_id, bin_name, correct_bin, malus, total_notoriety)
+                                            }
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    } else {
+                                        let msg = if use_english {
+                                            format!("❌ @{}, an error occurred while recycling catch #{}.", username, catch_id)
+                                        } else {
+                                            format!("❌ @{}, une erreur est survenue lors du recyclage de la capture #{}.", username, catch_id)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    }
+                                } else {
+                                    let msg = if use_english {
+                                        format!("❌ @{}, catch #{} not found in your inventory.", username, catch_id)
+                                    } else {
+                                        format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, catch_id)
+                                    };
+                                    let _ = client_msg.say(channel_login, msg).await;
+                                }
+                            }
+                        }
+                    });
                 } else if text.starts_with("!fish trade") || text.starts_with("!peche trade") || text.starts_with("!pêche trade") || text.starts_with("!fish echange") || text.starts_with("!fish échange") || text.starts_with("!peche echange") || text.starts_with("!pêche échange") {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -1811,6 +1965,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 xp: p.xp,
                                 vip_until: p.vip_until,
                                 gold: Some(p.gold),
+                                eco_notoriety: Some(p.eco_notoriety),
                             }).collect();
                             
                             if let Ok(json) = serde_json::to_string_pretty(&backups) {
@@ -2431,5 +2586,31 @@ mod tests {
         let normal_user = "someone_else";
         let is_bypass = normal_user == "monsieurcotcot" || normal_user == "ze_fisherman" || normal_user == "ze_tester";
         assert!(!is_bypass);
+    }
+
+    #[test]
+    fn test_recycle_helpers() {
+        assert_eq!(normalize_bin_name("bleu"), Some("bleu"));
+        assert_eq!(normalize_bin_name("BLUE"), Some("bleu"));
+        assert_eq!(normalize_bin_name("jaune"), Some("jaune"));
+        assert_eq!(normalize_bin_name("yellow"), Some("jaune"));
+        assert_eq!(normalize_bin_name("vert"), Some("vert"));
+        assert_eq!(normalize_bin_name("green"), Some("vert"));
+        assert_eq!(normalize_bin_name("marron"), Some("marron"));
+        assert_eq!(normalize_bin_name("brown"), Some("marron"));
+        assert_eq!(normalize_bin_name("gris"), Some("gris"));
+        assert_eq!(normalize_bin_name("grey"), Some("gris"));
+        assert_eq!(normalize_bin_name("gray"), Some("gris"));
+        assert_eq!(normalize_bin_name("decharge"), Some("decharge"));
+        assert_eq!(normalize_bin_name("décharge"), Some("decharge"));
+        assert_eq!(normalize_bin_name("dump"), Some("decharge"));
+        assert_eq!(normalize_bin_name("landfill"), Some("decharge"));
+        assert_eq!(normalize_bin_name("invalid"), None);
+
+        assert_eq!(parse_recycle_args("#42 jaune"), Some((42, "jaune".to_string())));
+        assert_eq!(parse_recycle_args("100 green"), Some((100, "green".to_string())));
+        assert_eq!(parse_recycle_args("#42"), None);
+        assert_eq!(parse_recycle_args("jaune"), None);
+        assert_eq!(parse_recycle_args(""), None);
     }
 }
