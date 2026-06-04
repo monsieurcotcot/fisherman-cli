@@ -40,7 +40,7 @@
                 ]
             },
             "id": 1,
-            "price": 300,
+            "price": 380,
             "location": "Rivières rapides, rivières côtières peu profondes et lacs - Japon, Corée, Chine et Taïwan",
             "preferred_time": "09h - 16h",
             "preferred_season": "Juin - septembre",
@@ -104,7 +104,7 @@
                 ]
             },
             "id": 2,
-            "price": 150,
+            "price": 160,
             "location": "Lacs, étangs et rivières lentes - Amérique du Nord et Europe",
             "preferred_time": "06h - 20h",
             "preferred_season": "Mai - Octobre",
@@ -221,7 +221,7 @@
                 ]
             },
             "id": 4,
-            "price": 150,
+            "price": 170,
             "location": "Rivières, lacs, étangs - Europe Centrale & Ouest",
             "preferred_time": "19h - 07h",
             "preferred_season": "Mai - Octobre",
@@ -291,7 +291,7 @@
                 ]
             },
             "id": 5,
-            "price": 110,
+            "price": 280,
             "location": "Étangs vaseux, lacs peu profonds, canaux et rivières lentes - Europe et Asie",
             "preferred_time": "06h - 19h",
             "preferred_season": "Mai - Septembre",
@@ -350,7 +350,7 @@
                 ]
             },
             "id": 6,
-            "price": 240,
+            "price": 180,
             "location": "Lacs, étangs, canaux et rivières lentes - Europe et Asie",
             "preferred_time": "18h - 08h",
             "preferred_season": "Mai - Octobre",
@@ -464,7 +464,7 @@
                 ]
             },
             "id": 8,
-            "price": 150,
+            "price": 190,
             "location": "Mer, océan - Océan Atlantique Nord-Est, Manche, Mer Méditerranée, Mer du Nord",
             "preferred_time": "20h - 05h",
             "preferred_season": "Mai - Octobre",
@@ -524,7 +524,7 @@
                 ]
             },
             "id": 9,
-            "price": 90,
+            "price": 50,
             "location": "Étangs peu profonds, lacs herbeux, canaux et rivières calmes - Amérique du Nord (et introduit en Europe)",
             "preferred_time": "09h - 18h",
             "preferred_season": "Toute l'année",
@@ -650,7 +650,7 @@
                 ]
             },
             "id": 11,
-            "price": 190,
+            "price": 210,
             "location": "Estuaires, baies peu profondes, marais d'eau douce et lacs littoraux - Amérique du Nord (Est du Canada et Nord-Est des États-Unis)",
             "preferred_time": "Toute la journée",
             "preferred_season": "Avril - Septembre",
@@ -710,7 +710,7 @@
                 ]
             },
             "id": 12,
-            "price": 300,
+            "price": 120,
             "location": "Océan Atlantique Nord-Est, Mer du Nord, Manche et Mer Baltique",
             "preferred_time": "06h - 18h",
             "preferred_season": "Octobre - avril",
@@ -771,7 +771,7 @@
                 ]
             },
             "id": 13,
-            "price": 450,
+            "price": 390,
             "location": "Étangs vaseux, marécages, bras morts et rivières très lentes - Europe",
             "preferred_time": "19h - 06h",
             "preferred_season": "Mars - Juin",
@@ -829,7 +829,7 @@
                 ]
             },
             "id": 14,
-            "price": 200,
+            "price": 400,
             "location": "lac, étang, rivière ; Amérique du Nord (Canada, États-Unis)",
             "preferred_time": "06h - 20h",
             "preferred_season": "Mai - Août",
@@ -882,7 +882,7 @@
                 ]
             },
             "id": 15,
-            "price": 250,
+            "price": 410,
             "location": "Lac, étang, rivière à courant lent (Amérique du Nord, Europe)",
             "preferred_time": "06h - 20h",
             "preferred_season": "Mai - Août",
@@ -935,7 +935,7 @@
                 ]
             },
             "id": 16,
-            "price": 180,
+            "price": 420,
             "location": "Lac, étang, rivière lente (Europe, Asie occidentale)",
             "preferred_time": "06h - 21h",
             "preferred_season": "Mai - Août",
@@ -988,7 +988,7 @@
                 ]
             },
             "id": 17,
-            "price": 190,
+            "price": 430,
             "location": "Océan Atlantique Nord-Est (de l'Islande au Sénégal), Mer Méditerranée, Mer Noire. Milieu pélagique côtier.",
             "preferred_time": "20h - 04h",
             "preferred_season": "Mai - Août",
@@ -1095,7 +1095,7 @@
                 ]
             },
             "id": 19,
-            "price": 320,
+            "price": 130,
             "location": "Fleuves, estuaires et zones côtières d'Europe du Nord et de l'Ouest (mer du Nord, mer Baltique, océan Atlantique)",
             "preferred_time": "20h - 04h",
             "preferred_season": "Novembre - Mai",
@@ -1151,7 +1151,7 @@
                 ]
             },
             "id": 102,
-            "price": 81,
+            "price": 310,
             "location": "Océan Atlantique Nord, Mer du Nord, Manche",
             "preferred_time": "06h - 12h",
             "preferred_season": "Septembre - Janvier",
@@ -1162,7 +1162,7 @@
                 12,
                 1
             ],
-            "fun_fact": "Le Cabillaud (Gadus morhua), poisson de l'Océan Atlantique, se pêche de préférence de septembre à janvier entre 06h et 12h, surtout sous un ciel pluvieux. Ce grand prédateur benthique possède un barbillon mentonnier sensoriel unique pour détecter ses proies sur le fond marin. Vendu à 81 pièces, sa chair blanche et feuilletée est très prisée en gastronomie, notamment pour le traditionnel fish and chips. Une merveille marine à préserver.",
+            "fun_fact": "Le Cabillaud (Gadus morhua), poisson de l'Océan Atlantique, se pêche de préférence de septembre à janvier entre 06h et 12h, surtout sous un ciel pluvieux. Ce grand prédateur benthique possède un barbillon mentonnier sensoriel unique pour détecter ses proies sur le fond marin. Vendu à 310 pièces, sa chair blanche et feuilletée est très prisée en gastronomie, notamment pour le traditionnel fish and chips. Une merveille marine à préserver.",
             "time_restriction": "before_22h"
         },
         {
@@ -1205,7 +1205,7 @@
                 ]
             },
             "id": 103,
-            "price": 82,
+            "price": 440,
             "location": "Eaux côtières de l'Atlantique Nord, Manche, Mer du Nord",
             "preferred_time": "05h - 10h",
             "preferred_season": "Juin - Septembre",
@@ -1215,7 +1215,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Maquereau (Scomber scombrus) s'active en bancs de juin à septembre de 05h à 10h dans l'Océan Atlantique, aimant le beau temps ensoleillé. Ce poisson pélagique dépourvu de vessie natatoire doit nager sans cesse pour ne pas couler. Estimé à 82 pièces, sa richesse en oméga-3 en fait un trésor pour la santé et sa chair savoureuse est succulente grillée au barbecue avec un filet de citron frais.",
+            "fun_fact": "Le Maquereau (Scomber scombrus) s'active en bancs de juin à septembre de 05h à 10h dans l'Océan Atlantique, aimant le beau temps ensoleillé. Ce poisson pélagique dépourvu de vessie natatoire doit nager sans cesse pour ne pas couler. Estimé à 440 pièces, sa richesse en oméga-3 en fait un trésor pour la santé et sa chair savoureuse est succulente grillée au barbecue avec un filet de citron frais.",
             "time_restriction": "before_22h"
         },
         {
@@ -1258,7 +1258,7 @@
                 ]
             },
             "id": 104,
-            "price": 83,
+            "price": 480,
             "location": "Rivières lentes, canaux, lacs et étangs d'Europe",
             "preferred_time": "07h - 19h",
             "preferred_season": "Mars - Mai",
@@ -1267,7 +1267,7 @@
                 4,
                 5
             ],
-            "fun_fact": "Le Gardon (Rutilus rutilus) se pêche dans les rivières lentes d'Europe de mars à mai entre 07h et 19h, préférant les eaux calmes sous un ciel couvert. Ce poisson grégaire très vif sert d'indicateur de la qualité de l'eau. Estimé à 83 pièces, ce cyprinidé est peu apprécié en cuisine à cause de ses nombreuses arêtes, mais reste parfait pour s'initier aux joies de la pêche traditionnelle.",
+            "fun_fact": "Le Gardon (Rutilus rutilus) se pêche dans les rivières lentes d'Europe de mars à mai entre 07h et 19h, préférant les eaux calmes sous un ciel couvert. Ce poisson grégaire très vif sert d'indicateur de la qualité de l'eau. Estimé à 480 pièces, ce cyprinidé est peu apprécié en cuisine à cause de ses nombreuses arêtes, mais reste parfait pour s'initier aux joies de la pêche traditionnelle.",
             "time_restriction": "before_22h"
         },
         {
@@ -1310,7 +1310,7 @@
                 ]
             },
             "id": 105,
-            "price": 84,
+            "price": 220,
             "location": "Rivières à courant rapide, lacs et cours d'eau frais",
             "preferred_time": "06h - 18h",
             "preferred_season": "Avril - Septembre",
@@ -1322,7 +1322,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Truite Arc-en-Ciel (Oncorhynchus mykiss) vit dans les rivières fraîches d'avril à septembre de 06h à 18h, mordant bien par temps couvert et pluvieux. Ce salmonide possède une robe irisée caractéristique et une combativité incroyable face au courant. Vendue à 84 pièces, sa chair rose et tendre est un délice gastronomique absolu, idéale cuite meunière avec des amandes grillées.",
+            "fun_fact": "La Truite Arc-en-Ciel (Oncorhynchus mykiss) vit dans les rivières fraîches d'avril à septembre de 06h à 18h, mordant bien par temps couvert et pluvieux. Ce salmonide possède une robe irisée caractéristique et une combativité incroyable face au courant. Vendue à 220 pièces, sa chair rose et tendre est un délice gastronomique absolu, idéale cuite meunière avec des amandes grillées.",
             "time_restriction": "before_22h"
         },
         {
@@ -1365,7 +1365,7 @@
                 ]
             },
             "id": 106,
-            "price": 86,
+            "price": 320,
             "location": "Atlantique Nord-Est, Mer du Nord, Mer Baltique",
             "preferred_time": "20h - 04h",
             "preferred_season": "Octobre - Février",
@@ -1376,7 +1376,7 @@
                 1,
                 2
             ],
-            "fun_fact": "Le Hareng (Clupea harengus) se pêche en Atlantique Nord d'octobre à février de 20h à 04h, par temps venteux et agité. Ce poisson grégaire migre verticalement la nuit pour se nourrir de plancton en surface. Évalué à 86 pièces, il est célébré en cuisine sous forme saurée, marinée ou fumée, apportant des saveurs intenses très recherchées par les amateurs de poissons salés traditionnels.",
+            "fun_fact": "Le Hareng (Clupea harengus) se pêche en Atlantique Nord d'octobre à février de 20h à 04h, par temps venteux et agité. Ce poisson grégaire migre verticalement la nuit pour se nourrir de plancton en surface. Évalué à 320 pièces, il est célébré en cuisine sous forme saurée, marinée ou fumée, apportant des saveurs intenses très recherchées par les amateurs de poissons salés traditionnels.",
             "time_restriction": "after_22h"
         },
         {
@@ -1419,7 +1419,7 @@
                 ]
             },
             "id": 107,
-            "price": 87,
+            "price": 450,
             "location": "Estuaires côtiers, lagunes et baies peu profondes",
             "preferred_time": "08h - 17h",
             "preferred_season": "Juillet - Octobre",
@@ -1429,7 +1429,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Mulet (Mugil cephalus) fréquente les estuaires de juillet à octobre entre 08h et 17h, préférant les journées ensoleillées et calmes. Capable de sauter hors de l'eau pour échapper aux prédateurs, il se nourrit de détritus et d'algues sur le fond. Évalué à 87 pièces, ce poisson rustique offre une chair ferme appréciée en court-bouillon ou grillée avec des herbes de Provence.",
+            "fun_fact": "Le Mulet (Mugil cephalus) fréquente les estuaires de juillet à octobre entre 08h et 17h, préférant les journées ensoleillées et calmes. Capable de sauter hors de l'eau pour échapper aux prédateurs, il se nourrit de détritus et d'algues sur le fond. Évalué à 450 pièces, ce poisson rustique offre une chair ferme appréciée en court-bouillon ou grillée avec des herbes de Provence.",
             "time_restriction": "before_22h"
         },
         {
@@ -1472,7 +1472,7 @@
                 ]
             },
             "id": 108,
-            "price": 88,
+            "price": 460,
             "location": "Fonds sablonneux et vaseux de la Mer du Nord et de l'Atlantique",
             "preferred_time": "21h - 05h",
             "preferred_season": "Juin - Septembre",
@@ -1482,7 +1482,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Sole (Solea solea) se capture sur les fonds sablonneux de juin à septembre de 21h à 05h, surtout lors des nuits sombres et pluvieuses. Ce poisson plat au mimétisme parfait s'enfouit dans le sable pour surprendre ses proies. Affichant un prix de 88 pièces, elle représente le sommet de la finesse culinaire avec sa chair délicate, traditionnellement préparée meunière au beurre doux.",
+            "fun_fact": "La Sole (Solea solea) se capture sur les fonds sablonneux de juin à septembre de 21h à 05h, surtout lors des nuits sombres et pluvieuses. Ce poisson plat au mimétisme parfait s'enfouit dans le sable pour surprendre ses proies. Affichant un prix de 460 pièces, elle représente le sommet de la finesse culinaire avec sa chair délicate, traditionnellement préparée meunière au beurre doux.",
             "time_restriction": "after_22h"
         },
         {
@@ -1525,7 +1525,7 @@
                 ]
             },
             "id": 109,
-            "price": 89,
+            "price": 330,
             "location": "Rivières lentes, étangs vaseux et étangs d'Europe",
             "preferred_time": "05h - 10h",
             "preferred_season": "Mai - Septembre",
@@ -1536,7 +1536,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Tanche (Tinca tinca) peuple les étangs d'Europe de mai à septembre entre 05h et 10h, appréciant les temps chauds et orageux. Surnommée poisson docteur grâce au mucus curatif de sa peau verte, elle hiverne en s'envasant profondément. Évaluée à 89 pièces, sa chair grasse exige d'être dégorgée dans l'eau claire avant d'être cuisinée au four avec des échalotes et du vin blanc.",
+            "fun_fact": "La Tanche (Tinca tinca) peuple les étangs d'Europe de mai à septembre entre 05h et 10h, appréciant les temps chauds et orageux. Surnommée poisson docteur grâce au mucus curatif de sa peau verte, elle hiverne en s'envasant profondément. Évaluée à 330 pièces, sa chair grasse exige d'être dégorgée dans l'eau claire avant d'être cuisinée au four avec des échalotes et du vin blanc.",
             "time_restriction": "before_22h"
         },
         {
@@ -1579,7 +1579,7 @@
                 ]
             },
             "id": 110,
-            "price": 91,
+            "price": 340,
             "location": "Fonds rocheux de l'Atlantique et de la Méditerranée",
             "preferred_time": "20h - 04h",
             "preferred_season": "Mars - Juillet",
@@ -1590,7 +1590,7 @@
                 6,
                 7
             ],
-            "fun_fact": "Le Colin (Merluccius merluccius) se pêche en Atlantique de mars à juillet entre 20h et 04h, par temps sombre et agité de préférence. Ce prédateur vorace possède une mâchoire garnie de dents acérées pour chasser les petits poissons. Vendu 91 pièces, il est indispensable en cuisine pour sa chair blanche très digeste, délicieuse pochée avec une sauce hollandaise ou un filet d'huile d'olive.",
+            "fun_fact": "Le Colin (Merluccius merluccius) se pêche en Atlantique de mars à juillet entre 20h et 04h, par temps sombre et agité de préférence. Ce prédateur vorace possède une mâchoire garnie de dents acérées pour chasser les petits poissons. Vendu 340 pièces, il est indispensable en cuisine pour sa chair blanche très digeste, délicieuse pochée avec une sauce hollandaise ou un filet d'huile d'olive.",
             "time_restriction": "after_22h"
         },
         {
@@ -1633,7 +1633,7 @@
                 ]
             },
             "id": 111,
-            "price": 92,
+            "price": 230,
             "location": "Récifs rocheux profonds de l'Atlantique Nord",
             "preferred_time": "06h - 15h",
             "preferred_season": "Mai - Octobre",
@@ -1645,7 +1645,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Lieu Noir (Pollachius virens) fréquente les récifs de mai à octobre entre 06h et 15h, aimant les eaux agitées et le ciel nuageux. Ce poisson vigoureux de la famille des morues est un nageur infatigable qui vit en bancs compacts. Vendu à 92 pièces, sa chair grise devient blanche à la cuisson, offrant une texture ferme parfaite pour les gratins et les préparations en papillote.",
+            "fun_fact": "Le Lieu Noir (Pollachius virens) fréquente les récifs de mai à octobre entre 06h et 15h, aimant les eaux agitées et le ciel nuageux. Ce poisson vigoureux de la famille des morues est un nageur infatigable qui vit en bancs compacts. Vendu à 230 pièces, sa chair grise devient blanche à la cuisson, offrant une texture ferme parfaite pour les gratins et les préparations en papillote.",
             "time_restriction": "before_22h"
         },
         {
@@ -1688,7 +1688,7 @@
                 ]
             },
             "id": 112,
-            "price": 93,
+            "price": 240,
             "location": "Fonds marins froids et profonds de l'Atlantique Nord",
             "preferred_time": "05h - 12h",
             "preferred_season": "Septembre - Février",
@@ -1700,7 +1700,7 @@
                 1,
                 2
             ],
-            "fun_fact": "L'Eglefin (Melanogrammus aeglefinus) vit en Atlantique Nord de septembre à février de 05h à 12h, préférant les temps froids et pluvieux. Il arbore une tache noire distinctive appelée marque du pouce de Saint-Pierre. Proposé à 93 pièces, sa chair très fine et délicate est la base du haddock fumé traditionnel, apportant une saveur salée et boisée exceptionnelle en cuisine.",
+            "fun_fact": "L'Eglefin (Melanogrammus aeglefinus) vit en Atlantique Nord de septembre à février de 05h à 12h, préférant les temps froids et pluvieux. Il arbore une tache noire distinctive appelée marque du pouce de Saint-Pierre. Proposé à 240 pièces, sa chair très fine et délicate est la base du haddock fumé traditionnel, apportant une saveur salée et boisée exceptionnelle en cuisine.",
             "time_restriction": "before_22h"
         },
         {
@@ -1743,7 +1743,7 @@
                 ]
             },
             "id": 113,
-            "price": 94,
+            "price": 250,
             "location": "Rivages sablonneux et fonds meubles d'Europe",
             "preferred_time": "08h - 18h",
             "preferred_season": "Mai - Octobre",
@@ -1755,7 +1755,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Plie (Pleuronectes platessa) se pêche sur les côtes d'Europe de mai à octobre entre 08h et 18h, aimant les marées de vive-eau par temps clair. Ce poisson plat moucheté de taches orange vif change de couleur selon le substrat sableux. Vendue à 94 pièces, sa chair douce et tendre est très appréciée cuite entière à la poêle ou en filets panés croustillants pour les enfants.",
+            "fun_fact": "La Plie (Pleuronectes platessa) se pêche sur les côtes d'Europe de mai à octobre entre 08h et 18h, aimant les marées de vive-eau par temps clair. Ce poisson plat moucheté de taches orange vif change de couleur selon le substrat sableux. Vendue à 250 pièces, sa chair douce et tendre est très appréciée cuite entière à la poêle ou en filets panés croustillants pour les enfants.",
             "time_restriction": "before_22h"
         },
         {
@@ -1798,7 +1798,7 @@
                 ]
             },
             "id": 114,
-            "price": 96,
+            "price": 350,
             "location": "Fonds sablonneux et graveleux de l'Atlantique et de la Méditerranée",
             "preferred_time": "07h - 17h",
             "preferred_season": "Juin - Octobre",
@@ -1809,7 +1809,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Grondin Rouge (Chelidonichthys cuculus) vit sur les fonds sablonneux de juin à octobre de 07h et 17h, par temps calme. Ce poisson singulier grogne lorsqu'il est sorti de l'eau et utilise ses nageoires pectorales comme des pattes pour marcher sur le fond marin. Vendu à 96 pièces, sa chair ferme et parfumée est l'ingrédient vedette et indispensable d'une authentique bouillabaisse.",
+            "fun_fact": "Le Grondin Rouge (Chelidonichthys cuculus) vit sur les fonds sablonneux de juin à octobre de 07h et 17h, par temps calme. Ce poisson singulier grogne lorsqu'il est sorti de l'eau et utilise ses nageoires pectorales comme des pattes pour marcher sur le fond marin. Vendu à 350 pièces, sa chair ferme et parfumée est l'ingrédient vedette et indispensable d'une authentique bouillabaisse.",
             "time_restriction": "before_22h"
         },
         {
@@ -1852,7 +1852,7 @@
                 ]
             },
             "id": 115,
-            "price": 97,
+            "price": 60,
             "location": "Ruisseaux d'eau douce rapides et rivières claires à fond de gravier ou sableux",
             "preferred_time": "08h - 18h",
             "preferred_season": "Toute l'année",
@@ -1870,7 +1870,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Goujon (Gobio gobio), petit poisson grégaire fouillant le gravier des ruisseaux clairs, se pêche toute l'année, de préférence de 08h à 18h par temps couvert. Ses barbillons sensitifs lui servent à localiser les larves benthiques. Valant 97 pièces d'or, ce poisson frétillant et vif possède une chair très délicate, traditionnellement frite entière pour un amuse-bouche croustillant.",
+            "fun_fact": "Le Goujon (Gobio gobio), petit poisson grégaire fouillant le gravier des ruisseaux clairs, se pêche toute l'année, de préférence de 08h à 18h par temps couvert. Ses barbillons sensitifs lui servent à localiser les larves benthiques. Valant 60 pièces d'or, ce poisson frétillant et vif possède une chair très délicate, traditionnellement frite entière pour un amuse-bouche croustillant.",
             "time_restriction": null
         },
         {
@@ -1913,7 +1913,7 @@
                 ]
             },
             "id": 116,
-            "price": 98,
+            "price": 140,
             "location": "Lacs d'eau douce et rivières calmes à courant lent",
             "preferred_time": "07h - 19h",
             "preferred_season": "Avril - octobre",
@@ -1926,7 +1926,7 @@
                 9,
                 10
             ],
-            "fun_fact": "L'Ablette (Alburnus alburnus) est un poisson grégaire brillant de la surface des lacs et rivières calmes. Pêchée d'avril à octobre, surtout de 07h à 19h sous un soleil doux, elle gobe des insectes volants. Ses écailles nacrées servaient jadis à fabriquer de fausses perles. Estimée à 98 pièces d'or, sa chair fine et délicate est parfaite marinée dans du vinaigre ou frite croustillante.",
+            "fun_fact": "L'Ablette (Alburnus alburnus) est un poisson grégaire brillant de la surface des lacs et rivières calmes. Pêchée d'avril à octobre, surtout de 07h à 19h sous un soleil doux, elle gobe des insectes volants. Ses écailles nacrées servaient jadis à fabriquer de fausses perles. Estimée à 140 pièces d'or, sa chair fine et délicate est parfaite marinée dans du vinaigre ou frite croustillante.",
             "time_restriction": null
         },
         {
@@ -1969,7 +1969,7 @@
                 ]
             },
             "id": 117,
-            "price": 99,
+            "price": 90,
             "location": "Lacs boueux, étangs peu profonds et rivières lentes à fond de vase",
             "preferred_time": "19h - 04h",
             "preferred_season": "Mars - novembre",
@@ -1984,7 +1984,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Poisson-chat (Ameiurus nebulosus) est un rôdeur nocturne des étangs boueux. Pêché de mars à novembre, surtout de 19h à 04h par temps pluvieux et lourd, il fouille la vase grâce à ses huit barbillons tactiles. Ses aiguillons dorsaux venimeux exigent une manipulation prudente. Vendu 99 pièces d'or, sa chair grasse et riche est appréciée en ragoût épicé ou en friture après avoir été bien pelée.",
+            "fun_fact": "Le Poisson-chat (Ameiurus nebulosus) est un rôdeur nocturne des étangs boueux. Pêché de mars à novembre, surtout de 19h à 04h par temps pluvieux et lourd, il fouille la vase grâce à ses huit barbillons tactiles. Ses aiguillons dorsaux venimeux exigent une manipulation prudente. Vendu 90 pièces d'or, sa chair grasse et riche est appréciée en ragoût épicé ou en friture après avoir été bien pelée.",
             "time_restriction": "after_18h"
         },
         {
@@ -2027,7 +2027,7 @@
                 ]
             },
             "id": 118,
-            "price": 101,
+            "price": 470,
             "location": "Estuaires côtiers et rivières anadromes soumises aux marées",
             "preferred_time": "20h - 04h",
             "preferred_season": "Juin - septembre",
@@ -2037,7 +2037,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Truite de Mer (Salmo trutta trutta) est la forme migratrice de la truite fario. Capturée de juin à septembre, surtout de 20h à 04h par nuit sombre dans les estuaires côtiers, elle y chasse activement les sprats. Ses écailles argentées tombent facilement lors du combat. Estimée à 101 pièces d'or, sa chair rosée très fine et savoureuse est un délice cuite à l'unilatéral ou pochée au court-bouillon.",
+            "fun_fact": "La Truite de Mer (Salmo trutta trutta) est la forme migratrice de la truite fario. Capturée de juin à septembre, surtout de 20h à 04h par nuit sombre dans les estuaires côtiers, elle y chasse activement les sprats. Ses écailles argentées tombent facilement lors du combat. Estimée à 470 pièces d'or, sa chair rosée très fine et savoureuse est un délice cuite à l'unilatéral ou pochée au court-bouillon.",
             "time_restriction": "after_18h"
         },
         {
@@ -2080,7 +2080,7 @@
                 ]
             },
             "id": 119,
-            "price": 102,
+            "price": 110,
             "location": "Lagunes côtières et baies peu profondes de la Méditerranée",
             "preferred_time": "06h - 10h",
             "preferred_season": "Avril - novembre",
@@ -2094,7 +2094,7 @@
                 10,
                 11
             ],
-            "fun_fact": "La Dorade Royale (Sparus aurata) se reconnaît à la bande dorée caractéristique entre ses yeux. Pêchée d'avril à novembre, surtout de 06h à 10h par mer calme, elle fréquente les fonds sableux de Méditerranée pour y broyer des coquillages. Elle peut changer de sexe au cours de sa vie. Valant 102 pièces d'or, sa chair blanche et ferme est très prisée grillée au fenouil ou cuite en croûte de sel.",
+            "fun_fact": "La Dorade Royale (Sparus aurata) se reconnaît à la bande dorée caractéristique entre ses yeux. Pêchée d'avril à novembre, surtout de 06h à 10h par mer calme, elle fréquente les fonds sableux de Méditerranée pour y broyer des coquillages. Elle peut changer de sexe au cours de sa vie. Valant 110 pièces d'or, sa chair blanche et ferme est très prisée grillée au fenouil ou cuite en croûte de sel.",
             "time_restriction": null
         },
         {
@@ -2137,7 +2137,7 @@
                 ]
             },
             "id": 120,
-            "price": 103,
+            "price": 360,
             "location": "Fonds sableux et rocheux côtiers de la Méditerranée",
             "preferred_time": "08h - 16h",
             "preferred_season": "Juin - octobre",
@@ -2148,7 +2148,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Pageot Commun (Pagellus erythrinus) se distingue par sa robe rose argentée parsemée de petits points bleus. Pêché de juin à octobre, surtout de 08h à 16h sous le soleil, il habite les fonds sableux méditerranéens. Il se nourrit de vers et de petits crustacés benthiques. Valant 103 pièces d'or, sa chair fine et blanche est excellente cuite entière en papillote ou simplement rôtie au citron.",
+            "fun_fact": "Le Pageot Commun (Pagellus erythrinus) se distingue par sa robe rose argentée parsemée de petits points bleus. Pêché de juin à octobre, surtout de 08h à 16h sous le soleil, il habite les fonds sableux méditerranéens. Il se nourrit de vers et de petits crustacés benthiques. Valant 360 pièces d'or, sa chair fine et blanche est excellente cuite entière en papillote ou simplement rôtie au citron.",
             "time_restriction": null
         },
         {
@@ -2191,7 +2191,7 @@
                 ]
             },
             "id": 121,
-            "price": 104,
+            "price": 260,
             "location": "Fonds sableux et rocheux profonds de l'océan Atlantique et de la mer du Nord",
             "preferred_time": "05h - 09h",
             "preferred_season": "Mai - octobre",
@@ -2203,7 +2203,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Turbot (Scophthalmus maximus) est un prestigieux poisson plat benthique de l'Atlantique. Pêché de mai à octobre, surtout de 05h à 09h par mer calme, il s'enfouit dans le sable pour chasser à l'affût. Sa peau sans écailles porte des tubercules osseux durs. Estimé à 104 pièces d'or, c'est un sommet de la gastronomie marine dont la chair ferme et feuilletée est sublime pochée au champagne.",
+            "fun_fact": "Le Turbot (Scophthalmus maximus) est un prestigieux poisson plat benthique de l'Atlantique. Pêché de mai à octobre, surtout de 05h à 09h par mer calme, il s'enfouit dans le sable pour chasser à l'affût. Sa peau sans écailles porte des tubercules osseux durs. Estimé à 260 pièces d'or, c'est un sommet de la gastronomie marine dont la chair ferme et feuilletée est sublime pochée au champagne.",
             "time_restriction": null
         },
         {
@@ -2246,7 +2246,7 @@
                 ]
             },
             "id": 122,
-            "price": 106,
+            "price": 270,
             "location": "Forêts de laminaires et récifs rocheux peu profonds de l'Atlantique",
             "preferred_time": "08h - 17h",
             "preferred_season": "Mai - octobre",
@@ -2258,7 +2258,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Vieille Commune (Labrus bergylta) est un poisson territorial coloré des forêts de varech atlantiques. Pêchée de mai à octobre, de préférence de 08h à 17h par eau claire, elle utilise ses dents robustes pour croquer les berniques. Tous les individus naissent femelles puis deviennent mâles. Estimée à 106 pièces d'or, sa chair est molle mais fait d'excellentes soupes de poisson traditionnelles.",
+            "fun_fact": "La Vieille Commune (Labrus bergylta) est un poisson territorial coloré des forêts de varech atlantiques. Pêchée de mai à octobre, de préférence de 08h à 17h par eau claire, elle utilise ses dents robustes pour croquer les berniques. Tous les individus naissent femelles puis deviennent mâles. Estimée à 270 pièces d'or, sa chair est molle mais fait d'excellentes soupes de poisson traditionnelles.",
             "time_restriction": null
         },
         {
@@ -2301,7 +2301,7 @@
                 ]
             },
             "id": 123,
-            "price": 107,
+            "price": 370,
             "location": "Épaves sous-marines et récifs rocheux profonds de l'océan Atlantique",
             "preferred_time": "06h - 10h",
             "preferred_season": "Mai - septembre",
@@ -2312,7 +2312,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Lieu Jaune (Pollachius pollachius) est un redoutable prédateur des épaves et falaises de l'Atlantique. Pêché de mai à septembre, surtout de 06h à 10h par fort coefficient de marée, il jaillit de sa cachette pour gober les lançons. Il possède une mâchoire inférieure proéminente. Vendu 107 pièces d'or, sa chair feuilletée d'une grande finesse est à consommer très fraîche, rôtie au four ou pochée.",
+            "fun_fact": "Le Lieu Jaune (Pollachius pollachius) est un redoutable prédateur des épaves et falaises de l'Atlantique. Pêché de mai à septembre, surtout de 06h à 10h par fort coefficient de marée, il jaillit de sa cachette pour gober les lançons. Il possède une mâchoire inférieure proéminente. Vendu 370 pièces d'or, sa chair feuilletée d'une grande finesse est à consommer très fraîche, rôtie au four ou pochée.",
             "time_restriction": null
         },
         {
@@ -2355,7 +2355,7 @@
                 ]
             },
             "id": 124,
-            "price": 108,
+            "price": 80,
             "location": "Épaves côtières et structures artificielles de l'océan Atlantique",
             "preferred_time": "08h - 18h",
             "preferred_season": "Mars - décembre",
@@ -2371,7 +2371,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Tacaud (Trisopterus luscus) est un poisson grégaire de la famille de la morue. Pêché de mars à décembre, surtout de 08h à 18h par mer agitée, il forme de larges bancs près des structures immergées. Il possède un barbillon mentonnier unique. Valant 108 pièces d'or, sa chair très tendre mais fragile doit être consommée rapidement après capture, idéale frite ou pochée dans du lait.",
+            "fun_fact": "Le Tacaud (Trisopterus luscus) est un poisson grégaire de la famille de la morue. Pêché de mars à décembre, surtout de 08h à 18h par mer agitée, il forme de larges bancs près des structures immergées. Il possède un barbillon mentonnier unique. Valant 80 pièces d'or, sa chair très tendre mais fragile doit être consommée rapidement après capture, idéale frite ou pochée dans du lait.",
             "time_restriction": null
         },
         {
@@ -2414,7 +2414,7 @@
                 ]
             },
             "id": 125,
-            "price": 109,
+            "price": 70,
             "location": "Ruisseaux de montagne rapides à fond de galets et d'eau claire",
             "preferred_time": "08h - 18h",
             "preferred_season": "Toute l'année",
@@ -2432,7 +2432,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Chabot (Cottus gobio) est un petit poisson de fond des rivières froides et limpides. Capturé toute l'année, de préférence de 08h à 18h par temps ensoleillé, il se cache sous les pierres car il n'a pas de vessie natatoire. Il possède une tête large et aplatie. Vendu 109 pièces d'or, sa chair blanche très fine est une délicatesse culinaire rare, traditionnellement cuite entière en friture.",
+            "fun_fact": "Le Chabot (Cottus gobio) est un petit poisson de fond des rivières froides et limpides. Capturé toute l'année, de préférence de 08h à 18h par temps ensoleillé, il se cache sous les pierres car il n'a pas de vessie natatoire. Il possède une tête large et aplatie. Vendu 70 pièces d'or, sa chair blanche très fine est une délicatesse culinaire rare, traditionnellement cuite entière en friture.",
             "time_restriction": null
         },
         {
@@ -2475,7 +2475,7 @@
                 ]
             },
             "id": 126,
-            "price": 111,
+            "price": 150,
             "location": "Zones côtières de la mer du Nord et rivages de la mer Baltique",
             "preferred_time": "08h - 17h",
             "preferred_season": "Septembre - mars",
@@ -2488,7 +2488,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Sprat (Sprattus sprattus) est un petit poisson pélagique vivant en bancs serrés dans les eaux septentrionales. Pêché de septembre à mars, surtout de 08h à 17h à marée haute, il se nourrit de plancton. Il tolère de faibles salinités. Vendu 111 pièces d'or, sa chair grasse et savoureuse est très populaire cuite entière sur le grill, fumée en conserve ou préparée sous forme d'anchois.",
+            "fun_fact": "Le Sprat (Sprattus sprattus) est un petit poisson pélagique vivant en bancs serrés dans les eaux septentrionales. Pêché de septembre à mars, surtout de 08h à 17h à marée haute, il se nourrit de plancton. Il tolère de faibles salinités. Vendu 150 pièces d'or, sa chair grasse et savoureuse est très populaire cuite entière sur le grill, fumée en conserve ou préparée sous forme d'anchois.",
             "time_restriction": null
         }
     ],
@@ -2533,7 +2533,7 @@
                 ]
             },
             "id": 20,
-            "price": 100,
+            "price": 500,
             "location": "Mer, océan (mer Méditerranée, mer Noire, océan Atlantique Est, de la Norvège jusqu'à l'Afrique du Sud)",
             "preferred_time": "05h - 19h",
             "preferred_season": "Toute l'année",
@@ -2594,7 +2594,7 @@
                 ]
             },
             "id": 21,
-            "price": 50,
+            "price": 860,
             "location": "Rivières à courant rapide, zones à ombre et barbeau (Europe)",
             "preferred_time": "18h - 06h",
             "preferred_season": "Mai - Octobre",
@@ -2649,7 +2649,7 @@
                 ]
             },
             "id": 22,
-            "price": 900,
+            "price": 1060,
             "location": "Rivières lentes, canaux, étangs, bras morts et lacs riches en végétation et en sédiments. Présente en Europe (de l'est de la France jusqu'à l'Oural) et en Asie Mineure.",
             "preferred_time": "06h00 - 21h00",
             "preferred_season": "Avril - Août",
@@ -2708,7 +2708,7 @@
                 ]
             },
             "id": 23,
-            "price": 470,
+            "price": 660,
             "location": "Mer Méditerranée, Océan Atlantique Est, Manche",
             "preferred_time": "20h - 04h",
             "preferred_season": "Septembre - Avril",
@@ -2765,7 +2765,7 @@
                 ]
             },
             "id": 24,
-            "price": 400,
+            "price": 880,
             "location": "Océan Atlantique Nord-Ouest, estuaires, baies, fonds sableux et vaseux (côte est des États-Unis et du Canada)",
             "preferred_time": "06h00 - 18h00",
             "preferred_season": "Mai - Octobre",
@@ -2820,7 +2820,7 @@
                 ]
             },
             "id": 25,
-            "price": 1500,
+            "price": 520,
             "location": "Océan Arctique, Océan Atlantique Nord, Océan Pacifique Nord (eaux froides et polaires, zone pélagique)",
             "preferred_time": "00h - 24h",
             "preferred_season": "Janvier - Décembre",
@@ -2881,7 +2881,7 @@
                 ]
             },
             "id": 26,
-            "price": 120,
+            "price": 780,
             "location": "Mer Méditerranée, Océan Atlantique Est (de la Norvège au Maroc), zones benthiques, fonds rocheux et herbiers de posidonies ou de zoostères.",
             "preferred_time": "06h - 20h",
             "preferred_season": "Avril - Octobre",
@@ -2937,7 +2937,7 @@
                 ]
             },
             "id": 27,
-            "price": 400,
+            "price": 540,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Toute l'année",
@@ -2955,7 +2955,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Gobie d'eau douce (Rhinogobius flumineus) est pêché toute l'année, de préférence de 16h à 09h, lorsque ce petit poisson benthique s'active le long des fonds de graviers pour capturer des invertébrés. Ce poisson possède une adaptation surprenante : ses nageoires pelviennes sont soudées en une ventouse ventrale lui permettant de s'ancrer solidement aux rochers face aux courants torrentiels. En observation de terrain, les scientifiques notent qu'il peut grimper sur des parois rocheuses humides de cascades. Son prix commercial moyen est de 400 pièces d'or. Sa chair très fine est consommée frite en friture complète dans les régions montagneuses d'Asie.",
+            "fun_fact": "Le Gobie d'eau douce (Rhinogobius flumineus) est pêché toute l'année, de préférence de 16h à 09h, lorsque ce petit poisson benthique s'active le long des fonds de graviers pour capturer des invertébrés. Ce poisson possède une adaptation surprenante : ses nageoires pelviennes sont soudées en une ventouse ventrale lui permettant de s'ancrer solidement aux rochers face aux courants torrentiels. En observation de terrain, les scientifiques notent qu'il peut grimper sur des parois rocheuses humides de cascades. Son prix commercial moyen est de 540 pièces d'or. Sa chair très fine est consommée frite en friture complète dans les régions montagneuses d'Asie.",
             "time_restriction": "after_22h"
         },
         {
@@ -2998,7 +2998,7 @@
                 ]
             },
             "id": 28,
-            "price": 120,
+            "price": 1160,
             "location": "Étang",
             "preferred_time": "00h - 24h",
             "preferred_season": "Mai - août",
@@ -3008,7 +3008,7 @@
                 7,
                 8
             ],
-            "fun_fact": "La Grenouille (Pelophylax esculentus) est capturée de mai à août, toute la journée, car elle est particulièrement active au bord des étangs durant la saison chaude pour chasser les insectes. Cet amphibien possède une capacité respiratoire surprenante : il respire en grande partie par sa peau humide, ce qui lui permet de rester immergé de longues heures. Les experts de terrain soulignent que son chant peut dépasser quatre-vingts décibels lors des concerts nocturnes. Commercialisée au tarif de 120 pièces d'or, elle est célèbre en gastronomie française pour ses cuisses à la chair tendre rappelant le poulet, généralement cuisinées sautées à l'ail et au persil.",
+            "fun_fact": "La Grenouille (Pelophylax esculentus) est capturée de mai à août, toute la journée, car elle est particulièrement active au bord des étangs durant la saison chaude pour chasser les insectes. Cet amphibien possède une capacité respiratoire surprenante : il respire en grande partie par sa peau humide, ce qui lui permet de rester immergé de longues heures. Les experts de terrain soulignent que son chant peut dépasser quatre-vingts décibels lors des concerts nocturnes. Commercialisée au tarif de 1160 pièces d'or, elle est célèbre en gastronomie française pour ses cuisses à la chair tendre rappelant le poulet, généralement cuisinées sautées à l'ail et au persil.",
             "time_restriction": null
         },
         {
@@ -3051,7 +3051,7 @@
                 ]
             },
             "id": 29,
-            "price": 1300,
+            "price": 680,
             "location": "Rivière",
             "preferred_time": "09h - 16h",
             "preferred_season": "Avril - novembre",
@@ -3065,7 +3065,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Guppy (Poecilia reticulata) est capturé d'avril à novembre de 09h à 16h car sa nature de poisson tropical diurne le pousse à s'activer en surface des eaux chaudes sous la lumière du soleil. Ce petit poisson possède une caractéristique de reproduction surprenante : il est ovovivipare, la femelle donnant naissance à des alevins vivants et autonomes. Les aquariophiles notent que les mâles arborent des nageoires caudales colorées uniques en éventail. Commercialisé au prix de 1300 pièces d'or pour les plus belles sélections, il est trop petit pour un intérêt culinaire et sa beauté en fait uniquement un joyau d'ornement.",
+            "fun_fact": "Le Guppy (Poecilia reticulata) est capturé d'avril à novembre de 09h à 16h car sa nature de poisson tropical diurne le pousse à s'activer en surface des eaux chaudes sous la lumière du soleil. Ce petit poisson possède une caractéristique de reproduction surprenante : il est ovovivipare, la femelle donnant naissance à des alevins vivants et autonomes. Les aquariophiles notent que les mâles arborent des nageoires caudales colorées uniques en éventail. Commercialisé au prix de 680 pièces d'or pour les plus belles sélections, il est trop petit pour un intérêt culinaire et sa beauté en fait uniquement un joyau d'ornement.",
             "time_restriction": "before_22h"
         },
         {
@@ -3108,7 +3108,7 @@
                 ]
             },
             "id": 30,
-            "price": 1100,
+            "price": 700,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Avril - novembre",
@@ -3122,7 +3122,7 @@
                 10,
                 11
             ],
-            "fun_fact": "L'Hippocampe (Hippocampus hippocampus) se pêche d'avril à novembre, toute la journée, dans les herbiers marins peu profonds. Ce poisson singulier possède un mode de reproduction surprenante : c'est le mâle qui incube les œufs dans sa poche ventrale avant de donner naissance à de minuscules hippocampes autonomes. Les ichtyologues observent qu'il utilise sa queue préhensile pour s'ancrer fermement aux algues. Estimé à 1100 pièces d'or pour l'aquariophilie de collection, sa structure osseuse externe rigide et sa texture coriace le rendent totalement impropre à la gastronomie.",
+            "fun_fact": "L'Hippocampe (Hippocampus hippocampus) se pêche d'avril à novembre, toute la journée, dans les herbiers marins peu profonds. Ce poisson singulier possède un mode de reproduction surprenante : c'est le mâle qui incube les œufs dans sa poche ventrale avant de donner naissance à de minuscules hippocampes autonomes. Les ichtyologues observent qu'il utilise sa queue préhensile pour s'ancrer fermement aux algues. Estimé à 700 pièces d'or pour l'aquariophilie de collection, sa structure osseuse externe rigide et sa texture coriace le rendent totalement impropre à la gastronomie.",
             "time_restriction": null
         },
         {
@@ -3165,7 +3165,7 @@
                 ]
             },
             "id": 31,
-            "price": 600,
+            "price": 1080,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Juin - octobre",
@@ -3176,7 +3176,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Murène ruban bleue (Rhinomuraena quaesita) est pêchée de juin à octobre, toute la journée, dans les récifs coralliens tropicaux. Ce prédateur serpentiforme possède une biologie surprenante : il est hermaphrodite protérandrique, commençant sa vie en tant que mâle noir, puis devenant bleu vif et jaune à maturité, avant de se transformer en femelle entièrement jaune. Les plongeurs experts notent qu'elle possède des appendices nasaux foliacés caractéristiques en forme de rubans. Commercialisée au prix de 600 pièces d'or, sa chair est fine mais sa dangerosité à cause de toxines et sa rareté en font un poisson d'aquarium plutôt que de table.",
+            "fun_fact": "La Murène ruban bleue (Rhinomuraena quaesita) est pêchée de juin à octobre, toute la journée, dans les récifs coralliens tropicaux. Ce prédateur serpentiforme possède une biologie surprenante : il est hermaphrodite protérandrique, commençant sa vie en tant que mâle noir, puis devenant bleu vif et jaune à maturité, avant de se transformer en femelle entièrement jaune. Les plongeurs experts notent qu'elle possède des appendices nasaux foliacés caractéristiques en forme de rubans. Commercialisée au prix de 1080 pièces d'or, sa chair est fine mais sa dangerosité à cause de toxines et sa rareté en font un poisson d'aquarium plutôt que de table.",
             "time_restriction": null
         },
         {
@@ -3219,7 +3219,7 @@
                 ]
             },
             "id": 32,
-            "price": 500,
+            "price": 720,
             "location": "Rivière",
             "preferred_time": "09h - 16h",
             "preferred_season": "Avril - novembre",
@@ -3233,7 +3233,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Néon bleu (Paracheirodon innesi) est pêché d'avril à novembre de 09h à 16h car ce minuscule poisson d'eau douce est strictement diurne et s'active en bancs d'autant plus brillants que la lumière solaire filtre à travers la canopée amazonienne. Il possède une caractéristique optique surprenante : sa bande latérale bleu-vert est composée de cristaux de guanine qui réfléchissent la lumière pour briller dans les eaux sombres. Les biologistes de terrain notent qu'il est sensible à la qualité de l'eau. Commercialisé à 500 pièces d'or pour sa popularité en aquariophilie, sa taille minuscule exclut tout usage en cuisine.",
+            "fun_fact": "Le Néon bleu (Paracheirodon innesi) est pêché d'avril à novembre de 09h à 16h car ce minuscule poisson d'eau douce est strictement diurne et s'active en bancs d'autant plus brillants que la lumière solaire filtre à travers la canopée amazonienne. Il possède une caractéristique optique surprenante : sa bande latérale bleu-vert est composée de cristaux de guanine qui réfléchissent la lumière pour briller dans les eaux sombres. Les biologistes de terrain notent qu'il est sensible à la qualité de l'eau. Commercialisé à 720 pièces d'or pour sa popularité en aquariophilie, sa taille minuscule exclut tout usage en cuisine.",
             "time_restriction": "before_22h"
         },
         {
@@ -3276,7 +3276,7 @@
                 ]
             },
             "id": 33,
-            "price": 800,
+            "price": 900,
             "location": "Rivière",
             "preferred_time": "09h - 16h",
             "preferred_season": "Mai - octobre",
@@ -3288,7 +3288,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Poisson arc-en-ciel (Melanotaenia boesemani) est capturé de mai à octobre entre 09h et 16h car ses superbes couleurs bicolores s'activent intensément sous la lumière du jour dans les eaux chaudes. Ce petit poisson d'ornement présente un dichromatisme sexuel remarquable, la moitié arrière du corps du mâle étant orange vif et la moitié avant bleu-violet. Les aquariophiles experts notent qu'il vit en bancs dynamiques pour maintenir ses couleurs d'une brillance optimale. Commercialisé au prix moyen de 800 pièces d'or, il est trop petit et sa chair n'a aucun intérêt gastronomique.",
+            "fun_fact": "Le Poisson arc-en-ciel (Melanotaenia boesemani) est capturé de mai à octobre entre 09h et 16h car ses superbes couleurs bicolores s'activent intensément sous la lumière du jour dans les eaux chaudes. Ce petit poisson d'ornement présente un dichromatisme sexuel remarquable, la moitié arrière du corps du mâle étant orange vif et la moitié avant bleu-violet. Les aquariophiles experts notent qu'il vit en bancs dynamiques pour maintenir ses couleurs d'une brillance optimale. Commercialisé au prix moyen de 900 pièces d'or, il est trop petit et sa chair n'a aucun intérêt gastronomique.",
             "time_restriction": "before_22h"
         },
         {
@@ -3331,7 +3331,7 @@
                 ]
             },
             "id": 34,
-            "price": 1000,
+            "price": 920,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Avril - septembre",
@@ -3343,7 +3343,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson chirurgien (Paracanthurus hepatus) se pêche toute l'année, de jour comme de nuit, dans les récifs coralliens. Ce sparidé coloré bleu royal et jaune possède une arme défensive redoutable : des scalpels tranchants érectiles à la base de sa queue. Les plongeurs sur le terrain observent qu'il s'ancre dans les coraux en cas de danger. Commercialisé à 1000 pièces d'or pour l'aquariophilie, sa chair est toxique en raison de la ciguatera qu'il accumule en broutant des algues récifales, le rendant impropre à la gastronomie.",
+            "fun_fact": "Le Poisson chirurgien (Paracanthurus hepatus) se pêche toute l'année, de jour comme de nuit, dans les récifs coralliens. Ce sparidé coloré bleu royal et jaune possède une arme défensive redoutable : des scalpels tranchants érectiles à la base de sa queue. Les plongeurs sur le terrain observent qu'il s'ancre dans les coraux en cas de danger. Commercialisé à 920 pièces d'or pour l'aquariophilie, sa chair est toxique en raison de la ciguatera qu'il accumule en broutant des algues récifales, le rendant impropre à la gastronomie.",
             "time_restriction": null
         },
         {
@@ -3386,7 +3386,7 @@
                 ]
             },
             "id": 35,
-            "price": 1300,
+            "price": 560,
             "location": "Étang",
             "preferred_time": "00h - 24h",
             "preferred_season": "Toute l'année",
@@ -3404,7 +3404,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Poisson Rouge (Carassius auratus) est pêché toute l'année, toute la journée, dans les étangs et plans d'eau calmes. Ce petit cyprinidé domestique possède une résistance surprenante : il peut survivre dans des eaux très pauvres en oxygène en convertissant l'acide lactique en éthanol. Les éleveurs sur le terrain rappellent qu'il est issu de la sélection de la carpe sauvage. Vendu à 1300 pièces d'or pour les spécimens rares d'aquariophilie, sa chair est fade et très arêteuse, ce qui limite grandement son intérêt gastronomique.",
+            "fun_fact": "Le Poisson Rouge (Carassius auratus) est pêché toute l'année, toute la journée, dans les étangs et plans d'eau calmes. Ce petit cyprinidé domestique possède une résistance surprenante : il peut survivre dans des eaux très pauvres en oxygène en convertissant l'acide lactique en éthanol. Les éleveurs sur le terrain rappellent qu'il est issu de la sélection de la carpe sauvage. Vendu à 560 pièces d'or pour les spécimens rares d'aquariophilie, sa chair est fade et très arêteuse, ce qui limite grandement son intérêt gastronomique.",
             "time_restriction": null
         },
         {
@@ -3447,7 +3447,7 @@
                 ]
             },
             "id": 36,
-            "price": 1000,
+            "price": 940,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Avril - septembre",
@@ -3459,7 +3459,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson-papillon (Chaetodon auriga) est pêché toute l'année, de jour comme de nuit, dans les récifs coralliens. Ce sparidé arbore une bande noire sur l'œil et un faux oeil noir près de la queue qui sert à tromper et désorienter ses prédateurs. Les plongeurs experts notent qu'il utilise sa bouche allongée en forme de pincette pour extraire de petits invertébrés des recoins rocheux. Commercialisé à 1000 pièces d'or pour l'aquariophilie de prestige, sa chair très fine est rarement consommée car le poisson est trop petit et a un rôle écologique crucial dans la santé des coraux.",
+            "fun_fact": "Le Poisson-papillon (Chaetodon auriga) est pêché toute l'année, de jour comme de nuit, dans les récifs coralliens. Ce sparidé arbore une bande noire sur l'œil et un faux oeil noir près de la queue qui sert à tromper et désorienter ses prédateurs. Les plongeurs experts notent qu'il utilise sa bouche allongée en forme de pincette pour extraire de petits invertébrés des recoins rocheux. Commercialisé à 940 pièces d'or pour l'aquariophilie de prestige, sa chair très fine est rarement consommée car le poisson est trop petit et a un rôle écologique crucial dans la santé des coraux.",
             "time_restriction": null
         },
         {
@@ -3502,7 +3502,7 @@
                 ]
             },
             "id": 37,
-            "price": 250,
+            "price": 1200,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Juillet - septembre",
@@ -3511,7 +3511,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson-porc-épic (Diodon holocanthus) se pêche de juillet à septembre, toute la journée, dans les eaux côtières peu profondes des mers chaudes. Ce poisson insolite possède un système défensif surprenant : il se gonfle d'eau pour tripler de volume et dresser des épines pointues acérées qui couvrent son corps, tout en accumulant une toxine mortelle dans ses organes. Les experts de terrain soulignent qu'il possède des mâchoires soudées formant un bec puissant pour broyer les coquillages. Commercialisé au prix de 250 pièces d'or, sa chair est consommée en Asie sous forme de soupe après une préparation rigoureuse par des chefs agréés.",
+            "fun_fact": "Le Poisson-porc-épic (Diodon holocanthus) se pêche de juillet à septembre, toute la journée, dans les eaux côtières peu profondes des mers chaudes. Ce poisson insolite possède un système défensif surprenant : il se gonfle d'eau pour tripler de volume et dresser des épines pointues acérées qui couvrent son corps, tout en accumulant une toxine mortelle dans ses organes. Les experts de terrain soulignent qu'il possède des mâchoires soudées formant un bec puissant pour broyer les coquillages. Commercialisé au prix de 1200 pièces d'or, sa chair est consommée en Asie sous forme de soupe après une préparation rigoureuse par des chefs agréés.",
             "time_restriction": null
         },
         {
@@ -3554,7 +3554,7 @@
                 ]
             },
             "id": 38,
-            "price": 500,
+            "price": 740,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Avril - novembre",
@@ -3568,7 +3568,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Poisson-scorpion (Scorpaena scrofa) est capturé d'avril à novembre, toute la journée, sur les fonds rocheux côtiers. Ce poisson benthique camouflé rouge brique possède un venin puissant injecté par les épines de ses nageoires dorsales pour paralyser ses agresseurs. Les pêcheurs experts sur le terrain manipulent ce poisson avec précaution pour éviter des piqûres extrêmement douloureuses. Commercialisé au prix de 500 pièces d'or, sa chair blanche et ferme est d'une qualité culinaire exceptionnelle, constituant l'ingrédient de base indispensable d'une bouillabaisse traditionnelle.",
+            "fun_fact": "Le Poisson-scorpion (Scorpaena scrofa) est capturé d'avril à novembre, toute la journée, sur les fonds rocheux côtiers. Ce poisson benthique camouflé rouge brique possède un venin puissant injecté par les épines de ses nageoires dorsales pour paralyser ses agresseurs. Les pêcheurs experts sur le terrain manipulent ce poisson avec précaution pour éviter des piqûres extrêmement douloureuses. Commercialisé au prix de 740 pièces d'or, sa chair blanche et ferme est d'une qualité culinaire exceptionnelle, constituant l'ingrédient de base indispensable d'une bouillabaisse traditionnelle.",
             "time_restriction": null
         },
         {
@@ -3611,7 +3611,7 @@
                 ]
             },
             "id": 39,
-            "price": 700,
+            "price": 640,
             "location": "Embouchure de rivière",
             "preferred_time": "05h - 22h",
             "preferred_season": "Février - novembre",
@@ -3670,7 +3670,7 @@
                 ]
             },
             "id": 40,
-            "price": 1000,
+            "price": 800,
             "location": "Rivière (falaise)",
             "preferred_time": "16h - 09h",
             "preferred_season": "Mars - juin, septembre - novembre",
@@ -3683,7 +3683,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Saumon masou (Oncorhynchus masou) est capturé de mars à juin puis de septembre à novembre, de 16h à 09h, profitant de la fraîcheur de l'aube et du crépuscule pour s'activer dans les torrents rapides de montagne. Ce salmonidé asiatique possède une particularité biologique surprenante : certains mâles restent toute leur vie en eau douce sans jamais migrer vers l'océan, devenant des résidents nains très agressifs. Les ichtyologues experts notent qu'il arbore des bandes verticales sombres et des taches roses spectaculaires à maturité. Commercialisé au tarif moyen de 1000 pièces d'or, sa chair délicate est d'une grande valeur culinaire, délicieuse grillée au sel ou préparée en sushi traditionnel.",
+            "fun_fact": "Le Saumon masou (Oncorhynchus masou) est capturé de mars à juin puis de septembre à novembre, de 16h à 09h, profitant de la fraîcheur de l'aube et du crépuscule pour s'activer dans les torrents rapides de montagne. Ce salmonidé asiatique possède une particularité biologique surprenante : certains mâles restent toute leur vie en eau douce sans jamais migrer vers l'océan, devenant des résidents nains très agressifs. Les ichtyologues experts notent qu'il arbore des bandes verticales sombres et des taches roses spectaculaires à maturité. Commercialisé au tarif moyen de 800 pièces d'or, sa chair délicate est d'une grande valeur culinaire, délicieuse grillée au sel ou préparée en sushi traditionnel.",
             "time_restriction": "after_22h"
         },
         {
@@ -3726,7 +3726,7 @@
                 ]
             },
             "id": 41,
-            "price": 800,
+            "price": 960,
             "location": "Étang",
             "preferred_time": "16h - 09h",
             "preferred_season": "Mai - octobre",
@@ -3738,7 +3738,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Silure (Silurus glanis) est capturé de mai à octobre, de 16h à 09h, car ce prédateur géant nocturne quitte les fosses profondes à la tombée de la nuit pour chasser activement. Ce colosse d'eau douce sans écailles possède des récepteurs tactiles et chimiques ultra-sensibles situés sur ses six longs barbillons sensoriels. Les biologistes de terrain rapportent qu'il est capable de capturer des oiseaux d'eau à la surface en pratiquant l'échouage. Commercialisé à 800 pièces d'or, sa chair est blanche et grasse, particulièrement savoureuse fumée ou cuisinée en darne au four si le spécimen n'est pas trop vieux.",
+            "fun_fact": "Le Silure (Silurus glanis) est capturé de mai à octobre, de 16h à 09h, car ce prédateur géant nocturne quitte les fosses profondes à la tombée de la nuit pour chasser activement. Ce colosse d'eau douce sans écailles possède des récepteurs tactiles et chimiques ultra-sensibles situés sur ses six longs barbillons sensoriels. Les biologistes de terrain rapportent qu'il est capable de capturer des oiseaux d'eau à la surface en pratiquant l'échouage. Commercialisé à 960 pièces d'or, sa chair est blanche et grasse, particulièrement savoureuse fumée ou cuisinée en darne au four si le spécimen n'est pas trop vieux.",
             "time_restriction": "after_22h"
         },
         {
@@ -3781,7 +3781,7 @@
                 ]
             },
             "id": 42,
-            "price": 400,
+            "price": 980,
             "location": "Rivières calmes, étangs et lacs vaseux - Europe et Asie",
             "preferred_time": "04h - 09h, 16h - 21h",
             "preferred_season": "Mai - octobre",
@@ -3793,7 +3793,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Tanche (Tinca tinca) est pêchée de mai à octobre entre 04h et 09h ou de 16h à 21h car elle s'active principalement aux heures crépusculaires pour fouiller la vase. Ce poisson d'eau douce est capable de survivre plusieurs heures hors de l'eau en s'enterrant dans la boue humide en cas de sécheresse. Les experts de terrain l'appellent le poisson-médecin car son mucus épais a la réputation de soigner les infections cutanées des autres poissons qui s'y frottent. La tanche a une chair savoureuse et délicate, bien qu'un peu terreuse si elle n'est pas dégorgée avant la cuisson. Son prix commercial moyen est de 400 pièces d'or.",
+            "fun_fact": "La Tanche (Tinca tinca) est pêchée de mai à octobre entre 04h et 09h ou de 16h à 21h car elle s'active principalement aux heures crépusculaires pour fouiller la vase. Ce poisson d'eau douce est capable de survivre plusieurs heures hors de l'eau en s'enterrant dans la boue humide en cas de sécheresse. Les experts de terrain l'appellent le poisson-médecin car son mucus épais a la réputation de soigner les infections cutanées des autres poissons qui s'y frottent. La tanche a une chair savoureuse et délicate, bien qu'un peu terreuse si elle n'est pas dégorgée avant la cuisson. Son prix commercial moyen est de 980 pièces d'or.",
             "time_restriction": "before_22h"
         },
         {
@@ -3836,7 +3836,7 @@
                 ]
             },
             "id": 43,
-            "price": 800,
+            "price": 1100,
             "location": "Rivière",
             "preferred_time": "00h - 24h",
             "preferred_season": "Juin - octobre",
@@ -3847,7 +3847,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Tilapia (Oreochromis niloticus) est pêché toute l'année, de jour comme de nuit, dans les cours d'eau d'eaux douces chaudes. Ce poisson robuste possède une biologie surprenante : il pratique l'incubation buccale, la femelle conservant les œufs puis les alevins dans sa propre bouche pour les protéger des prédateurs. Les éleveurs soulignent sa tolérance extrême aux variations de salinité et de température. Commercialisé au prix de 800 pièces d'or, sa chair blanche et ferme au goût neutre est l'une des plus consommées au monde, excellente cuisinée grillée avec des épices ou en papillote.",
+            "fun_fact": "Le Tilapia (Oreochromis niloticus) est pêché toute l'année, de jour comme de nuit, dans les cours d'eau d'eaux douces chaudes. Ce poisson robuste possède une biologie surprenante : il pratique l'incubation buccale, la femelle conservant les œufs puis les alevins dans sa propre bouche pour les protéger des prédateurs. Les éleveurs soulignent sa tolérance extrême aux variations de salinité et de température. Commercialisé au prix de 1100 pièces d'or, sa chair blanche et ferme au goût neutre est l'une des plus consommées au monde, excellente cuisinée grillée avec des épices ou en papillote.",
             "time_restriction": null
         },
         {
@@ -3890,7 +3890,7 @@
                 ]
             },
             "id": 44,
-            "price": 800,
+            "price": 820,
             "location": "Rivières de montagne fraîches, torrents et lacs - Amérique du Nord (introduite en Europe)",
             "preferred_time": "04h - 09h, 16h - 21h",
             "preferred_season": "Mars - juin, septembre - novembre",
@@ -3903,7 +3903,7 @@
                 10,
                 11
             ],
-            "fun_fact": "La Truite Arc-en-Ciel (Oncorhynchus mykiss) est capturée de mars à juin puis de septembre à novembre, de 04h à 09h ou de 16h à 21h, profitant de la fraîcheur de l'eau et de l'émergence des insectes. Ce poisson se distingue par une bande latérale rose irisée éblouissante. Un fait surprenant est sa capacité à nager à contre-courant dans les torrents les plus tumultueux. Les pêcheurs expérimentés savent qu'elle possède une vision très développée lui permettant de détecter les moindres mouvements hors de l'eau. Très appréciée en cuisine pour sa chair tendre et sa saveur fine, elle est souvent cuisinée meunière ou grillée. Son prix estimé est de 800 pièces d'or.",
+            "fun_fact": "La Truite Arc-en-Ciel (Oncorhynchus mykiss) est capturée de mars à juin puis de septembre à novembre, de 04h à 09h ou de 16h à 21h, profitant de la fraîcheur de l'eau et de l'émergence des insectes. Ce poisson se distingue par une bande latérale rose irisée éblouissante. Un fait surprenant est sa capacité à nager à contre-courant dans les torrents les plus tumultueux. Les pêcheurs expérimentés savent qu'elle possède une vision très développée lui permettant de détecter les moindres mouvements hors de l'eau. Très appréciée en cuisine pour sa chair tendre et sa saveur fine, elle est souvent cuisinée meunière ou grillée. Son prix estimé est de 820 pièces d'or.",
             "time_restriction": "before_22h"
         },
         {
@@ -3946,7 +3946,7 @@
                 ]
             },
             "id": 45,
-            "price": 240,
+            "price": 580,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Toute l'année",
@@ -3964,7 +3964,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Vandoise (Leuciscus leuciscus) est pêchée toute l'année de 16h à 09h dans les cours d'eau rapides et frais d'Europe. Ce petit cyprinidé très vif présente un comportement surprenant : il gobe les insectes à la surface de l'eau en effectuant de petits bonds caractéristiques appelés ronds de vandoise. Les pêcheurs experts sur le terrain soulignent qu'elle est extrêmement craintive et nécessite une approche très discrète. Commercialisée au prix de 240 pièces d'or, sa chair est fine mais truffée de nombreuses petites arêtes, ce qui la destine traditionnellement à la friture après cuisson complète.",
+            "fun_fact": "La Vandoise (Leuciscus leuciscus) est pêchée toute l'année de 16h à 09h dans les cours d'eau rapides et frais d'Europe. Ce petit cyprinidé très vif présente un comportement surprenant : il gobe les insectes à la surface de l'eau en effectuant de petits bonds caractéristiques appelés ronds de vandoise. Les pêcheurs experts sur le terrain soulignent qu'elle est extrêmement craintive et nécessite une approche très discrète. Commercialisée au prix de 580 pièces d'or, sa chair est fine mais truffée de nombreuses petites arêtes, ce qui la destine traditionnellement à la friture après cuisson complète.",
             "time_restriction": "after_22h"
         },
         {
@@ -4007,7 +4007,7 @@
                 ]
             },
             "id": 127,
-            "price": 351,
+            "price": 760,
             "location": "Lacs profonds et rivières à courant lent (Europe)",
             "preferred_time": "18h - 06h",
             "preferred_season": "Juin - Janvier",
@@ -4021,7 +4021,7 @@
                 12,
                 1
             ],
-            "fun_fact": "Le Sandre, Sander lucioperca, se pêche de Juin à Janvier de 18h à 06h par temps couvert dans les grands lacs profonds d'Europe. Ce prédateur aux yeux opaques réfléchissants possède une vision nocturne exceptionnelle pour chasser. Estimé à 351 pièces, sa chair blanche très fine, ferme et sans arêtes est particulièrement appréciée en gastronomie, pochée ou rôtie au four avec un filet de citron.",
+            "fun_fact": "Le Sandre, Sander lucioperca, se pêche de Juin à Janvier de 18h à 06h par temps couvert dans les grands lacs profonds d'Europe. Ce prédateur aux yeux opaques réfléchissants possède une vision nocturne exceptionnelle pour chasser. Estimé à 760 pièces, sa chair blanche très fine, ferme et sans arêtes est particulièrement appréciée en gastronomie, pochée ou rôtie au four avec un filet de citron.",
             "time_restriction": "after_22h"
         },
         {
@@ -4064,7 +4064,7 @@
                 ]
             },
             "id": 128,
-            "price": 352,
+            "price": 1120,
             "location": "Fonds sablonneux et profonds de l'océan Atlantique Nord",
             "preferred_time": "06h - 18h",
             "preferred_season": "Mai - Septembre",
@@ -4075,7 +4075,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Flétan de l'Atlantique, Hippoglossus hippoglossus, se pêche de Mai à Septembre de 06h à 18h par mer calme dans les profondeurs de l'Atlantique Nord. Ce poisson plat géant peut vivre plus de cinquante ans et grandir de façon spectaculaire. Vendu 352 pièces, sa chair blanche ferme et dense est extrêmement recherchée en cuisine, souvent rôtie ou préparée en pavés grillés accompagnés d'herbes.",
+            "fun_fact": "Le Flétan de l'Atlantique, Hippoglossus hippoglossus, se pêche de Mai à Septembre de 06h à 18h par mer calme dans les profondeurs de l'Atlantique Nord. Ce poisson plat géant peut vivre plus de cinquante ans et grandir de façon spectaculaire. Vendu 1120 pièces, sa chair blanche ferme et dense est extrêmement recherchée en cuisine, souvent rôtie ou préparée en pavés grillés accompagnés d'herbes.",
             "time_restriction": "before_22h"
         },
         {
@@ -4118,7 +4118,7 @@
                 ]
             },
             "id": 129,
-            "price": 353,
+            "price": 1180,
             "location": "Lacs alpins et subarctiques profonds et froids (Europe, Amérique du Nord)",
             "preferred_time": "05h - 21h",
             "preferred_season": "Juin - Septembre",
@@ -4128,7 +4128,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Omble Chevalier, Salvelinus alpinus, se capture de Juin à Septembre de 05h à 21h par temps frais dans les lacs alpins profonds. Ce salmonidé tolère les eaux les plus froides de la planète, survivant sous la glace. Estimé à 353 pièces, sa chair délicate couleur rose-orangé possède une saveur subtile et beurrée, très appréciée cuite à la vapeur ou poêlée doucement au beurre meunière.",
+            "fun_fact": "L'Omble Chevalier, Salvelinus alpinus, se capture de Juin à Septembre de 05h à 21h par temps frais dans les lacs alpins profonds. Ce salmonidé tolère les eaux les plus froides de la planète, survivant sous la glace. Estimé à 1180 pièces, sa chair délicate couleur rose-orangé possède une saveur subtile et beurrée, très appréciée cuite à la vapeur ou poêlée doucement au beurre meunière.",
             "time_restriction": "before_22h"
         },
         {
@@ -4171,7 +4171,7 @@
                 ]
             },
             "id": 130,
-            "price": 354,
+            "price": 600,
             "location": "Fonds sablonneux et rocheux du plateau continental (Atlantique, Méditerranée)",
             "preferred_time": "20h - 06h",
             "preferred_season": "Toute l'année",
@@ -4189,7 +4189,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Roussette, Scyliorhinus canicula, se pêche toute l'année de 20h à 06h par nuit sombre sur les fonds sablonneux de l'Atlantique. Ce petit requin possède une peau rugueuse comme du papier de verre et pond des œufs protégés dans des capsules appelées bourses de sirène. Estimée à 354 pièces, sa chair ferme sans arêtes est cuisinée en matelote ou à la sauce tomate après avoir été soigneusement pelée.",
+            "fun_fact": "La Roussette, Scyliorhinus canicula, se pêche toute l'année de 20h à 06h par nuit sombre sur les fonds sablonneux de l'Atlantique. Ce petit requin possède une peau rugueuse comme du papier de verre et pond des œufs protégés dans des capsules appelées bourses de sirène. Estimée à 600 pièces, sa chair ferme sans arêtes est cuisinée en matelote ou à la sauce tomate après avoir été soigneusement pelée.",
             "time_restriction": "after_22h"
         },
         {
@@ -4232,7 +4232,7 @@
                 ]
             },
             "id": 131,
-            "price": 356,
+            "price": 1000,
             "location": "Épaves, récifs et anfractuosités rocheuses (océan Atlantique)",
             "preferred_time": "20h - 06h",
             "preferred_season": "Juin - Novembre",
@@ -4244,7 +4244,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Congre, Conger conger, se capture de Juin à Novembre entre 20h et 06h par nuit calme près des épaves en Atlantique. Ce prédateur massif et puissant vit caché dans les crevasses sombres. Estimé à 356 pièces, ce poisson offre une chair très ferme et savoureuse. Sa partie avant, moins riche en arêtes, est idéale pour enrichir une bouillabaisse ou préparée rôtie avec des aromates.",
+            "fun_fact": "Le Congre, Conger conger, se capture de Juin à Novembre entre 20h et 06h par nuit calme près des épaves en Atlantique. Ce prédateur massif et puissant vit caché dans les crevasses sombres. Estimé à 1000 pièces, ce poisson offre une chair très ferme et savoureuse. Sa partie avant, moins riche en arêtes, est idéale pour enrichir une bouillabaisse ou préparée rôtie avec des aromates.",
             "time_restriction": "after_22h"
         },
         {
@@ -4287,7 +4287,7 @@
                 ]
             },
             "id": 132,
-            "price": 357,
+            "price": 1140,
             "location": "Eaux côtières de surface, zones pélagiques (Europe)",
             "preferred_time": "09h - 18h",
             "preferred_season": "Mai - Septembre",
@@ -4298,7 +4298,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Orphie, Belone belone, se capture de Mai à Septembre entre 09h et 18h par grand soleil dans les eaux côtières d'Europe. Ce poisson fuselé possède un bec effilé et des arêtes d'une couleur verte surprenante due à la biliverdine. Estimée à 357 pièces, sa chair fine et iodée se prête très bien à la friture ou à une cuisson sur le gril après avoir été marinée dans du jus de citron.",
+            "fun_fact": "L'Orphie, Belone belone, se capture de Mai à Septembre entre 09h et 18h par grand soleil dans les eaux côtières d'Europe. Ce poisson fuselé possède un bec effilé et des arêtes d'une couleur verte surprenante due à la biliverdine. Estimée à 1140 pièces, sa chair fine et iodée se prête très bien à la friture ou à une cuisson sur le gril après avoir été marinée dans du jus de citron.",
             "time_restriction": "before_22h"
         },
         {
@@ -4341,7 +4341,7 @@
                 ]
             },
             "id": 133,
-            "price": 358,
+            "price": 1020,
             "location": "Fonds sablonneux côtiers, récifs et épaves (Méditerranée, Atlantique)",
             "preferred_time": "06h - 18h",
             "preferred_season": "Juin - Novembre",
@@ -4353,7 +4353,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Saint-Pierre, Zeus faber, se pêche de Juin à Novembre de 06h à 18h par mer calme en Méditerranée. Ce prédateur possède une tache noire sur chaque flanc, assimilée selon la légende à l'empreinte des doigts de l'apôtre Pierre. Estimé à 358 pièces, c'est un poisson noble à la chair blanche exceptionnelle, très ferme et délicate, star incontestée des grandes tables de la gastronomie marine.",
+            "fun_fact": "Le Saint-Pierre, Zeus faber, se pêche de Juin à Novembre de 06h à 18h par mer calme en Méditerranée. Ce prédateur possède une tache noire sur chaque flanc, assimilée selon la légende à l'empreinte des doigts de l'apôtre Pierre. Estimé à 1020 pièces, c'est un poisson noble à la chair blanche exceptionnelle, très ferme et délicate, star incontestée des grandes tables de la gastronomie marine.",
             "time_restriction": "before_22h"
         },
         {
@@ -4396,7 +4396,7 @@
                 ]
             },
             "id": 134,
-            "price": 359,
+            "price": 620,
             "location": "Fonds vaseux et profonds du plateau continental (Atlantique)",
             "preferred_time": "08h - 20h",
             "preferred_season": "Toute l'année",
@@ -4414,7 +4414,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Baudroie, Lophius piscatorius, se pêche toute l'année de 08h à 20h par temps sombre sur les fonds profonds de l'Atlantique. Ce poisson plat camouflé attire ses proies avec un leurre charnu sur sa tête. Estimée à 359 pièces, sa queue (appelée lotte) fournit une chair ferme et serrée, semblable à celle de la queue de homard, exquise rôtie ou cuite en sauce armoricaine.",
+            "fun_fact": "La Baudroie, Lophius piscatorius, se pêche toute l'année de 08h à 20h par temps sombre sur les fonds profonds de l'Atlantique. Ce poisson plat camouflé attire ses proies avec un leurre charnu sur sa tête. Estimée à 620 pièces, sa queue (appelée lotte) fournit une chair ferme et serrée, semblable à celle de la queue de homard, exquise rôtie ou cuite en sauce armoricaine.",
             "time_restriction": "before_22h"
         },
         {
@@ -4457,7 +4457,7 @@
                 ]
             },
             "id": 135,
-            "price": 361,
+            "price": 1040,
             "location": "Cours d'eau lents, étangs, marais et zones humides (Europe)",
             "preferred_time": "20h - 04h",
             "preferred_season": "Avril - Septembre",
@@ -4469,7 +4469,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Anguille d'Europe, Anguilla anguilla, se capture d'Avril à Septembre de 20h à 04h par temps pluvieux dans les marais d'Europe. Ce poisson migrateur parcourt des milliers de kilomètres jusqu'à la mer des Sargasses pour se reproduire. Vendu 361 pièces, sa chair très riche et grasse est une spécialité recherchée en gastronomie, particulièrement délicieuse lorsqu'elle est fumée ou cuisinée en persillade.",
+            "fun_fact": "L'Anguille d'Europe, Anguilla anguilla, se capture d'Avril à Septembre de 20h à 04h par temps pluvieux dans les marais d'Europe. Ce poisson migrateur parcourt des milliers de kilomètres jusqu'à la mer des Sargasses pour se reproduire. Vendu 1040 pièces, sa chair très riche et grasse est une spécialité recherchée en gastronomie, particulièrement délicieuse lorsqu'elle est fumée ou cuisinée en persillade.",
             "time_restriction": "after_22h"
         },
         {
@@ -4512,7 +4512,7 @@
                 ]
             },
             "id": 136,
-            "price": 362,
+            "price": 840,
             "location": "Lacs et étangs d'eau douce chauds (Régions tropicales)",
             "preferred_time": "06h - 18h",
             "preferred_season": "Avril - Octobre",
@@ -4525,7 +4525,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Tilapia, Oreochromis niloticus, se pêche d'Avril à Octobre de 06h à 18h par temps chaud et ensoleillé dans les lacs tropicaux. Ce poisson d'eau douce résistant est connu pour incuber ses œufs dans sa bouche afin de protéger ses petits. Vendu 362 pièces, c'est une ressource aquacole majeure. Sa chair blanche et neutre apprécie d'être grillée entière avec des épices ou cuite à la vapeur.",
+            "fun_fact": "Le Tilapia, Oreochromis niloticus, se pêche d'Avril à Octobre de 06h à 18h par temps chaud et ensoleillé dans les lacs tropicaux. Ce poisson d'eau douce résistant est connu pour incuber ses œufs dans sa bouche afin de protéger ses petits. Vendu 840 pièces, c'est une ressource aquacole majeure. Sa chair blanche et neutre apprécie d'être grillée entière avec des épices ou cuite à la vapeur.",
             "time_restriction": "before_22h"
         }
     ],
@@ -4570,7 +4570,7 @@
                 ]
             },
             "id": 46,
-            "price": 4000,
+            "price": 3200,
             "location": "Rivière",
             "preferred_time": "21h - 04h",
             "preferred_season": "Juin - septembre",
@@ -4580,7 +4580,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Bichir (Polypterus senegalus) se pêche de juin à septembre de 21h à 04h, profitant de l'obscurité pour ramper sur les fonds boueux des rivières calmes d'Afrique. Cette créature préhistorique possède une caractéristique biologique extraordinaire : des poumons primitifs fonctionnels lui permettant de respirer de l'air à la surface et de survivre plusieurs jours hors de l'eau en rampant sur la terre. Les ichtyologues experts notent que ses nageoires pectorales lobées rappellent les membres des premiers tétrapodes terrestres. Commercialisé au prix moyen de 4000 pièces d'or pour l'aquariophilie d'exception, il n'a aucun usage culinaire en raison de sa rareté et de sa cuirasse d'écailles dures.",
+            "fun_fact": "Le Bichir (Polypterus senegalus) se pêche de juin à septembre de 21h à 04h, profitant de l'obscurité pour ramper sur les fonds boueux des rivières calmes d'Afrique. Cette créature préhistorique possède une caractéristique biologique extraordinaire : des poumons primitifs fonctionnels lui permettant de respirer de l'air à la surface et de survivre plusieurs jours hors de l'eau en rampant sur la terre. Les ichtyologues experts notent que ses nageoires pectorales lobées rappellent les membres des premiers tétrapodes terrestres. Commercialisé au prix moyen de 3200 pièces d'or pour l'aquariophilie d'exception, il n'a aucun usage culinaire en raison de sa rareté et de sa cuirasse d'écailles dures.",
             "time_restriction": "after_22h"
         },
         {
@@ -4623,7 +4623,7 @@
                 ]
             },
             "id": 47,
-            "price": 1800,
+            "price": 3300,
             "location": "Rivière",
             "preferred_time": "00h - 24h",
             "preferred_season": "Septembre - décembre",
@@ -4633,7 +4633,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Brochet (Esox lucius) se pêche de septembre à décembre, toute la journée, dans les rivières calmes et lacs riches en végétation. Ce redoutable prédateur embusqué possède une anatomie surprenante : sa mâchoire en bec de canard est tapissée de plus de sept cents dents acérées inclinées vers l'arrière pour empêcher toute proie de s'échapper. Les pêcheurs experts sur le terrain savent qu'il est capable de pointes de vitesse fulgurantes pour bondir sur ses cibles. Commercialisé au prix de 1800 pièces d'or, sa chair blanche et ferme est très estimée en cuisine, traditionnellement préparée sous forme de quenelles de brochet sauce Nantua.",
+            "fun_fact": "Le Brochet (Esox lucius) se pêche de septembre à décembre, toute la journée, dans les rivières calmes et lacs riches en végétation. Ce redoutable prédateur embusqué possède une anatomie surprenante : sa mâchoire en bec de canard est tapissée de plus de sept cents dents acérées inclinées vers l'arrière pour empêcher toute proie de s'échapper. Les pêcheurs experts sur le terrain savent qu'il est capable de pointes de vitesse fulgurantes pour bondir sur ses cibles. Commercialisé au prix de 3300 pièces d'or, sa chair blanche et ferme est très estimée en cuisine, traditionnellement préparée sous forme de quenelles de brochet sauce Nantua.",
             "time_restriction": null
         },
         {
@@ -4676,7 +4676,7 @@
                 ]
             },
             "id": 48,
-            "price": 4500,
+            "price": 2200,
             "location": "Océan (ponton)",
             "preferred_time": "00h - 24h",
             "preferred_season": "Mai - octobre",
@@ -4688,7 +4688,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Carangue grosse tête (Caranx ignobilis) se pêche de mai à octobre, toute la journée, près des récifs et des pontons marins profonds. Ce prédateur pélagique massif possède une biologie surprenante : il est capable de bondir hors de l'eau pour capturer des oiseaux marins en plein vol. Les pêcheurs sportifs sur le terrain la respectent pour sa combativité extrême qui met à rude épreuve le matériel. Commercialisée au prix de 4500 pièces d'or, sa chair est ferme et savoureuse, très recherchée à Hawaï où elle est consommée crue en sashimi ou grillée avec des herbes tropicales.",
+            "fun_fact": "La Carangue grosse tête (Caranx ignobilis) se pêche de mai à octobre, toute la journée, près des récifs et des pontons marins profonds. Ce prédateur pélagique massif possède une biologie surprenante : il est capable de bondir hors de l'eau pour capturer des oiseaux marins en plein vol. Les pêcheurs sportifs sur le terrain la respectent pour sa combativité extrême qui met à rude épreuve le matériel. Commercialisée au prix de 2200 pièces d'or, sa chair est ferme et savoureuse, très recherchée à Hawaï où elle est consommée crue en sashimi ou grillée avec des herbes tropicales.",
             "time_restriction": null
         },
         {
@@ -4731,7 +4731,7 @@
                 ]
             },
             "id": 49,
-            "price": 4000,
+            "price": 1500,
             "location": "Étang",
             "preferred_time": "16h - 09h",
             "preferred_season": "Toute l'année",
@@ -4749,7 +4749,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Carpe koï (Cyprinus rubrofuscus) se pêche toute l'année de 16h à 09h dans les étangs et bassins calmes. Ce grand cyprinidé ornemental possède une longévité surprenante : certains spécimens sélectionnés au Japon ont dépassé l'âge de deux cents ans. Les éleveurs experts sur le terrain la considèrent comme un symbole vivant de chance et de persévérance. Commercialisée au prix de 4000 pièces d'or pour les motifs colorés les plus rares, sa chair grasse et arêteuse est consommée au Japon en soupe koïkoku, bien que sa valeur ornementale surpasse largement sa valeur culinaire.",
+            "fun_fact": "La Carpe koï (Cyprinus rubrofuscus) se pêche toute l'année de 16h à 09h dans les étangs et bassins calmes. Ce grand cyprinidé ornemental possède une longévité surprenante : certains spécimens sélectionnés au Japon ont dépassé l'âge de deux cents ans. Les éleveurs experts sur le terrain la considèrent comme un symbole vivant de chance et de persévérance. Commercialisée au prix de 1500 pièces d'or pour les motifs colorés les plus rares, sa chair grasse et arêteuse est consommée au Japon en soupe koïkoku, bien que sa valeur ornementale surpasse largement sa valeur culinaire.",
             "time_restriction": "after_22h"
         },
         {
@@ -4792,7 +4792,7 @@
                 ]
             },
             "id": 50,
-            "price": 2500,
+            "price": 2300,
             "location": "Rivière",
             "preferred_time": "09h - 16h",
             "preferred_season": "Mai - octobre",
@@ -4804,7 +4804,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Combattant (Betta splendens) se pêche de mai à octobre entre 09h et 16h dans les marais peu profonds et rizières. Ce petit poisson d'ornement possède une biologie surprenante : les mâles sont si territoriaux qu'ils s'attaquent à mort à la vue de leur propre reflet dans un miroir. Les aquariophiles sur le terrain notent qu'il possède un organe labyrinthe lui permettant de respirer l'air de la surface. Commercialisé au prix moyen de 2500 pièces d'or pour ses voiles spectaculaires, sa taille minuscule exclut tout intérêt culinaire et il sert exclusivement d'ornement.",
+            "fun_fact": "Le Combattant (Betta splendens) se pêche de mai à octobre entre 09h et 16h dans les marais peu profonds et rizières. Ce petit poisson d'ornement possède une biologie surprenante : les mâles sont si territoriaux qu'ils s'attaquent à mort à la vue de leur propre reflet dans un miroir. Les aquariophiles sur le terrain notent qu'il possède un organe labyrinthe lui permettant de respirer l'air de la surface. Commercialisé au prix moyen de 2300 pièces d'or pour ses voiles spectaculaires, sa taille minuscule exclut tout intérêt culinaire et il sert exclusivement d'ornement.",
             "time_restriction": "before_22h"
         },
         {
@@ -4847,7 +4847,7 @@
                 ]
             },
             "id": 51,
-            "price": 2000,
+            "price": 3900,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Septembre - novembre",
@@ -4856,7 +4856,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Crabe chinois (Eriocheir sinensis) se pêche de septembre à novembre, de 16h à 09h, dans les rivières et estuaires. Ce crustacé possède une biologie surprenante : il passe la majeure partie de sa vie en eau douce avant de migrer sur des centaines de kilomètres vers la mer pour s'accoupler et pondre. Les observateurs sur le terrain le reconnaissent à ses pinces recouvertes d'un manchon de fourrure dense et sombre. Commercialisé au prix moyen de 2000 pièces d'or, il est un mets d'exception très recherché en Asie en automne, traditionnellement cuit à la vapeur et consommé pour ses œufs crémeux et sa chair blanche et sucrée.",
+            "fun_fact": "Le Crabe chinois (Eriocheir sinensis) se pêche de septembre à novembre, de 16h à 09h, dans les rivières et estuaires. Ce crustacé possède une biologie surprenante : il passe la majeure partie de sa vie en eau douce avant de migrer sur des centaines de kilomètres vers la mer pour s'accoupler et pondre. Les observateurs sur le terrain le reconnaissent à ses pinces recouvertes d'un manchon de fourrure dense et sombre. Commercialisé au prix moyen de 3900 pièces d'or, il est un mets d'exception très recherché en Asie en automne, traditionnellement cuit à la vapeur et consommé pour ses œufs crémeux et sa chair blanche et sucrée.",
             "time_restriction": "after_22h"
         },
         {
@@ -4899,7 +4899,7 @@
                 ]
             },
             "id": 52,
-            "price": 3500,
+            "price": 1600,
             "location": "Océans tropicaux et tempérés (haute mer) - Mondial",
             "preferred_time": "22h - 04h",
             "preferred_season": "Toute l'année",
@@ -4917,7 +4917,7 @@
                 11,
                 12
             ],
-            "fun_fact": "L'Espadon (Xiphias gladius) est pêché toute l'année, de préférence entre 22h et 04h lorsque ce grand prédateur remonte des profondeurs pour chasser les calmars sous la lune. Reconnaissable à son rostre en forme d'épée représentant un tiers de sa longueur, il peut atteindre une vitesse de 90 km/h. Les biologistes de terrain ont observé qu'il possède un organe chauffant spécial près des yeux pour améliorer sa vision dans les eaux glaciales des abysses. C'est un poisson noble très recherché en cuisine pour ses steaks de chair ferme et savoureuse rappelant le veau. Son prix sur le marché est évalué à 3500 pièces d'or.",
+            "fun_fact": "L'Espadon (Xiphias gladius) est pêché toute l'année, de préférence entre 22h et 04h lorsque ce grand prédateur remonte des profondeurs pour chasser les calmars sous la lune. Reconnaissable à son rostre en forme d'épée représentant un tiers de sa longueur, il peut atteindre une vitesse de 90 km/h. Les biologistes de terrain ont observé qu'il possède un organe chauffant spécial près des yeux pour améliorer sa vision dans les eaux glaciales des abysses. C'est un poisson noble très recherché en cuisine pour ses steaks de chair ferme et savoureuse rappelant le veau. Son prix sur le marché est évalué à 1600 pièces d'or.",
             "time_restriction": "after_22h"
         },
         {
@@ -4960,7 +4960,7 @@
                 ]
             },
             "id": 53,
-            "price": 3000,
+            "price": 1800,
             "location": "Embouchures de grands fleuves et zones côtières - Amérique du Nord et Europe",
             "preferred_time": "00h - 24h",
             "preferred_season": "Septembre - mars",
@@ -4973,7 +4973,7 @@
                 2,
                 3
             ],
-            "fun_fact": "L'Esturgeon Royal (Acipenser oxyrinchus) est capturé de septembre à mars, toute la journée, dans les embouchures fluviales. Ce poisson préhistorique cuirassé possède des plaques osseuses à la place des écailles. Un fait surprenant est sa longévité exceptionnelle pouvant dépasser cent ans. Les ichtyologues notent que ses barbillons sensoriels sous le museau lui permettent de détecter les proies dans la vase sans utiliser ses yeux. Célèbre mondialement pour ses œufs précieux qui donnent le caviar, sa chair ferme est également excellente pochée ou fumée. Son prix est de 3000 pièces d'or.",
+            "fun_fact": "L'Esturgeon Royal (Acipenser oxyrinchus) est capturé de septembre à mars, toute la journée, dans les embouchures fluviales. Ce poisson préhistorique cuirassé possède des plaques osseuses à la place des écailles. Un fait surprenant est sa longévité exceptionnelle pouvant dépasser cent ans. Les ichtyologues notent que ses barbillons sensoriels sous le museau lui permettent de détecter les proies dans la vase sans utiliser ses yeux. Célèbre mondialement pour ses œufs précieux qui donnent le caviar, sa chair ferme est également excellente pochée ou fumée. Son prix est de 1800 pièces d'or.",
             "time_restriction": null
         },
         {
@@ -5016,7 +5016,7 @@
                 ]
             },
             "id": 54,
-            "price": 2000,
+            "price": 4000,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Août - octobre",
@@ -5025,7 +5025,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Murène (Muraena helena) se pêche d'août à octobre, toute la journée, dans les crevasses rocheuses de l'océan. Ce prédateur serpentiforme possède une biologie surprenante : ses mâchoires pharyngiennes secondaires se projettent vers l'avant pour entraîner les proies dans sa gorge, à la manière d'un monstre de cinéma. Les plongeurs experts sur le terrain évitent de l'approcher de trop près car ses morsures peuvent s'infecter à cause des bactéries de sa bouche. Commercialisée au prix de 2000 pièces d'or, sa chair grasse et ferme au goût prononcé est cuisinée depuis l'Antiquité, excellente rôtie ou mijotée en ragoût de mer.",
+            "fun_fact": "La Murène (Muraena helena) se pêche d'août à octobre, toute la journée, dans les crevasses rocheuses de l'océan. Ce prédateur serpentiforme possède une biologie surprenante : ses mâchoires pharyngiennes secondaires se projettent vers l'avant pour entraîner les proies dans sa gorge, à la manière d'un monstre de cinéma. Les plongeurs experts sur le terrain évitent de l'approcher de trop près car ses morsures peuvent s'infecter à cause des bactéries de sa bouche. Commercialisée au prix de 4000 pièces d'or, sa chair grasse et ferme au goût prononcé est cuisinée depuis l'Antiquité, excellente rôtie ou mijotée en ragoût de mer.",
             "time_restriction": null
         },
         {
@@ -5068,7 +5068,7 @@
                 ]
             },
             "id": 55,
-            "price": 3800,
+            "price": 1900,
             "location": "Rivière (falaise)",
             "preferred_time": "16h - 09h",
             "preferred_season": "Mars - juin, septembre - novembre",
@@ -5081,7 +5081,7 @@
                 10,
                 11
             ],
-            "fun_fact": "L'Omble chevalier (Salvelinus alpinus) se pêche de mars à juin puis de septembre à novembre, entre 16h et 09h, dans les lacs alpins profonds et les torrents glaciaires de montagne. Ce salmonidé des eaux pures possède une tolérance au froid surprenante : il est le poisson d'eau douce le plus nordique de la planète, capable de vivre sous les glaces de l'Arctique. Les pêcheurs experts notent qu'il arbore un ventre orange vif spectaculaire lors du frai. Commercialisé au tarif moyen de 3800 pièces d'or, sa chair saumonée et très fine est d'une valeur gastronomique exceptionnelle, simplement grillée au beurre de montagne ou pochée.",
+            "fun_fact": "L'Omble chevalier (Salvelinus alpinus) se pêche de mars à juin puis de septembre à novembre, entre 16h et 09h, dans les lacs alpins profonds et les torrents glaciaires de montagne. Ce salmonidé des eaux pures possède une tolérance au froid surprenante : il est le poisson d'eau douce le plus nordique de la planète, capable de vivre sous les glaces de l'Arctique. Les pêcheurs experts notent qu'il arbore un ventre orange vif spectaculaire lors du frai. Commercialisé au tarif moyen de 1900 pièces d'or, sa chair saumonée et très fine est d'une valeur gastronomique exceptionnelle, simplement grillée au beurre de montagne ou pochée.",
             "time_restriction": "after_22h"
         },
         {
@@ -5124,7 +5124,7 @@
                 ]
             },
             "id": 56,
-            "price": 1500,
+            "price": 3000,
             "location": "Rivière",
             "preferred_time": "09h - 16h",
             "preferred_season": "Mai - septembre",
@@ -5135,7 +5135,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson docteur (Garra rufa) est pêché de mai à septembre entre 09h et 16h dans les sources thermales chaudes d'eau douce du Moyen-Orient. Ce petit poisson possède un comportement surprenant : il se nourrit des peaux mortes des baigneurs pour combler son alimentation dans ces eaux pauvres en nutriments. Les experts sur le terrain soulignent que sa salive contient une enzyme cicatrisante appelée dithranol. Commercialisé au prix moyen de 1500 pièces d'or pour la thérapie esthétique de poisson-pédicure, sa chair n'est pas comestible en raison de sa taille minuscule et d'un goût fade sans aucun intérêt culinaire.",
+            "fun_fact": "Le Poisson docteur (Garra rufa) est pêché de mai à septembre entre 09h et 16h dans les sources thermales chaudes d'eau douce du Moyen-Orient. Ce petit poisson possède un comportement surprenant : il se nourrit des peaux mortes des baigneurs pour combler son alimentation dans ces eaux pauvres en nutriments. Les experts sur le terrain soulignent que sa salive contient une enzyme cicatrisante appelée dithranol. Commercialisé au prix moyen de 3000 pièces d'or pour la thérapie esthétique de poisson-pédicure, sa chair n'est pas comestible en raison de sa taille minuscule et d'un goût fade sans aucun intérêt culinaire.",
             "time_restriction": "before_22h"
         },
         {
@@ -5178,7 +5178,7 @@
                 ]
             },
             "id": 57,
-            "price": 2500,
+            "price": 3100,
             "location": "Océan",
             "preferred_time": "16h - 09h",
             "preferred_season": "Novembre - mars",
@@ -5189,7 +5189,7 @@
                 2,
                 3
             ],
-            "fun_fact": "Le Poisson lanterne (Himantolophus groenlandicus) se pêche de novembre à mars de 16h à 09h dans les abysses océaniques sombres. Ce grand poisson prédateur présente une biologie surprenante : la femelle porte sur le museau un appendice lumineux appelé esca, abritant des bactéries symbiotiques bioluminescentes pour attirer ses proies dans l'obscurité totale. Les biologistes de terrain notent que le mâle est minuscule et vit en parasite soudé au corps de la femelle. Commercialisé au prix moyen de 2500 pièces d'or, sa chair gélatineuse et riche en eau est totalement impropre à la gastronomie.",
+            "fun_fact": "Le Poisson lanterne (Himantolophus groenlandicus) se pêche de novembre à mars de 16h à 09h dans les abysses océaniques sombres. Ce grand poisson prédateur présente une biologie surprenante : la femelle porte sur le museau un appendice lumineux appelé esca, abritant des bactéries symbiotiques bioluminescentes pour attirer ses proies dans l'obscurité totale. Les biologistes de terrain notent que le mâle est minuscule et vit en parasite soudé au corps de la femelle. Commercialisé au prix moyen de 3100 pièces d'or, sa chair gélatineuse et riche en eau est totalement impropre à la gastronomie.",
             "time_restriction": "after_22h"
         },
         {
@@ -5232,7 +5232,7 @@
                 ]
             },
             "id": 58,
-            "price": 3000,
+            "price": 2400,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Mai - octobre",
@@ -5244,7 +5244,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Poisson-ange (Pterophyllum scalare) se pêche de mai à octobre de 16h à 09h dans les cours d'eau d'eau douce calmes et les forêts inondées d'Amazonie. Ce cichlidé au corps plat discoïdal possède une morphologie surprenante : ses nageoires dorsales et anales sont extrêmement allongées pour lui permettre de se camoufler parmi les roseaux et les racines submergées. Les aquariophiles sur le terrain notent qu'il vit en groupes hiérarchisés très soudés. Commercialisé au prix moyen de 3000 pièces d'or pour les plus belles variétés d'ornement, sa chair est fine mais sa petite taille et sa valeur esthétique le réservent exclusivement aux aquariums.",
+            "fun_fact": "Le Poisson-ange (Pterophyllum scalare) se pêche de mai à octobre de 16h à 09h dans les cours d'eau d'eau douce calmes et les forêts inondées d'Amazonie. Ce cichlidé au corps plat discoïdal possède une morphologie surprenante : ses nageoires dorsales et anales sont extrêmement allongées pour lui permettre de se camoufler parmi les roseaux et les racines submergées. Les aquariophiles sur le terrain notent qu'il vit en groupes hiérarchisés très soudés. Commercialisé au prix moyen de 2400 pièces d'or pour les plus belles variétés d'ornement, sa chair est fine mais sa petite taille et sa valeur esthétique le réservent exclusivement aux aquariums.",
             "time_restriction": "after_22h"
         },
         {
@@ -5287,7 +5287,7 @@
                 ]
             },
             "id": 59,
-            "price": 3000,
+            "price": 3400,
             "location": "Océan",
             "preferred_time": "04h - 21h",
             "preferred_season": "Août - novembre",
@@ -5297,7 +5297,7 @@
                 10,
                 11
             ],
-            "fun_fact": "La Raie bouclée (Raja clavata) se pêche d'août à novembre entre 04h et 21h sur les fonds sableux marins peu profonds. Ce poisson cartilagineux aplati possède un système défensif surprenante : son dos est parsemé de boucles osseuses pointues acérées appelées tubercules pour décourager les prédateurs. Les pêcheurs experts sur le terrain la manipulent avec soin pour éviter des écorchures douloureuses. Commercialisée au prix de 3000 pièces d'or, sa chair est succulente et dépourvue d'arêtes ; ses ailes de raie cuisinées au beurre noir et aux câpres sont un monument de la gastronomie maritime.",
+            "fun_fact": "La Raie bouclée (Raja clavata) se pêche d'août à novembre entre 04h et 21h sur les fonds sableux marins peu profonds. Ce poisson cartilagineux aplati possède un système défensif surprenante : son dos est parsemé de boucles osseuses pointues acérées appelées tubercules pour décourager les prédateurs. Les pêcheurs experts sur le terrain la manipulent avec soin pour éviter des écorchures douloureuses. Commercialisée au prix de 3400 pièces d'or, sa chair est succulente et dépourvue d'arêtes ; ses ailes de raie cuisinées au beurre noir et aux câpres sont un monument de la gastronomie maritime.",
             "time_restriction": "before_22h"
         },
         {
@@ -5340,7 +5340,7 @@
                 ]
             },
             "id": 60,
-            "price": 1500,
+            "price": 3500,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Juin - septembre",
@@ -5350,7 +5350,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Rémora rayé (Echeneis naucrates) se pêche de juin à septembre, toute la journée, dans l'océan. Ce poisson benthique allongé possède une adaptation surprenante : sa première nageoire dorsale est transformée en un puissant disque de succion ovale sur le dessus de sa tête lui permettant de s'attacher fermement aux requins et tortues pour voyager sans effort. Les biologistes experts observent qu'il nettoie également les parasites de ses hôtes. Commercialisé au prix de 1500 pièces d'or pour sa rareté biologique, sa chair est fine mais sa texture coriace limite son intérêt gastronomique.",
+            "fun_fact": "Le Rémora rayé (Echeneis naucrates) se pêche de juin à septembre, toute la journée, dans l'océan. Ce poisson benthique allongé possède une adaptation surprenante : sa première nageoire dorsale est transformée en un puissant disque de succion ovale sur le dessus de sa tête lui permettant de s'attacher fermement aux requins et tortues pour voyager sans effort. Les biologistes experts observent qu'il nettoie également les parasites de ses hôtes. Commercialisé au prix de 3500 pièces d'or pour sa rareté biologique, sa chair est fine mais sa texture coriace limite son intérêt gastronomique.",
             "time_restriction": null
         },
         {
@@ -5393,7 +5393,7 @@
                 ]
             },
             "id": 61,
-            "price": 2500,
+            "price": 2000,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Mars - juin, septembre - novembre",
@@ -5406,7 +5406,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Saumon Atlantique (Salmo salar) se pêche de mars à juin puis de septembre à novembre, toute la journée, dans l'océan Atlantique Nord et à l'embouchure des fleuves. Ce poisson migrateur légendaire remonte les rivières à contre-courant et franchit des obstacles de plusieurs mètres pour frayer. Un fait biologique surprenant est qu'il cesse de s'alimenter dès qu'il entre en eau douce, vivant uniquement sur ses réserves de graisse. Les experts soulignent sa capacité extraordinaire à retrouver sa rivière natale grâce à son odorat ultra-développé. Sa chair rose tendre et savoureuse est un pilier de la gastronomie mondiale, délicieuse fumée, grillée ou en papillote. Son prix sur le marché est de 2500 pièces d'or.",
+            "fun_fact": "Le Saumon Atlantique (Salmo salar) se pêche de mars à juin puis de septembre à novembre, toute la journée, dans l'océan Atlantique Nord et à l'embouchure des fleuves. Ce poisson migrateur légendaire remonte les rivières à contre-courant et franchit des obstacles de plusieurs mètres pour frayer. Un fait biologique surprenant est qu'il cesse de s'alimenter dès qu'il entre en eau douce, vivant uniquement sur ses réserves de graisse. Les experts soulignent sa capacité extraordinaire à retrouver sa rivière natale grâce à son odorat ultra-développé. Sa chair rose tendre et savoureuse est un pilier de la gastronomie mondiale, délicieuse fumée, grillée ou en papillote. Son prix sur le marché est de 2000 pièces d'or.",
             "time_restriction": null
         },
         {
@@ -5449,7 +5449,7 @@
                 ]
             },
             "id": 62,
-            "price": 1800,
+            "price": 4300,
             "location": "Embouchure de rivière",
             "preferred_time": "00h - 24h",
             "preferred_season": "Septembre",
@@ -5499,7 +5499,7 @@
                 ]
             },
             "id": 63,
-            "price": 7000,
+            "price": 2500,
             "location": "Océan (ponton)",
             "preferred_time": "00h - 24h",
             "preferred_season": "Novembre - avril",
@@ -5511,7 +5511,7 @@
                 3,
                 4
             ],
-            "fun_fact": "Le Thon (Thunnus alalunga) se pêche de novembre à avril, toute la journée, en haute mer lors de ses migrations thermiques. Ce grand migrateur est l'un des rares poissons à sang chaud, ce qui lui permet de maintenir une vitesse de nage supérieure à 70 km/h. Les marins notent sur le terrain ses nageoires pectorales extrêmement longues en forme de sabre. Commercialisé au prix de 7000 pièces d'or, sa chair rouge et ferme est très estimée pour la préparation de pavés mi-cuits ou de conserves fines.",
+            "fun_fact": "Le Thon (Thunnus alalunga) se pêche de novembre à avril, toute la journée, en haute mer lors de ses migrations thermiques. Ce grand migrateur est l'un des rares poissons à sang chaud, ce qui lui permet de maintenir une vitesse de nage supérieure à 70 km/h. Les marins notent sur le terrain ses nageoires pectorales extrêmement longues en forme de sabre. Commercialisé au prix de 2500 pièces d'or, sa chair rouge et ferme est très estimée pour la préparation de pavés mi-cuits ou de conserves fines.",
             "time_restriction": null
         },
         {
@@ -5554,7 +5554,7 @@
                 ]
             },
             "id": 64,
-            "price": 11000,
+            "price": 2600,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Novembre - avril",
@@ -5566,7 +5566,7 @@
                 3,
                 4
             ],
-            "fun_fact": "Le Thon rouge (Thunnus thynnus) est capturé de novembre à avril, toute la journée, dans les courants océaniques profonds. Ce colosse des mers peut dépasser 600 kilos et vivre 40 ans en parcourant des milliers de kilomètres. Les ichtyologues observent sur le terrain ses pinnules jaune vif alignées près de sa queue puissante. Vendu à prix d'or en criée, autour de 11000 pièces d'or ici, ce poisson d'exception possède une chair persillée très grasse, reine absolue des sashimis et sushi haut de gamme.",
+            "fun_fact": "Le Thon rouge (Thunnus thynnus) est capturé de novembre à avril, toute la journée, dans les courants océaniques profonds. Ce colosse des mers peut dépasser 600 kilos et vivre 40 ans en parcourant des milliers de kilomètres. Les ichtyologues observent sur le terrain ses pinnules jaune vif alignées près de sa queue puissante. Vendu à prix d'or en criée, autour de 2600 pièces d'or ici, ce poisson d'exception possède une chair persillée très grasse, reine absolue des sashimis et sushi haut de gamme.",
             "time_restriction": null
         },
         {
@@ -5609,7 +5609,7 @@
                 ]
             },
             "id": 65,
-            "price": 3750,
+            "price": 4200,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Août - septembre",
@@ -5617,7 +5617,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Tortue trionyx (Pelodiscus sinensis) se pêche d'août à septembre de 16h à 09h dans les rivières calmes et vaseuses. Cette tortue d'eau douce surprend par sa carapace molle et cuirassée sans écailles dures. Les observateurs notent son museau effilé en forme de tuba qui lui permet de respirer tout en restant enfouie dans la vase. Estimée à 3750 pièces d'or, sa chair tendre, dont le goût rappelle celui du poulet, est un ingrédient raffiné utilisé dans des soupes traditionnelles asiatiques.",
+            "fun_fact": "La Tortue trionyx (Pelodiscus sinensis) se pêche d'août à septembre de 16h à 09h dans les rivières calmes et vaseuses. Cette tortue d'eau douce surprend par sa carapace molle et cuirassée sans écailles dures. Les observateurs notent son museau effilé en forme de tuba qui lui permet de respirer tout en restant enfouie dans la vase. Estimée à 4200 pièces d'or, sa chair tendre, dont le goût rappelle celui du poulet, est un ingrédient raffiné utilisé dans des soupes traditionnelles asiatiques.",
             "time_restriction": "after_22h"
         },
         {
@@ -5660,7 +5660,7 @@
                 ]
             },
             "id": 66,
-            "price": 3000,
+            "price": 1700,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Toute l'année",
@@ -5678,7 +5678,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Vivaneau (Lutjanus campechanus) se pêche toute l'année, toute la journée, près des récifs rocheux et coralliens. Ce prédateur côtier peut vivre jusqu'à 50 ans en changeant de régime alimentaire à mesure qu'il grandit. Les marins reconnaissent immédiatement sa robe rouge orangé étincelante et ses yeux écarlates. Commercialisé au prix de 3000 pièces d'or, ce poisson est particulièrement recherché en cuisine pour sa chair blanche, ferme et savoureuse, qui excelle rôtie entière ou grillée.",
+            "fun_fact": "Le Vivaneau (Lutjanus campechanus) se pêche toute l'année, toute la journée, près des récifs rocheux et coralliens. Ce prédateur côtier peut vivre jusqu'à 50 ans en changeant de régime alimentaire à mesure qu'il grandit. Les marins reconnaissent immédiatement sa robe rouge orangé étincelante et ses yeux écarlates. Commercialisé au prix de 1700 pièces d'or, ce poisson est particulièrement recherché en cuisine pour sa chair blanche, ferme et savoureuse, qui excelle rôtie entière ou grillée.",
             "time_restriction": null
         },
         {
@@ -5721,7 +5721,7 @@
                 ]
             },
             "id": 137,
-            "price": 1601,
+            "price": 3600,
             "location": "Océan Atlantique Nord et rivières froides d'Europe et d'Amérique du Nord",
             "preferred_time": "05h - 10h, 17h - 22h",
             "preferred_season": "Juin - septembre",
@@ -5731,7 +5731,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Saumon de l'Atlantique (Salmo salar) se pêche en juin-septembre, de 05h à 10h et 17h à 22h, surtout par temps pluvieux dans l'océan Atlantique Nord et ses rivières. Ce poisson anadrome accomplit une migration remarquable pour frayer. Vendu 1601 pièces d'or, sa chair rose très estimée en fait un régal gastronomique grillé ou fumé.",
+            "fun_fact": "Le Saumon de l'Atlantique (Salmo salar) se pêche en juin-septembre, de 05h à 10h et 17h à 22h, surtout par temps pluvieux dans l'océan Atlantique Nord et ses rivières. Ce poisson anadrome accomplit une migration remarquable pour frayer. Vendu 3600 pièces d'or, sa chair rose très estimée en fait un régal gastronomique grillé ou fumé.",
             "time_restriction": "before_22h"
         },
         {
@@ -5774,7 +5774,7 @@
                 ]
             },
             "id": 138,
-            "price": 1602,
+            "price": 3700,
             "location": "Profondeurs bathyales et abysses des océans Arctique et Atlantique Nord",
             "preferred_time": "20h - 04h",
             "preferred_season": "Décembre - mars",
@@ -5784,7 +5784,7 @@
                 2,
                 3
             ],
-            "fun_fact": "Le Requin-Harpail (Somniosus microcephalus) se pêche de décembre à mars, entre 20h et 04h, par temps glacial dans les abysses arctiques. Ce géant au métabolisme lent peut vivre plus de 400 ans. Estimé à 1602 pièces d'or, sa chair est toxique à l'état frais mais appréciée séchée en Hákarl en Islande.",
+            "fun_fact": "Le Requin-Harpail (Somniosus microcephalus) se pêche de décembre à mars, entre 20h et 04h, par temps glacial dans les abysses arctiques. Ce géant au métabolisme lent peut vivre plus de 400 ans. Estimé à 3700 pièces d'or, sa chair est toxique à l'état frais mais appréciée séchée en Hákarl en Islande.",
             "time_restriction": "after_22h"
         },
         {
@@ -5827,7 +5827,7 @@
                 ]
             },
             "id": 139,
-            "price": 1603,
+            "price": 2100,
             "location": "Rivières et ruisseaux d'Europe rapides, propres et froids",
             "preferred_time": "10h - 16h",
             "preferred_season": "Juin - décembre",
@@ -5840,7 +5840,7 @@
                 11,
                 12
             ],
-            "fun_fact": "L'Ombre Commun (Thymallus thymallus) se pêche de juin à décembre, entre 10h et 16h, par temps clair dans les rivières rapides d'Europe. Surnommé la dame des courants, ce poisson possède une dorsale en voile colorée. Vendu 1603 pièces d'or, sa chair délicate exhalant le thym est un mets culinaire raffiné.",
+            "fun_fact": "L'Ombre Commun (Thymallus thymallus) se pêche de juin à décembre, entre 10h et 16h, par temps clair dans les rivières rapides d'Europe. Surnommé la dame des courants, ce poisson possède une dorsale en voile colorée. Vendu 2100 pièces d'or, sa chair délicate exhalant le thym est un mets culinaire raffiné.",
             "time_restriction": "before_22h"
         },
         {
@@ -5883,7 +5883,7 @@
                 ]
             },
             "id": 140,
-            "price": 1604,
+            "price": 2700,
             "location": "Bayous lents, rivières marécageuses et lacs herbeux d'Amérique du Nord",
             "preferred_time": "10h - 18h",
             "preferred_season": "Avril - septembre",
@@ -5895,7 +5895,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson-Castor (Amia calva) se capture d'avril à septembre, de 10h à 18h, par temps chaud et ensoleillé dans les bayous d'Amérique du Nord. Ce fossile vivant préhistorique respire l'air à la surface en eau peu oxygénée. Vendu 1604 pièces d'or, sa chair molle exige des épices fortes en beignets pour être appréciée.",
+            "fun_fact": "Le Poisson-Castor (Amia calva) se capture d'avril à septembre, de 10h à 18h, par temps chaud et ensoleillé dans les bayous d'Amérique du Nord. Ce fossile vivant préhistorique respire l'air à la surface en eau peu oxygénée. Vendu 2700 pièces d'or, sa chair molle exige des épices fortes en beignets pour être appréciée.",
             "time_restriction": "before_22h"
         },
         {
@@ -5938,7 +5938,7 @@
                 ]
             },
             "id": 141,
-            "price": 1606,
+            "price": 2800,
             "location": "Grands lacs oligotrophes et rivières d'Amérique du Nord",
             "preferred_time": "05h - 09h, 17h - 21h",
             "preferred_season": "Juin - novembre",
@@ -5950,7 +5950,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Maskinongé (Esox masquinongy) se pêche de juin à novembre, de 05h à 09h et 17h à 21h, par temps couvert et pluvieux sur les grands lacs d'Amérique du Nord. Ce prédateur furtif est le poisson de dix mille lancers. Vendu 1606 pièces d'or, sa chair ferme et blanche est excellente rôtie ou pochée au court-bouillon.",
+            "fun_fact": "Le Maskinongé (Esox masquinongy) se pêche de juin à novembre, de 05h à 09h et 17h à 21h, par temps couvert et pluvieux sur les grands lacs d'Amérique du Nord. Ce prédateur furtif est le poisson de dix mille lancers. Vendu 2800 pièces d'or, sa chair ferme et blanche est excellente rôtie ou pochée au court-bouillon.",
             "time_restriction": "before_22h"
         },
         {
@@ -5993,7 +5993,7 @@
                 ]
             },
             "id": 142,
-            "price": 1607,
+            "price": 3800,
             "location": "Récifs coralliens tropicaux et mangroves de l'océan Atlantique Ouest",
             "preferred_time": "08h - 17h",
             "preferred_season": "Mai - août",
@@ -6003,7 +6003,7 @@
                 7,
                 8
             ],
-            "fun_fact": "Le Poisson-Perroquet (Scarus guacamaia) se pêche de mai à août, de 08h à 17h, par beau temps sur les récifs tropicaux. Ce brouteur de corail crée le sable blanc grâce à son bec broyeur. Vendu 1607 pièces d'or, sa chair parfumée est appréciée grillée, bien qu'il faille surveiller la toxine Ciguatera.",
+            "fun_fact": "Le Poisson-Perroquet (Scarus guacamaia) se pêche de mai à août, de 08h à 17h, par beau temps sur les récifs tropicaux. Ce brouteur de corail crée le sable blanc grâce à son bec broyeur. Vendu 3800 pièces d'or, sa chair parfumée est appréciée grillée, bien qu'il faille surveiller la toxine Ciguatera.",
             "time_restriction": "before_22h"
         },
         {
@@ -6046,7 +6046,7 @@
                 ]
             },
             "id": 143,
-            "price": 1608,
+            "price": 2900,
             "location": "Rivières profondes, cours d'eau lents et grands lacs d'Europe",
             "preferred_time": "20h - 04h",
             "preferred_season": "Mai - octobre",
@@ -6058,7 +6058,7 @@
                 9,
                 10
             ],
-            "fun_fact": "Le Silure Glane (Silurus glanis) se pêche de mai à octobre, entre 20h et 04h, par temps pluvieux ou orageux dans les cours d'eau d'Europe. Ce titan d'eau douce chasse grâce à ses barbillons sensoriels. Vendu 1608 pièces d'or, sa chair blanche est bonne matelotée mais grasse chez les grands spécimens.",
+            "fun_fact": "Le Silure Glane (Silurus glanis) se pêche de mai à octobre, entre 20h et 04h, par temps pluvieux ou orageux dans les cours d'eau d'Europe. Ce titan d'eau douce chasse grâce à ses barbillons sensoriels. Vendu 2900 pièces d'or, sa chair blanche est bonne matelotée mais grasse chez les grands spécimens.",
             "time_restriction": "after_22h"
         },
         {
@@ -6101,7 +6101,7 @@
                 ]
             },
             "id": 144,
-            "price": 1609,
+            "price": 4100,
             "location": "Eaux côtières et fonds sableux ou rocheux de la mer Méditerranée et de la mer Noire",
             "preferred_time": "06h - 11h, 17h - 22h",
             "preferred_season": "Juin - août",
@@ -6110,7 +6110,7 @@
                 7,
                 8
             ],
-            "fun_fact": "L'Ombrine Bronzée (Umbrina cirrosa) se pêche de juin à août, de 06h à 11h et 17h à 22h, par mer calme sur les fonds sableux méditerranéens. Ce poisson utilise son barbillon mentonnier pour débusquer ses proies. Vendu 1609 pièces d'or, sa chair blanche très fine en fait un régal recherché en cuisine.",
+            "fun_fact": "L'Ombrine Bronzée (Umbrina cirrosa) se pêche de juin à août, de 06h à 11h et 17h à 22h, par mer calme sur les fonds sableux méditerranéens. Ce poisson utilise son barbillon mentonnier pour débusquer ses proies. Vendu 4100 pièces d'or, sa chair blanche très fine en fait un régal recherché en cuisine.",
             "time_restriction": "before_22h"
         }
     ],
@@ -6155,7 +6155,7 @@
                 ]
             },
             "id": 67,
-            "price": 5000,
+            "price": 7500,
             "location": "Rivières boueuses et marécages d'eau douce - Amérique du Sud",
             "preferred_time": "21h - 04h",
             "preferred_season": "Juin - septembre",
@@ -6165,7 +6165,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Anguille Électrique (Electrophorus electricus) est pêchée de juin à septembre, de 21h à 04h, lorsqu'elle patrouille activement les eaux sombres. Ce poisson produit des décharges de plus de 600 volts pour paralyser ses proies ou se défendre. Un fait surprenant est qu'elle doit remonter régulièrement respirer de l'air à la surface car ses branchies sont rudimentaires. Les guides de terrain recommandent d'utiliser des gants isolants pour la manipuler sans risque d'électrocution. Sa chair grasse et ferme est consommée localement, bien que délicate à préparer. Son prix sur le marché est estimé à 5000 pièces d'or.",
+            "fun_fact": "L'Anguille Électrique (Electrophorus electricus) est pêchée de juin à septembre, de 21h à 04h, lorsqu'elle patrouille activement les eaux sombres. Ce poisson produit des décharges de plus de 600 volts pour paralyser ses proies ou se défendre. Un fait surprenant est qu'elle doit remonter régulièrement respirer de l'air à la surface car ses branchies sont rudimentaires. Les guides de terrain recommandent d'utiliser des gants isolants pour la manipuler sans risque d'électrocution. Sa chair grasse et ferme est consommée localement, bien que délicate à préparer. Son prix sur le marché est estimé à 7500 pièces d'or.",
             "time_restriction": "after_22h"
         },
         {
@@ -6208,7 +6208,7 @@
                 ]
             },
             "id": 68,
-            "price": 1300,
+            "price": 5000,
             "location": "Étang",
             "preferred_time": "9h - 16h",
             "preferred_season": "Toute l'année",
@@ -6226,7 +6226,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Cyprin doré (Carassius auratus) est recherché toute l'année de 09h à 16h dans les étangs tranquilles. Ce poisson d'ornement surprend par sa mémoire remarquable s'étendant sur plusieurs mois, brisant le mythe populaire des trois secondes. Les éleveurs soulignent qu'il est dépourvu d'estomac, ce qui l'oblige à s'alimenter de petites portions tout au long de la journée. Vendu au tarif de 1300 pièces d'or pour embellir les bassins extérieurs, sa taille minuscule et son goût de vase le rendent inapte à toute préparation culinaire.",
+            "fun_fact": "Le Cyprin doré (Carassius auratus) est recherché toute l'année de 09h à 16h dans les étangs tranquilles. Ce poisson d'ornement surprend par sa mémoire remarquable s'étendant sur plusieurs mois, brisant le mythe populaire des trois secondes. Les éleveurs soulignent qu'il est dépourvu d'estomac, ce qui l'oblige à s'alimenter de petites portions tout au long de la journée. Vendu au tarif de 5000 pièces d'or pour embellir les bassins extérieurs, sa taille minuscule et son goût de vase le rendent inapte à toute préparation culinaire.",
             "time_restriction": "before_22h"
         },
         {
@@ -6269,7 +6269,7 @@
                 ]
             },
             "id": 69,
-            "price": 4000,
+            "price": 8500,
             "location": "Océan",
             "preferred_time": "4h - 21h",
             "preferred_season": "Juillet - septembre",
@@ -6278,7 +6278,7 @@
                 8,
                 9
             ],
-            "fun_fact": "La Lune de mer (Mola mola) se pêche de juillet à septembre entre 04h et 21h dans les grands courants océaniques. Ce géant atypique détient un record de croissance phénoménal, multipliant son poids d'œuf par soixante millions. Les observateurs décrivent souvent ce colosse flottant sur le flanc en surface pour se réchauffer au soleil et inviter les mouettes à nettoyer les parasites incrustés sur son derme. Estimé à 4000 pièces d'or, sa chair gélatineuse n'a pas d'intérêt culinaire.",
+            "fun_fact": "La Lune de mer (Mola mola) se pêche de juillet à septembre entre 04h et 21h dans les grands courants océaniques. Ce géant atypique détient un record de croissance phénoménal, multipliant son poids d'œuf par soixante millions. Les observateurs décrivent souvent ce colosse flottant sur le flanc en surface pour se réchauffer au soleil et inviter les mouettes à nettoyer les parasites incrustés sur son derme. Estimé à 8500 pièces d'or, sa chair gélatineuse n'a pas d'intérêt culinaire.",
             "time_restriction": "before_22h"
         },
         {
@@ -6321,7 +6321,7 @@
                 ]
             },
             "id": 70,
-            "price": 2500,
+            "price": 8000,
             "location": "Rivière",
             "preferred_time": "9h - 16h, 21h - 4h",
             "preferred_season": "Juin - septembre",
@@ -6331,7 +6331,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Piranha (Pygocentrus nattereri) se capture de juin à septembre de 09h à 16h ou de 21h à 04h dans les rivières tropicales. Ce redoutable carnassier possède des dents triangulaires acérées capables de sectionner un fil de cuivre d'un seul coup. Les guides sur le terrain rapportent qu'il est en réalité craintif et se nourrit principalement de cadavres de poissons. Vendu 2500 pièces d'or aux collectionneurs, sa chair blanche et ferme est consommée en friture ou en soupe épicée en Amazonie.",
+            "fun_fact": "Le Piranha (Pygocentrus nattereri) se capture de juin à septembre de 09h à 16h ou de 21h à 04h dans les rivières tropicales. Ce redoutable carnassier possède des dents triangulaires acérées capables de sectionner un fil de cuivre d'un seul coup. Les guides sur le terrain rapportent qu'il est en réalité craintif et se nourrit principalement de cadavres de poissons. Vendu 8000 pièces d'or aux collectionneurs, sa chair blanche et ferme est consommée en friture ou en soupe épicée en Amazonie.",
             "time_restriction": "before_22h"
         },
         {
@@ -6374,7 +6374,7 @@
                 ]
             },
             "id": 71,
-            "price": 4000,
+            "price": 9000,
             "location": "Océans tempérés et tropicaux (pleine mer) - Mondial",
             "preferred_time": "09h - 16h",
             "preferred_season": "Juillet - septembre",
@@ -6383,7 +6383,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson-Lune (Mola mola) se pêche de juillet à septembre entre 09h et 16h, profitant du soleil pour se réchauffer en surface. C'est le poisson osseux le plus lourd du monde, pouvant peser plus de deux tonnes. Un fait surprenant est que sa femelle pond jusqu'à 300 millions d'œufs en une fois. Les experts soulignent sa peau extrêmement rugueuse recouverte de parasites, ce qui le pousse à flotter sur le flanc pour laisser les oiseaux marins le nettoyer. Rarement consommé en raison de sa texture gélatineuse et de risques de toxines, il vaut 4000 pièces d'or.",
+            "fun_fact": "Le Poisson-Lune (Mola mola) se pêche de juillet à septembre entre 09h et 16h, profitant du soleil pour se réchauffer en surface. C'est le poisson osseux le plus lourd du monde, pouvant peser plus de deux tonnes. Un fait surprenant est que sa femelle pond jusqu'à 300 millions d'œufs en une fois. Les experts soulignent sa peau extrêmement rugueuse recouverte de parasites, ce qui le pousse à flotter sur le flanc pour laisser les oiseaux marins le nettoyer. Rarement consommé en raison de sa texture gélatineuse et de risques de toxines, il vaut 9000 pièces d'or.",
             "time_restriction": "before_22h"
         },
         {
@@ -6426,7 +6426,7 @@
                 ]
             },
             "id": 72,
-            "price": 4500,
+            "price": 5500,
             "location": "Étang",
             "preferred_time": "9h - 16h",
             "preferred_season": "Toute l'année",
@@ -6444,7 +6444,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Ranchu (Carassius auratus) se pêche toute l'année de 09h à 16h dans les bassins d'eau douce d'ornement. Ce poisson unique, surnommé le roi des poissons rouges au Japon, se distingue par l'absence totale de nageoire dorsale et un corps globuleux. Les spécialistes remarquent que sa tête développe avec l'âge une excroissance charnue appelée wen ressemblant à une framboise. Commercialisé à 4500 pièces d'or pour sa grande valeur d'ornement, ce poisson n'a aucune vocation culinaire.",
+            "fun_fact": "Le Ranchu (Carassius auratus) se pêche toute l'année de 09h à 16h dans les bassins d'eau douce d'ornement. Ce poisson unique, surnommé le roi des poissons rouges au Japon, se distingue par l'absence totale de nageoire dorsale et un corps globuleux. Les spécialistes remarquent que sa tête développe avec l'âge une excroissance charnue appelée wen ressemblant à une framboise. Commercialisé à 5500 pièces d'or pour sa grande valeur d'ornement, ce poisson n'a aucune vocation culinaire.",
             "time_restriction": "before_22h"
         },
         {
@@ -6487,7 +6487,7 @@
                 ]
             },
             "id": 145,
-            "price": 4101,
+            "price": 6000,
             "location": "Rivières côtières et estuaires nord-américains de l'océan Atlantique",
             "preferred_time": "06h - 12h, 18h - 00h",
             "preferred_season": "Avril - septembre",
@@ -6499,7 +6499,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Esturgeon Noir d'Amérique (Acipenser oxyrinchus) se pêche d'avril à septembre, de 06h à 12h et 18h à 00h, par temps pluvieux dans les rivières côtières. Ce géant cuirassé remonte les fleuves pour frayer. Vendu 4101 pièces d'or, sa chair ferme et ses œufs fournissent un caviar estimé en haute gastronomie.",
+            "fun_fact": "L'Esturgeon Noir d'Amérique (Acipenser oxyrinchus) se pêche d'avril à septembre, de 06h à 12h et 18h à 00h, par temps pluvieux dans les rivières côtières. Ce géant cuirassé remonte les fleuves pour frayer. Vendu 6000 pièces d'or, sa chair ferme et ses œufs fournissent un caviar estimé en haute gastronomie.",
             "time_restriction": null
         },
         {
@@ -6542,7 +6542,7 @@
                 ]
             },
             "id": 146,
-            "price": 4102,
+            "price": 9500,
             "location": "Rivières profondes et grands réservoirs du bassin du Mississippi",
             "preferred_time": "07h - 12h, 16h - 20h",
             "preferred_season": "Mars - mai",
@@ -6551,7 +6551,7 @@
                 4,
                 5
             ],
-            "fun_fact": "Le Poisson-Spatule (Polyodon spathula) se capture de mars à mai, de 07h à 12h et 16h à 20h, après la pluie dans le bassin du Mississippi. Ce poisson préhistorique filtre le plancton grâce à son rostre sensible. Vendu 4102 pièces d'or, sa chair ferme et son caviar de qualité sont très prisés au menu.",
+            "fun_fact": "Le Poisson-Spatule (Polyodon spathula) se capture de mars à mai, de 07h à 12h et 16h à 20h, après la pluie dans le bassin du Mississippi. Ce poisson préhistorique filtre le plancton grâce à son rostre sensible. Vendu 9500 pièces d'or, sa chair ferme et son caviar de qualité sont très prisés au menu.",
             "time_restriction": "before_22h"
         },
         {
@@ -6594,7 +6594,7 @@
                 ]
             },
             "id": 147,
-            "price": 4103,
+            "price": 7000,
             "location": "Zone mésopélagique et profondeurs bathyales de l'océan Atlantique Nord et de la mer Méditerranée",
             "preferred_time": "20h - 04h",
             "preferred_season": "Octobre - février",
@@ -6605,7 +6605,7 @@
                 1,
                 2
             ],
-            "fun_fact": "Le Poisson-Lanterne (Myctophum punctatum) se capture d'octobre à février, de 20h à 04h, par nuit sombre dans les eaux bathyales. Ce migrateur vertical luit dans le noir grâce à ses photophores ventraux. Vendu 4103 pièces d'or, sa chair très fine et délicate est un délice croustillant frit à la poêle.",
+            "fun_fact": "Le Poisson-Lanterne (Myctophum punctatum) se capture d'octobre à février, de 20h à 04h, par nuit sombre dans les eaux bathyales. Ce migrateur vertical luit dans le noir grâce à ses photophores ventraux. Vendu 7000 pièces d'or, sa chair très fine et délicate est un délice croustillant frit à la poêle.",
             "time_restriction": "after_22h"
         },
         {
@@ -6648,7 +6648,7 @@
                 ]
             },
             "id": 148,
-            "price": 4104,
+            "price": 6500,
             "location": "Profondeurs abyssales et eaux mésopélagiques des océans tempérés et tropicaux",
             "preferred_time": "21h - 04h",
             "preferred_season": "Octobre - mars",
@@ -6660,7 +6660,7 @@
                 2,
                 3
             ],
-            "fun_fact": "Le Poisson-Viper (Chauliodus sloani) se capture d'octobre à mars, de 21h à 04h, par nuit sombre dans les grandes profondeurs et abysses marins. Ce prédateur féroce possède de longs crocs translucides pour empaler ses proies. Vendu 4104 pièces d'or, sa chair fine et délicate est appréciée frite après retrait des dents.",
+            "fun_fact": "Le Poisson-Viper (Chauliodus sloani) se capture d'octobre à mars, de 21h à 04h, par nuit sombre dans les grandes profondeurs et abysses marins. Ce prédateur féroce possède de longs crocs translucides pour empaler ses proies. Vendu 6500 pièces d'or, sa chair fine et délicate est appréciée frite après retrait des dents.",
             "time_restriction": "after_22h"
         }
     ],
@@ -6705,7 +6705,7 @@
                 ]
             },
             "id": 73,
-            "price": 10000,
+            "price": 15000,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Juin - septembre",
@@ -6715,7 +6715,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Arapaïma (Arapaima gigas) se pêche de juin à septembre de 16h à 09h dans les rivières amazoniennes, période où il patrouille en surface pour chasser. Ce fossile vivant géant possède la faculté surprenante de respirer de l'air atmosphérique grâce à une vessie natatoire modifiée, l'obligeant à faire surface régulièrement. Les experts observent que ses grandes écailles rouges sont si dures qu'elles résistent aux morsures de piranhas. Vendu 10000 pièces d'or, sa chair blanche sans arêtes, ferme et savoureuse, est surnommée la morue d'Amazonie et constitue un mets de choix très recherché.",
+            "fun_fact": "L'Arapaïma (Arapaima gigas) se pêche de juin à septembre de 16h à 09h dans les rivières amazoniennes, période où il patrouille en surface pour chasser. Ce fossile vivant géant possède la faculté surprenante de respirer de l'air atmosphérique grâce à une vessie natatoire modifiée, l'obligeant à faire surface régulièrement. Les experts observent que ses grandes écailles rouges sont si dures qu'elles résistent aux morsures de piranhas. Vendu 15000 pièces d'or, sa chair blanche sans arêtes, ferme et savoureuse, est surnommée la morue d'Amazonie et constitue un mets de choix très recherché.",
             "time_restriction": "after_22h"
         },
         {
@@ -6758,7 +6758,7 @@
                 ]
             },
             "id": 74,
-            "price": 10000,
+            "price": 15500,
             "location": "Rivière",
             "preferred_time": "16h - 09h",
             "preferred_season": "Juin - septembre",
@@ -6768,7 +6768,7 @@
                 8,
                 9
             ],
-            "fun_fact": "L'Arowana (Osteoglossum bicirrhosum) est capturé de juin à septembre de 16h à 09h dans les rivières amazoniennes, profitant de la pénombre pour chasser sous la végétation. Ce poisson-dragon surprend par sa capacité à sauter jusqu'à deux mètres hors de l'eau pour gober des insectes ou des grenouilles sur les branches. Les ichtyologues observent que le mâle incube les œufs dans sa bouche pour protéger sa progéniture. Commercialisé au prix de 10000 pièces d'or, sa valeur ornementale immense et son statut de porte-bonheur en Asie le préservent de toute consommation en cuisine.",
+            "fun_fact": "L'Arowana (Osteoglossum bicirrhosum) est capturé de juin à septembre de 16h à 09h dans les rivières amazoniennes, profitant de la pénombre pour chasser sous la végétation. Ce poisson-dragon surprend par sa capacité à sauter jusqu'à deux mètres hors de l'eau pour gober des insectes ou des grenouilles sur les branches. Les ichtyologues observent que le mâle incube les œufs dans sa bouche pour protéger sa progéniture. Commercialisé au prix de 15500 pièces d'or, sa valeur ornementale immense et son statut de porte-bonheur en Asie le préservent de toute consommation en cuisine.",
             "time_restriction": "after_22h"
         },
         {
@@ -6811,7 +6811,7 @@
                 ]
             },
             "id": 75,
-            "price": 6000,
+            "price": 13000,
             "location": "Océan (ponton)",
             "preferred_time": "00h - 24h",
             "preferred_season": "Mai - octobre",
@@ -6823,7 +6823,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Coryphène (Coryphaena hippurus) se pêche de mai à octobre toute la journée en haute mer, chassant les poissons-volants sous les débris flottants. Ce prédateur ultra-rapide étonne par son changement de couleur spectaculaire, passant d'un vert-jaune brillant à un gris terne dès sa capture. Les biologistes notent sa croissance fulgurante, l'une des plus rapides du règne marin. Estimé à 6000 pièces d'or, ce poisson appelé Mahi-Mahi est une merveille gastronomique, apprécié pour sa chair blanche, ferme et savoureuse au barbecue.",
+            "fun_fact": "La Coryphène (Coryphaena hippurus) se pêche de mai à octobre toute la journée en haute mer, chassant les poissons-volants sous les débris flottants. Ce prédateur ultra-rapide étonne par son changement de couleur spectaculaire, passant d'un vert-jaune brillant à un gris terne dès sa capture. Les biologistes notent sa croissance fulgurante, l'une des plus rapides du règne marin. Estimé à 13000 pièces d'or, ce poisson appelé Mahi-Mahi est une merveille gastronomique, apprécié pour sa chair blanche, ferme et savoureuse au barbecue.",
             "time_restriction": null
         },
         {
@@ -6866,7 +6866,7 @@
                 ]
             },
             "id": 76,
-            "price": 10000,
+            "price": 12000,
             "location": "Embouchure de rivière",
             "preferred_time": "00h - 24h",
             "preferred_season": "Septembre - mars",
@@ -6879,7 +6879,7 @@
                 2,
                 3
             ],
-            "fun_fact": "L'Esturgeon (Acipenser sturio) est pêché de septembre à mars toute la journée à l'embouchure des fleuves où il cherche sa nourriture. Ce poisson préhistorique présente la particularité de posséder des plaques osseuses à la place des écailles. Les guides de terrain observent que ses barbillons tactiles sous son museau lui permettent de détecter les proies dans le sédiment. Vendu 10000 pièces d'or, il est célèbre pour ses œufs précieux transformés en caviar, mais sa chair ferme et blanche, rappelant le veau, est également succulente rôtie.",
+            "fun_fact": "L'Esturgeon (Acipenser sturio) est pêché de septembre à mars toute la journée à l'embouchure des fleuves où il cherche sa nourriture. Ce poisson préhistorique présente la particularité de posséder des plaques osseuses à la place des écailles. Les guides de terrain observent que ses barbillons tactiles sous son museau lui permettent de détecter les proies dans le sédiment. Vendu 12000 pièces d'or, il est célèbre pour ses œufs précieux transformés en caviar, mais sa chair ferme et blanche, rappelant le veau, est également succulente rôtie.",
             "time_restriction": null
         },
         {
@@ -6922,7 +6922,7 @@
                 ]
             },
             "id": 77,
-            "price": 6000,
+            "price": 16000,
             "location": "Étang",
             "preferred_time": "16h - 09h",
             "preferred_season": "Juin - septembre",
@@ -6932,7 +6932,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Gar (Atractosteus spatula) se pêche de juin à septembre de 16h à 09h dans les lacs et grands étangs. Ce grand prédateur se distingue par son museau de crocodile armé de dents acérées. Un fait surprenant est la toxicité extrême de ses œufs, un mécanisme naturel de défense contre les oiseaux. Les experts sur le terrain soulignent que ses écailles ganoïdes sont si dures qu'elles servaient autrefois de pointes de flèches. Vendu 6000 pièces d'or, sa chair blanche et ferme se consomme frite, mais exige une préparation minutieuse pour écarter les œufs mortels.",
+            "fun_fact": "Le Gar (Atractosteus spatula) se pêche de juin à septembre de 16h à 09h dans les lacs et grands étangs. Ce grand prédateur se distingue par son museau de crocodile armé de dents acérées. Un fait surprenant est la toxicité extrême de ses œufs, un mécanisme naturel de défense contre les oiseaux. Les experts sur le terrain soulignent que ses écailles ganoïdes sont si dures qu'elles servaient autrefois de pointes de flèches. Vendu 16000 pièces d'or, sa chair blanche et ferme se consomme frite, mais exige une préparation minutieuse pour écarter les œufs mortels.",
             "time_restriction": "after_22h"
         },
         {
@@ -6975,7 +6975,7 @@
                 ]
             },
             "id": 78,
-            "price": 5000,
+            "price": 11000,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Mars - novembre",
@@ -6990,7 +6990,7 @@
                 10,
                 11
             ],
-            "fun_fact": "L'Ishidai (Oplegnathus fasciatus) est pêché de mars à novembre, toute la journée, près des récifs rocheux côtiers. Ce poisson se caractérise par des dents fusionnées en un bec semblable à celui d'un perroquet, lui permettant de broyer les carapaces des oursins et des crabes. Les plongeurs constatent sa grande curiosité et sa combativité légendaire. Vendu au prix de 5000 pièces d'or, ce poisson rayé est une star de la gastronomie nipponne, estimé en sashimi haut de gamme pour sa chair blanche ferme dotée d'une saveur douce unique.",
+            "fun_fact": "L'Ishidai (Oplegnathus fasciatus) est pêché de mars à novembre, toute la journée, près des récifs rocheux côtiers. Ce poisson se caractérise par des dents fusionnées en un bec semblable à celui d'un perroquet, lui permettant de broyer les carapaces des oursins et des crabes. Les plongeurs constatent sa grande curiosité et sa combativité légendaire. Vendu au prix de 11000 pièces d'or, ce poisson rayé est une star de la gastronomie nipponne, estimé en sashimi haut de gamme pour sa chair blanche ferme dotée d'une saveur douce unique.",
             "time_restriction": null
         },
         {
@@ -7033,7 +7033,7 @@
                 ]
             },
             "id": 79,
-            "price": 10000,
+            "price": 11500,
             "location": "Océan (ponton)",
             "preferred_time": "00h - 24h",
             "preferred_season": "Juillet - septembre, novembre - avril",
@@ -7048,7 +7048,7 @@
                 3,
                 4
             ],
-            "fun_fact": "Le Marlin bleu (Makaira nigricans) se pêche de juillet à septembre et de novembre à avril, toute la journée, près des pontons en haute mer. Ce colosse est l'un des poissons les plus rapides au monde, utilisant son rostre pointu pour assommer ses proies dans les bancs. Les marins notent sur le terrain qu'il vire à l'bleu électrique lorsqu'il est excité ou en chasse. Commercialisé à 10000 pièces d'or, sa chair dense et savoureuse, rappelant le veau de mer, est succulente grillée au barbecue ou préparée en fines tranches fumées.",
+            "fun_fact": "Le Marlin bleu (Makaira nigricans) se pêche de juillet à septembre et de novembre à avril, toute la journée, près des pontons en haute mer. Ce colosse est l'un des poissons les plus rapides au monde, utilisant son rostre pointu pour assommer ses proies dans les bancs. Les marins notent sur le terrain qu'il vire à l'bleu électrique lorsqu'il est excité ou en chasse. Commercialisé à 11500 pièces d'or, sa chair dense et savoureuse, rappelant le veau de mer, est succulente grillée au barbecue ou préparée en fines tranches fumées.",
             "time_restriction": null
         },
         {
@@ -7091,7 +7091,7 @@
                 ]
             },
             "id": 80,
-            "price": 10000,
+            "price": 18000,
             "location": "Océan",
             "preferred_time": "04h - 21h",
             "preferred_season": "Juillet - août",
@@ -7099,7 +7099,7 @@
                 7,
                 8
             ],
-            "fun_fact": "Le Napoléon (Cheilinus undulatus) est pêché en juillet et août de 04h à 21h au cœur des récifs coralliens tropicaux. Ce géant des mers se distingue par sa bosse frontale proéminente et ses grosses lèvres charnues. Un fait biologique remarquable est sa capacité à consommer des espèces toxiques comme l'étoile de mer tueuse de corail. Les naturalistes notent sa longévité exceptionnelle dépassant 30 ans. Vendu au prix de 10000 pièces d'or, sa chair ferme et blanche est un mets de luxe traditionnel en Asie, bien que protégé par des quotas stricts.",
+            "fun_fact": "Le Napoléon (Cheilinus undulatus) est pêché en juillet et août de 04h à 21h au cœur des récifs coralliens tropicaux. Ce géant des mers se distingue par sa bosse frontale proéminente et ses grosses lèvres charnues. Un fait biologique remarquable est sa capacité à consommer des espèces toxiques comme l'étoile de mer tueuse de corail. Les naturalistes notent sa longévité exceptionnelle dépassant 30 ans. Vendu au prix de 18000 pièces d'or, sa chair ferme et blanche est un mets de luxe traditionnel en Asie, bien que protégé par des quotas stricts.",
             "time_restriction": "before_22h"
         },
         {
@@ -7142,7 +7142,7 @@
                 ]
             },
             "id": 81,
-            "price": 5000,
+            "price": 16500,
             "location": "Océan",
             "preferred_time": "21h - 04h",
             "preferred_season": "Novembre - février",
@@ -7152,7 +7152,7 @@
                 1,
                 2
             ],
-            "fun_fact": "Le Poisson-ballon (Takifugu rubripes) se pêche de novembre à février de 21h à 04h dans les eaux côtières marines. Ce poisson se gonfle d'eau pour effrayer ses agresseurs. Un fait surprenant est la présence de tétrodotoxine, un poison mortel contenu dans son foie et ses organes. Les experts de terrain soulignent que seuls des chefs diplômés peuvent ôter ces parties toxiques. Vendu 5000 pièces d'or, sa chair blanche translucide coupée en tranches ultrafines est la base du fugu japonais, une expérience culinaire de prestige.",
+            "fun_fact": "Le Poisson-ballon (Takifugu rubripes) se pêche de novembre à février de 21h à 04h dans les eaux côtières marines. Ce poisson se gonfle d'eau pour effrayer ses agresseurs. Un fait surprenant est la présence de tétrodotoxine, un poison mortel contenu dans son foie et ses organes. Les experts de terrain soulignent que seuls des chefs diplômés peuvent ôter ces parties toxiques. Vendu 16500 pièces d'or, sa chair blanche translucide coupée en tranches ultrafines est la base du fugu japonais, une expérience culinaire de prestige.",
             "time_restriction": "after_22h"
         },
         {
@@ -7195,7 +7195,7 @@
                 ]
             },
             "id": 82,
-            "price": 650,
+            "price": 13500,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Avril - septembre",
@@ -7207,7 +7207,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Poisson-clown (Amphiprion ocellaris) est capturé d'avril à septembre toute la journée dans les récifs coralliens tropicaux. Ce poisson orange aux bandes blanches vit en symbiose avec les anémones urticantes grâce à un mucus protecteur breveté. Un fait surprenant est que tous naissent mâles et que le plus grand du groupe se transforme en femelle reproductrice dominante. Les aquariophiles apprécient sa nage dandinante caractéristique. Estimé à 650 pièces d'or, ce petit poisson d'ornement n'a aucun intérêt pour la cuisine.",
+            "fun_fact": "Le Poisson-clown (Amphiprion ocellaris) est capturé d'avril à septembre toute la journée dans les récifs coralliens tropicaux. Ce poisson orange aux bandes blanches vit en symbiose avec les anémones urticantes grâce à un mucus protecteur breveté. Un fait surprenant est que tous naissent mâles et que le plus grand du groupe se transforme en femelle reproductrice dominante. Les aquariophiles apprécient sa nage dandinante caractéristique. Estimé à 13500 pièces d'or, ce petit poisson d'ornement n'a aucun intérêt pour la cuisine.",
             "time_restriction": null
         },
         {
@@ -7250,7 +7250,7 @@
                 ]
             },
             "id": 83,
-            "price": 9000,
+            "price": 14000,
             "location": "Océan",
             "preferred_time": "00h - 24h",
             "preferred_season": "Décembre - mai",
@@ -7262,7 +7262,7 @@
                 4,
                 5
             ],
-            "fun_fact": "Le Poisson-ruban (Regalecus glesne) est capturé de décembre à mai, toute la journée, dans l'océan profond. Surnommé le roi des harengs, c'est le plus long poisson osseux du monde, pouvant mesurer jusqu'à onze mètres. Un fait biologique surprenant est son autotome caudal : il peut abandonner le bout de son corps sans abîmer ses organes vitaux. Les océanographes notent qu'il nage souvent à la verticale dans le noir. Estimé à 9000 pièces d'or, sa chair gélatineuse et insipide n'a aucune valeur pour la gastronomie.",
+            "fun_fact": "Le Poisson-ruban (Regalecus glesne) est capturé de décembre à mai, toute la journée, dans l'océan profond. Surnommé le roi des harengs, c'est le plus long poisson osseux du monde, pouvant mesurer jusqu'à onze mètres. Un fait biologique surprenant est son autotome caudal : il peut abandonner le bout de son corps sans abîmer ses organes vitaux. Les océanographes notent qu'il nage souvent à la verticale dans le noir. Estimé à 14000 pièces d'or, sa chair gélatineuse et insipide n'a aucune valeur pour la gastronomie.",
             "time_restriction": null
         },
         {
@@ -7305,7 +7305,7 @@
                 ]
             },
             "id": 84,
-            "price": 8000,
+            "price": 17000,
             "location": "Océan",
             "preferred_time": "16h - 09h",
             "preferred_season": "Juin - septembre",
@@ -7315,7 +7315,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Requin marteau (Sphyrna mokarran) se pêche de juin à septembre de 16h à 09h près de la surface de l'océan. Sa tête élargie en marteau améliore sa vision tridimensionnelle et abrite des capteurs électro-magnétiques pour débusquer les raies sous le sable. Les pêcheurs de terrain observent sa nageoire dorsale extrêmement haute en forme de faux. Commercialisé à 8000 pièces d'or, la pêche de ce prédateur est réglementée et sa chair forte en ammoniaque est rarement consommée pour des raisons sanitaires.",
+            "fun_fact": "Le Requin marteau (Sphyrna mokarran) se pêche de juin à septembre de 16h à 09h près de la surface de l'océan. Sa tête élargie en marteau améliore sa vision tridimensionnelle et abrite des capteurs électro-magnétiques pour débusquer les raies sous le sable. Les pêcheurs de terrain observent sa nageoire dorsale extrêmement haute en forme de faux. Commercialisé à 17000 pièces d'or, la pêche de ce prédateur est réglementée et sa chair forte en ammoniaque est rarement consommée pour des raisons sanitaires.",
             "time_restriction": "after_22h"
         },
         {
@@ -7358,7 +7358,7 @@
                 ]
             },
             "id": 85,
-            "price": 5000,
+            "price": 12500,
             "location": "Rivière",
             "preferred_time": "21h - 04h",
             "preferred_season": "Avril - octobre",
@@ -7371,7 +7371,7 @@
                 9,
                 10
             ],
-            "fun_fact": "La Tortue serpentine (Chelydra serpentina) se pêche d'avril à octobre de 21h à 04h au fond des rivières calmes. Ce reptile massif ne peut pas rétracter sa tête dans sa carapace et compense cette faiblesse par une mâchoire coupante redoutable. Les naturalistes observent sa queue parsemée de crêtes pointues qui rappelle celle d'un dinosaure. Estimée à 5000 pièces d'or, sa chair riche en collagène, aux saveurs variées selon les morceaux, est l'ingrédient principal de soupes traditionnelles américaines.",
+            "fun_fact": "La Tortue serpentine (Chelydra serpentina) se pêche d'avril à octobre de 21h à 04h au fond des rivières calmes. Ce reptile massif ne peut pas rétracter sa tête dans sa carapace et compense cette faiblesse par une mâchoire coupante redoutable. Les naturalistes observent sa queue parsemée de crêtes pointues qui rappelle celle d'un dinosaure. Estimée à 12500 pièces d'or, sa chair riche en collagène, aux saveurs variées selon les morceaux, est l'ingrédient principal de soupes traditionnelles américaines.",
             "time_restriction": "after_22h"
         },
         {
@@ -7414,7 +7414,7 @@
                 ]
             },
             "id": 86,
-            "price": 5500,
+            "price": 17500,
             "location": "Étang",
             "preferred_time": "09h - 16h",
             "preferred_season": "Juin - août",
@@ -7423,7 +7423,7 @@
                 7,
                 8
             ],
-            "fun_fact": "La Tête-de-serpent (Channa micropeltes) est pêchée de juin à août de 09h à 16h dans les étangs d'eau douce. Ce prédateur féroce respire de l'air et peut survivre plusieurs jours hors de l'eau en rampant d'un bassin à un autre. Les biologistes observent que la femelle garde agressivement ses jeunes à la coloration rouge vif. Commercialisé pour 5500 pièces d'or, ce poisson robuste possède une chair blanche ferme et très savoureuse, traditionnellement cuite à la vapeur avec du gingembre frais en Asie.",
+            "fun_fact": "La Tête-de-serpent (Channa micropeltes) est pêchée de juin à août de 09h à 16h dans les étangs d'eau douce. Ce prédateur féroce respire de l'air et peut survivre plusieurs jours hors de l'eau en rampant d'un bassin à un autre. Les biologistes observent que la femelle garde agressivement ses jeunes à la coloration rouge vif. Commercialisé pour 17500 pièces d'or, ce poisson robuste possède une chair blanche ferme et très savoureuse, traditionnellement cuite à la vapeur avec du gingembre frais en Asie.",
             "time_restriction": "before_22h"
         },
         {
@@ -7466,7 +7466,7 @@
                 ]
             },
             "id": 149,
-            "price": 8101,
+            "price": 10000,
             "location": "Fonds mésopélagiques, haute mer",
             "preferred_time": "00h - 24h",
             "preferred_season": "Janvier - décembre",
@@ -7484,7 +7484,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Régalec (Regalecus glesne) se pêche toute l'année, de 00h à 24h sans restriction de météo, dans les fonds mésopélagiques de haute mer. Ce géant au corps rubané argenté de 8 mètres nage à la verticale et inspire les légendes de serpents de mer. Estimé à 8101 pièces d'or, sa chair gélatineuse et flasque a une valeur culinaire très faible. Ses longs rayons dorsaux forment une couronne rouge spectaculaire.",
+            "fun_fact": "Le Régalec (Regalecus glesne) se pêche toute l'année, de 00h à 24h sans restriction de météo, dans les fonds mésopélagiques de haute mer. Ce géant au corps rubané argenté de 8 mètres nage à la verticale et inspire les légendes de serpents de mer. Estimé à 10000 pièces d'or, sa chair gélatineuse et flasque a une valeur culinaire très faible. Ses longs rayons dorsaux forment une couronne rouge spectaculaire.",
             "time_restriction": null
         },
         {
@@ -7527,7 +7527,7 @@
                 ]
             },
             "id": 150,
-            "price": 8102,
+            "price": 10500,
             "location": "Fosses abyssales, eaux profondes",
             "preferred_time": "00h - 24h",
             "preferred_season": "Janvier - décembre",
@@ -7545,7 +7545,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Requin-Lutin (Mitsukurina owstoni) se pêche toute l'année, de 00h à 24h sous n'importe quel climat, dans les fosses abyssales et eaux profondes. Ce fossile vivant rose possède un museau allongé aplati et des mâchoires protractiles qui se projettent en avant pour capturer les proies. Estimé à 8102 pièces d'or, sa chair molle a une valeur culinaire très faible. Son corps rose flasque laisse transparaître ses vaisseaux sanguins.",
+            "fun_fact": "Le Requin-Lutin (Mitsukurina owstoni) se pêche toute l'année, de 00h à 24h sous n'importe quel climat, dans les fosses abyssales et eaux profondes. Ce fossile vivant rose possède un museau allongé aplati et des mâchoires protractiles qui se projettent en avant pour capturer les proies. Estimé à 10500 pièces d'or, sa chair molle a une valeur culinaire très faible. Son corps rose flasque laisse transparaître ses vaisseaux sanguins.",
             "time_restriction": null
         },
         {
@@ -7588,7 +7588,7 @@
                 ]
             },
             "id": 151,
-            "price": 8103,
+            "price": 14500,
             "location": "Eaux pélagiques de haute mer",
             "preferred_time": "06h - 20h",
             "preferred_season": "Juin - novembre",
@@ -7600,7 +7600,7 @@
                 10,
                 11
             ],
-            "fun_fact": "Le Thon Rouge du Nord (Thunnus thynnus) se pêche de juin à novembre de 06h à 20h sous un ciel dégagé ou pluvieux, dans les eaux pélagiques de haute mer. Ce puissant prédateur migratoire régule sa température interne, lui permettant de nager à 70 km/h. Vendu 8103 pièces d'or, sa chair rouge grasse et savoureuse est adulée au Japon pour les sushis de qualité supérieure. C'est l'un des poissons les plus combatifs et chers au monde.",
+            "fun_fact": "Le Thon Rouge du Nord (Thunnus thynnus) se pêche de juin à novembre de 06h à 20h sous un ciel dégagé ou pluvieux, dans les eaux pélagiques de haute mer. Ce puissant prédateur migratoire régule sa température interne, lui permettant de nager à 70 km/h. Vendu 14500 pièces d'or, sa chair rouge grasse et savoureuse est adulée au Japon pour les sushis de qualité supérieure. C'est l'un des poissons les plus combatifs et chers au monde.",
             "time_restriction": "before_22h"
         }
     ],
@@ -7645,7 +7645,7 @@
                 ]
             },
             "id": 87,
-            "price": 15000,
+            "price": 20000,
             "location": "Océan (pluie)",
             "preferred_time": "Toute la journée",
             "preferred_season": "Toute l'année",
@@ -7663,7 +7663,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Coelacanthe (Latimeria chalumnae) se pêche toute l'année, toute la journée, dans l'océan profond de préférence sous la pluie. Ce fossile vivant extraordinaire appartient à une lignée inchangée depuis quatre cents millions d'années, survivant aux dinosaures. Les scientifiques notent sur le terrain ses nageoires lobées dotées d'une structure osseuse similaire à celle des membres de vertébrés terrestres. Estimé à 15000 pièces d'or, sa chair est grasse, riche en cires indigestes et dégage une forte odeur d'huile, ce qui la rend totalement impropre à la gastronomie.",
+            "fun_fact": "Le Coelacanthe (Latimeria chalumnae) se pêche toute l'année, toute la journée, dans l'océan profond de préférence sous la pluie. Ce fossile vivant extraordinaire appartient à une lignée inchangée depuis quatre cents millions d'années, survivant aux dinosaures. Les scientifiques notent sur le terrain ses nageoires lobées dotées d'une structure osseuse similaire à celle des membres de vertébrés terrestres. Estimé à 20000 pièces d'or, sa chair est grasse, riche en cires indigestes et dégage une forte odeur d'huile, ce qui la rend totalement impropre à la gastronomie.",
             "time_restriction": null
         },
         {
@@ -7706,7 +7706,7 @@
                 ]
             },
             "id": 88,
-            "price": 15000,
+            "price": 32000,
             "location": "Rivière (falaise)",
             "preferred_time": "16h - 9h",
             "preferred_season": "Décembre - mars",
@@ -7716,7 +7716,7 @@
                 2,
                 3
             ],
-            "fun_fact": "Le Dai yu (Hucho perryi) se pêche de décembre à mars de 16h à 09h dans les rivières de falaise en haute altitude. Ce saumon géant de rivière est l'un des plus grands salmonidés d'eau douce au monde, pouvant atteindre deux mètres et chasser des canetons. Les ichtyologues observent qu'il exige des eaux pures de montagne pour sa reproduction difficile. Vendu 15000 pièces d'or aux collectionneurs, sa chair est décrite comme grasse et succulente, bien que l'espèce soit trop menacée de disparition pour être cuisinée aujourd'hui.",
+            "fun_fact": "Le Dai yu (Hucho perryi) se pêche de décembre à mars de 16h à 09h dans les rivières de falaise en haute altitude. Ce saumon géant de rivière est l'un des plus grands salmonidés d'eau douce au monde, pouvant atteindre deux mètres et chasser des canetons. Les ichtyologues observent qu'il exige des eaux pures de montagne pour sa reproduction difficile. Vendu 32000 pièces d'or aux collectionneurs, sa chair est décrite comme grasse et succulente, bien que l'espèce soit trop menacée de disparition pour être cuisinée aujourd'hui.",
             "time_restriction": "after_22h"
         },
         {
@@ -7759,7 +7759,7 @@
                 ]
             },
             "id": 89,
-            "price": 15000,
+            "price": 34000,
             "location": "Rivière",
             "preferred_time": "4h - 21h",
             "preferred_season": "Juin - septembre",
@@ -7769,7 +7769,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Dorado (Salminus brasiliensis) se pêche de juin à septembre de 04h à 21h dans les courants vifs des grandes rivières. Ce prédateur surnommé l'or des rivières brille par sa robe dorée étincelante et sa queue rouge. Bien qu'il ressemble à un saumon, c'est en fait un characin parent du piranha. Les guides observent sa combativité aérienne spectaculaire avec des bonds hors de l'eau pour rompre la ligne. Vendu 15000 pièces d'or, sa chair ferme et savoureuse est succulente grillée ou cuite en papillote dans des feuilles de bananier.",
+            "fun_fact": "Le Dorado (Salminus brasiliensis) se pêche de juin à septembre de 04h à 21h dans les courants vifs des grandes rivières. Ce prédateur surnommé l'or des rivières brille par sa robe dorée étincelante et sa queue rouge. Bien qu'il ressemble à un saumon, c'est en fait un characin parent du piranha. Les guides observent sa combativité aérienne spectaculaire avec des bonds hors de l'eau pour rompre la ligne. Vendu 34000 pièces d'or, sa chair ferme et savoureuse est succulente grillée ou cuite en papillote dans des feuilles de bananier.",
             "time_restriction": "before_22h"
         },
         {
@@ -7812,7 +7812,7 @@
                 ]
             },
             "id": 90,
-            "price": 15000,
+            "price": 36000,
             "location": "Océan",
             "preferred_time": "16h - 9h",
             "preferred_season": "Juin - septembre",
@@ -7822,7 +7822,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Grand requin blanc (Carcharodon carcharias) se pêche de juin à septembre de 16h à 09h en haute mer. Ce prédateur emblématique peut bondir hors de l'eau pour intercepter des otaries à grande vitesse. Les experts sur le terrain notent son dos gris-noir contrastant avec son ventre blanc, assurant un camouflage parfait dans l'océan. Vendu au tarif légendaire de 15000 pièces d'or, sa chair accumule des métaux lourds et des toxines urinaires, ce qui interdit formellement sa consommation pour des raisons de santé et de protection.",
+            "fun_fact": "Le Grand requin blanc (Carcharodon carcharias) se pêche de juin à septembre de 16h à 09h en haute mer. Ce prédateur emblématique peut bondir hors de l'eau pour intercepter des otaries à grande vitesse. Les experts sur le terrain notent son dos gris-noir contrastant avec son ventre blanc, assurant un camouflage parfait dans l'océan. Vendu au tarif légendaire de 36000 pièces d'or, sa chair accumule des métaux lourds et des toxines urinaires, ce qui interdit formellement sa consommation pour des raisons de santé et de protection.",
             "time_restriction": "after_22h"
         },
         {
@@ -7865,7 +7865,7 @@
                 ]
             },
             "id": 91,
-            "price": 15000,
+            "price": 22000,
             "location": "Océan",
             "preferred_time": "21h - 4h",
             "preferred_season": "Toute l'année",
@@ -7883,7 +7883,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Macropinna (Macropinna microstoma) se pêche toute l'année de 21h à 04h dans la zone aphotique de l'océan profond. Ce poisson abyssal possède une tête transparente en forme de dôme rempli de liquide, révélant ses yeux tubulaires verts. Les océanographes observent que ses yeux tournent vers l'avant pour viser ses proies lors de l'attaque. Estimé à 15000 pièces d'or pour sa rareté scientifique exceptionnelle, sa taille minuscule et sa consistance gélatineuse le rendent totalement inutilisable en cuisine.",
+            "fun_fact": "Le Macropinna (Macropinna microstoma) se pêche toute l'année de 21h à 04h dans la zone aphotique de l'océan profond. Ce poisson abyssal possède une tête transparente en forme de dôme rempli de liquide, révélant ses yeux tubulaires verts. Les océanographes observent que ses yeux tournent vers l'avant pour viser ses proies lors de l'attaque. Estimé à 22000 pièces d'or pour sa rareté scientifique exceptionnelle, sa taille minuscule et sa consistance gélatineuse le rendent totalement inutilisable en cuisine.",
             "time_restriction": "after_22h"
         },
         {
@@ -7926,7 +7926,7 @@
                 ]
             },
             "id": 92,
-            "price": 25000,
+            "price": 24000,
             "location": "Rivière (falaise)",
             "preferred_time": "22h - 4h",
             "preferred_season": "Toute l'année",
@@ -7944,7 +7944,7 @@
                 11,
                 12
             ],
-            "fun_fact": "Le Piranhator (Piranha mechanicus) est une créature légendaire pêchée toute l'année de 22h à 04h dans les rivières de falaise les plus escarpées. Ce cyborg surprenant possède des implants cybernétiques et des yeux lasers capables de couper le carbone. Les experts notent que son châssis en titane inoxydable lui permet de survivre aux courants acides. Estimé à 25000 pièces d'or par les ingénieurs, ce poisson mécanique n'est pas consommable en raison de la présence d'huile de moteur et de câbles d'acier dans ses rouages.",
+            "fun_fact": "Le Piranhator (Piranha mechanicus) est une créature légendaire pêchée toute l'année de 22h à 04h dans les rivières de falaise les plus escarpées. Ce cyborg surprenant possède des implants cybernétiques et des yeux lasers capables de couper le carbone. Les experts notent que son châssis en titane inoxydable lui permet de survivre aux courants acides. Estimé à 24000 pièces d'or par les ingénieurs, ce poisson mécanique n'est pas consommable en raison de la présence d'huile de moteur et de câbles d'acier dans ses rouages.",
             "time_restriction": "after_22h"
         },
         {
@@ -7987,7 +7987,7 @@
                 ]
             },
             "id": 93,
-            "price": 15000,
+            "price": 26000,
             "location": "Fonds marins mystérieux et calanques secrètes - Îles tropicales",
             "preferred_time": "Toute la journée",
             "preferred_season": "Toute l'année",
@@ -8005,7 +8005,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Pristine Banana 1 (Musa acuminata) est une banane légendaire et sous-marine qui se récolte toute l'année, de jour comme de nuit. Ce fruit tropical magique a développé la faculté incroyable d'absorber le sel marin pour le transformer en sucre pur. Un fait surprenant est sa texture qui reste parfaitement ferme et imperméable même après des siècles sous l'eau. Les plongeurs experts racontent qu'elle sert de monnaie d'échange secrète parmi les sirènes. En cuisine, elle caramélise instantanément sous le feu, offrant une saveur divine incomparable. Son prix est de 15000 pièces d'or.",
+            "fun_fact": "La Pristine Banana 1 (Musa acuminata) est une banane légendaire et sous-marine qui se récolte toute l'année, de jour comme de nuit. Ce fruit tropical magique a développé la faculté incroyable d'absorber le sel marin pour le transformer en sucre pur. Un fait surprenant est sa texture qui reste parfaitement ferme et imperméable même après des siècles sous l'eau. Les plongeurs experts racontent qu'elle sert de monnaie d'échange secrète parmi les sirènes. En cuisine, elle caramélise instantanément sous le feu, offrant une saveur divine incomparable. Son prix est de 26000 pièces d'or.",
             "time_restriction": null
         },
         {
@@ -8048,7 +8048,7 @@
                 ]
             },
             "id": 94,
-            "price": 15000,
+            "price": 28000,
             "location": "Fonds marins mystérieux et récifs coralliens sacrés - Îles tropicales",
             "preferred_time": "Toute la journée",
             "preferred_season": "Toute l'année",
@@ -8066,7 +8066,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Pristine Banana 2 (Musa balbisiana) est la seconde variété de banane divine sous-marine récoltée toute l'année, 24h sur 24. Contrairement à la première, elle possède des reflets bleutés qui luisent dans l'obscurité des fonds marins pour attirer les poissons curieux. Un fait surprenant est sa pelure qui contient un lubrifiant naturel empêchant toute algue de s'y fixer. Les navigateurs rapportent qu'en manger une confère une chance insolente pour les pêches futures. Elle est délicieuse rôtie avec une touche de cannelle sous-marine. Son prix est estimé à 15000 pièces d'or.",
+            "fun_fact": "La Pristine Banana 2 (Musa balbisiana) est la seconde variété de banane divine sous-marine récoltée toute l'année, 24h sur 24. Contrairement à la première, elle possède des reflets bleutés qui luisent dans l'obscurité des fonds marins pour attirer les poissons curieux. Un fait surprenant est sa pelure qui contient un lubrifiant naturel empêchant toute algue de s'y fixer. Les navigateurs rapportent qu'en manger une confère une chance insolente pour les pêches futures. Elle est délicieuse rôtie avec une touche de cannelle sous-marine. Son prix est estimé à 28000 pièces d'or.",
             "time_restriction": null
         },
         {
@@ -8109,7 +8109,7 @@
                 ]
             },
             "id": 95,
-            "price": 12000,
+            "price": 38000,
             "location": "Océan",
             "preferred_time": "16h - 9h",
             "preferred_season": "Juin - septembre",
@@ -8119,7 +8119,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Requin scie (Pristis pristis) se pêche de juin à septembre de 16h à 09h dans les estuaires et lagunes salées. Ce poisson cartilagineux possède un long rostre plat bordé de dents acérées en forme de scie. Un fait biologique surprenant est que ce rostre sert de détecteur électro-sensible et d'arme pour trancher les poissons au milieu des bancs. Les experts observent qu'il remue le sédiment avec sa scie pour débusquer les crustacés. Vendu 12000 pièces d'or, ce poisson est protégé et sa chair n'est pas comestible à cause du mercure.",
+            "fun_fact": "Le Requin scie (Pristis pristis) se pêche de juin à septembre de 16h à 09h dans les estuaires et lagunes salées. Ce poisson cartilagineux possède un long rostre plat bordé de dents acérées en forme de scie. Un fait biologique surprenant est que ce rostre sert de détecteur électro-sensible et d'arme pour trancher les poissons au milieu des bancs. Les experts observent qu'il remue le sédiment avec sa scie pour débusquer les crustacés. Vendu 38000 pièces d'or, ce poisson est protégé et sa chair n'est pas comestible à cause du mercure.",
             "time_restriction": "after_22h"
         },
         {
@@ -8162,7 +8162,7 @@
                 ]
             },
             "id": 96,
-            "price": 13000,
+            "price": 40000,
             "location": "Océan",
             "preferred_time": "Toute la journée",
             "preferred_season": "Juin - septembre",
@@ -8172,7 +8172,7 @@
                 8,
                 9
             ],
-            "fun_fact": "Le Requin-baleine (Rhincodon typus) se pêche de juin à septembre toute la journée dans les eaux océaniques chaudes. C'est le plus grand poisson vivant au monde, pouvant atteindre dix-huit mètres de long. Un fait surprenant est que ce géant pacifique se nourrit exclusivement de plancton en filtrant des milliers de litres d'eau par heure. Les biologistes notent sur le terrain que ses taches blanches forment un motif unique propre à chaque individu. Vendu 13000 pièces d'or, sa chair est protégée mondialement et sa pêche est interdite.",
+            "fun_fact": "Le Requin-baleine (Rhincodon typus) se pêche de juin à septembre toute la journée dans les eaux océaniques chaudes. C'est le plus grand poisson vivant au monde, pouvant atteindre dix-huit mètres de long. Un fait surprenant est que ce géant pacifique se nourrit exclusivement de plancton en filtrant des milliers de litres d'eau par heure. Les biologistes notent sur le terrain que ses taches blanches forment un motif unique propre à chaque individu. Vendu 40000 pièces d'or, sa chair est protégée mondialement et sa pêche est interdite.",
             "time_restriction": null
         },
         {
@@ -8215,7 +8215,7 @@
                 ]
             },
             "id": 97,
-            "price": 15000,
+            "price": 30000,
             "location": "Rivière (falaise)",
             "preferred_time": "16h - 9h",
             "preferred_season": "Mars - mai, septembre - novembre",
@@ -8227,7 +8227,7 @@
                 10,
                 11
             ],
-            "fun_fact": "La Truite dorée (Oncorhynchus mykiss aguabonita) se pêche de mars à mai puis de septembre à novembre de 16h à 09h dans les torrents de falaise. Ce joyau d'altitude surprend par sa livrée rouge et dorée flamboyante, unique parmi les truites. Les guides de montagne observent qu'elle ne survit que dans les eaux les plus pures et glacées des sommets. Estimé à 15000 pièces d'or, ce poisson possède une chair rose d'une finesse culinaire incomparable, délicieuse simplement dorée à la poêle avec des amandes effilées.",
+            "fun_fact": "La Truite dorée (Oncorhynchus mykiss aguabonita) se pêche de mars à mai puis de septembre à novembre de 16h à 09h dans les torrents de falaise. Ce joyau d'altitude surprend par sa livrée rouge et dorée flamboyante, unique parmi les truites. Les guides de montagne observent qu'elle ne survit que dans les eaux les plus pures et glacées des sommets. Estimé à 30000 pièces d'or, ce poisson possède une chair rose d'une finesse culinaire incomparable, délicieuse simplement dorée à la poêle avec des amandes effilées.",
             "time_restriction": "after_22h"
         }
     ],
@@ -8272,7 +8272,7 @@
                 ]
             },
             "id": 98,
-            "price": 40000,
+            "price": 50000,
             "location": "Abysses insondables et cavernes englouties - Profondeurs océaniques",
             "preferred_time": "22h - 04h",
             "preferred_season": "Toute l'année",
@@ -8290,7 +8290,7 @@
                 11,
                 12
             ],
-            "fun_fact": "La Gemme VIP (Lapis vipensis) est un cristal mythique extrait des abysses océaniques de 22h à 04h toute l'année. Ce trésor géologique émet une résonance magique qui accorde des privilèges temporels uniques à son porteur. Un fait surprenant est qu'il bat comme un cœur au rythme des marées. Les mineurs de l'extrême soulignent que sa dureté dépasse celle du diamant brut. Bien qu'elle ne soit pas comestible, la gemme peut être réduite en poudre pour créer des élixirs de longévité prisés par la noblesse. Sa valeur marchande est fixée à 40000 pièces d'or.",
+            "fun_fact": "La Gemme VIP (Lapis vipensis) est un cristal mythique extrait des abysses océaniques de 22h à 04h toute l'année. Ce trésor géologique émet une résonance magique qui accorde des privilèges temporels uniques à son porteur. Un fait surprenant est qu'il bat comme un cœur au rythme des marées. Les mineurs de l'extrême soulignent que sa dureté dépasse celle du diamant brut. Bien qu'elle ne soit pas comestible, la gemme peut être réduite en poudre pour créer des élixirs de longévité prisés par la noblesse. Sa valeur marchande est fixée à 50000 pièces d'or.",
             "time_restriction": "after_22h"
         },
         {
@@ -8333,7 +8333,7 @@
                 ]
             },
             "id": 99,
-            "price": 45000,
+            "price": 70000,
             "location": "Océan",
             "preferred_time": "9h - 18h",
             "preferred_season": "Juin - août",
@@ -8342,7 +8342,7 @@
                 7,
                 8
             ],
-            "fun_fact": "Le Crabe Dictateur (Cancer imperator) se capture de juin à août de 09h à 18h sur les récifs coralliens côtiers. Ce crustacé unique surprend par sa carapace imitant un uniforme d'amiral et sa pince gauche disproportionnée qu'il brandit pour diriger ses troupes. Les observateurs constatent sa fâcheuse tendance à ordonner la reddition des poissons environnants. Estimé à 45000 pièces d'or par les collectionneurs de curiosités, sa carapace extrêmement dure et son goût amer le préservent de toute intégration dans la gastronomie.",
+            "fun_fact": "Le Crabe Dictateur (Cancer imperator) se capture de juin à août de 09h à 18h sur les récifs coralliens côtiers. Ce crustacé unique surprend par sa carapace imitant un uniforme d'amiral et sa pince gauche disproportionnée qu'il brandit pour diriger ses troupes. Les observateurs constatent sa fâcheuse tendance à ordonner la reddition des poissons environnants. Estimé à 70000 pièces d'or par les collectionneurs de curiosités, sa carapace extrêmement dure et son goût amer le préservent de toute intégration dans la gastronomie.",
             "time_restriction": "before_22h"
         },
         {
@@ -8385,7 +8385,7 @@
                 ]
             },
             "id": 100,
-            "price": 50000,
+            "price": 60000,
             "location": "Océan",
             "preferred_time": "21h - 5h",
             "preferred_season": "Décembre - mars",
@@ -8395,7 +8395,7 @@
                 2,
                 3
             ],
-            "fun_fact": "Le Xénomorphe des Abysses (Xenomorphus abyssi) se pêche de décembre à mars de 21h à 05h dans l'obscurité totale des fosses marines. Cette créature cauchemardesque présente une anatomie surprenante : son sang acide détruit les hameçons et elle possède une double mâchoire interne rétractable. Les océanographes observent qu'elle est dépourvue d'yeux et s'oriente grâce aux vibrations. Estimé à 50000 pièces d'or, ce monstre noir d'encre est totalement mortel et toxique pour la consommation culinaire.",
+            "fun_fact": "Le Xénomorphe des Abysses (Xenomorphus abyssi) se pêche de décembre à mars de 21h à 05h dans l'obscurité totale des fosses marines. Cette créature cauchemardesque présente une anatomie surprenante : son sang acide détruit les hameçons et elle possède une double mâchoire interne rétractable. Les océanographes observent qu'elle est dépourvue d'yeux et s'oriente grâce aux vibrations. Estimé à 60000 pièces d'or, ce monstre noir d'encre est totalement mortel et toxique pour la consommation culinaire.",
             "time_restriction": "after_22h"
         }
     ],

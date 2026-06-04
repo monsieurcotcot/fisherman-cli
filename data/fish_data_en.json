@@ -40,7 +40,7 @@
                 ]
             },
             "id": 1,
-            "price": 300,
+            "price": 380,
             "location": "Rapid rivers, shallow coastal rivers and lakes - Japan, Korea, China and Taiwan",
             "preferred_time": "09h - 16h",
             "preferred_season": "June - September",
@@ -104,7 +104,7 @@
                 ]
             },
             "id": 2,
-            "price": 150,
+            "price": 160,
             "location": "Lakes, ponds and lazy rivers - North America and Europe",
             "preferred_time": "06h - 20h",
             "preferred_season": "May - October",
@@ -221,7 +221,7 @@
                 ]
             },
             "id": 4,
-            "price": 150,
+            "price": 170,
             "location": "Rivers, lakes, ponds - Central & Western Europe",
             "preferred_time": "19h - 07h",
             "preferred_season": "May - October",
@@ -291,7 +291,7 @@
                 ]
             },
             "id": 5,
-            "price": 110,
+            "price": 280,
             "location": "Muddy ponds, shallow lakes, canals and slow-moving rivers - Europe and Asia",
             "preferred_time": "06h - 19h",
             "preferred_season": "May - September",
@@ -350,7 +350,7 @@
                 ]
             },
             "id": 6,
-            "price": 240,
+            "price": 180,
             "location": "Lakes, ponds, canals and slow-moving rivers - Europe and Asia",
             "preferred_time": "18h - 08h",
             "preferred_season": "May - October",
@@ -464,7 +464,7 @@
                 ]
             },
             "id": 8,
-            "price": 150,
+            "price": 190,
             "location": "Sea, ocean - North-East Atlantic Ocean, English Channel, Mediterranean Sea, North Sea",
             "preferred_time": "20h - 05h",
             "preferred_season": "May - October",
@@ -524,7 +524,7 @@
                 ]
             },
             "id": 9,
-            "price": 90,
+            "price": 50,
             "location": "Shallow ponds, grassy lakes, canals and calm rivers - North America (and introduced to Europe)",
             "preferred_time": "09h - 18h",
             "preferred_season": "All year round",
@@ -650,7 +650,7 @@
                 ]
             },
             "id": 11,
-            "price": 190,
+            "price": 210,
             "location": "Estuaries, shallow bays, freshwater marshes and coastal lakes - North America (Eastern Canada and Northeastern United States)",
             "preferred_time": "Toute la journée",
             "preferred_season": "April - September",
@@ -710,7 +710,7 @@
                 ]
             },
             "id": 12,
-            "price": 300,
+            "price": 120,
             "location": "Northeast Atlantic Ocean, North Sea, English Channel and Baltic Sea",
             "preferred_time": "06h - 18h",
             "preferred_season": "October - April",
@@ -771,7 +771,7 @@
                 ]
             },
             "id": 13,
-            "price": 450,
+            "price": 390,
             "location": "Muddy ponds, swamps, backwaters and very slow rivers - Europe",
             "preferred_time": "19h - 06h",
             "preferred_season": "March - June",
@@ -829,7 +829,7 @@
                 ]
             },
             "id": 14,
-            "price": 200,
+            "price": 400,
             "location": "lake, pond, river; North America (Canada, United States)",
             "preferred_time": "06h - 20h",
             "preferred_season": "May - August",
@@ -882,7 +882,7 @@
                 ]
             },
             "id": 15,
-            "price": 250,
+            "price": 410,
             "location": "Lake, pond, slow-moving river (North America, Europe)",
             "preferred_time": "06h - 20h",
             "preferred_season": "May - August",
@@ -935,7 +935,7 @@
                 ]
             },
             "id": 16,
-            "price": 180,
+            "price": 420,
             "location": "Lake, pond, slow river (Europe, Western Asia)",
             "preferred_time": "06h - 21h",
             "preferred_season": "May - August",
@@ -988,7 +988,7 @@
                 ]
             },
             "id": 17,
-            "price": 190,
+            "price": 430,
             "location": "North-East Atlantic Ocean (from Iceland to Senegal), Mediterranean Sea, Black Sea. Coastal pelagic environment.",
             "preferred_time": "20h - 04h",
             "preferred_season": "May - August",
@@ -1095,7 +1095,7 @@
                 ]
             },
             "id": 19,
-            "price": 320,
+            "price": 130,
             "location": "Rivers, estuaries and coastal areas of Northern and Western Europe (North Sea, Baltic Sea, Atlantic Ocean)",
             "preferred_time": "20h - 04h",
             "preferred_season": "November - May",
@@ -1151,7 +1151,7 @@
                 ]
             },
             "id": 102,
-            "price": 81,
+            "price": 310,
             "location": "North Atlantic Ocean, North Sea, English Channel",
             "preferred_time": "06h - 12h",
             "preferred_season": "September - January",
@@ -1162,7 +1162,7 @@
                 12,
                 1
             ],
-            "fun_fact": "The Cod (Gadus morhua), a key North Atlantic species, is best fished from September to January between 06h and 12h, thriving in cool, rainy weather. This bottom-dwelling predator uses a unique chin barbel to feel for prey on the seabed. Priced at 81, it is highly valued for its mild, flaky white flesh, making it the supreme choice for traditional culinary dishes like fish and chips.",
+            "fun_fact": "The Cod (Gadus morhua), a key North Atlantic species, is best fished from September to January between 06h and 12h, thriving in cool, rainy weather. This bottom-dwelling predator uses a unique chin barbel to feel for prey on the seabed. Priced at 310, it is highly valued for its mild, flaky white flesh, making it the supreme choice for traditional culinary dishes like fish and chips.",
             "time_restriction": "before_22h"
         },
         {
@@ -1205,7 +1205,7 @@
                 ]
             },
             "id": 103,
-            "price": 82,
+            "price": 440,
             "location": "Coastal waters of the North Atlantic, English Channel, North Sea",
             "preferred_time": "05h - 10h",
             "preferred_season": "June - September",
@@ -1215,7 +1215,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Mackerel (Scomber scombrus) is caught in schools from June to September between 05h and 10h in the Atlantic, preferring sunny weather. Lacking a swim bladder, this pelagic fish must swim constantly to avoid sinking. Priced at 82, it is packed with healthy omega-3 fatty acids, and its rich, flavorful flesh is absolutely delicious when grilled over hot coals with fresh lemon juice.",
+            "fun_fact": "The Mackerel (Scomber scombrus) is caught in schools from June to September between 05h and 10h in the Atlantic, preferring sunny weather. Lacking a swim bladder, this pelagic fish must swim constantly to avoid sinking. Priced at 440, it is packed with healthy omega-3 fatty acids, and its rich, flavorful flesh is absolutely delicious when grilled over hot coals with fresh lemon juice.",
             "time_restriction": "before_22h"
         },
         {
@@ -1258,7 +1258,7 @@
                 ]
             },
             "id": 104,
-            "price": 83,
+            "price": 480,
             "location": "Slow-flowing rivers, canals, lakes and ponds of Europe",
             "preferred_time": "07h - 19h",
             "preferred_season": "March - May",
@@ -1267,7 +1267,7 @@
                 4,
                 5
             ],
-            "fun_fact": "The Roach (Rutilus rutilus) is fished in slow rivers of Europe from March to May between 07h and 19h, biting best under overcast skies. This active, schooling fish serves as an indicator of water quality. Priced at 83, this species is not popular in cooking due to many small bones, but it remains a favorite catch for anglers learning the basics of traditional float fishing.",
+            "fun_fact": "The Roach (Rutilus rutilus) is fished in slow rivers of Europe from March to May between 07h and 19h, biting best under overcast skies. This active, schooling fish serves as an indicator of water quality. Priced at 480, this species is not popular in cooking due to many small bones, but it remains a favorite catch for anglers learning the basics of traditional float fishing.",
             "time_restriction": "before_22h"
         },
         {
@@ -1310,7 +1310,7 @@
                 ]
             },
             "id": 105,
-            "price": 84,
+            "price": 220,
             "location": "Fast-flowing rivers, lakes and cool streams",
             "preferred_time": "06h - 18h",
             "preferred_season": "April - September",
@@ -1322,7 +1322,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Rainbow Trout (Oncorhynchus mykiss) prefers cool streams from April to September between 06h and 18h, biting well in rainy or overcast weather. This salmonid has a colorful iridescent stripe and fighting spirit. Priced at 84, its tender pink flesh is a culinary delight, usually pan-fried in butter with toasted almonds to make the classic trout meuniere dish.",
+            "fun_fact": "The Rainbow Trout (Oncorhynchus mykiss) prefers cool streams from April to September between 06h and 18h, biting well in rainy or overcast weather. This salmonid has a colorful iridescent stripe and fighting spirit. Priced at 220, its tender pink flesh is a culinary delight, usually pan-fried in butter with toasted almonds to make the classic trout meuniere dish.",
             "time_restriction": "before_22h"
         },
         {
@@ -1365,7 +1365,7 @@
                 ]
             },
             "id": 106,
-            "price": 86,
+            "price": 320,
             "location": "North-East Atlantic, North Sea, Baltic Sea",
             "preferred_time": "20h - 04h",
             "preferred_season": "October - February",
@@ -1376,7 +1376,7 @@
                 1,
                 2
             ],
-            "fun_fact": "The Herring (Clupea harengus) is fished in the North Atlantic from October to February between 20h and 04h, during windy and rough weather. This schooling species migrates vertically at night to feed on plankton. Priced at 86, it is culturally celebrated when pickled, salted, or smoked, offering intense maritime flavors highly appreciated by traditional seafood lovers.",
+            "fun_fact": "The Herring (Clupea harengus) is fished in the North Atlantic from October to February between 20h and 04h, during windy and rough weather. This schooling species migrates vertically at night to feed on plankton. Priced at 320, it is culturally celebrated when pickled, salted, or smoked, offering intense maritime flavors highly appreciated by traditional seafood lovers.",
             "time_restriction": "after_22h"
         },
         {
@@ -1419,7 +1419,7 @@
                 ]
             },
             "id": 107,
-            "price": 87,
+            "price": 450,
             "location": "Coastal estuaries, lagoons and shallow bays",
             "preferred_time": "08h - 17h",
             "preferred_season": "July - October",
@@ -1429,7 +1429,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Mullet (Mugil cephalus) inhabits coastal estuaries from July to October between 08h and 17h, preferring calm, sunny days. Able to leap high out of the water to escape predators, it feeds on algae on the bottom. Priced at 87, this robust fish offers a firm flesh that is great when poached in a savory court-bouillon or grilled with aromatic Mediterranean herbs.",
+            "fun_fact": "The Mullet (Mugil cephalus) inhabits coastal estuaries from July to October between 08h and 17h, preferring calm, sunny days. Able to leap high out of the water to escape predators, it feeds on algae on the bottom. Priced at 450, this robust fish offers a firm flesh that is great when poached in a savory court-bouillon or grilled with aromatic Mediterranean herbs.",
             "time_restriction": "before_22h"
         },
         {
@@ -1472,7 +1472,7 @@
                 ]
             },
             "id": 108,
-            "price": 88,
+            "price": 460,
             "location": "Sandy and muddy bottoms of the North Sea and Atlantic",
             "preferred_time": "21h - 05h",
             "preferred_season": "June - September",
@@ -1482,7 +1482,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Sole (Solea solea) is caught on sandy bottoms from June to September between 21h and 05h, during dark, rainy nights. This flatfish uses perfect camouflage to blend into the seabed and ambush prey. Priced at 88, it represents the peak of culinary refinement with its delicate, firm flesh, classically prepared as Sole Meuniere with a rich butter sauce.",
+            "fun_fact": "The Sole (Solea solea) is caught on sandy bottoms from June to September between 21h and 05h, during dark, rainy nights. This flatfish uses perfect camouflage to blend into the seabed and ambush prey. Priced at 460, it represents the peak of culinary refinement with its delicate, firm flesh, classically prepared as Sole Meuniere with a rich butter sauce.",
             "time_restriction": "after_22h"
         },
         {
@@ -1525,7 +1525,7 @@
                 ]
             },
             "id": 109,
-            "price": 89,
+            "price": 330,
             "location": "Slow-flowing rivers, muddy ponds and lakes of Europe",
             "preferred_time": "05h - 10h",
             "preferred_season": "May - September",
@@ -1536,7 +1536,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Tench (Tinca tinca) is found in slow European waters from May to September between 05h and 10h, active during warm, thundery weather. Known as the doctor fish due to the healing mucus on its olive-green skin, it winters in the mud. Priced at 89, its sweet flesh requires purging in clean water before being baked with shallots, butter, and white wine.",
+            "fun_fact": "The Tench (Tinca tinca) is found in slow European waters from May to September between 05h and 10h, active during warm, thundery weather. Known as the doctor fish due to the healing mucus on its olive-green skin, it winters in the mud. Priced at 330, its sweet flesh requires purging in clean water before being baked with shallots, butter, and white wine.",
             "time_restriction": "before_22h"
         },
         {
@@ -1579,7 +1579,7 @@
                 ]
             },
             "id": 110,
-            "price": 91,
+            "price": 340,
             "location": "Rocky bottoms of the Atlantic and Mediterranean",
             "preferred_time": "20h - 04h",
             "preferred_season": "March - July",
@@ -1590,7 +1590,7 @@
                 6,
                 7
             ],
-            "fun_fact": "The Hake (Merluccius merluccius) is fished in the Atlantic from March to July between 20h and 04h, preferring dark, rough sea conditions. This deep-water predator has sharp teeth to hunt small fish. Priced at 91, it is a culinary staple prized for its highly digestible white flesh, best enjoyed poached with a creamy hollandaise sauce or drizzled with olive oil.",
+            "fun_fact": "The Hake (Merluccius merluccius) is fished in the Atlantic from March to July between 20h and 04h, preferring dark, rough sea conditions. This deep-water predator has sharp teeth to hunt small fish. Priced at 340, it is a culinary staple prized for its highly digestible white flesh, best enjoyed poached with a creamy hollandaise sauce or drizzled with olive oil.",
             "time_restriction": "after_22h"
         },
         {
@@ -1633,7 +1633,7 @@
                 ]
             },
             "id": 111,
-            "price": 92,
+            "price": 230,
             "location": "Deep rocky reefs of the North Atlantic",
             "preferred_time": "06h - 15h",
             "preferred_season": "May - October",
@@ -1645,7 +1645,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Coalfish (Pollachius virens) is found near rocky reefs from May to October between 06h and 15h, active in choppy waters and cloudy weather. A strong swimmer of the cod family, it forms large, active schools. Priced at 92, its grey flesh turns beautifully white when cooked, providing a firm texture ideal for seafood bakes, curries, and deep-fried fish recipes.",
+            "fun_fact": "The Coalfish (Pollachius virens) is found near rocky reefs from May to October between 06h and 15h, active in choppy waters and cloudy weather. A strong swimmer of the cod family, it forms large, active schools. Priced at 230, its grey flesh turns beautifully white when cooked, providing a firm texture ideal for seafood bakes, curries, and deep-fried fish recipes.",
             "time_restriction": "before_22h"
         },
         {
@@ -1688,7 +1688,7 @@
                 ]
             },
             "id": 112,
-            "price": 93,
+            "price": 240,
             "location": "Cold and deep sea beds of the North Atlantic",
             "preferred_time": "05h - 12h",
             "preferred_season": "September - February",
@@ -1700,7 +1700,7 @@
                 1,
                 2
             ],
-            "fun_fact": "The Haddock (Melanogrammus aeglefinus) lives in the North Atlantic from September to February between 05h and 12h, preferring cold, wet weather. It features a dark thumbprint mark on its side. Priced at 93, its fine, delicate white flesh is the traditional base for smoked haddock, bringing a wonderful smoky and salty depth to chowders and bakes.",
+            "fun_fact": "The Haddock (Melanogrammus aeglefinus) lives in the North Atlantic from September to February between 05h and 12h, preferring cold, wet weather. It features a dark thumbprint mark on its side. Priced at 240, its fine, delicate white flesh is the traditional base for smoked haddock, bringing a wonderful smoky and salty depth to chowders and bakes.",
             "time_restriction": "before_22h"
         },
         {
@@ -1743,7 +1743,7 @@
                 ]
             },
             "id": 113,
-            "price": 94,
+            "price": 250,
             "location": "Sandy shores and soft bottoms of Europe",
             "preferred_time": "08h - 18h",
             "preferred_season": "May - October",
@@ -1755,7 +1755,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Plaice (Pleuronectes platessa) is caught along sandy shores from May to October between 08h and 18h, biting well during spring tides in clear weather. This flatfish features bright orange spots and changes color to match the sand. Priced at 94, its sweet, tender flesh is popular when pan-fried whole in butter or served as crispy breaded fillets.",
+            "fun_fact": "The Plaice (Pleuronectes platessa) is caught along sandy shores from May to October between 08h and 18h, biting well during spring tides in clear weather. This flatfish features bright orange spots and changes color to match the sand. Priced at 250, its sweet, tender flesh is popular when pan-fried whole in butter or served as crispy breaded fillets.",
             "time_restriction": "before_22h"
         },
         {
@@ -1798,7 +1798,7 @@
                 ]
             },
             "id": 114,
-            "price": 96,
+            "price": 350,
             "location": "Sandy and gravelly bottoms of the Atlantic and Mediterranean",
             "preferred_time": "07h - 17h",
             "preferred_season": "June - October",
@@ -1809,7 +1809,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Red Gurnard (Chelidonichthys cuculus) lives on sandy seabeds from June to October between 07h and 17h in calm weather. This unusual fish makes a grunting sound when caught and uses its leg-like pectoral rays to walk on the seafloor. Priced at 96, its firm, flavorful flesh is highly valued as a key, essential ingredient in authentic French bouillabaisse.",
+            "fun_fact": "The Red Gurnard (Chelidonichthys cuculus) lives on sandy seabeds from June to October between 07h and 17h in calm weather. This unusual fish makes a grunting sound when caught and uses its leg-like pectoral rays to walk on the seafloor. Priced at 350, its firm, flavorful flesh is highly valued as a key, essential ingredient in authentic French bouillabaisse.",
             "time_restriction": "before_22h"
         },
         {
@@ -1852,7 +1852,7 @@
                 ]
             },
             "id": 115,
-            "price": 97,
+            "price": 60,
             "location": "Clear freshwater streams and fast-flowing rivers with gravel or sandy beds",
             "preferred_time": "08h - 18h",
             "preferred_season": "Year-round",
@@ -1870,7 +1870,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Gudgeon (Gobio gobio) is a small, shoaling freshwater fish found in fast streams with gravel beds. Caught year-round, ideally between 08h and 18h under cloudy skies, it uses sensory barbels to find bottom invertebrates. Priced at 97 gold coins, this active species is highly celebrated in gastronomy when fried whole into a crispy, delicate, and savory appetizer.",
+            "fun_fact": "The Gudgeon (Gobio gobio) is a small, shoaling freshwater fish found in fast streams with gravel beds. Caught year-round, ideally between 08h and 18h under cloudy skies, it uses sensory barbels to find bottom invertebrates. Priced at 60 gold coins, this active species is highly celebrated in gastronomy when fried whole into a crispy, delicate, and savory appetizer.",
             "time_restriction": null
         },
         {
@@ -1913,7 +1913,7 @@
                 ]
             },
             "id": 116,
-            "price": 98,
+            "price": 140,
             "location": "Freshwater lakes and calm, slow-flowing rivers",
             "preferred_time": "07h - 19h",
             "preferred_season": "April - October",
@@ -1926,7 +1926,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Bleak (Alburnus alburnus) is a shiny, schooling surface fish of calm lakes and rivers. Targeted from April to October, mostly between 07h and 19h during warm sunny days, it feeds on flying insects. Its pearly scales were once harvested to create faux pearls. Valued at 98 gold coins, its delicate flesh is highly appreciated when fried or pickled in vinegar.",
+            "fun_fact": "The Bleak (Alburnus alburnus) is a shiny, schooling surface fish of calm lakes and rivers. Targeted from April to October, mostly between 07h and 19h during warm sunny days, it feeds on flying insects. Its pearly scales were once harvested to create faux pearls. Valued at 140 gold coins, its delicate flesh is highly appreciated when fried or pickled in vinegar.",
             "time_restriction": null
         },
         {
@@ -1969,7 +1969,7 @@
                 ]
             },
             "id": 117,
-            "price": 99,
+            "price": 90,
             "location": "Muddy lakes, shallow ponds, and slow rivers with muddy bottoms",
             "preferred_time": "19h - 04h",
             "preferred_season": "March - November",
@@ -1984,7 +1984,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Brown Bullhead Catfish (Ameiurus nebulosus) is a nocturnal bottom-dweller of muddy ponds. Caught from March to November, especially between 19h and 04h in rainy, overcast weather, it navigates the dark using eight sensory barbels. Watch out for its sharp, venomous spines. Priced at 99 gold coins, its rich, oily flesh is highly praised in spicy stews or deep-fried dishes.",
+            "fun_fact": "The Brown Bullhead Catfish (Ameiurus nebulosus) is a nocturnal bottom-dweller of muddy ponds. Caught from March to November, especially between 19h and 04h in rainy, overcast weather, it navigates the dark using eight sensory barbels. Watch out for its sharp, venomous spines. Priced at 90 gold coins, its rich, oily flesh is highly praised in spicy stews or deep-fried dishes.",
             "time_restriction": "after_18h"
         },
         {
@@ -2027,7 +2027,7 @@
                 ]
             },
             "id": 118,
-            "price": 101,
+            "price": 470,
             "location": "Coastal estuaries and tidal, anadromous river systems",
             "preferred_time": "20h - 04h",
             "preferred_season": "June - September",
@@ -2037,7 +2037,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Sea Trout (Salmo trutta trutta) is the migratory form of the brown trout. Caught from June to September, especially between 20h and 04h on dark nights in coastal estuaries, it hunts actively for small fish. Its silver scales shed easily during fights. Priced at 101 gold coins, its fine, pinkish flesh is a delicacy when pan-seared or gently poached in a seasoned court-bouillon.",
+            "fun_fact": "The Sea Trout (Salmo trutta trutta) is the migratory form of the brown trout. Caught from June to September, especially between 20h and 04h on dark nights in coastal estuaries, it hunts actively for small fish. Its silver scales shed easily during fights. Priced at 470 gold coins, its fine, pinkish flesh is a delicacy when pan-seared or gently poached in a seasoned court-bouillon.",
             "time_restriction": "after_18h"
         },
         {
@@ -2080,7 +2080,7 @@
                 ]
             },
             "id": 119,
-            "price": 102,
+            "price": 110,
             "location": "Coastal lagoons and shallow bays of the Mediterranean Sea",
             "preferred_time": "06h - 10h",
             "preferred_season": "April - November",
@@ -2094,7 +2094,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Gilt-head Bream (Sparus aurata) is named for the golden band between its eyes. Caught from April to November, especially from 06h to 10h under calm waters, it roams Mediterranean sandy bays to crush shells with strong teeth. It is a protandrous hermaphrodite. Valued at 102 gold coins, its firm white flesh is highly prized when grilled with fennel or baked in a salt crust.",
+            "fun_fact": "The Gilt-head Bream (Sparus aurata) is named for the golden band between its eyes. Caught from April to November, especially from 06h to 10h under calm waters, it roams Mediterranean sandy bays to crush shells with strong teeth. It is a protandrous hermaphrodite. Valued at 110 gold coins, its firm white flesh is highly prized when grilled with fennel or baked in a salt crust.",
             "time_restriction": null
         },
         {
@@ -2137,7 +2137,7 @@
                 ]
             },
             "id": 120,
-            "price": 103,
+            "price": 360,
             "location": "Coastal sandy and rocky seabeds of the Mediterranean Sea",
             "preferred_time": "08h - 16h",
             "preferred_season": "June - October",
@@ -2148,7 +2148,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Common Pandora (Pagellus erythrinus) is known for its beautiful pink-silvery body dotted with tiny blue spots. Caught from June to October, mainly between 08h and 16h in sunny weather, it feeds on worms and small crustaceans on Mediterranean sandy bottoms. Priced at 103 gold coins, its delicate white flesh is excellent when baked whole in foil or roasted with lemon.",
+            "fun_fact": "The Common Pandora (Pagellus erythrinus) is known for its beautiful pink-silvery body dotted with tiny blue spots. Caught from June to October, mainly between 08h and 16h in sunny weather, it feeds on worms and small crustaceans on Mediterranean sandy bottoms. Priced at 360 gold coins, its delicate white flesh is excellent when baked whole in foil or roasted with lemon.",
             "time_restriction": null
         },
         {
@@ -2191,7 +2191,7 @@
                 ]
             },
             "id": 121,
-            "price": 104,
+            "price": 260,
             "location": "Deep sandy and gravel seabeds of the Atlantic Ocean and North Sea",
             "preferred_time": "05h - 09h",
             "preferred_season": "May - October",
@@ -2203,7 +2203,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Turbot (Scophthalmus maximus) is a highly prized flatfish from the North Atlantic. Fished from May to October, mainly between 05h and 09h in stable weather, it buries itself in sand to ambush prey. Its scaleless skin features hard bony tubercles. Valued at 104 gold coins, it represents a pinnacle of marine gastronomy, offering firm, succulent flesh perfect when poached in champagne.",
+            "fun_fact": "The Turbot (Scophthalmus maximus) is a highly prized flatfish from the North Atlantic. Fished from May to October, mainly between 05h and 09h in stable weather, it buries itself in sand to ambush prey. Its scaleless skin features hard bony tubercles. Valued at 260 gold coins, it represents a pinnacle of marine gastronomy, offering firm, succulent flesh perfect when poached in champagne.",
             "time_restriction": null
         },
         {
@@ -2246,7 +2246,7 @@
                 ]
             },
             "id": 122,
-            "price": 106,
+            "price": 270,
             "location": "Kelp forests and shallow rocky reefs of the Atlantic Ocean",
             "preferred_time": "08h - 17h",
             "preferred_season": "May - October",
@@ -2258,7 +2258,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Ballan Wrasse (Labrus bergylta) is a colorful, territorial fish inhabiting Atlantic kelp forests. Fished from May to October, especially between 08h and 17h in clear water, it uses strong teeth to feed on mollusks. They are protogynous hermaphrodites, changing from female to male. Valued at 106 gold coins, its soft flesh is highly suited for traditional, slow-simmered fish soups.",
+            "fun_fact": "The Ballan Wrasse (Labrus bergylta) is a colorful, territorial fish inhabiting Atlantic kelp forests. Fished from May to October, especially between 08h and 17h in clear water, it uses strong teeth to feed on mollusks. They are protogynous hermaphrodites, changing from female to male. Valued at 270 gold coins, its soft flesh is highly suited for traditional, slow-simmered fish soups.",
             "time_restriction": null
         },
         {
@@ -2301,7 +2301,7 @@
                 ]
             },
             "id": 123,
-            "price": 107,
+            "price": 370,
             "location": "Deep shipwrecks and rocky reefs of the Atlantic Ocean",
             "preferred_time": "06h - 10h",
             "preferred_season": "May - September",
@@ -2312,7 +2312,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Pollack (Pollachius pollachius) is a powerful ambush predator of Atlantic reefs and shipwrecks. Fished from May to September, mainly between 06h and 10h during strong tides, it darts from cover to swallow sandeels. It features a prominent lower jaw. Priced at 107 gold coins, its delicate, flaky white flesh is best eaten very fresh, either baked in the oven or gently poached.",
+            "fun_fact": "The Pollack (Pollachius pollachius) is a powerful ambush predator of Atlantic reefs and shipwrecks. Fished from May to September, mainly between 06h and 10h during strong tides, it darts from cover to swallow sandeels. It features a prominent lower jaw. Priced at 370 gold coins, its delicate, flaky white flesh is best eaten very fresh, either baked in the oven or gently poached.",
             "time_restriction": null
         },
         {
@@ -2355,7 +2355,7 @@
                 ]
             },
             "id": 124,
-            "price": 108,
+            "price": 80,
             "location": "Coastal shipwrecks and artificial structures of the Atlantic Ocean",
             "preferred_time": "08h - 18h",
             "preferred_season": "March - December",
@@ -2371,7 +2371,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Bib (Trisopterus luscus) is a shoaling fish belonging to the cod family. Caught from March to December, especially between 08h and 18h in choppy seas, it forms dense schools around submerged wrecks. It features a unique chin barbel. Priced at 108 gold coins, its tender but delicate flesh must be eaten very fresh, making it perfect for quick pan-frying or poaching in milk.",
+            "fun_fact": "The Bib (Trisopterus luscus) is a shoaling fish belonging to the cod family. Caught from March to December, especially between 08h and 18h in choppy seas, it forms dense schools around submerged wrecks. It features a unique chin barbel. Priced at 80 gold coins, its tender but delicate flesh must be eaten very fresh, making it perfect for quick pan-frying or poaching in milk.",
             "time_restriction": null
         },
         {
@@ -2414,7 +2414,7 @@
                 ]
             },
             "id": 125,
-            "price": 109,
+            "price": 70,
             "location": "Fast mountain streams with gravel beds and clear, cold water",
             "preferred_time": "08h - 18h",
             "preferred_season": "Year-round",
@@ -2432,7 +2432,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The European Bullhead (Cottus gobio) is a tiny bottom fish in clear, cold streams. Caught year-round, ideally between 08h and 18h on sunny days, it hides under stones due to its lack of a swim bladder. It is recognized by a wide, flattened head. Priced at 109 gold coins, its fine white flesh is a rare culinary delicacy, traditionally fried whole as a crispy appetizer.",
+            "fun_fact": "The European Bullhead (Cottus gobio) is a tiny bottom fish in clear, cold streams. Caught year-round, ideally between 08h and 18h on sunny days, it hides under stones due to its lack of a swim bladder. It is recognized by a wide, flattened head. Priced at 70 gold coins, its fine white flesh is a rare culinary delicacy, traditionally fried whole as a crispy appetizer.",
             "time_restriction": null
         },
         {
@@ -2475,7 +2475,7 @@
                 ]
             },
             "id": 126,
-            "price": 111,
+            "price": 150,
             "location": "Coastal zones of the North Sea and Baltic Sea shores",
             "preferred_time": "08h - 17h",
             "preferred_season": "September - March",
@@ -2488,7 +2488,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Sprat (Sprattus sprattus) is a small pelagic schooling fish inhabiting northern waters. Fished from September to March, mainly between 08h and 17h during high tide, it feeds on plankton and tolerates low salinity. Priced at 111 gold coins, its oily, flavorful flesh is highly popular when grilled whole, smoked in oil, or prepared similarly to anchovies.",
+            "fun_fact": "The Sprat (Sprattus sprattus) is a small pelagic schooling fish inhabiting northern waters. Fished from September to March, mainly between 08h and 17h during high tide, it feeds on plankton and tolerates low salinity. Priced at 150 gold coins, its oily, flavorful flesh is highly popular when grilled whole, smoked in oil, or prepared similarly to anchovies.",
             "time_restriction": null
         }
     ],
@@ -2533,7 +2533,7 @@
                 ]
             },
             "id": 20,
-            "price": 100,
+            "price": 500,
             "location": "Sea, ocean (Mediterranean Sea, Black Sea, Eastern Atlantic Ocean, from Norway to South Africa)",
             "preferred_time": "05h - 19h",
             "preferred_season": "All year round",
@@ -2594,7 +2594,7 @@
                 ]
             },
             "id": 21,
-            "price": 50,
+            "price": 860,
             "location": "Fast-flowing rivers, grayling and barbel (Europe)",
             "preferred_time": "18h - 06h",
             "preferred_season": "May - October",
@@ -2649,7 +2649,7 @@
                 ]
             },
             "id": 22,
-            "price": 900,
+            "price": 1060,
             "location": "Slow-moving rivers, canals, ponds, backwaters and lakes rich in vegetation and sediment. Present in Europe (from eastern France to the Urals) and in Asia Minor.",
             "preferred_time": "06h00 - 21h00",
             "preferred_season": "April - August",
@@ -2708,7 +2708,7 @@
                 ]
             },
             "id": 23,
-            "price": 470,
+            "price": 660,
             "location": "Mediterranean Sea, Eastern Atlantic Ocean, English Channel",
             "preferred_time": "20h - 04h",
             "preferred_season": "September - April",
@@ -2765,7 +2765,7 @@
                 ]
             },
             "id": 24,
-            "price": 400,
+            "price": 880,
             "location": "Northwest Atlantic Ocean, estuaries, bays, sandy and muddy bottoms (east coast of the United States and Canada)",
             "preferred_time": "06h00 - 18h00",
             "preferred_season": "May - October",
@@ -2820,7 +2820,7 @@
                 ]
             },
             "id": 25,
-            "price": 1500,
+            "price": 520,
             "location": "Arctic Ocean, North Atlantic Ocean, North Pacific Ocean (cold and polar waters, pelagic zone)",
             "preferred_time": "00h - 24h",
             "preferred_season": "January - December",
@@ -2881,7 +2881,7 @@
                 ]
             },
             "id": 26,
-            "price": 120,
+            "price": 780,
             "location": "Mediterranean Sea, Eastern Atlantic Ocean (from Norway to Morocco), benthic zones, rocky bottoms and Posidonia or zoostera meadows.",
             "preferred_time": "06h - 20h",
             "preferred_season": "April - October",
@@ -2937,7 +2937,7 @@
                 ]
             },
             "id": 27,
-            "price": 400,
+            "price": 540,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "Year-round",
@@ -2955,7 +2955,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Freshwater Goby (Rhinogobius flumineus) is fished year-round, preferably from 16h to 09h, when this small benthic fish is active along gravel beds to capture invertebrates. This fish has a surprising adaptation: its pelvic fins are fused into a ventral sucker allowing it to anchor itself firmly to rocks in torrential currents. In field observations, scientists note that it can climb damp rock faces of waterfalls. Its average market price is 400 gold coins. Its very fine flesh is consumed deep-fried whole in the mountainous regions of Asia.",
+            "fun_fact": "The Freshwater Goby (Rhinogobius flumineus) is fished year-round, preferably from 16h to 09h, when this small benthic fish is active along gravel beds to capture invertebrates. This fish has a surprising adaptation: its pelvic fins are fused into a ventral sucker allowing it to anchor itself firmly to rocks in torrential currents. In field observations, scientists note that it can climb damp rock faces of waterfalls. Its average market price is 540 gold coins. Its very fine flesh is consumed deep-fried whole in the mountainous regions of Asia.",
             "time_restriction": "after_22h"
         },
         {
@@ -2998,7 +2998,7 @@
                 ]
             },
             "id": 28,
-            "price": 120,
+            "price": 1160,
             "location": "Pond",
             "preferred_time": "00h - 24h",
             "preferred_season": "May - August",
@@ -3008,7 +3008,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Frog (Pelophylax esculentus) is caught from May to August, all day long, as it is highly active along pond banks during the warm season to hunt insects. This amphibian has a surprising breathing capacity: it breathes largely through its moist skin, allowing it to stay submerged for hours. Field experts highlight that its call can exceed eighty decibels during night concerts. Marketed at a rate of 120 gold coins, it is famous in French gastronomy for its tender legs resembling chicken, usually cooked sautéed with garlic and parsley.",
+            "fun_fact": "The Frog (Pelophylax esculentus) is caught from May to August, all day long, as it is highly active along pond banks during the warm season to hunt insects. This amphibian has a surprising breathing capacity: it breathes largely through its moist skin, allowing it to stay submerged for hours. Field experts highlight that its call can exceed eighty decibels during night concerts. Marketed at a rate of 1160 gold coins, it is famous in French gastronomy for its tender legs resembling chicken, usually cooked sautéed with garlic and parsley.",
             "time_restriction": null
         },
         {
@@ -3051,7 +3051,7 @@
                 ]
             },
             "id": 29,
-            "price": 1300,
+            "price": 680,
             "location": "River",
             "preferred_time": "09h - 16h",
             "preferred_season": "April - November",
@@ -3065,7 +3065,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Guppy (Poecilia reticulata) is caught from April to November from 09h to 16h because its nature as a diurnal tropical fish drives it to be active at the surface of warm waters under sunlight. This small fish has a surprising reproductive feature: it is ovoviviparous, with the female giving birth to live, independent fry. Aquarists note that males sport unique, colorful fan-like caudal fins. Marketed at a price of 1300 gold coins for the finest selections, it is too small for culinary interest and its beauty makes it solely an ornamental gem.",
+            "fun_fact": "The Guppy (Poecilia reticulata) is caught from April to November from 09h to 16h because its nature as a diurnal tropical fish drives it to be active at the surface of warm waters under sunlight. This small fish has a surprising reproductive feature: it is ovoviviparous, with the female giving birth to live, independent fry. Aquarists note that males sport unique, colorful fan-like caudal fins. Marketed at a price of 680 gold coins for the finest selections, it is too small for culinary interest and its beauty makes it solely an ornamental gem.",
             "time_restriction": "before_22h"
         },
         {
@@ -3108,7 +3108,7 @@
                 ]
             },
             "id": 30,
-            "price": 1100,
+            "price": 700,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "April - November",
@@ -3122,7 +3122,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Seahorse (Hippocampus hippocampus) is fished from April to November, all day long, in shallow seagrass beds. This singular fish has a surprising reproductive method: the male incubates the eggs in his pouch before giving birth to tiny independent seahorses. Ichthyologists observe that it uses its prehensile tail to anchor itself firmly to algae. Valued at 1100 gold coins for collector aquariums, its rigid external bony structure and leathery texture make it completely unsuitable for cooking.",
+            "fun_fact": "The Seahorse (Hippocampus hippocampus) is fished from April to November, all day long, in shallow seagrass beds. This singular fish has a surprising reproductive method: the male incubates the eggs in his pouch before giving birth to tiny independent seahorses. Ichthyologists observe that it uses its prehensile tail to anchor itself firmly to algae. Valued at 700 gold coins for collector aquariums, its rigid external bony structure and leathery texture make it completely unsuitable for cooking.",
             "time_restriction": null
         },
         {
@@ -3165,7 +3165,7 @@
                 ]
             },
             "id": 31,
-            "price": 600,
+            "price": 1080,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "June - October",
@@ -3176,7 +3176,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Ribbon Eel (Rhinomuraena quaesita) is fished from June to October, all day long, in tropical coral reefs. This snake-like predator has a surprising biology: it is a protandrous hermaphrodite, starting life as a black male, then becoming bright blue and yellow at maturity, before transforming into a completely yellow female. Expert divers note that it has characteristic leaf-like nasal appendages shaped like ribbons. Marketed at a price of 600 gold coins, its flesh is fine but its potential toxicity and rarity make it a fish for aquariums rather than tables.",
+            "fun_fact": "The Ribbon Eel (Rhinomuraena quaesita) is fished from June to October, all day long, in tropical coral reefs. This snake-like predator has a surprising biology: it is a protandrous hermaphrodite, starting life as a black male, then becoming bright blue and yellow at maturity, before transforming into a completely yellow female. Expert divers note that it has characteristic leaf-like nasal appendages shaped like ribbons. Marketed at a price of 1080 gold coins, its flesh is fine but its potential toxicity and rarity make it a fish for aquariums rather than tables.",
             "time_restriction": null
         },
         {
@@ -3219,7 +3219,7 @@
                 ]
             },
             "id": 32,
-            "price": 500,
+            "price": 720,
             "location": "River",
             "preferred_time": "09h - 16h",
             "preferred_season": "April - November",
@@ -3233,7 +3233,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Neon Tetra (Paracheirodon innesi) is caught from April to November from 09h to 16h because this tiny freshwater fish is strictly diurnal and active in schools that appear brighter as sunlight filters through the Amazonian canopy. It has a surprising optical feature: its blue-green lateral band is composed of guanine crystals that reflect light to glow in dark waters. Field biologists note that it is highly sensitive to water quality. Marketed at 500 gold coins due to its popularity in aquariums, its tiny size rules out any culinary use.",
+            "fun_fact": "The Neon Tetra (Paracheirodon innesi) is caught from April to November from 09h to 16h because this tiny freshwater fish is strictly diurnal and active in schools that appear brighter as sunlight filters through the Amazonian canopy. It has a surprising optical feature: its blue-green lateral band is composed of guanine crystals that reflect light to glow in dark waters. Field biologists note that it is highly sensitive to water quality. Marketed at 720 gold coins due to its popularity in aquariums, its tiny size rules out any culinary use.",
             "time_restriction": "before_22h"
         },
         {
@@ -3276,7 +3276,7 @@
                 ]
             },
             "id": 33,
-            "price": 800,
+            "price": 900,
             "location": "River",
             "preferred_time": "09h - 16h",
             "preferred_season": "May - October",
@@ -3288,7 +3288,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Rainbowfish (Melanotaenia boesemani) is caught from May to October between 09h and 16h because its beautiful bicoloration shows intensely under daylight in warm waters. This small ornamental fish features remarkable sexual dichromatism, the male's hind half being bright orange and the front half violet-blue. Expert aquarists note that it lives in dynamic schools to maintain its colors at optimal brightness. Marketed at an average price of 800 gold coins, it is too small and its flesh has no culinary value.",
+            "fun_fact": "The Rainbowfish (Melanotaenia boesemani) is caught from May to October between 09h and 16h because its beautiful bicoloration shows intensely under daylight in warm waters. This small ornamental fish features remarkable sexual dichromatism, the male's hind half being bright orange and the front half violet-blue. Expert aquarists note that it lives in dynamic schools to maintain its colors at optimal brightness. Marketed at an average price of 900 gold coins, it is too small and its flesh has no culinary value.",
             "time_restriction": "before_22h"
         },
         {
@@ -3331,7 +3331,7 @@
                 ]
             },
             "id": 34,
-            "price": 1000,
+            "price": 920,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "April - September",
@@ -3343,7 +3343,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Surgeonfish (Paracanthurus hepatus) is fished year-round, day and night, in coral reefs. This royal blue and yellow colored fish possesses a formidable defensive weapon: sharp erectile scalpels at the base of its tail. Divers in the field observe that it anchors itself in corals when threatened. Marketed at 1000 gold coins for aquariums, its flesh is toxic due to ciguatera accumulated by grazing on reef algae, making it unsuitable for eating.",
+            "fun_fact": "The Surgeonfish (Paracanthurus hepatus) is fished year-round, day and night, in coral reefs. This royal blue and yellow colored fish possesses a formidable defensive weapon: sharp erectile scalpels at the base of its tail. Divers in the field observe that it anchors itself in corals when threatened. Marketed at 920 gold coins for aquariums, its flesh is toxic due to ciguatera accumulated by grazing on reef algae, making it unsuitable for eating.",
             "time_restriction": null
         },
         {
@@ -3386,7 +3386,7 @@
                 ]
             },
             "id": 35,
-            "price": 1300,
+            "price": 560,
             "location": "Pond",
             "preferred_time": "00h - 24h",
             "preferred_season": "Year-round",
@@ -3404,7 +3404,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Goldfish (Carassius auratus) is fished year-round, all day long, in calm ponds and still waters. This small domestic cyprinid has a surprising resilience: it can survive in very oxygen-poor waters by converting lactic acid into ethanol. Field breeders recall that it stems from the selection of wild Prussian carp. Sold at 1300 gold coins for rare aquarium specimens, its flesh is bland and bony, greatly limiting its culinary value.",
+            "fun_fact": "The Goldfish (Carassius auratus) is fished year-round, all day long, in calm ponds and still waters. This small domestic cyprinid has a surprising resilience: it can survive in very oxygen-poor waters by converting lactic acid into ethanol. Field breeders recall that it stems from the selection of wild Prussian carp. Sold at 560 gold coins for rare aquarium specimens, its flesh is bland and bony, greatly limiting its culinary value.",
             "time_restriction": null
         },
         {
@@ -3447,7 +3447,7 @@
                 ]
             },
             "id": 36,
-            "price": 1000,
+            "price": 940,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "April - September",
@@ -3459,7 +3459,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Butterflyfish (Chaetodon auriga) is fished year-round, day and night, in coral reefs. This fish sports a black band across its eye and a false black eye spot near its tail to trick and confuse predators. Expert divers note that it uses its elongated snout like tweezers to extract small invertebrates from rocky crevices. Marketed at 1000 gold coins for prestigious aquariums, its very fine flesh is rarely consumed as the fish is too small and has a crucial ecological role in reef health.",
+            "fun_fact": "The Butterflyfish (Chaetodon auriga) is fished year-round, day and night, in coral reefs. This fish sports a black band across its eye and a false black eye spot near its tail to trick and confuse predators. Expert divers note that it uses its elongated snout like tweezers to extract small invertebrates from rocky crevices. Marketed at 940 gold coins for prestigious aquariums, its very fine flesh is rarely consumed as the fish is too small and has a crucial ecological role in reef health.",
             "time_restriction": null
         },
         {
@@ -3502,7 +3502,7 @@
                 ]
             },
             "id": 37,
-            "price": 250,
+            "price": 1200,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "July - September",
@@ -3511,7 +3511,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Porcupinefish (Diodon holocanthus) is fished from July to September, all day long, in shallow coastal waters of warm seas. This unusual fish features a surprising defensive system: it inflates with water to triple its volume and erect sharp pointed spines covering its body, while accumulating a deadly toxin in its organs. Field experts highlight that it possesses fused jaws forming a powerful beak to crush shells. Marketed at a price of 250 gold coins, its flesh is consumed in Asia as soup after rigorous preparation by licensed chefs.",
+            "fun_fact": "The Porcupinefish (Diodon holocanthus) is fished from July to September, all day long, in shallow coastal waters of warm seas. This unusual fish features a surprising defensive system: it inflates with water to triple its volume and erect sharp pointed spines covering its body, while accumulating a deadly toxin in its organs. Field experts highlight that it possesses fused jaws forming a powerful beak to crush shells. Marketed at a price of 1200 gold coins, its flesh is consumed in Asia as soup after rigorous preparation by licensed chefs.",
             "time_restriction": null
         },
         {
@@ -3554,7 +3554,7 @@
                 ]
             },
             "id": 38,
-            "price": 500,
+            "price": 740,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "April - November",
@@ -3568,7 +3568,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Scorpionfish (Scorpaena scrofa) is caught from April to November, all day long, on coastal rocky bottoms. This camouflaged brick-red benthic fish has a powerful venom injected by the spines of its dorsal fins to paralyze attackers. Expert anglers in the field handle this fish with caution to avoid extremely painful stings. Marketed at a price of 500 gold coins, its firm white flesh is of exceptional culinary quality, forming the indispensable base ingredient of a traditional bouillabaisse.",
+            "fun_fact": "The Scorpionfish (Scorpaena scrofa) is caught from April to November, all day long, on coastal rocky bottoms. This camouflaged brick-red benthic fish has a powerful venom injected by the spines of its dorsal fins to paralyze attackers. Expert anglers in the field handle this fish with caution to avoid extremely painful stings. Marketed at a price of 740 gold coins, its firm white flesh is of exceptional culinary quality, forming the indispensable base ingredient of a traditional bouillabaisse.",
             "time_restriction": null
         },
         {
@@ -3611,7 +3611,7 @@
                 ]
             },
             "id": 39,
-            "price": 700,
+            "price": 640,
             "location": "River mouth",
             "preferred_time": "05h - 22h",
             "preferred_season": "February - November",
@@ -3670,7 +3670,7 @@
                 ]
             },
             "id": 40,
-            "price": 1000,
+            "price": 800,
             "location": "River (cliffs)",
             "preferred_time": "16h - 09h",
             "preferred_season": "March - June, September - November",
@@ -3683,7 +3683,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Masou Salmon (Oncorhynchus masou) is caught from March to June and September to November, from 16h to 09h, taking advantage of the cool dawn and twilight to be active in rapid mountain streams. This Asian salmonid has a surprising biological feature: some males spend their entire life in freshwater without migrating to the ocean, becoming highly aggressive dwarf residents. Expert ichthyologists note that it sports dark vertical bands and spectacular pink spots at maturity. Marketed at an average price of 1000 gold coins, its delicate flesh has great culinary value, delicious salt-grilled or prepared as traditional sushi.",
+            "fun_fact": "The Masou Salmon (Oncorhynchus masou) is caught from March to June and September to November, from 16h to 09h, taking advantage of the cool dawn and twilight to be active in rapid mountain streams. This Asian salmonid has a surprising biological feature: some males spend their entire life in freshwater without migrating to the ocean, becoming highly aggressive dwarf residents. Expert ichthyologists note that it sports dark vertical bands and spectacular pink spots at maturity. Marketed at an average price of 800 gold coins, its delicate flesh has great culinary value, delicious salt-grilled or prepared as traditional sushi.",
             "time_restriction": "after_22h"
         },
         {
@@ -3726,7 +3726,7 @@
                 ]
             },
             "id": 41,
-            "price": 800,
+            "price": 960,
             "location": "Pond",
             "preferred_time": "16h - 09h",
             "preferred_season": "May - October",
@@ -3738,7 +3738,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Wels Catfish (Silurus glanis) is caught from May to October, from 16h to 09h, as this giant nocturnal predator leaves deep river pools at dusk to actively hunt. This scaleless freshwater giant features highly sensitive tactile and chemical receptors located on its six long sensory barbels. Field biologists report that it is capable of capturing waterbirds at the surface through beaching. Marketed at 800 gold coins, its white flesh is oily and rich, particularly tasty smoked or baked as steaks if the fish is not too old.",
+            "fun_fact": "The Wels Catfish (Silurus glanis) is caught from May to October, from 16h to 09h, as this giant nocturnal predator leaves deep river pools at dusk to actively hunt. This scaleless freshwater giant features highly sensitive tactile and chemical receptors located on its six long sensory barbels. Field biologists report that it is capable of capturing waterbirds at the surface through beaching. Marketed at 960 gold coins, its white flesh is oily and rich, particularly tasty smoked or baked as steaks if the fish is not too old.",
             "time_restriction": "after_22h"
         },
         {
@@ -3781,7 +3781,7 @@
                 ]
             },
             "id": 42,
-            "price": 400,
+            "price": 980,
             "location": "Calm rivers, ponds and muddy lakes - Europe and Asia",
             "preferred_time": "04h - 09h, 16h - 21h",
             "preferred_season": "May - October",
@@ -3793,7 +3793,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Tench (Tinca tinca) is fished from May to October between 04h and 09h or 16h and 21h as it is most active during twilight to forage in the mud. This freshwater fish can survive for hours out of water by burying itself in damp mud during droughts. Field experts call it the doctor fish because its thick mucus is believed to heal skin infections of other fish rubbing against it. The tench has a tasty, delicate flesh, though slightly earthy if not purged before cooking. Its average market price is 400 gold coins.",
+            "fun_fact": "The Tench (Tinca tinca) is fished from May to October between 04h and 09h or 16h and 21h as it is most active during twilight to forage in the mud. This freshwater fish can survive for hours out of water by burying itself in damp mud during droughts. Field experts call it the doctor fish because its thick mucus is believed to heal skin infections of other fish rubbing against it. The tench has a tasty, delicate flesh, though slightly earthy if not purged before cooking. Its average market price is 980 gold coins.",
             "time_restriction": "before_22h"
         },
         {
@@ -3836,7 +3836,7 @@
                 ]
             },
             "id": 43,
-            "price": 800,
+            "price": 1100,
             "location": "River",
             "preferred_time": "00h - 24h",
             "preferred_season": "June - October",
@@ -3847,7 +3847,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Tilapia (Oreochromis niloticus) is fished year-round, day and night, in warm freshwater streams. This robust fish features a surprising biology: it practices mouthbrooding, the female keeping the eggs and then the fry in her own mouth to protect them from predators. Fish farmers highlight its extreme tolerance to variations in salinity and temperature. Marketed at a price of 800 gold coins, its firm white flesh with a neutral taste is one of the most consumed in the world, excellent grilled with spices or baked.",
+            "fun_fact": "The Tilapia (Oreochromis niloticus) is fished year-round, day and night, in warm freshwater streams. This robust fish features a surprising biology: it practices mouthbrooding, the female keeping the eggs and then the fry in her own mouth to protect them from predators. Fish farmers highlight its extreme tolerance to variations in salinity and temperature. Marketed at a price of 1100 gold coins, its firm white flesh with a neutral taste is one of the most consumed in the world, excellent grilled with spices or baked.",
             "time_restriction": null
         },
         {
@@ -3890,7 +3890,7 @@
                 ]
             },
             "id": 44,
-            "price": 800,
+            "price": 820,
             "location": "Cool mountain rivers, streams and lakes - North America (introduced to Europe)",
             "preferred_time": "04h - 09h, 16h - 21h",
             "preferred_season": "March - June, September - November",
@@ -3903,7 +3903,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Rainbow Trout (Oncorhynchus mykiss) is caught from March to June and September to November, from 04h - 09h or 16h - 21h, taking advantage of cool waters and insect hatches. This fish is distinguished by a dazzling iridescent pink lateral band. A surprising fact is its ability to swim against the current in the most turbulent torrents. Experienced anglers know it has highly developed vision, allowing it to detect the slightest movements outside the water. Highly prized in cooking for its tender flesh and fine flavor, it is often cooked meunière or grilled. Its estimated price is 800 gold coins.",
+            "fun_fact": "The Rainbow Trout (Oncorhynchus mykiss) is caught from March to June and September to November, from 04h - 09h or 16h - 21h, taking advantage of cool waters and insect hatches. This fish is distinguished by a dazzling iridescent pink lateral band. A surprising fact is its ability to swim against the current in the most turbulent torrents. Experienced anglers know it has highly developed vision, allowing it to detect the slightest movements outside the water. Highly prized in cooking for its tender flesh and fine flavor, it is often cooked meunière or grilled. Its estimated price is 820 gold coins.",
             "time_restriction": "before_22h"
         },
         {
@@ -3946,7 +3946,7 @@
                 ]
             },
             "id": 45,
-            "price": 240,
+            "price": 580,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "Year-round",
@@ -3964,7 +3964,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Dace (Leuciscus leuciscus) is fished year-round from 16h to 09h in rapid and cool streams of Europe. This very lively small cyprinid presents a surprising behavior: it gulps insects at the water surface while performing characteristic small leaps. Expert anglers in the field highlight that it is extremely skittish and requires a very stealthy approach. Marketed at a price of 240 gold coins, its flesh is fine but filled with many small bones, making it traditionally suitable for deep frying.",
+            "fun_fact": "The Dace (Leuciscus leuciscus) is fished year-round from 16h to 09h in rapid and cool streams of Europe. This very lively small cyprinid presents a surprising behavior: it gulps insects at the water surface while performing characteristic small leaps. Expert anglers in the field highlight that it is extremely skittish and requires a very stealthy approach. Marketed at a price of 580 gold coins, its flesh is fine but filled with many small bones, making it traditionally suitable for deep frying.",
             "time_restriction": "after_22h"
         },
         {
@@ -4007,7 +4007,7 @@
                 ]
             },
             "id": 127,
-            "price": 351,
+            "price": 760,
             "location": "Deep lakes and slow-moving rivers (Europe)",
             "preferred_time": "18h - 06h",
             "preferred_season": "June - January",
@@ -4021,7 +4021,7 @@
                 12,
                 1
             ],
-            "fun_fact": "The Zander, Sander lucioperca, is fished from June to January between 18h and 06h on cloudy days in deep European lakes. This predator has reflective eyes giving it excellent night vision to hunt. Valued at 351 coins, its fine, firm, boneless white flesh is highly prized in gastronomy, traditionally poached or roasted with a drizzle of lemon.",
+            "fun_fact": "The Zander, Sander lucioperca, is fished from June to January between 18h and 06h on cloudy days in deep European lakes. This predator has reflective eyes giving it excellent night vision to hunt. Valued at 760 coins, its fine, firm, boneless white flesh is highly prized in gastronomy, traditionally poached or roasted with a drizzle of lemon.",
             "time_restriction": "after_22h"
         },
         {
@@ -4064,7 +4064,7 @@
                 ]
             },
             "id": 128,
-            "price": 352,
+            "price": 1120,
             "location": "Deep sandy bottoms of the North Atlantic Ocean",
             "preferred_time": "06h - 18h",
             "preferred_season": "May - September",
@@ -4075,7 +4075,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Atlantic Halibut, Hippoglossus hippoglossus, is fished from May to September between 06h and 18h in calm seas in the North Atlantic depths. This giant flatfish can live over fifty years and grow to massive sizes. Valued at 352 coins, its firm, dense white flesh is highly sought after in gastronomy, traditionally roasted or served as grilled steaks with herbs.",
+            "fun_fact": "The Atlantic Halibut, Hippoglossus hippoglossus, is fished from May to September between 06h and 18h in calm seas in the North Atlantic depths. This giant flatfish can live over fifty years and grow to massive sizes. Valued at 1120 coins, its firm, dense white flesh is highly sought after in gastronomy, traditionally roasted or served as grilled steaks with herbs.",
             "time_restriction": "before_22h"
         },
         {
@@ -4118,7 +4118,7 @@
                 ]
             },
             "id": 129,
-            "price": 353,
+            "price": 1180,
             "location": "Deep cold alpine and subarctic lakes (Europe, North America)",
             "preferred_time": "05h - 21h",
             "preferred_season": "June - September",
@@ -4128,7 +4128,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Arctic Charr, Salvelinus alpinus, is caught from June to September between 05h and 21h in cool weather in deep alpine lakes. This salmonid tolerates the coldest waters on Earth, surviving under ice sheets. Valued at 353 coins, its delicate pink-orange flesh has a subtle, buttery flavor, highly prized when gently steamed or pan-seared with a classic lemon-butter sauce.",
+            "fun_fact": "The Arctic Charr, Salvelinus alpinus, is caught from June to September between 05h and 21h in cool weather in deep alpine lakes. This salmonid tolerates the coldest waters on Earth, surviving under ice sheets. Valued at 1180 coins, its delicate pink-orange flesh has a subtle, buttery flavor, highly prized when gently steamed or pan-seared with a classic lemon-butter sauce.",
             "time_restriction": "before_22h"
         },
         {
@@ -4171,7 +4171,7 @@
                 ]
             },
             "id": 130,
-            "price": 354,
+            "price": 600,
             "location": "Sandy and rocky shelves of the continental shelf (Atlantic, Mediterranean)",
             "preferred_time": "20h - 06h",
             "preferred_season": "Year-round",
@@ -4189,7 +4189,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Lesser Spotted Dogfish, Scyliorhinus canicula, is fished year-round from 20h to 06h on dark nights over Atlantic sandy beds. This small shark has sandpaper-like skin and lays egg cases known as mermaid's purses. Valued at 354 coins, its firm, boneless flesh is traditionally prepared in stews or poached in tomato sauce after being skinned.",
+            "fun_fact": "The Lesser Spotted Dogfish, Scyliorhinus canicula, is fished year-round from 20h to 06h on dark nights over Atlantic sandy beds. This small shark has sandpaper-like skin and lays egg cases known as mermaid's purses. Valued at 600 coins, its firm, boneless flesh is traditionally prepared in stews or poached in tomato sauce after being skinned.",
             "time_restriction": "after_22h"
         },
         {
@@ -4232,7 +4232,7 @@
                 ]
             },
             "id": 131,
-            "price": 356,
+            "price": 1000,
             "location": "Shipwrecks, reefs, and rocky crevices (Atlantic Ocean)",
             "preferred_time": "20h - 06h",
             "preferred_season": "June - November",
@@ -4244,7 +4244,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Conger Eel, Conger conger, is caught from June to November between 20h and 06h on calm nights near Atlantic wrecks. This massive, powerful predator hides in dark crevices. Valued at 356 coins, it provides very firm and flavorful flesh. Its front section, containing fewer bones, is ideal for enriching seafood stews or prepared roasted with herbs.",
+            "fun_fact": "The Conger Eel, Conger conger, is caught from June to November between 20h and 06h on calm nights near Atlantic wrecks. This massive, powerful predator hides in dark crevices. Valued at 1000 coins, it provides very firm and flavorful flesh. Its front section, containing fewer bones, is ideal for enriching seafood stews or prepared roasted with herbs.",
             "time_restriction": "after_22h"
         },
         {
@@ -4287,7 +4287,7 @@
                 ]
             },
             "id": 132,
-            "price": 357,
+            "price": 1140,
             "location": "Surface coastal waters, pelagic zones (Europe)",
             "preferred_time": "09h - 18h",
             "preferred_season": "May - September",
@@ -4298,7 +4298,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Garfish, Belone belone, is caught from May to September between 09h and 18h in bright sunshine along European coasts. This needle-like fish features a long beak and green bones caused by biliverdin pigment. Valued at 357 coins, its fine, iodized flesh is highly suited for shallow frying or grilling after being marinated in lemon juice and olive oil.",
+            "fun_fact": "The Garfish, Belone belone, is caught from May to September between 09h and 18h in bright sunshine along European coasts. This needle-like fish features a long beak and green bones caused by biliverdin pigment. Valued at 1140 coins, its fine, iodized flesh is highly suited for shallow frying or grilling after being marinated in lemon juice and olive oil.",
             "time_restriction": "before_22h"
         },
         {
@@ -4341,7 +4341,7 @@
                 ]
             },
             "id": 133,
-            "price": 358,
+            "price": 1020,
             "location": "Coastal sandy seabeds, reefs, and wrecks (Mediterranean, Atlantic)",
             "preferred_time": "06h - 18h",
             "preferred_season": "June - November",
@@ -4353,7 +4353,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The John Dory, Zeus faber, is fished from June to November between 06h and 18h in calm conditions in the Mediterranean. This slow predator features a dark spot on each side, said to be Saint Peter's fingerprint. Valued at 358 coins, its exceptional white flesh is extremely firm and delicate, making it a legendary gourmet fish served in fine dining restaurants.",
+            "fun_fact": "The John Dory, Zeus faber, is fished from June to November between 06h and 18h in calm conditions in the Mediterranean. This slow predator features a dark spot on each side, said to be Saint Peter's fingerprint. Valued at 1020 coins, its exceptional white flesh is extremely firm and delicate, making it a legendary gourmet fish served in fine dining restaurants.",
             "time_restriction": "before_22h"
         },
         {
@@ -4396,7 +4396,7 @@
                 ]
             },
             "id": 134,
-            "price": 359,
+            "price": 620,
             "location": "Deep muddy seabeds of the continental shelf (Atlantic)",
             "preferred_time": "08h - 20h",
             "preferred_season": "Year-round",
@@ -4414,7 +4414,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Monkfish, Lophius piscatorius, is fished year-round between 08h and 20h under overcast skies in Atlantic deep waters. This camouflaged benthic predator attracts prey with a fleshy lure on its head. Valued at 359 coins, its meaty tail yields firm, succulent flesh resembling lobster tail, delicious when roasted or prepared in a rich tomato and wine sauce.",
+            "fun_fact": "The Monkfish, Lophius piscatorius, is fished year-round between 08h and 20h under overcast skies in Atlantic deep waters. This camouflaged benthic predator attracts prey with a fleshy lure on its head. Valued at 620 coins, its meaty tail yields firm, succulent flesh resembling lobster tail, delicious when roasted or prepared in a rich tomato and wine sauce.",
             "time_restriction": "before_22h"
         },
         {
@@ -4457,7 +4457,7 @@
                 ]
             },
             "id": 135,
-            "price": 361,
+            "price": 1040,
             "location": "Slow-moving rivers, ponds, marshes, and wetlands (Europe)",
             "preferred_time": "20h - 04h",
             "preferred_season": "April - September",
@@ -4469,7 +4469,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The European Eel, Anguilla anguilla, is caught from April to September between 20h and 04h during rainy weather in European wetlands. This migratory fish travels thousands of miles to the Sargasso Sea to spawn. Valued at 361 coins, its rich, oily flesh is a traditional culinary specialty, highly prized when smoked, stewed, or pan-fried with garlic and parsley.",
+            "fun_fact": "The European Eel, Anguilla anguilla, is caught from April to September between 20h and 04h during rainy weather in European wetlands. This migratory fish travels thousands of miles to the Sargasso Sea to spawn. Valued at 1040 coins, its rich, oily flesh is a traditional culinary specialty, highly prized when smoked, stewed, or pan-fried with garlic and parsley.",
             "time_restriction": "after_22h"
         },
         {
@@ -4512,7 +4512,7 @@
                 ]
             },
             "id": 136,
-            "price": 362,
+            "price": 840,
             "location": "Warm freshwater lakes and ponds (Tropical regions)",
             "preferred_time": "06h - 18h",
             "preferred_season": "April - October",
@@ -4525,7 +4525,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Tilapia, Oreochromis niloticus, is caught from April to October between 06h and 18h in warm, sunny weather in tropical lakes. This hardy freshwater fish is famous for mouthbrooding, incubating eggs in its mouth to protect fry. Valued at 362 coins, it is a key aquaculture fish. Its neutral white flesh is delicious when grilled whole with spices or steamed.",
+            "fun_fact": "The Tilapia, Oreochromis niloticus, is caught from April to October between 06h and 18h in warm, sunny weather in tropical lakes. This hardy freshwater fish is famous for mouthbrooding, incubating eggs in its mouth to protect fry. Valued at 840 coins, it is a key aquaculture fish. Its neutral white flesh is delicious when grilled whole with spices or steamed.",
             "time_restriction": "before_22h"
         }
     ],
@@ -4570,7 +4570,7 @@
                 ]
             },
             "id": 46,
-            "price": 4000,
+            "price": 3200,
             "location": "River",
             "preferred_time": "21h - 04h",
             "preferred_season": "June - September",
@@ -4580,7 +4580,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Senegal Bichir (Polypterus senegalus) is fished from June to September between 21h and 04h, taking advantage of the darkness to crawl along muddy bottoms of calm African rivers. This prehistoric creature features an extraordinary biological trait: functional primitive lungs allowing it to breathe air at the surface and survive for days out of water by crawling on land. Expert ichthyologists note that its lobed pectoral fins recall the limbs of the first terrestrial tetrapods. Marketed at an average price of 4000 gold coins for exceptional aquariums, it has no culinary use due to its rarity and tough scales.",
+            "fun_fact": "The Senegal Bichir (Polypterus senegalus) is fished from June to September between 21h and 04h, taking advantage of the darkness to crawl along muddy bottoms of calm African rivers. This prehistoric creature features an extraordinary biological trait: functional primitive lungs allowing it to breathe air at the surface and survive for days out of water by crawling on land. Expert ichthyologists note that its lobed pectoral fins recall the limbs of the first terrestrial tetrapods. Marketed at an average price of 3200 gold coins for exceptional aquariums, it has no culinary use due to its rarity and tough scales.",
             "time_restriction": "after_22h"
         },
         {
@@ -4623,7 +4623,7 @@
                 ]
             },
             "id": 47,
-            "price": 1800,
+            "price": 3300,
             "location": "River",
             "preferred_time": "00h - 24h",
             "preferred_season": "September - December",
@@ -4633,7 +4633,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Northern Pike (Esox lucius) is fished from September to December, all day long, in calm rivers and lakes rich in vegetation. This formidable ambush predator features a surprising anatomy: its duckbill-like jaw is lined with over seven hundred sharp backward-pointing teeth to prevent any prey from escaping. Expert anglers in the field know it is capable of lightning-fast bursts of speed to leap at its targets. Marketed at a price of 1800 gold coins, its firm white flesh is highly esteemed in cooking, traditionally prepared as pike quenelles with Nantua sauce.",
+            "fun_fact": "The Northern Pike (Esox lucius) is fished from September to December, all day long, in calm rivers and lakes rich in vegetation. This formidable ambush predator features a surprising anatomy: its duckbill-like jaw is lined with over seven hundred sharp backward-pointing teeth to prevent any prey from escaping. Expert anglers in the field know it is capable of lightning-fast bursts of speed to leap at its targets. Marketed at a price of 3300 gold coins, its firm white flesh is highly esteemed in cooking, traditionally prepared as pike quenelles with Nantua sauce.",
             "time_restriction": null
         },
         {
@@ -4676,7 +4676,7 @@
                 ]
             },
             "id": 48,
-            "price": 4500,
+            "price": 2200,
             "location": "Ocean (pier)",
             "preferred_time": "00h - 24h",
             "preferred_season": "May - October",
@@ -4688,7 +4688,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Giant Trevally (Caranx ignobilis) is fished from May to October, all day long, near reefs and deep marine piers. This massive pelagic predator has a surprising biology: it is capable of leaping out of the water to capture seabirds in mid-air. Sport anglers in the field respect it for its extreme fighting spirit that tests fishing gear to its limits. Marketed at a price of 4500 gold coins, its flesh is firm and tasty, highly sought after in Hawaii where it is eaten raw as sashimi or grilled with tropical herbs.",
+            "fun_fact": "The Giant Trevally (Caranx ignobilis) is fished from May to October, all day long, near reefs and deep marine piers. This massive pelagic predator has a surprising biology: it is capable of leaping out of the water to capture seabirds in mid-air. Sport anglers in the field respect it for its extreme fighting spirit that tests fishing gear to its limits. Marketed at a price of 2200 gold coins, its flesh is firm and tasty, highly sought after in Hawaii where it is eaten raw as sashimi or grilled with tropical herbs.",
             "time_restriction": null
         },
         {
@@ -4731,7 +4731,7 @@
                 ]
             },
             "id": 49,
-            "price": 4000,
+            "price": 1500,
             "location": "Pond",
             "preferred_time": "16h - 09h",
             "preferred_season": "Year-round",
@@ -4749,7 +4749,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Koi Carp (Cyprinus rubrofuscus) is fished year-round from 16h to 09h in calm ponds and still basins. This large ornamental cyprinid features a surprising lifespan: some selected specimens in Japan have exceeded two hundred years of age. Expert breeders in the field view it as a living symbol of luck and perseverance. Marketed at a price of 4000 gold coins for the rarest color patterns, its bony, oily flesh is consumed in Japan as koikoku soup, though its ornamental value far exceeds its culinary worth.",
+            "fun_fact": "The Koi Carp (Cyprinus rubrofuscus) is fished year-round from 16h to 09h in calm ponds and still basins. This large ornamental cyprinid features a surprising lifespan: some selected specimens in Japan have exceeded two hundred years of age. Expert breeders in the field view it as a living symbol of luck and perseverance. Marketed at a price of 1500 gold coins for the rarest color patterns, its bony, oily flesh is consumed in Japan as koikoku soup, though its ornamental value far exceeds its culinary worth.",
             "time_restriction": "after_22h"
         },
         {
@@ -4792,7 +4792,7 @@
                 ]
             },
             "id": 50,
-            "price": 2500,
+            "price": 2300,
             "location": "River",
             "preferred_time": "09h - 16h",
             "preferred_season": "May - October",
@@ -4804,7 +4804,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Siamese Fighting Fish (Betta splendens) is fished from May to October between 09h and 16h in shallow swamps and rice paddies. This small ornamental fish features a surprising biology: males are so territorial that they fight to the death at the sight of their own reflection in a mirror. Aquarists in the field note that it possesses a labyrinth organ allowing it to breathe surface air. Marketed at an average price of 2500 gold coins for its spectacular veils, its tiny size rules out any culinary interest and it serves solely as an ornament.",
+            "fun_fact": "The Siamese Fighting Fish (Betta splendens) is fished from May to October between 09h and 16h in shallow swamps and rice paddies. This small ornamental fish features a surprising biology: males are so territorial that they fight to the death at the sight of their own reflection in a mirror. Aquarists in the field note that it possesses a labyrinth organ allowing it to breathe surface air. Marketed at an average price of 2300 gold coins for its spectacular veils, its tiny size rules out any culinary interest and it serves solely as an ornament.",
             "time_restriction": "before_22h"
         },
         {
@@ -4847,7 +4847,7 @@
                 ]
             },
             "id": 51,
-            "price": 2000,
+            "price": 3900,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "September - November",
@@ -4856,7 +4856,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Mitten Crab (Eriocheir sinensis) is fished from September to November, from 16h to 09h, in rivers and estuaries. This crustacean features a surprising biology: it spends most of its life in freshwater before migrating hundreds of kilometers to the sea to mate and spawn. Field observers recognize it by its claws covered in a dense, dark sleeve of fur. Marketed at an average price of 2000 gold coins, it is a highly sought-after delicacy in Asia in autumn, traditionally steamed and eaten for its rich roe and sweet white meat.",
+            "fun_fact": "The Mitten Crab (Eriocheir sinensis) is fished from September to November, from 16h to 09h, in rivers and estuaries. This crustacean features a surprising biology: it spends most of its life in freshwater before migrating hundreds of kilometers to the sea to mate and spawn. Field observers recognize it by its claws covered in a dense, dark sleeve of fur. Marketed at an average price of 3900 gold coins, it is a highly sought-after delicacy in Asia in autumn, traditionally steamed and eaten for its rich roe and sweet white meat.",
             "time_restriction": "after_22h"
         },
         {
@@ -4899,7 +4899,7 @@
                 ]
             },
             "id": 52,
-            "price": 3500,
+            "price": 1600,
             "location": "Tropical and temperate oceans (open sea) - Global",
             "preferred_time": "22h - 04h",
             "preferred_season": "Year-round",
@@ -4917,7 +4917,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Swordfish (Xiphias gladius) is fished year-round, preferably between 22h and 04h when this large predator rises from the depths to hunt squid under the moon. Recognizable by its sword-like bill representing a third of its length, it can reach speeds of 90 km/h. Field biologists have observed that it has a special heating organ near its eyes to improve vision in icy abyssal waters. It is a noble fish highly sought after in cooking for its firm, tasty steaks resembling veal. Its market price is valued at 3500 gold coins.",
+            "fun_fact": "The Swordfish (Xiphias gladius) is fished year-round, preferably between 22h and 04h when this large predator rises from the depths to hunt squid under the moon. Recognizable by its sword-like bill representing a third of its length, it can reach speeds of 90 km/h. Field biologists have observed that it has a special heating organ near its eyes to improve vision in icy abyssal waters. It is a noble fish highly sought after in cooking for its firm, tasty steaks resembling veal. Its market price is valued at 1600 gold coins.",
             "time_restriction": "after_22h"
         },
         {
@@ -4960,7 +4960,7 @@
                 ]
             },
             "id": 53,
-            "price": 3000,
+            "price": 1800,
             "location": "Mouths of large rivers and coastal areas - North America and Europe",
             "preferred_time": "00h - 24h",
             "preferred_season": "September - March",
@@ -4973,7 +4973,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Atlantic Sturgeon (Acipenser oxyrinchus) is caught from September to March, all day long, in river mouths. This armored prehistoric fish features bony plates instead of scales. A surprising fact is its exceptional lifespan, which can exceed one hundred years. Ichthyologists note that its sensory barbels under the snout allow it to detect prey in the mud without using its eyes. Famous worldwide for its precious eggs that yield caviar, its firm flesh is also excellent poached or smoked. Its price is 3000 gold coins.",
+            "fun_fact": "The Atlantic Sturgeon (Acipenser oxyrinchus) is caught from September to March, all day long, in river mouths. This armored prehistoric fish features bony plates instead of scales. A surprising fact is its exceptional lifespan, which can exceed one hundred years. Ichthyologists note that its sensory barbels under the snout allow it to detect prey in the mud without using its eyes. Famous worldwide for its precious eggs that yield caviar, its firm flesh is also excellent poached or smoked. Its price is 1800 gold coins.",
             "time_restriction": null
         },
         {
@@ -5016,7 +5016,7 @@
                 ]
             },
             "id": 54,
-            "price": 2000,
+            "price": 4000,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "August - October",
@@ -5025,7 +5025,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Moray Eel (Muraena helena) is fished from August to October, all day long, in rocky ocean crevices. This snake-like predator has a surprising biology: its secondary pharyngeal jaws project forward to drag prey down its throat, akin to a movie monster. Expert divers in the field avoid getting too close as its bites can become infected from mouth bacteria. Marketed at a price of 2000 gold coins, its rich, firm flesh with a strong flavor has been cooked since antiquity, excellent roasted or simmered in sea stews.",
+            "fun_fact": "The Moray Eel (Muraena helena) is fished from August to October, all day long, in rocky ocean crevices. This snake-like predator has a surprising biology: its secondary pharyngeal jaws project forward to drag prey down its throat, akin to a movie monster. Expert divers in the field avoid getting too close as its bites can become infected from mouth bacteria. Marketed at a price of 4000 gold coins, its rich, firm flesh with a strong flavor has been cooked since antiquity, excellent roasted or simmered in sea stews.",
             "time_restriction": null
         },
         {
@@ -5068,7 +5068,7 @@
                 ]
             },
             "id": 55,
-            "price": 3800,
+            "price": 1900,
             "location": "River (cliffs)",
             "preferred_time": "16h - 09h",
             "preferred_season": "March - June, September - November",
@@ -5081,7 +5081,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Arctic Charr (Salvelinus alpinus) is fished from March to June and September to November, from 16h to 09h, in deep alpine lakes and glacial mountain streams. This salmonid of pure waters has a surprising cold tolerance: it is the northernmost freshwater fish on Earth, capable of living under Arctic ice. Expert anglers note that it sports a spectacular bright orange belly during spawning. Marketed at an average price of 3800 gold coins, its fine, salmon-pink flesh has exceptional culinary value, simply grilled with mountain butter or poached.",
+            "fun_fact": "The Arctic Charr (Salvelinus alpinus) is fished from March to June and September to November, from 16h to 09h, in deep alpine lakes and glacial mountain streams. This salmonid of pure waters has a surprising cold tolerance: it is the northernmost freshwater fish on Earth, capable of living under Arctic ice. Expert anglers note that it sports a spectacular bright orange belly during spawning. Marketed at an average price of 1900 gold coins, its fine, salmon-pink flesh has exceptional culinary value, simply grilled with mountain butter or poached.",
             "time_restriction": "after_22h"
         },
         {
@@ -5124,7 +5124,7 @@
                 ]
             },
             "id": 56,
-            "price": 1500,
+            "price": 3000,
             "location": "River",
             "preferred_time": "09h - 16h",
             "preferred_season": "May - September",
@@ -5135,7 +5135,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Doctor Fish (Garra rufa) is fished from May to September between 09h and 16h in warm freshwater thermal springs of the Middle East. This small fish features a surprising behavior: it feeds on the dead skin of bathers to supplement its diet in these nutrient-poor waters. Experts in the field highlight that its saliva contains a healing enzyme called dithranol. Marketed at an average price of 1500 gold coins for fish-pedicure aesthetic therapy, its flesh is not edible due to its tiny size and a bland taste with no culinary interest.",
+            "fun_fact": "The Doctor Fish (Garra rufa) is fished from May to September between 09h and 16h in warm freshwater thermal springs of the Middle East. This small fish features a surprising behavior: it feeds on the dead skin of bathers to supplement its diet in these nutrient-poor waters. Experts in the field highlight that its saliva contains a healing enzyme called dithranol. Marketed at an average price of 3000 gold coins for fish-pedicure aesthetic therapy, its flesh is not edible due to its tiny size and a bland taste with no culinary interest.",
             "time_restriction": "before_22h"
         },
         {
@@ -5178,7 +5178,7 @@
                 ]
             },
             "id": 57,
-            "price": 2500,
+            "price": 3100,
             "location": "Ocean",
             "preferred_time": "16h - 09h",
             "preferred_season": "November - March",
@@ -5189,7 +5189,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Footballfish (Himantolophus groenlandicus) is fished from November to March between 16h and 09h in dark ocean abysses. This large predatory fish features a surprising biology: the female sports a glowing appendage on her snout called an esca, hosting bioluminescent symbiotic bacteria to attract prey in total darkness. Field biologists note that the male is tiny and lives as a parasite fused to the female's body. Marketed at an average price of 2500 gold coins, its gelatinous, water-rich flesh is completely unsuitable for eating.",
+            "fun_fact": "The Footballfish (Himantolophus groenlandicus) is fished from November to March between 16h and 09h in dark ocean abysses. This large predatory fish features a surprising biology: the female sports a glowing appendage on her snout called an esca, hosting bioluminescent symbiotic bacteria to attract prey in total darkness. Field biologists note that the male is tiny and lives as a parasite fused to the female's body. Marketed at an average price of 3100 gold coins, its gelatinous, water-rich flesh is completely unsuitable for eating.",
             "time_restriction": "after_22h"
         },
         {
@@ -5232,7 +5232,7 @@
                 ]
             },
             "id": 58,
-            "price": 3000,
+            "price": 2400,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "May - October",
@@ -5244,7 +5244,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Angelfish (Pterophyllum scalare) is fished from May to October between 16h and 09h in calm freshwater streams and flooded forests of the Amazon. This cichlid with a flat discoid body features a surprising morphology: its dorsal and anal fins are extremely elongated to allow it to camouflage among reeds and submerged roots. Aquarists in the field note that it lives in highly cohesive hierarchical groups. Marketed at an average price of 3000 gold coins for the finest ornamental varieties, its flesh is fine but its small size and aesthetic value reserve it solely for aquariums.",
+            "fun_fact": "The Angelfish (Pterophyllum scalare) is fished from May to October between 16h and 09h in calm freshwater streams and flooded forests of the Amazon. This cichlid with a flat discoid body features a surprising morphology: its dorsal and anal fins are extremely elongated to allow it to camouflage among reeds and submerged roots. Aquarists in the field note that it lives in highly cohesive hierarchical groups. Marketed at an average price of 2400 gold coins for the finest ornamental varieties, its flesh is fine but its small size and aesthetic value reserve it solely for aquariums.",
             "time_restriction": "after_22h"
         },
         {
@@ -5287,7 +5287,7 @@
                 ]
             },
             "id": 59,
-            "price": 3000,
+            "price": 3400,
             "location": "Ocean",
             "preferred_time": "04h - 21h",
             "preferred_season": "August - November",
@@ -5297,7 +5297,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Thornback Ray (Raja clavata) is fished from August to November between 04h and 21h on shallow sandy seafloors. This flattened cartilaginous fish features a surprising defensive system: its back is dotted with sharp pointed bony buckles called tubercles to discourage predators. Expert anglers in the field handle it with care to avoid painful scratches. Marketed at a price of 3000 gold coins, its flesh is succulent and boneless; its ray wings cooked in black butter with capers are a monument of seafood gastronomy.",
+            "fun_fact": "The Thornback Ray (Raja clavata) is fished from August to November between 04h and 21h on shallow sandy seafloors. This flattened cartilaginous fish features a surprising defensive system: its back is dotted with sharp pointed bony buckles called tubercles to discourage predators. Expert anglers in the field handle it with care to avoid painful scratches. Marketed at a price of 3400 gold coins, its flesh is succulent and boneless; its ray wings cooked in black butter with capers are a monument of seafood gastronomy.",
             "time_restriction": "before_22h"
         },
         {
@@ -5340,7 +5340,7 @@
                 ]
             },
             "id": 60,
-            "price": 1500,
+            "price": 3500,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "June - September",
@@ -5350,7 +5350,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Live Sharksucker (Echeneis naucrates) is fished from June to September, all day long, in the ocean. This elongated benthic fish has a surprising adaptation: its first dorsal fin is transformed into a powerful oval suction disc on top of its head, allowing it to attach firmly to sharks and turtles to travel effortlessly. Expert biologists observe that it also cleans parasites off its hosts. Marketed at a price of 1500 gold coins due to its biological rarity, its flesh is fine but its leathery texture limits its culinary value.",
+            "fun_fact": "The Live Sharksucker (Echeneis naucrates) is fished from June to September, all day long, in the ocean. This elongated benthic fish has a surprising adaptation: its first dorsal fin is transformed into a powerful oval suction disc on top of its head, allowing it to attach firmly to sharks and turtles to travel effortlessly. Expert biologists observe that it also cleans parasites off its hosts. Marketed at a price of 3500 gold coins due to its biological rarity, its flesh is fine but its leathery texture limits its culinary value.",
             "time_restriction": null
         },
         {
@@ -5393,7 +5393,7 @@
                 ]
             },
             "id": 61,
-            "price": 2500,
+            "price": 2000,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "March - June, September - November",
@@ -5406,7 +5406,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Atlantic Salmon (Salmo salar) is fished from March to June and September to November, all day long, in the North Atlantic Ocean and at river mouths. This legendary migratory fish swims upriver against the current and leaps over obstacles several meters high to spawn. A surprising biological fact is that it stops feeding as soon as it enters freshwater, living solely on its fat reserves. Experts highlight its extraordinary ability to find its home river using its ultra-developed sense of smell. Its tender, flavorful pink flesh is a cornerstone of global gastronomy, delicious smoked, grilled, or baked. Its market price is 2500 gold coins.",
+            "fun_fact": "The Atlantic Salmon (Salmo salar) is fished from March to June and September to November, all day long, in the North Atlantic Ocean and at river mouths. This legendary migratory fish swims upriver against the current and leaps over obstacles several meters high to spawn. A surprising biological fact is that it stops feeding as soon as it enters freshwater, living solely on its fat reserves. Experts highlight its extraordinary ability to find its home river using its ultra-developed sense of smell. Its tender, flavorful pink flesh is a cornerstone of global gastronomy, delicious smoked, grilled, or baked. Its market price is 2000 gold coins.",
             "time_restriction": null
         },
         {
@@ -5449,7 +5449,7 @@
                 ]
             },
             "id": 62,
-            "price": 1800,
+            "price": 4300,
             "location": "River mouth",
             "preferred_time": "00h - 24h",
             "preferred_season": "September",
@@ -5499,7 +5499,7 @@
                 ]
             },
             "id": 63,
-            "price": 7000,
+            "price": 2500,
             "location": "Ocean (pier)",
             "preferred_time": "00h - 24h",
             "preferred_season": "November - April",
@@ -5511,7 +5511,7 @@
                 3,
                 4
             ],
-            "fun_fact": "The Tuna (Thunnus alalunga) is fished from November to April, all day long, in the open sea during its thermal migrations. This great migratory fish is one of the few warm-blooded fish, allowing it to maintain a swimming speed over 70 km/h. Sailors notice its extremely long sabre-shaped pectoral fins. Sold for 7000 gold coins, its firm red flesh is highly esteemed for preparing seared steaks or fine preserves.",
+            "fun_fact": "The Tuna (Thunnus alalunga) is fished from November to April, all day long, in the open sea during its thermal migrations. This great migratory fish is one of the few warm-blooded fish, allowing it to maintain a swimming speed over 70 km/h. Sailors notice its extremely long sabre-shaped pectoral fins. Sold for 2500 gold coins, its firm red flesh is highly esteemed for preparing seared steaks or fine preserves.",
             "time_restriction": null
         },
         {
@@ -5554,7 +5554,7 @@
                 ]
             },
             "id": 64,
-            "price": 11000,
+            "price": 2600,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "November - April",
@@ -5566,7 +5566,7 @@
                 3,
                 4
             ],
-            "fun_fact": "The Bluefin Tuna (Thunnus thynnus) is caught from November to April, all day long, in deep ocean currents. This sea colossus can exceed 600 kilograms and live 40 years while traveling thousands of kilometers. Ichthyologists observe its bright yellow finlets lined near its powerful tail. Sold at high prices at auctions, around 11000 gold coins here, this exceptional fish has a marbled fat flesh, the absolute queen of high-end sashimi and sushi.",
+            "fun_fact": "The Bluefin Tuna (Thunnus thynnus) is caught from November to April, all day long, in deep ocean currents. This sea colossus can exceed 600 kilograms and live 40 years while traveling thousands of kilometers. Ichthyologists observe its bright yellow finlets lined near its powerful tail. Sold at high prices at auctions, around 2600 gold coins here, this exceptional fish has a marbled fat flesh, the absolute queen of high-end sashimi and sushi.",
             "time_restriction": null
         },
         {
@@ -5609,7 +5609,7 @@
                 ]
             },
             "id": 65,
-            "price": 3750,
+            "price": 4200,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "August - September",
@@ -5617,7 +5617,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Softshell Turtle (Pelodiscus sinensis) is fished from August to September between 16h and 09h in calm, muddy rivers. This freshwater turtle surprises with its soft, leathery shell without hard scales. Observers notice its snorkel-shaped snout that allows it to breathe while remaining buried in the mud. Estimated at 3750 gold coins, its tender flesh, tasting like chicken, is a refined ingredient used in traditional Asian soups.",
+            "fun_fact": "The Softshell Turtle (Pelodiscus sinensis) is fished from August to September between 16h and 09h in calm, muddy rivers. This freshwater turtle surprises with its soft, leathery shell without hard scales. Observers notice its snorkel-shaped snout that allows it to breathe while remaining buried in the mud. Estimated at 4200 gold coins, its tender flesh, tasting like chicken, is a refined ingredient used in traditional Asian soups.",
             "time_restriction": "after_22h"
         },
         {
@@ -5660,7 +5660,7 @@
                 ]
             },
             "id": 66,
-            "price": 3000,
+            "price": 1700,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "All year",
@@ -5678,7 +5678,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Red Snapper (Lutjanus campechanus) is fished all year round, all day long, near rocky and coral reefs. This coastal predator can live up to 50 years, changing its diet as it grows. Sailors immediately recognize its sparkling red-orange body and scarlet eyes. Sold for 3000 gold coins, this fish is highly sought-after in cooking for its white, firm, and flavorful flesh, which excels roasted whole or grilled.",
+            "fun_fact": "The Red Snapper (Lutjanus campechanus) is fished all year round, all day long, near rocky and coral reefs. This coastal predator can live up to 50 years, changing its diet as it grows. Sailors immediately recognize its sparkling red-orange body and scarlet eyes. Sold for 1700 gold coins, this fish is highly sought-after in cooking for its white, firm, and flavorful flesh, which excels roasted whole or grilled.",
             "time_restriction": null
         },
         {
@@ -5721,7 +5721,7 @@
                 ]
             },
             "id": 137,
-            "price": 1601,
+            "price": 3600,
             "location": "North Atlantic Ocean and cold rivers of Europe and North America",
             "preferred_time": "05h - 10h, 17h - 22h",
             "preferred_season": "June - September",
@@ -5731,7 +5731,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Atlantic Salmon (Salmo salar) is fished from June to September between 05h-10h and 17h-22h, especially in rainy weather in the North Atlantic Ocean and its rivers. This anadromous fish undertakes an incredible spawning migration. Valued at 1601 gold, its highly prized pink flesh makes it a culinary delicacy when grilled or smoked.",
+            "fun_fact": "The Atlantic Salmon (Salmo salar) is fished from June to September between 05h-10h and 17h-22h, especially in rainy weather in the North Atlantic Ocean and its rivers. This anadromous fish undertakes an incredible spawning migration. Valued at 3600 gold, its highly prized pink flesh makes it a culinary delicacy when grilled or smoked.",
             "time_restriction": "before_22h"
         },
         {
@@ -5774,7 +5774,7 @@
                 ]
             },
             "id": 138,
-            "price": 1602,
+            "price": 3700,
             "location": "Bathyal depths and abysses of the Arctic and North Atlantic Oceans",
             "preferred_time": "20h - 04h",
             "preferred_season": "December - March",
@@ -5784,7 +5784,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Greenland Shark (Somniosus microcephalus) is fished from December to March between 20h and 04h, in freezing weather in Arctic abysses. This slow-moving giant can live over 400 years. Valued at 1602 gold, its flesh is toxic when fresh but highly prized in Iceland as fermented Hákarl after drying.",
+            "fun_fact": "The Greenland Shark (Somniosus microcephalus) is fished from December to March between 20h and 04h, in freezing weather in Arctic abysses. This slow-moving giant can live over 400 years. Valued at 3700 gold, its flesh is toxic when fresh but highly prized in Iceland as fermented Hákarl after drying.",
             "time_restriction": "after_22h"
         },
         {
@@ -5827,7 +5827,7 @@
                 ]
             },
             "id": 139,
-            "price": 1603,
+            "price": 2100,
             "location": "Clean, cold, fast-flowing rivers and streams in Europe",
             "preferred_time": "10h - 16h",
             "preferred_season": "June - December",
@@ -5840,7 +5840,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Grayling (Thymallus thymallus) is fished from June to December between 10h and 16h, in clear weather in fast-flowing European streams. Known as the Lady of the Stream, it features a magnificent sail-like dorsal fin. Valued at 1603 gold, its delicate flesh exuding a thyme scent is a highly refined culinary treat.",
+            "fun_fact": "The Grayling (Thymallus thymallus) is fished from June to December between 10h and 16h, in clear weather in fast-flowing European streams. Known as the Lady of the Stream, it features a magnificent sail-like dorsal fin. Valued at 2100 gold, its delicate flesh exuding a thyme scent is a highly refined culinary treat.",
             "time_restriction": "before_22h"
         },
         {
@@ -5883,7 +5883,7 @@
                 ]
             },
             "id": 140,
-            "price": 1604,
+            "price": 2700,
             "location": "Sluggish bayous, swampy rivers and weedy lakes of North America",
             "preferred_time": "10h - 18h",
             "preferred_season": "April - September",
@@ -5895,7 +5895,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Bowfin (Amia calva) is caught from April to September between 10h and 18h, in sunny weather in North American bayous and slow-moving streams. This living fossil breathes air at the surface in low-oxygen waters. Valued at 1604 gold, its soft flesh requires strong spices in fritters to be culinarily appreciated.",
+            "fun_fact": "The Bowfin (Amia calva) is caught from April to September between 10h and 18h, in sunny weather in North American bayous and slow-moving streams. This living fossil breathes air at the surface in low-oxygen waters. Valued at 2700 gold, its soft flesh requires strong spices in fritters to be culinarily appreciated.",
             "time_restriction": "before_22h"
         },
         {
@@ -5938,7 +5938,7 @@
                 ]
             },
             "id": 141,
-            "price": 1606,
+            "price": 2800,
             "location": "Large oligotrophic lakes and rivers of North America",
             "preferred_time": "05h - 09h, 17h - 21h",
             "preferred_season": "June - November",
@@ -5950,7 +5950,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Muskellunge (Esox masquinongy) is fished from June to November between 05h-09h and 17h-21h, in overcast weather in large North American lakes and rivers. This stealthy apex predator is known as the fish of ten thousand casts. Valued at 1606 gold, its firm white flesh is highly appreciated when roasted or poached.",
+            "fun_fact": "The Muskellunge (Esox masquinongy) is fished from June to November between 05h-09h and 17h-21h, in overcast weather in large North American lakes and rivers. This stealthy apex predator is known as the fish of ten thousand casts. Valued at 2800 gold, its firm white flesh is highly appreciated when roasted or poached.",
             "time_restriction": "before_22h"
         },
         {
@@ -5993,7 +5993,7 @@
                 ]
             },
             "id": 142,
-            "price": 1607,
+            "price": 3800,
             "location": "Tropical coral reefs and mangroves of the Western Atlantic Ocean",
             "preferred_time": "08h - 17h",
             "preferred_season": "May - August",
@@ -6003,7 +6003,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Parrotfish (Scarus guacamaia) is fished from May to August between 08h and 17h, in sunny weather on tropical coral reefs. This herbivorous coral grazer creates white sand using its powerful crushing beak. Valued at 1607 gold, its fragrant flesh is highly prized grilled, though Ciguatera warnings apply.",
+            "fun_fact": "The Parrotfish (Scarus guacamaia) is fished from May to August between 08h and 17h, in sunny weather on tropical coral reefs. This herbivorous coral grazer creates white sand using its powerful crushing beak. Valued at 3800 gold, its fragrant flesh is highly prized grilled, though Ciguatera warnings apply.",
             "time_restriction": "before_22h"
         },
         {
@@ -6046,7 +6046,7 @@
                 ]
             },
             "id": 143,
-            "price": 1608,
+            "price": 2900,
             "location": "Deep rivers, slow-flowing streams and large lakes of Europe",
             "preferred_time": "20h - 04h",
             "preferred_season": "May - October",
@@ -6058,7 +6058,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Wels Catfish (Silurus glanis) is fished from May to October between 20h and 04h, in rainy or stormy weather in large European rivers and lakes. This freshwater titan hunts using its sensory barbels. Valued at 1608 gold, its white flesh is good when stewed but can be very oily in larger specimens.",
+            "fun_fact": "The Wels Catfish (Silurus glanis) is fished from May to October between 20h and 04h, in rainy or stormy weather in large European rivers and lakes. This freshwater titan hunts using its sensory barbels. Valued at 2900 gold, its white flesh is good when stewed but can be very oily in larger specimens.",
             "time_restriction": "after_22h"
         },
         {
@@ -6101,7 +6101,7 @@
                 ]
             },
             "id": 144,
-            "price": 1609,
+            "price": 4100,
             "location": "Coastal waters and sandy or rocky seabeds of the Mediterranean and Black Seas",
             "preferred_time": "06h - 11h, 17h - 22h",
             "preferred_season": "June - August",
@@ -6110,7 +6110,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Shi Drum (Umbrina cirrosa) is fished from June to August between 06h-11h and 17h-22h, in calm weather on Mediterranean sandy and rocky seabeds. This fish uses its chin barbel to detect prey under the sand. Valued at 1609 gold, its highly delicate white flesh makes it a sought-after culinary delicacy.",
+            "fun_fact": "The Shi Drum (Umbrina cirrosa) is fished from June to August between 06h-11h and 17h-22h, in calm weather on Mediterranean sandy and rocky seabeds. This fish uses its chin barbel to detect prey under the sand. Valued at 4100 gold, its highly delicate white flesh makes it a sought-after culinary delicacy.",
             "time_restriction": "before_22h"
         }
     ],
@@ -6155,7 +6155,7 @@
                 ]
             },
             "id": 67,
-            "price": 5000,
+            "price": 7500,
             "location": "Muddy rivers and freshwater swamps - South America",
             "preferred_time": "21h - 04h",
             "preferred_season": "June - September",
@@ -6165,7 +6165,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Electric Eel (Electrophorus electricus) is fished from June to September between 21h and 04h when it actively patrols dark waters. This fish produces discharges of over 600 volts to paralyze prey or defend itself. A surprising fact is that it must regularly surface to breathe air because its gills are rudimentary. Field guides recommend using insulating gloves to handle it without risk of electrocution. Its fatty and firm flesh is consumed locally, although delicate to prepare. Its market price is estimated at 5000 gold coins.",
+            "fun_fact": "The Electric Eel (Electrophorus electricus) is fished from June to September between 21h and 04h when it actively patrols dark waters. This fish produces discharges of over 600 volts to paralyze prey or defend itself. A surprising fact is that it must regularly surface to breathe air because its gills are rudimentary. Field guides recommend using insulating gloves to handle it without risk of electrocution. Its fatty and firm flesh is consumed locally, although delicate to prepare. Its market price is estimated at 7500 gold coins.",
             "time_restriction": "after_22h"
         },
         {
@@ -6208,7 +6208,7 @@
                 ]
             },
             "id": 68,
-            "price": 1300,
+            "price": 5000,
             "location": "Pond",
             "preferred_time": "9h - 16h",
             "preferred_season": "All year round",
@@ -6226,7 +6226,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Goldfish (Carassius auratus) is sought all year round from 09h to 16h in quiet ponds. This ornamental fish surprises with its remarkable memory extending over several months, shattering the popular three-second myth. Breeders point out that it lacks a stomach, forcing it to feed on small portions throughout the day. Sold for 1300 gold coins to beautify outdoor ponds, its tiny size and muddy taste make it unsuitable for cooking.",
+            "fun_fact": "The Goldfish (Carassius auratus) is sought all year round from 09h to 16h in quiet ponds. This ornamental fish surprises with its remarkable memory extending over several months, shattering the popular three-second myth. Breeders point out that it lacks a stomach, forcing it to feed on small portions throughout the day. Sold for 5000 gold coins to beautify outdoor ponds, its tiny size and muddy taste make it unsuitable for cooking.",
             "time_restriction": "before_22h"
         },
         {
@@ -6269,7 +6269,7 @@
                 ]
             },
             "id": 69,
-            "price": 4000,
+            "price": 8500,
             "location": "Ocean",
             "preferred_time": "4h - 21h",
             "preferred_season": "July - September",
@@ -6278,7 +6278,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Ocean Sunfish (Mola mola) is fished from July to September between 04h and 21h in major ocean currents. This atypical giant holds a phenomenal growth record, multiplying its egg weight by sixty million. Observers often describe this colossus floating on its side at the surface to warm up in the sun and invite seagulls to clean parasites embedded in its skin. Estimated at 4000 gold coins, its gelatinous flesh has no culinary value.",
+            "fun_fact": "The Ocean Sunfish (Mola mola) is fished from July to September between 04h and 21h in major ocean currents. This atypical giant holds a phenomenal growth record, multiplying its egg weight by sixty million. Observers often describe this colossus floating on its side at the surface to warm up in the sun and invite seagulls to clean parasites embedded in its skin. Estimated at 8500 gold coins, its gelatinous flesh has no culinary value.",
             "time_restriction": "before_22h"
         },
         {
@@ -6321,7 +6321,7 @@
                 ]
             },
             "id": 70,
-            "price": 2500,
+            "price": 8000,
             "location": "River",
             "preferred_time": "9h - 16h, 21h - 4h",
             "preferred_season": "June - September",
@@ -6331,7 +6331,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Piranha (Pygocentrus nattereri) is caught from June to September between 09h and 16h or 21h and 04h in tropical rivers. This formidable predator has sharp triangular teeth capable of cutting a copper wire in a single bite. Field guides report that it is actually fearful and feeds mainly on fish carcasses. Sold for 2500 gold coins to collectors, its firm white flesh is eaten fried or in spicy soup in the Amazon.",
+            "fun_fact": "The Piranha (Pygocentrus nattereri) is caught from June to September between 09h and 16h or 21h and 04h in tropical rivers. This formidable predator has sharp triangular teeth capable of cutting a copper wire in a single bite. Field guides report that it is actually fearful and feeds mainly on fish carcasses. Sold for 8000 gold coins to collectors, its firm white flesh is eaten fried or in spicy soup in the Amazon.",
             "time_restriction": "before_22h"
         },
         {
@@ -6374,7 +6374,7 @@
                 ]
             },
             "id": 71,
-            "price": 4000,
+            "price": 9000,
             "location": "Temperate and tropical oceans (open sea) - Global",
             "preferred_time": "09h - 16h",
             "preferred_season": "July - September",
@@ -6383,7 +6383,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Ocean Sunfish (Mola mola) is fished from July to September between 09h and 16h, taking advantage of the sun to warm up at the surface. It is the heaviest bony fish in the world, weighing up to two tons. A surprising fact is that the female lays up to 300 million eggs at a time. Experts highlight its extremely rough skin covered in parasites, which pushes it to float on its side to let seabirds clean it. Rarely eaten due to its gelatinous texture and risk of toxins, it is worth 4000 gold coins.",
+            "fun_fact": "The Ocean Sunfish (Mola mola) is fished from July to September between 09h and 16h, taking advantage of the sun to warm up at the surface. It is the heaviest bony fish in the world, weighing up to two tons. A surprising fact is that the female lays up to 300 million eggs at a time. Experts highlight its extremely rough skin covered in parasites, which pushes it to float on its side to let seabirds clean it. Rarely eaten due to its gelatinous texture and risk of toxins, it is worth 9000 gold coins.",
             "time_restriction": "before_22h"
         },
         {
@@ -6426,7 +6426,7 @@
                 ]
             },
             "id": 72,
-            "price": 4500,
+            "price": 5500,
             "location": "Pond",
             "preferred_time": "9h - 16h",
             "preferred_season": "All year round",
@@ -6444,7 +6444,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Ranchu (Carassius auratus) is fished all year round from 09h to 16h in ornamental freshwater ponds. This unique fish, dubbed the goldfish king in Japan, is distinguished by the total absence of a dorsal fin and a globose body. Specialists notice that its head develops with age a fleshy growth called wen resembling a raspberry. Sold at 4500 gold coins for its high ornamental value, this fish has no culinary vocation.",
+            "fun_fact": "The Ranchu (Carassius auratus) is fished all year round from 09h to 16h in ornamental freshwater ponds. This unique fish, dubbed the goldfish king in Japan, is distinguished by the total absence of a dorsal fin and a globose body. Specialists notice that its head develops with age a fleshy growth called wen resembling a raspberry. Sold at 5500 gold coins for its high ornamental value, this fish has no culinary vocation.",
             "time_restriction": "before_22h"
         },
         {
@@ -6487,7 +6487,7 @@
                 ]
             },
             "id": 145,
-            "price": 4101,
+            "price": 6000,
             "location": "North American coastal rivers and estuaries of the Atlantic Ocean",
             "preferred_time": "06h - 12h, 18h - 00h",
             "preferred_season": "April - September",
@@ -6499,7 +6499,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Atlantic Sturgeon (Acipenser oxyrinchus) is fished from April to September between 06h-12h and 18h-00h, in rainy weather in North American coastal rivers. This armored giant migrates upstream to spawn. Valued at 4101 gold, its firm flesh and precious eggs provide premium caviar highly prized in gastronomy.",
+            "fun_fact": "The Atlantic Sturgeon (Acipenser oxyrinchus) is fished from April to September between 06h-12h and 18h-00h, in rainy weather in North American coastal rivers. This armored giant migrates upstream to spawn. Valued at 6000 gold, its firm flesh and precious eggs provide premium caviar highly prized in gastronomy.",
             "time_restriction": null
         },
         {
@@ -6542,7 +6542,7 @@
                 ]
             },
             "id": 146,
-            "price": 4102,
+            "price": 9500,
             "location": "Deep rivers and large reservoirs of the Mississippi River basin",
             "preferred_time": "07h - 12h, 16h - 20h",
             "preferred_season": "March - May",
@@ -6551,7 +6551,7 @@
                 4,
                 5
             ],
-            "fun_fact": "The Paddlefish (Polyodon spathula) is caught from March to May between 07h-12h and 16h-20h, after spring rains in the Mississippi River basin. This prehistoric filter feeder detects plankton with its sensory paddle. Valued at 4102 gold, its firm boneless meat and quality caviar are highly prized on the menu.",
+            "fun_fact": "The Paddlefish (Polyodon spathula) is caught from March to May between 07h-12h and 16h-20h, after spring rains in the Mississippi River basin. This prehistoric filter feeder detects plankton with its sensory paddle. Valued at 9500 gold, its firm boneless meat and quality caviar are highly prized on the menu.",
             "time_restriction": "before_22h"
         },
         {
@@ -6594,7 +6594,7 @@
                 ]
             },
             "id": 147,
-            "price": 4103,
+            "price": 7000,
             "location": "Mesopelagic zone and bathyal depths of the North Atlantic Ocean and Mediterranean Sea",
             "preferred_time": "20h - 04h",
             "preferred_season": "October - February",
@@ -6605,7 +6605,7 @@
                 1,
                 2
             ],
-            "fun_fact": "The Lanternfish (Myctophum punctatum) is caught from October to February between 20h and 04h, on dark nights in bathyal depths. This vertical migrant glows in the dark using ventral photophores. Valued at 4103 gold, its very fine, delicate flesh is a crispy pan-fried delicacy appreciated by foodies.",
+            "fun_fact": "The Lanternfish (Myctophum punctatum) is caught from October to February between 20h and 04h, on dark nights in bathyal depths. This vertical migrant glows in the dark using ventral photophores. Valued at 7000 gold, its very fine, delicate flesh is a crispy pan-fried delicacy appreciated by foodies.",
             "time_restriction": "after_22h"
         },
         {
@@ -6648,7 +6648,7 @@
                 ]
             },
             "id": 148,
-            "price": 4104,
+            "price": 6500,
             "location": "Abyssal depths and mesopelagic waters of temperate and tropical oceans",
             "preferred_time": "21h - 04h",
             "preferred_season": "October - March",
@@ -6660,7 +6660,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Viperfish (Chauliodus sloani) is caught from October to March between 21h and 04h, on dark nights in deep abyssal depths. This fierce predator has long translucent fangs to impale its prey. Valued at 4104 gold, its fine, delicate flesh is highly appreciated fried after removing the dangerous teeth.",
+            "fun_fact": "The Viperfish (Chauliodus sloani) is caught from October to March between 21h and 04h, on dark nights in deep abyssal depths. This fierce predator has long translucent fangs to impale its prey. Valued at 6500 gold, its fine, delicate flesh is highly appreciated fried after removing the dangerous teeth.",
             "time_restriction": "after_22h"
         }
     ],
@@ -6705,7 +6705,7 @@
                 ]
             },
             "id": 73,
-            "price": 10000,
+            "price": 15000,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "June - September",
@@ -6715,7 +6715,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Arapaima (Arapaima gigas) is fished from June to September between 16h and 09h in Amazonian rivers, when it patrols the surface to hunt. This giant living fossil has the surprising ability to breathe atmospheric air using a modified swim bladder, forcing it to surface regularly. Experts observe that its large red scales are so hard they resist piranha bites. Sold for 10000 gold coins, its boneless, firm, and flavorful white flesh is nicknamed the cod of the Amazon and is a highly sought-after delicacy.",
+            "fun_fact": "The Arapaima (Arapaima gigas) is fished from June to September between 16h and 09h in Amazonian rivers, when it patrols the surface to hunt. This giant living fossil has the surprising ability to breathe atmospheric air using a modified swim bladder, forcing it to surface regularly. Experts observe that its large red scales are so hard they resist piranha bites. Sold for 15000 gold coins, its boneless, firm, and flavorful white flesh is nicknamed the cod of the Amazon and is a highly sought-after delicacy.",
             "time_restriction": "after_22h"
         },
         {
@@ -6758,7 +6758,7 @@
                 ]
             },
             "id": 74,
-            "price": 10000,
+            "price": 15500,
             "location": "River",
             "preferred_time": "16h - 09h",
             "preferred_season": "June - September",
@@ -6768,7 +6768,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Arowana (Osteoglossum bicirrhosum) is caught from June to September between 16h and 09h in Amazonian rivers, taking advantage of the darkness to hunt under vegetation. This dragonfish surprises with its ability to leap up to two meters out of the water to grab insects or frogs on branches. Ichthyologists observe that the male incubates the eggs in its mouth to protect its offspring. Sold for 10000 gold coins, its immense ornamental value and status as a lucky charm in Asia protect it from consumption.",
+            "fun_fact": "The Arowana (Osteoglossum bicirrhosum) is caught from June to September between 16h and 09h in Amazonian rivers, taking advantage of the darkness to hunt under vegetation. This dragonfish surprises with its ability to leap up to two meters out of the water to grab insects or frogs on branches. Ichthyologists observe that the male incubates the eggs in its mouth to protect its offspring. Sold for 15500 gold coins, its immense ornamental value and status as a lucky charm in Asia protect it from consumption.",
             "time_restriction": "after_22h"
         },
         {
@@ -6811,7 +6811,7 @@
                 ]
             },
             "id": 75,
-            "price": 6000,
+            "price": 13000,
             "location": "Ocean (pier)",
             "preferred_time": "00h - 24h",
             "preferred_season": "May - October",
@@ -6823,7 +6823,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Mahi-Mahi (Coryphaena hippurus) is fished from May to October all day long in the open sea, hunting flying fish under floating debris. This ultra-fast predator surprises with its spectacular color change, shifting from shiny green-yellow to dull gray upon capture. Biologists note its lightning-fast growth, one of the fastest in the marine kingdom. Estimated at 6000 gold coins, this fish is a culinary wonder, prized for its white, firm, and flavorful grilled flesh.",
+            "fun_fact": "The Mahi-Mahi (Coryphaena hippurus) is fished from May to October all day long in the open sea, hunting flying fish under floating debris. This ultra-fast predator surprises with its spectacular color change, shifting from shiny green-yellow to dull gray upon capture. Biologists note its lightning-fast growth, one of the fastest in the marine kingdom. Estimated at 13000 gold coins, this fish is a culinary wonder, prized for its white, firm, and flavorful grilled flesh.",
             "time_restriction": null
         },
         {
@@ -6866,7 +6866,7 @@
                 ]
             },
             "id": 76,
-            "price": 10000,
+            "price": 12000,
             "location": "River mouth",
             "preferred_time": "00h - 24h",
             "preferred_season": "September - March",
@@ -6879,7 +6879,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Sturgeon (Acipenser sturio) is fished from September to March all day long at river mouths where it searches for food. This prehistoric fish has the unique feature of possessing bony plates instead of scales. Field guides observe that its tactile barbels under its snout allow it to detect prey in sediment. Sold for 10000 gold coins, it is famous for its precious eggs turned into caviar, but its firm white flesh is also delicious roasted.",
+            "fun_fact": "The Sturgeon (Acipenser sturio) is fished from September to March all day long at river mouths where it searches for food. This prehistoric fish has the unique feature of possessing bony plates instead of scales. Field guides observe that its tactile barbels under its snout allow it to detect prey in sediment. Sold for 12000 gold coins, it is famous for its precious eggs turned into caviar, but its firm white flesh is also delicious roasted.",
             "time_restriction": null
         },
         {
@@ -6922,7 +6922,7 @@
                 ]
             },
             "id": 77,
-            "price": 6000,
+            "price": 16000,
             "location": "Pond",
             "preferred_time": "16h - 09h",
             "preferred_season": "June - September",
@@ -6932,7 +6932,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Alligator Gar (Atractosteus spatula) is fished from June to September between 16h and 09h in lakes and large ponds. This large predator is distinguished by its crocodile snout armed with sharp teeth. A surprising fact is the extreme toxicity of its eggs, a natural defense mechanism against birds. Experts in the field highlight that its ganoid scales are so hard they once served as arrowheads. Sold for 6000 gold coins, its firm white flesh is eaten fried, but requires careful preparation to remove the deadly eggs.",
+            "fun_fact": "The Alligator Gar (Atractosteus spatula) is fished from June to September between 16h and 09h in lakes and large ponds. This large predator is distinguished by its crocodile snout armed with sharp teeth. A surprising fact is the extreme toxicity of its eggs, a natural defense mechanism against birds. Experts in the field highlight that its ganoid scales are so hard they once served as arrowheads. Sold for 16000 gold coins, its firm white flesh is eaten fried, but requires careful preparation to remove the deadly eggs.",
             "time_restriction": "after_22h"
         },
         {
@@ -6975,7 +6975,7 @@
                 ]
             },
             "id": 78,
-            "price": 5000,
+            "price": 11000,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "March - November",
@@ -6990,7 +6990,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Barred Knifejaw (Oplegnathus fasciatus) is fished from March to November, all day long, near coastal rocky reefs. This fish is characterized by teeth fused into a beak similar to a parrot's, allowing it to crush the shells of sea urchins and crabs. Divers notice its great curiosity and legendary combativeness. Sold for 5000 gold coins, this striped fish is a star of Japanese gastronomy, esteemed in high-end sashimi for its sweet firm white flesh.",
+            "fun_fact": "The Barred Knifejaw (Oplegnathus fasciatus) is fished from March to November, all day long, near coastal rocky reefs. This fish is characterized by teeth fused into a beak similar to a parrot's, allowing it to crush the shells of sea urchins and crabs. Divers notice its great curiosity and legendary combativeness. Sold for 11000 gold coins, this striped fish is a star of Japanese gastronomy, esteemed in high-end sashimi for its sweet firm white flesh.",
             "time_restriction": null
         },
         {
@@ -7033,7 +7033,7 @@
                 ]
             },
             "id": 79,
-            "price": 10000,
+            "price": 11500,
             "location": "Ocean (pier)",
             "preferred_time": "00h - 24h",
             "preferred_season": "July - September, November - April",
@@ -7048,7 +7048,7 @@
                 3,
                 4
             ],
-            "fun_fact": "The Blue Marlin (Makaira nigricans) is fished from July to September and November to April, all day long, near piers in the open sea. This colossus is one of the fastest fish in the world, using its sharp bill to stun prey in schools. Sailors observe that it turns electric blue when excited or hunting. Sold for 10000 gold coins, its dense and flavorful flesh, recalling swordfish, is delicious grilled or smoked.",
+            "fun_fact": "The Blue Marlin (Makaira nigricans) is fished from July to September and November to April, all day long, near piers in the open sea. This colossus is one of the fastest fish in the world, using its sharp bill to stun prey in schools. Sailors observe that it turns electric blue when excited or hunting. Sold for 11500 gold coins, its dense and flavorful flesh, recalling swordfish, is delicious grilled or smoked.",
             "time_restriction": null
         },
         {
@@ -7091,7 +7091,7 @@
                 ]
             },
             "id": 80,
-            "price": 10000,
+            "price": 18000,
             "location": "Ocean",
             "preferred_time": "04h - 21h",
             "preferred_season": "July - August",
@@ -7099,7 +7099,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Napoleonfish (Cheilinus undulatus) is fished in July and August from 04h to 21h in the heart of tropical coral reefs. This ocean giant is distinguished by its prominent forehead hump and thick lips. A remarkable biological fact is its ability to eat toxic species like the coral-killing starfish. Naturalists note its exceptional longevity exceeding 30 years. Sold for 10000 gold coins, its firm white flesh is a traditional luxury dish in Asia.",
+            "fun_fact": "The Napoleonfish (Cheilinus undulatus) is fished in July and August from 04h to 21h in the heart of tropical coral reefs. This ocean giant is distinguished by its prominent forehead hump and thick lips. A remarkable biological fact is its ability to eat toxic species like the coral-killing starfish. Naturalists note its exceptional longevity exceeding 30 years. Sold for 18000 gold coins, its firm white flesh is a traditional luxury dish in Asia.",
             "time_restriction": "before_22h"
         },
         {
@@ -7142,7 +7142,7 @@
                 ]
             },
             "id": 81,
-            "price": 5000,
+            "price": 16500,
             "location": "Ocean",
             "preferred_time": "21h - 04h",
             "preferred_season": "November - February",
@@ -7152,7 +7152,7 @@
                 1,
                 2
             ],
-            "fun_fact": "The Pufferfish (Takifugu rubripes) is fished from November to February between 21h and 04h in marine coastal waters. This fish inflates with water to scare predators. A surprising fact is the presence of tetrodotoxin, a deadly poison contained in its liver and organs. Field experts highlight that only licensed chefs can remove these toxic parts. Sold for 5000 gold coins, its translucent white flesh cut in paper-thin slices is the base of Japanese fugu.",
+            "fun_fact": "The Pufferfish (Takifugu rubripes) is fished from November to February between 21h and 04h in marine coastal waters. This fish inflates with water to scare predators. A surprising fact is the presence of tetrodotoxin, a deadly poison contained in its liver and organs. Field experts highlight that only licensed chefs can remove these toxic parts. Sold for 16500 gold coins, its translucent white flesh cut in paper-thin slices is the base of Japanese fugu.",
             "time_restriction": "after_22h"
         },
         {
@@ -7195,7 +7195,7 @@
                 ]
             },
             "id": 82,
-            "price": 650,
+            "price": 13500,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "April - September",
@@ -7207,7 +7207,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Clownfish (Amphiprion ocellaris) is caught from April to September all day long in tropical coral reefs. This orange fish with white bands lives in symbiosis with stinging anemones thanks to a protective mucus. A surprising fact is that all are born male and the largest of the group transforms into the dominant breeding female. Aquarists appreciate its characteristic waddling swim. Sold for 650 gold coins, this fish has no interest for cooking.",
+            "fun_fact": "The Clownfish (Amphiprion ocellaris) is caught from April to September all day long in tropical coral reefs. This orange fish with white bands lives in symbiosis with stinging anemones thanks to a protective mucus. A surprising fact is that all are born male and the largest of the group transforms into the dominant breeding female. Aquarists appreciate its characteristic waddling swim. Sold for 13500 gold coins, this fish has no interest for cooking.",
             "time_restriction": null
         },
         {
@@ -7250,7 +7250,7 @@
                 ]
             },
             "id": 83,
-            "price": 9000,
+            "price": 14000,
             "location": "Ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "December - May",
@@ -7262,7 +7262,7 @@
                 4,
                 5
             ],
-            "fun_fact": "The Giant Oarfish (Regalecus glesne) is caught from December to May, all day long, in the deep ocean. Nicknamed the king of herrings, it is the longest bony fish in the world, measuring up to eleven meters. A surprising biological fact is its caudal autotomy: it can shed the end of its body without harming its vital organs. Oceanographers note that it often swims vertically in the dark. Estimated at 9000 gold coins, its gelatinous flesh has no culinary value.",
+            "fun_fact": "The Giant Oarfish (Regalecus glesne) is caught from December to May, all day long, in the deep ocean. Nicknamed the king of herrings, it is the longest bony fish in the world, measuring up to eleven meters. A surprising biological fact is its caudal autotomy: it can shed the end of its body without harming its vital organs. Oceanographers note that it often swims vertically in the dark. Estimated at 14000 gold coins, its gelatinous flesh has no culinary value.",
             "time_restriction": null
         },
         {
@@ -7305,7 +7305,7 @@
                 ]
             },
             "id": 84,
-            "price": 8000,
+            "price": 17000,
             "location": "Ocean",
             "preferred_time": "16h - 09h",
             "preferred_season": "June - September",
@@ -7315,7 +7315,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Hammerhead Shark (Sphyrna mokarran) is fished from June to September between 16h and 09h near the ocean surface. Its wide hammer-shaped head improves its three-dimensional vision and houses electro-magnetic sensors to flush out rays under the sand. Pêcheurs observe its extremely high scythe-shaped dorsal fin. Sold for 8000 gold coins, fishing this predator is regulated and its meat is rarely eaten due to heavy metals.",
+            "fun_fact": "The Hammerhead Shark (Sphyrna mokarran) is fished from June to September between 16h and 09h near the ocean surface. Its wide hammer-shaped head improves its three-dimensional vision and houses electro-magnetic sensors to flush out rays under the sand. Pêcheurs observe its extremely high scythe-shaped dorsal fin. Sold for 17000 gold coins, fishing this predator is regulated and its meat is rarely eaten due to heavy metals.",
             "time_restriction": "after_22h"
         },
         {
@@ -7358,7 +7358,7 @@
                 ]
             },
             "id": 85,
-            "price": 5000,
+            "price": 12500,
             "location": "River",
             "preferred_time": "21h - 04h",
             "preferred_season": "April - October",
@@ -7371,7 +7371,7 @@
                 9,
                 10
             ],
-            "fun_fact": "The Snapping Turtle (Chelydra serpentina) is fished from April to October between 21h and 04h at the bottom of calm rivers. This massive reptile cannot retract its head into its shell and compensates for this weakness with a formidable sharp jaw. Naturalists observe its tail dotted with pointed ridges that recalls a dinosaur. Estimated at 5000 gold coins, its collagen-rich flesh is the main ingredient in traditional turtle soups.",
+            "fun_fact": "The Snapping Turtle (Chelydra serpentina) is fished from April to October between 21h and 04h at the bottom of calm rivers. This massive reptile cannot retract its head into its shell and compensates for this weakness with a formidable sharp jaw. Naturalists observe its tail dotted with pointed ridges that recalls a dinosaur. Estimated at 12500 gold coins, its collagen-rich flesh is the main ingredient in traditional turtle soups.",
             "time_restriction": "after_22h"
         },
         {
@@ -7414,7 +7414,7 @@
                 ]
             },
             "id": 86,
-            "price": 5500,
+            "price": 17500,
             "location": "Pond",
             "preferred_time": "09h - 16h",
             "preferred_season": "June - August",
@@ -7423,7 +7423,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Snakehead (Channa micropeltes) is fished from June to August between 09h and 16h in freshwater ponds. This fierce predator breathes air and can survive several days out of water by crawling from one pond to another. Biologists observe that the female aggressively guards her bright red young. Sold for 5500 gold coins, this robust fish has a firm and very tasty white flesh, traditionally steamed with fresh ginger.",
+            "fun_fact": "The Snakehead (Channa micropeltes) is fished from June to August between 09h and 16h in freshwater ponds. This fierce predator breathes air and can survive several days out of water by crawling from one pond to another. Biologists observe that the female aggressively guards her bright red young. Sold for 17500 gold coins, this robust fish has a firm and very tasty white flesh, traditionally steamed with fresh ginger.",
             "time_restriction": "before_22h"
         },
         {
@@ -7466,7 +7466,7 @@
                 ]
             },
             "id": 149,
-            "price": 8101,
+            "price": 10000,
             "location": "Deep mesopelagic sea beds, open ocean",
             "preferred_time": "00h - 24h",
             "preferred_season": "January - December",
@@ -7484,7 +7484,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Oarfish (Regalecus glesne) can be caught year-round, from 00h to 24h regardless of weather, in deep mesopelagic open ocean beds. This 8-meter silver ribbon-like giant swims vertically and inspired sea serpent legends. Valued at 8101 gold coins, its gelatinous and watery flesh offers very low culinary appreciation. Its long, bright red dorsal rays form a spectacular crown.",
+            "fun_fact": "The Oarfish (Regalecus glesne) can be caught year-round, from 00h to 24h regardless of weather, in deep mesopelagic open ocean beds. This 8-meter silver ribbon-like giant swims vertically and inspired sea serpent legends. Valued at 10000 gold coins, its gelatinous and watery flesh offers very low culinary appreciation. Its long, bright red dorsal rays form a spectacular crown.",
             "time_restriction": null
         },
         {
@@ -7527,7 +7527,7 @@
                 ]
             },
             "id": 150,
-            "price": 8102,
+            "price": 10500,
             "location": "Abyssal trenches, deep sea",
             "preferred_time": "00h - 24h",
             "preferred_season": "January - December",
@@ -7545,7 +7545,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Goblin Shark (Mitsukurina owstoni) is caught year-round, from 00h to 24h under any weather, in deep sea abyssal trenches. This pink living fossil features an elongated snout and unique protractile jaws that catapult forward to grab prey. Priced at 8102 gold coins, its soft, watery flesh yields very poor culinary appreciation. Its pink hue comes from blood vessels visible through translucent skin.",
+            "fun_fact": "The Goblin Shark (Mitsukurina owstoni) is caught year-round, from 00h to 24h under any weather, in deep sea abyssal trenches. This pink living fossil features an elongated snout and unique protractile jaws that catapult forward to grab prey. Priced at 10500 gold coins, its soft, watery flesh yields very poor culinary appreciation. Its pink hue comes from blood vessels visible through translucent skin.",
             "time_restriction": null
         },
         {
@@ -7588,7 +7588,7 @@
                 ]
             },
             "id": 151,
-            "price": 8103,
+            "price": 14500,
             "location": "Open ocean pelagic waters",
             "preferred_time": "06h - 20h",
             "preferred_season": "June - November",
@@ -7600,7 +7600,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Atlantic Bluefin Tuna (Thunnus thynnus) is fished from June to November between 06h and 20h under clear or rainy skies, in open ocean pelagic waters. This powerful apex predator can regulate its body temperature, allowing it to swim at 70 km/h. Priced at 8103 gold coins, its rich, fatty red meat is highly prized in Japan for high-grade sushi. It remains one of the most athletic and expensive sport fish.",
+            "fun_fact": "The Atlantic Bluefin Tuna (Thunnus thynnus) is fished from June to November between 06h and 20h under clear or rainy skies, in open ocean pelagic waters. This powerful apex predator can regulate its body temperature, allowing it to swim at 70 km/h. Priced at 14500 gold coins, its rich, fatty red meat is highly prized in Japan for high-grade sushi. It remains one of the most athletic and expensive sport fish.",
             "time_restriction": "before_22h"
         }
     ],
@@ -7645,7 +7645,7 @@
                 ]
             },
             "id": 87,
-            "price": 15000,
+            "price": 20000,
             "location": "Ocean (rain)",
             "preferred_time": "Toute la journée",
             "preferred_season": "All year round",
@@ -7663,7 +7663,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Coelacanth (Latimeria chalumnae) is fished all year round, all day long, in the deep ocean, preferably in the rain. This extraordinary living fossil belongs to a lineage unchanged for four hundred million years, surviving the dinosaurs. Scientists observe its lobed fins with a bony structure similar to that of land vertebrates. Estimated at 15000 gold coins, its flesh is fatty, rich in indigestible waxes and smells strongly of oil, making it completely unfit for gastronomy.",
+            "fun_fact": "The Coelacanth (Latimeria chalumnae) is fished all year round, all day long, in the deep ocean, preferably in the rain. This extraordinary living fossil belongs to a lineage unchanged for four hundred million years, surviving the dinosaurs. Scientists observe its lobed fins with a bony structure similar to that of land vertebrates. Estimated at 20000 gold coins, its flesh is fatty, rich in indigestible waxes and smells strongly of oil, making it completely unfit for gastronomy.",
             "time_restriction": null
         },
         {
@@ -7706,7 +7706,7 @@
                 ]
             },
             "id": 88,
-            "price": 15000,
+            "price": 32000,
             "location": "River (cliff)",
             "preferred_time": "16h - 9h",
             "preferred_season": "December - March",
@@ -7716,7 +7716,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Sakhalin Taimen (Hucho perryi) is fished from December to March from 16h to 09h in mountain cliff rivers. This giant river salmon is one of the largest freshwater salmonids in the world, reaching up to two meters and hunting ducklings. Ichthyologists observe that it requires pure mountain waters for its difficult reproduction. Sold for 15000 gold coins to collectors, its flesh is described as fat and delicious, although the species is too threatened to be cooked today.",
+            "fun_fact": "The Sakhalin Taimen (Hucho perryi) is fished from December to March from 16h to 09h in mountain cliff rivers. This giant river salmon is one of the largest freshwater salmonids in the world, reaching up to two meters and hunting ducklings. Ichthyologists observe that it requires pure mountain waters for its difficult reproduction. Sold for 32000 gold coins to collectors, its flesh is described as fat and delicious, although the species is too threatened to be cooked today.",
             "time_restriction": "after_22h"
         },
         {
@@ -7759,7 +7759,7 @@
                 ]
             },
             "id": 89,
-            "price": 15000,
+            "price": 34000,
             "location": "River",
             "preferred_time": "4h - 21h",
             "preferred_season": "June - September",
@@ -7769,7 +7769,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Dorado (Salminus brasiliensis) is fished from June to September between 04h and 21h in the fast currents of large rivers. This predator, nicknamed the river gold, shines with its sparkling golden coat and red tail. Although it looks like a salmon, it is actually a characin related to the piranha. Guides observe its spectacular aerial combat with leaps to break the line. Sold for 15000 gold coins, its firm and tasty flesh is delicious grilled or baked.",
+            "fun_fact": "The Dorado (Salminus brasiliensis) is fished from June to September between 04h and 21h in the fast currents of large rivers. This predator, nicknamed the river gold, shines with its sparkling golden coat and red tail. Although it looks like a salmon, it is actually a characin related to the piranha. Guides observe its spectacular aerial combat with leaps to break the line. Sold for 34000 gold coins, its firm and tasty flesh is delicious grilled or baked.",
             "time_restriction": "before_22h"
         },
         {
@@ -7812,7 +7812,7 @@
                 ]
             },
             "id": 90,
-            "price": 15000,
+            "price": 36000,
             "location": "Ocean",
             "preferred_time": "16h - 9h",
             "preferred_season": "June - September",
@@ -7822,7 +7822,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Great White Shark (Carcharodon carcharias) is fished from June to September from 16h to 09h in the open sea. This iconic predator can leap out of the water to intercept seals at high speed. Field experts note its gray-black back contrasting with its white belly, ensuring perfect camouflage. Sold for 15000 gold coins, its flesh accumulates heavy metals and urinary toxins, prohibiting consumption for health and protection reasons.",
+            "fun_fact": "The Great White Shark (Carcharodon carcharias) is fished from June to September from 16h to 09h in the open sea. This iconic predator can leap out of the water to intercept seals at high speed. Field experts note its gray-black back contrasting with its white belly, ensuring perfect camouflage. Sold for 36000 gold coins, its flesh accumulates heavy metals and urinary toxins, prohibiting consumption for health and protection reasons.",
             "time_restriction": "after_22h"
         },
         {
@@ -7865,7 +7865,7 @@
                 ]
             },
             "id": 91,
-            "price": 15000,
+            "price": 22000,
             "location": "Ocean",
             "preferred_time": "21h - 4h",
             "preferred_season": "All year round",
@@ -7883,7 +7883,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Barreleye (Macropinna microstoma) is fished all year round from 21h to 04h in the deep ocean. This abyssal fish has a transparent, fluid-filled dome on its head, revealing its green tubular eyes. Oceanographers observe that its eyes rotate forward to aim at its prey during attack. Estimated at 15000 gold coins for its exceptional scientific rarity, its tiny size and gelatinous consistency make it completely useless in the kitchen.",
+            "fun_fact": "The Barreleye (Macropinna microstoma) is fished all year round from 21h to 04h in the deep ocean. This abyssal fish has a transparent, fluid-filled dome on its head, revealing its green tubular eyes. Oceanographers observe that its eyes rotate forward to aim at its prey during attack. Estimated at 22000 gold coins for its exceptional scientific rarity, its tiny size and gelatinous consistency make it completely useless in the kitchen.",
             "time_restriction": "after_22h"
         },
         {
@@ -7926,7 +7926,7 @@
                 ]
             },
             "id": 92,
-            "price": 25000,
+            "price": 24000,
             "location": "River (cliff)",
             "preferred_time": "22h - 4h",
             "preferred_season": "All year round",
@@ -7944,7 +7944,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Piranhator (Piranha mechanicus) is a legendary creature fished all year round from 22h to 04h in the steepest cliff rivers. This surprising cyborg has cybernetic implants and laser eyes capable of cutting carbon. Experts note that its rustproof titanium chassis allows it to survive acid currents. Estimated at 25000 gold coins by engineers, this mechanical fish is not edible due to the presence of motor oil and steel cables.",
+            "fun_fact": "The Piranhator (Piranha mechanicus) is a legendary creature fished all year round from 22h to 04h in the steepest cliff rivers. This surprising cyborg has cybernetic implants and laser eyes capable of cutting carbon. Experts note that its rustproof titanium chassis allows it to survive acid currents. Estimated at 24000 gold coins by engineers, this mechanical fish is not edible due to the presence of motor oil and steel cables.",
             "time_restriction": "after_22h"
         },
         {
@@ -7987,7 +7987,7 @@
                 ]
             },
             "id": 93,
-            "price": 15000,
+            "price": 26000,
             "location": "Mysterious seabed and secret creeks - Tropical islands",
             "preferred_time": "Toute la journée",
             "preferred_season": "Year-round",
@@ -8005,7 +8005,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Pristine Banana 1 (Musa acuminata) is a legendary and underwater banana harvested all year round, day and night. This magical tropical fruit developed the incredible ability to absorb marine salt and transform it into pure sugar. A surprising fact is its texture which remains perfectly firm and waterproof even after centuries under water. Expert divers say it serves as a secret currency among mermaids. In the kitchen, it caramelizes instantly under fire, offering an incomparable divine flavor. Its price is 15000 gold coins.",
+            "fun_fact": "The Pristine Banana 1 (Musa acuminata) is a legendary and underwater banana harvested all year round, day and night. This magical tropical fruit developed the incredible ability to absorb marine salt and transform it into pure sugar. A surprising fact is its texture which remains perfectly firm and waterproof even after centuries under water. Expert divers say it serves as a secret currency among mermaids. In the kitchen, it caramelizes instantly under fire, offering an incomparable divine flavor. Its price is 26000 gold coins.",
             "time_restriction": null
         },
         {
@@ -8048,7 +8048,7 @@
                 ]
             },
             "id": 94,
-            "price": 15000,
+            "price": 28000,
             "location": "Mysterious seabed and sacred coral reefs - Tropical islands",
             "preferred_time": "Toute la journée",
             "preferred_season": "Year-round",
@@ -8066,7 +8066,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The Pristine Banana 2 (Musa balbisiana) is the second variety of divine underwater banana harvested all year round, 24h a day. Unlike the first, it has bluish reflections that glow in the dark of the seabed to attract curious fish. A surprising fact is its peel which contains a natural lubricant preventing any algae from fixing. Sailors report that eating one gives insolent luck for future fishing. It is delicious roasted with a touch of underwater cinnamon. Its price is estimated at 15000 gold coins.",
+            "fun_fact": "The Pristine Banana 2 (Musa balbisiana) is the second variety of divine underwater banana harvested all year round, 24h a day. Unlike the first, it has bluish reflections that glow in the dark of the seabed to attract curious fish. A surprising fact is its peel which contains a natural lubricant preventing any algae from fixing. Sailors report that eating one gives insolent luck for future fishing. It is delicious roasted with a touch of underwater cinnamon. Its price is estimated at 28000 gold coins.",
             "time_restriction": null
         },
         {
@@ -8109,7 +8109,7 @@
                 ]
             },
             "id": 95,
-            "price": 12000,
+            "price": 38000,
             "location": "Ocean",
             "preferred_time": "16h - 9h",
             "preferred_season": "June - September",
@@ -8119,7 +8119,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Sawfish (Pristis pristis) is fished from June to September between 16h and 09h in estuaries and salty lagoons. This cartilaginous fish has a long flat snout bordered with sharp teeth in the shape of a saw. A surprising biological fact is that this snout serves as an electro-sensitive detector and weapon to slash fish. Experts observe that it stirs the sediment with its saw to flush out crustaceans. Sold for 12000 gold coins, this fish is protected and its meat is toxic.",
+            "fun_fact": "The Sawfish (Pristis pristis) is fished from June to September between 16h and 09h in estuaries and salty lagoons. This cartilaginous fish has a long flat snout bordered with sharp teeth in the shape of a saw. A surprising biological fact is that this snout serves as an electro-sensitive detector and weapon to slash fish. Experts observe that it stirs the sediment with its saw to flush out crustaceans. Sold for 38000 gold coins, this fish is protected and its meat is toxic.",
             "time_restriction": "after_22h"
         },
         {
@@ -8162,7 +8162,7 @@
                 ]
             },
             "id": 96,
-            "price": 13000,
+            "price": 40000,
             "location": "Ocean",
             "preferred_time": "Toute la journée",
             "preferred_season": "June - September",
@@ -8172,7 +8172,7 @@
                 8,
                 9
             ],
-            "fun_fact": "The Whale Shark (Rhincodon typus) is fished from June to September all day long in warm ocean waters. It is the largest living fish in the world, reaching up to eighteen meters in length. A surprising fact is that this peaceful giant feeds exclusively on plankton by filtering thousands of liters of water per hour. Biologists note that its white spots form a unique pattern for each individual. Sold for 13000 gold coins, its flesh is protected globally and fishing is banned.",
+            "fun_fact": "The Whale Shark (Rhincodon typus) is fished from June to September all day long in warm ocean waters. It is the largest living fish in the world, reaching up to eighteen meters in length. A surprising fact is that this peaceful giant feeds exclusively on plankton by filtering thousands of liters of water per hour. Biologists note that its white spots form a unique pattern for each individual. Sold for 40000 gold coins, its flesh is protected globally and fishing is banned.",
             "time_restriction": null
         },
         {
@@ -8215,7 +8215,7 @@
                 ]
             },
             "id": 97,
-            "price": 15000,
+            "price": 30000,
             "location": "River (cliff)",
             "preferred_time": "16h - 9h",
             "preferred_season": "March - May, September - November",
@@ -8227,7 +8227,7 @@
                 10,
                 11
             ],
-            "fun_fact": "The Golden Trout (Oncorhynchus mykiss aguabonita) is fished from March to May and September to November from 16h to 09h in cliff streams. This altitude jewel surprises with its flamboyant red and golden coat, unique among trout. Mountain guides observe that it only survives in the purest and ice-cold waters of the summits. Estimated at 15000 gold coins, this fish has an incomparably fine pink flesh, delicious simply pan-seared with almonds.",
+            "fun_fact": "The Golden Trout (Oncorhynchus mykiss aguabonita) is fished from March to May and September to November from 16h to 09h in cliff streams. This altitude jewel surprises with its flamboyant red and golden coat, unique among trout. Mountain guides observe that it only survives in the purest and ice-cold waters of the summits. Estimated at 30000 gold coins, this fish has an incomparably fine pink flesh, delicious simply pan-seared with almonds.",
             "time_restriction": "after_22h"
         }
     ],
@@ -8272,7 +8272,7 @@
                 ]
             },
             "id": 98,
-            "price": 40000,
+            "price": 50000,
             "location": "Fathomless abysses and sunken caverns - Ocean depths",
             "preferred_time": "22h - 04h",
             "preferred_season": "Year-round",
@@ -8290,7 +8290,7 @@
                 11,
                 12
             ],
-            "fun_fact": "The VIP Gem (Lapis vipensis) is a mythical crystal extracted from ocean abysses from 22h to 04h all year round. This geological treasure emits a magical resonance that grants unique temporal privileges to its holder. A surprising fact is that it beats like a heart to the rhythm of the tides. Extreme miners highlight that its hardness exceeds that of rough diamond. Although not edible, the gem can be reduced to powder to create longevity elixirs. Its market value is 40000 gold coins.",
+            "fun_fact": "The VIP Gem (Lapis vipensis) is a mythical crystal extracted from ocean abysses from 22h to 04h all year round. This geological treasure emits a magical resonance that grants unique temporal privileges to its holder. A surprising fact is that it beats like a heart to the rhythm of the tides. Extreme miners highlight that its hardness exceeds that of rough diamond. Although not edible, the gem can be reduced to powder to create longevity elixirs. Its market value is 50000 gold coins.",
             "time_restriction": "after_22h"
         },
         {
@@ -8333,7 +8333,7 @@
                 ]
             },
             "id": 99,
-            "price": 45000,
+            "price": 70000,
             "location": "Ocean",
             "preferred_time": "9h - 18h",
             "preferred_season": "June - August",
@@ -8342,7 +8342,7 @@
                 7,
                 8
             ],
-            "fun_fact": "The Dictator Crab (Cancer imperator) is caught from June to August between 09h and 18h on coastal coral reefs. This unique crustacean surprises with its shell imitating an admiral's uniform and its disproportionate left claw that it brandishes to direct its troops. Observers note its annoying tendency to order the surrender of surrounding fish. Estimated at 45000 gold coins by curiosity collectors, its extremely hard shell and bitter taste preserve it from eating.",
+            "fun_fact": "The Dictator Crab (Cancer imperator) is caught from June to August between 09h and 18h on coastal coral reefs. This unique crustacean surprises with its shell imitating an admiral's uniform and its disproportionate left claw that it brandishes to direct its troops. Observers note its annoying tendency to order the surrender of surrounding fish. Estimated at 70000 gold coins by curiosity collectors, its extremely hard shell and bitter taste preserve it from eating.",
             "time_restriction": "before_22h"
         },
         {
@@ -8385,7 +8385,7 @@
                 ]
             },
             "id": 100,
-            "price": 50000,
+            "price": 60000,
             "location": "Ocean",
             "preferred_time": "21h - 5h",
             "preferred_season": "December - March",
@@ -8395,7 +8395,7 @@
                 2,
                 3
             ],
-            "fun_fact": "The Abyssal Xenomorph (Xenomorphus abyssi) is fished from December to March from 21h to 05h in the total darkness of marine trenches. This nightmarish creature has a surprising anatomy: its acidic blood destroys hooks and it has a retractable secondary internal jaw. Oceanographers observe that it lacks eyes and orientates itself using vibrations. Estimated at 50000 gold coins, this ink-black monster is totally deadly and toxic for eating.",
+            "fun_fact": "The Abyssal Xenomorph (Xenomorphus abyssi) is fished from December to March from 21h to 05h in the total darkness of marine trenches. This nightmarish creature has a surprising anatomy: its acidic blood destroys hooks and it has a retractable secondary internal jaw. Oceanographers observe that it lacks eyes and orientates itself using vibrations. Estimated at 60000 gold coins, this ink-black monster is totally deadly and toxic for eating.",
             "time_restriction": "after_22h"
         }
     ],
