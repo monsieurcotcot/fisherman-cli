@@ -1110,6 +1110,1386 @@
             ],
             "fun_fact": "Osmerus eperlanus s'active de 20h - 04h pour fuir les prédateurs en surface et migre de Mars à Mai en amont des estuaires pour frayer mais on peut également le trouver à partir de Novembre. Ce poisson émet une odeur saisissante de concombre frais due à une molécule volatile, le trans-2-nonénal. Sur le terrain, on repère les bancs à cette effluve caractéristique planant au-dessus de l'eau. En cuisine, sa chair fine et délicate se déguste traditionnellement entière, frite et croustillante, après un simple passage dans la farine.",
             "time_restriction": null
+        },
+        {
+            "name": "Cabillaud",
+            "size_min": 30.0,
+            "size_mean": 60.0,
+            "size_sigma": 15.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un cabillaud très abîmé par le combat, présentant d'importantes lacérations sur les flancs.",
+                    "🔴 On dirait que ce cabillaud a servi de punching-ball à un requin particulièrement énervé.",
+                    "🔴 La chair de ce cabillaud est complètement écrasée, inutilisable pour un beau pavé au four.",
+                    "🔴 Ce poisson dégage une forte odeur d'ammoniaque et sa peau a perdu tout son mucus protecteur."
+                ],
+                "damaged": [
+                    "🟠 Un cabillaud blessé avec des marques d'écailles manquantes et des nageoires déchirées.",
+                    "🟠 Ce cabillaud s'est disputé sa nourriture avec un crabe et a visiblement perdu le duel.",
+                    "🟠 Quelques plaies sur les flancs obligent à parer les filets pour en retirer les parties meurtries.",
+                    "🟠 L'œil est légèrement vitreux et les branchies ont perdu de leur éclat rouge vif d'origine."
+                ],
+                "worn": [
+                    "🟡 Un cabillaud ordinaire, fatigué par de longs déplacements dans les courants froids.",
+                    "🟡 Il a l'air aussi fatigué qu'un lundi matin après une trop longue nuit de pêche côtière.",
+                    "🟡 La chair est un peu molle mais conviendra parfaitement pour être émiettée dans une brandade.",
+                    "🟡 La peau a perdu son éclat métallique typique et le mucus commence à s'opacifier doucement."
+                ],
+                "good": [
+                    "🟢 Un magnifique cabillaud vigoureux aux belles écailles marbrées et intactes.",
+                    "🟢 Il frétille avec tant d'énergie qu'il essaie de repeindre votre bateau avec l'eau de mer.",
+                    "🟢 Un poisson superbe à la chair blanche et ferme, idéal pour un dos de cabillaud à l'aïoli.",
+                    "🟢 L'œil est bien bombé et transparent, gage d'une fraîcheur irréprochable après la capture."
+                ],
+                "pristine": [
+                    "✨ Un spécimen de cabillaud absolument parfait, resplendissant sous la lumière du nord.",
+                    "✨ Ce poisson est si parfait qu'on croirait qu'il a été brossé et poli avant d'être accroché.",
+                    "✨ Une chair nacrée exceptionnelle qui se détache en beaux flocons d'une pureté gastronomique absolue.",
+                    "✨ Un poisson d'une fraîcheur extraordinaire exhalant une saine et douce odeur d'océan Atlantique."
+                ]
+            },
+            "id": 102,
+            "price": 81,
+            "location": "Océan Atlantique Nord, Mer du Nord, Manche",
+            "preferred_time": "06h - 12h",
+            "preferred_season": "Septembre - Janvier",
+            "months": [
+                9,
+                10,
+                11,
+                12,
+                1
+            ],
+            "fun_fact": "Le Cabillaud (Gadus morhua), poisson de l'Océan Atlantique, se pêche de préférence de septembre à janvier entre 06h et 12h, surtout sous un ciel pluvieux. Ce grand prédateur benthique possède un barbillon mentonnier sensoriel unique pour détecter ses proies sur le fond marin. Vendu à 81 pièces, sa chair blanche et feuilletée est très prisée en gastronomie, notamment pour le traditionnel fish and chips. Une merveille marine à préserver.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Maquereau",
+            "size_min": 15.0,
+            "size_mean": 30.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un maquereau très endommagé, présentant des morsures de prédateurs marins.",
+                    "🔴 Ce maquereau a dû faire un tour dans la turbine d'un cargo pour être dans cet état.",
+                    "🔴 Chair écrasée et déchirée, impossible à griller convenablement au barbecue.",
+                    "🔴 Odeur de poisson très forte et peau terne dépourvue de son éclat bleu-vert."
+                ],
+                "damaged": [
+                    "🟠 Un maquereau blessé aux flancs rayés et à la nageoire caudale déchirée.",
+                    "🟠 Il a voulu nager trop vite et s'est frotté d'un peu trop près aux rochers côtiers.",
+                    "🟠 La peau est zébrée de coupures, mais la chair reste exploitable en rillettes.",
+                    "🟠 Les ouïes sont pâles et l'œil a perdu sa brillance métallique caractéristique."
+                ],
+                "worn": [
+                    "🟡 Un maquereau ordinaire montrant des signes d'usure sur sa robe zébrée.",
+                    "🟡 Ses rayures bleues ont l'air d'avoir été délavées après un passage en machine.",
+                    "🟡 La chair est un peu molle, idéale pour être marinée dans du vin blanc.",
+                    "🟡 La texture générale est un peu flasque et le mucus protecteur est altéré."
+                ],
+                "good": [
+                    "🟢 Un magnifique maquereau vif aux superbes rayures sombres bien définies.",
+                    "🟢 Il est si zébré qu'on dirait un petit cheval de mer sauvage échappé de la savane.",
+                    "🟢 Un poisson très sain aux flancs argentés, idéal à griller entier au barbecue.",
+                    "🟢 Corps rigide et odeur fraîche de marée, signe d'une capture récente et propre."
+                ],
+                "pristine": [
+                    "✨ Un maquereau étincelant d'une perfection absolue, digne d'un grand large.",
+                    "✨ Ses flancs brillent tant qu'on pourrait l'utiliser comme miroir pour se raser.",
+                    "✨ Un poisson royal dont la chair grasse et ferme promet une expérience culinaire d'exception.",
+                    "✨ Fraîcheur éclatante aux reflets irisés magiques, exhalant un parfum pur d'océan."
+                ]
+            },
+            "id": 103,
+            "price": 82,
+            "location": "Eaux côtières de l'Atlantique Nord, Manche, Mer du Nord",
+            "preferred_time": "05h - 10h",
+            "preferred_season": "Juin - Septembre",
+            "months": [
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "Le Maquereau (Scomber scombrus) s'active en bancs de juin à septembre de 05h à 10h dans l'Océan Atlantique, aimant le beau temps ensoleillé. Ce poisson pélagique dépourvu de vessie natatoire doit nager sans cesse pour ne pas couler. Estimé à 82 pièces, sa richesse en oméga-3 en fait un trésor pour la santé et sa chair savoureuse est succulente grillée au barbecue avec un filet de citron frais.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Gardon",
+            "size_min": 8.0,
+            "size_mean": 18.0,
+            "size_sigma": 4.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un gardon en piteux état, très abîmé par une attaque de brochet.",
+                    "🔴 Ce gardon a servi de jouet à mâcher pour un carnassier peu délicat.",
+                    "🔴 Chair trop endommagée pour être préparée en friture de rivière.",
+                    "🔴 Poisson terne présentant des signes avancés de dégradation biologique."
+                ],
+                "damaged": [
+                    "🟠 Un gardon blessé avec des nageoires pectorales rouges déchirées.",
+                    "🟠 Il s'est frotté d'un peu trop près aux branches immergées d'un saule.",
+                    "🟠 Quelques écailles arrachées sur le dos, mais utilisable en soupe de poissons.",
+                    "🟠 L'œil est terne et les reflets argentés des flancs commencent à s'estomper."
+                ],
+                "worn": [
+                    "🟡 Un gardon ordinaire au teint légèrement grisâtre et fatigué.",
+                    "🟡 Il a passé trop de temps à slalomer entre les herbiers vaseux.",
+                    "🟡 La chair est un peu molle, nécessitant d'être bien frite pour être croustillante.",
+                    "🟡 Le mucus cutané est épais et dégage une légère odeur de vase."
+                ],
+                "good": [
+                    "🟢 Un beau gardon bien argenté avec des nageoires d'un rouge vif intact.",
+                    "🟢 Il gigote avec une telle énergie qu'il essaie de glisser entre vos doigts.",
+                    "🟢 Spécimen très sain aux écailles denses, idéal pour une friture croustillante.",
+                    "🟢 Corps ferme et branchies bien rouges, témoignant d'une eau saine."
+                ],
+                "pristine": [
+                    "✨ Un gardon resplendissant aux flancs argentés impeccables et sans tache.",
+                    "✨ Ce gardon brille tellement qu'il pourrait servir de leurre brillant pour d'autres poissons.",
+                    "✨ Une pièce magnifique aux écailles étincelantes, le sommet de la friture de Loire.",
+                    "✨ Fraîcheur parfaite avec une lueur argentée éclatante et une peau sans défaut."
+                ]
+            },
+            "id": 104,
+            "price": 83,
+            "location": "Rivières lentes, canaux, lacs et étangs d'Europe",
+            "preferred_time": "07h - 19h",
+            "preferred_season": "Mars - Mai",
+            "months": [
+                3,
+                4,
+                5
+            ],
+            "fun_fact": "Le Gardon (Rutilus rutilus) se pêche dans les rivières lentes d'Europe de mars à mai entre 07h et 19h, préférant les eaux calmes sous un ciel couvert. Ce poisson grégaire très vif sert d'indicateur de la qualité de l'eau. Estimé à 83 pièces, ce cyprinidé est peu apprécié en cuisine à cause de ses nombreuses arêtes, mais reste parfait pour s'initier aux joies de la pêche traditionnelle.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Truite Arc-en-Ciel",
+            "size_min": 20.0,
+            "size_mean": 38.0,
+            "size_sigma": 8.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une truite arc-en-ciel gravement abîmée, lacérée par des rochers coupants.",
+                    "🔴 On dirait qu'elle a tenté de remonter une cascade de graviers sans eau.",
+                    "🔴 Chair broyée et impropre pour une cuisson entière au four.",
+                    "🔴 Odeur de poisson suspecte et perte totale des couleurs irisées."
+                ],
+                "damaged": [
+                    "🟠 Une truite arc-en-ciel blessée avec des éraflures cutanées sur la ligne rose.",
+                    "🟠 Elle s'est battue avec un hameçon trop grand et porte une cicatrice sur la joue.",
+                    "🟠 Les flancs sont marqués, mais la chair reste excellente pour des filets.",
+                    "🟠 Les yeux sont enfoncés et les ouïes virent au rose pâle."
+                ],
+                "worn": [
+                    "🟡 Une truite arc-en-ciel de rivière montrant des signes de fatigue ordinaires.",
+                    "🟡 Ses reflets roses sont si ternes qu'elle ressemble à une truite en noir et blanc.",
+                    "🟡 Chair un peu molle, préférable à cuisiner en papillote bien assaisonnée.",
+                    "🟡 La coloration arc-en-ciel est estompée sous un mucus collant."
+                ],
+                "good": [
+                    "🟢 Une truite arc-en-ciel vigoureuse affichant une magnifique bande latérale rose.",
+                    "🟢 Elle saute partout comme si elle faisait un cours d'aérobic dans votre seau.",
+                    "🟢 Un poisson bien dodu à la chair rosée, idéal pour une truite meunière.",
+                    "🟢 Peau brillante et œil bien vif, témoignant d'une capture en eau vive."
+                ],
+                "pristine": [
+                    "✨ Une truite arc-en-ciel d'une beauté époustouflante, irréprochable et étincelante.",
+                    "✨ Elle brille de mille couleurs, on croirait un arc-en-ciel tout droit sorti de l'eau.",
+                    "✨ Une chair saumonée d'une fermeté et d'une finesse exceptionnelles pour un grand chef.",
+                    "✨ Fraîcheur absolue aux reflets nacrés spectaculaires, exhalant la pureté des torrents."
+                ]
+            },
+            "id": 105,
+            "price": 84,
+            "location": "Rivières à courant rapide, lacs et cours d'eau frais",
+            "preferred_time": "06h - 18h",
+            "preferred_season": "Avril - Septembre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "La Truite Arc-en-Ciel (Oncorhynchus mykiss) vit dans les rivières fraîches d'avril à septembre de 06h à 18h, mordant bien par temps couvert et pluvieux. Ce salmonide possède une robe irisée caractéristique et une combativité incroyable face au courant. Vendue à 84 pièces, sa chair rose et tendre est un délice gastronomique absolu, idéale cuite meunière avec des amandes grillées.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Hareng",
+            "size_min": 15.0,
+            "size_mean": 26.0,
+            "size_sigma": 4.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un hareng écrasé par le poids du banc, très abîmé après la remontée.",
+                    "🔴 Ce pauvre hareng a dû être pris dans une bataille géante d'oreillers.",
+                    "🔴 Chair en miettes, inutilisable pour faire de beaux filets marinés.",
+                    "🔴 Odeur rance et huileuse très prononcée, avec perte complète des écailles."
+                ],
+                "damaged": [
+                    "🟠 Un hareng blessé ayant perdu une grande partie de ses écailles argentées.",
+                    "🟠 Il s'est bagarré avec ses congénères dans un banc trop serré.",
+                    "🟠 La peau est écorchée, mais convient encore pour être fumé entier.",
+                    "🟠 Les branchies sont pâles et l'œil présente une couleur opaque."
+                ],
+                "worn": [
+                    "🟡 Un hareng ordinaire, un peu fatigué par les courants de la mer du Nord.",
+                    "🟡 On dirait qu'il a perdu son punch à force de nager en rond.",
+                    "🟡 Chair molle qui nécessite une salaison ou un fumage rapide pour la conserver.",
+                    "🟡 Le dos bleu-vert a perdu son brillant et la peau est sèche."
+                ],
+                "good": [
+                    "🟢 Un beau hareng bien gras aux écailles argentées et bleutées intactes.",
+                    "🟢 Il est si argenté qu'on dirait un lingot de métal qui frétille.",
+                    "🟢 Poisson très sain au goût riche, parfait pour être grillé sur la braise.",
+                    "🟢 Corps bien ferme et branchies rouge sang, signe de fraîcheur marine."
+                ],
+                "pristine": [
+                    "✨ Un hareng magnifique d'une perfection absolue, étincelant comme un miroir.",
+                    "✨ Il brille tellement qu'il pourrait éclairer la cabine de votre bateau.",
+                    "✨ Une chair d'une qualité exceptionnelle, grasse à souhait pour un hareng saur de luxe.",
+                    "✨ Fraîcheur parfaite et éclat argenté éblouissant, exhalant l'air vif du large."
+                ]
+            },
+            "id": 106,
+            "price": 86,
+            "location": "Atlantique Nord-Est, Mer du Nord, Mer Baltique",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Octobre - Février",
+            "months": [
+                10,
+                11,
+                12,
+                1,
+                2
+            ],
+            "fun_fact": "Le Hareng (Clupea harengus) se pêche en Atlantique Nord d'octobre à février de 20h à 04h, par temps venteux et agité. Ce poisson grégaire migre verticalement la nuit pour se nourrir de plancton en surface. Évalué à 86 pièces, il est célébré en cuisine sous forme saurée, marinée ou fumée, apportant des saveurs intenses très recherchées par les amateurs de poissons salés traditionnels.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Mulet",
+            "size_min": 18.0,
+            "size_mean": 35.0,
+            "size_sigma": 6.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un mulet gravement blessé, présentant des lacérations d'hélice sur le dos.",
+                    "🔴 Ce mulet s'est pris pour un cascadeur et a raté son saut sur un rocher.",
+                    "🔴 Chair meurtrie et pleine de vase, impropre à toute cuisson gastronomique.",
+                    "🔴 Odeur marécageuse insupportable et peau terne recouverte de vase séchée."
+                ],
+                "damaged": [
+                    "🟠 Un mulet blessé avec des écailles manquantes et des nageoires abîmées.",
+                    "🟠 Il a tenté d'entrer dans un port fermé et s'est heurté à la digue.",
+                    "🟠 Quelques blessures cutanées mineures, à nettoyer avant de le cuire au four.",
+                    "🟠 L'œil est vitreux et la couleur grise des flancs est très terne."
+                ],
+                "worn": [
+                    "🟡 Un mulet ordinaire, fatigué par ses allers-retours dans les eaux de l'estuaire.",
+                    "🟡 Il a l'air de s'ennuyer autant qu'une bouée dans un port sans bateaux.",
+                    "🟡 Chair légèrement molle, nécessitant d'être cuite avec beaucoup d'herbes aromatiques.",
+                    "🟡 La peau a perdu ses reflets argentés et le mucus est épais."
+                ],
+                "good": [
+                    "🟢 Un beau mulet vigoureux aux flancs argentés bien réguliers et sains.",
+                    "🟢 Il a une tête si plate qu'on pourrait presque l'utiliser comme presse-papier.",
+                    "🟢 Poisson sain et bien charnu, idéal à préparer grillé avec du fenouil.",
+                    "🟢 Corps rigide et odeur neutre, témoignant d'une eau côtière propre."
+                ],
+                "pristine": [
+                    "✨ Un mulet parfait sans la moindre égratignure, brillant sous le soleil.",
+                    "✨ Ce mulet est si propre qu'on dirait qu'il sort d'un salon de coiffure pour poissons.",
+                    "✨ Une chair d'une fermeté et d'une blancheur extraordinaires, digne de la haute cuisine.",
+                    "✨ Fraîcheur absolue aux écailles étincelantes, exhalant une saine odeur marine."
+                ]
+            },
+            "id": 107,
+            "price": 87,
+            "location": "Estuaires côtiers, lagunes et baies peu profondes",
+            "preferred_time": "08h - 17h",
+            "preferred_season": "Juillet - Octobre",
+            "months": [
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Mulet (Mugil cephalus) fréquente les estuaires de juillet à octobre entre 08h et 17h, préférant les journées ensoleillées et calmes. Capable de sauter hors de l'eau pour échapper aux prédateurs, il se nourrit de détritus et d'algues sur le fond. Évalué à 87 pièces, ce poisson rustique offre une chair ferme appréciée en court-bouillon ou grillée avec des herbes de Provence.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Sole",
+            "size_min": 20.0,
+            "size_mean": 30.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une sole très abîmée, déchirée sur les bords par le ressac ou un chalut.",
+                    "🔴 On dirait que cette sole a été pliée en quatre et écrasée sous un livre.",
+                    "🔴 Chair déchirée et pleine de sable, impossible à lever en jolis filets.",
+                    "🔴 Odeur suspecte de vase putride et peau visqueuse décolorée."
+                ],
+                "damaged": [
+                    "🟠 Une sole blessée avec des éraflures sur sa face supérieure brune.",
+                    "🟠 Elle s'est frottée d'un peu trop près aux coquilles pointues des moules.",
+                    "🟠 La peau est écorchée, mais la chair reste propre et exploitable.",
+                    "🟠 Face inférieure légèrement grisée et œil manquant de transparence."
+                ],
+                "worn": [
+                    "🟡 Une sole ordinaire montrant des signes d'usure sur ses nageoires périphériques.",
+                    "🟡 Elle a passé trop de temps à ramper sur les fonds de sable grossier.",
+                    "🟡 Chair un peu molle, convenant tout de même pour une cuisson vapeur simple.",
+                    "🟡 La peau brune est mate et le mucus protecteur commence à s'altérer."
+                ],
+                "good": [
+                    "🟢 Une belle sole vigoureuse avec une peau brune saine et intacte.",
+                    "🟢 Elle est si plate qu'on pourrait s'en servir de frisbee si on s'ennuie.",
+                    "🟢 Un poisson très sain aux flancs fermes, parfait pour une sole meunière.",
+                    "🟢 Face inférieure d'un blanc pur et odeur fraîche d'iode, gage de qualité."
+                ],
+                "pristine": [
+                    "✨ Une sole d'une perfection absolue, sans le moindre défaut sur le dos.",
+                    "✨ Cette sole est si lisse et plate qu'on dirait un tapis de luxe pour cabane de pêcheur.",
+                    "✨ La reine des poissons plats, chair ferme et nacrée d'une qualité gastronomique suprême.",
+                    "✨ Fraîcheur éblouissante exhalant le grand large, peau intacte aux reflets sombres."
+                ]
+            },
+            "id": 108,
+            "price": 88,
+            "location": "Fonds sablonneux et vaseux de la Mer du Nord et de l'Atlantique",
+            "preferred_time": "21h - 05h",
+            "preferred_season": "Juin - Septembre",
+            "months": [
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "La Sole (Solea solea) se capture sur les fonds sablonneux de juin à septembre de 21h à 05h, surtout lors des nuits sombres et pluvieuses. Ce poisson plat au mimétisme parfait s'enfouit dans le sable pour surprendre ses proies. Affichant un prix de 88 pièces, elle représente le sommet de la finesse culinaire avec sa chair délicate, traditionnellement préparée meunière au beurre doux.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Tanche",
+            "size_min": 15.0,
+            "size_mean": 30.0,
+            "size_sigma": 6.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une tanche très abîmée, blessée par les morsures d'un oiseau pêcheur.",
+                    "🔴 On dirait qu'elle s'est envasée si fort qu'elle a perdu la moitié de sa carrosserie.",
+                    "🔴 Chair trop abîmée et vaseuse, impropre à toute friture ou cuisson.",
+                    "🔴 Odeur de vase putride insupportable et peau recouverte de mucus dégradé."
+                ],
+                "damaged": [
+                    "🟠 Une tanche blessée avec des écailles arrachées sur sa peau olive.",
+                    "🟠 Elle a glissé sur un caillou pointu lors d'une sieste dans la vase.",
+                    "🟠 Quelques éraflures cutanées, mais utilisable après un bon nettoyage.",
+                    "🟠 Les ouïes sont ternes et la belle couleur vert-bronze a perdu son éclat."
+                ],
+                "worn": [
+                    "🟡 Une tanche ordinaire avec un mucus très épais et une coloration terne.",
+                    "🟡 Elle a l'air de sortir d'une longue cure de sommeil dans de la boue tiède.",
+                    "🟡 Chair un peu grasse, nécessitant d'être marinée dans du jus de citron.",
+                    "🟡 Mucus protecteur opaque et odorant, caractéristique d'une vie benthique usante."
+                ],
+                "good": [
+                    "🟢 Une belle tanche en bonne santé à la robe vert-olive et aux yeux rouges vifs.",
+                    "🟢 Ses petits yeux rouges brillent comme deux petites leds allumées dans l'eau.",
+                    "🟢 Spécimen sain à la chair ferme, idéal pour une cuisson lente au court-bouillon.",
+                    "🟢 Corps trapu et vigoureux, signe d'un poisson capturé en pleine forme."
+                ],
+                "pristine": [
+                    "✨ Une tanche d'une perfection absolue, arborant une magnifique livrée bronze.",
+                    "✨ Elle brille comme un vieux lingot de bronze poli par des fées des marais.",
+                    "✨ Une chair d'une fermeté et d'une douceur exceptionnelles, un vrai trésor d'étang.",
+                    "✨ Fraîcheur éclatante au mucus translucide et aux couleurs intenses sans aucun défaut."
+                ]
+            },
+            "id": 109,
+            "price": 89,
+            "location": "Rivières lentes, étangs vaseux et étangs d'Europe",
+            "preferred_time": "05h - 10h",
+            "preferred_season": "Mai - Septembre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "La Tanche (Tinca tinca) peuple les étangs d'Europe de mai à septembre entre 05h et 10h, appréciant les temps chauds et orageux. Surnommée poisson docteur grâce au mucus curatif de sa peau verte, elle hiverne en s'envasant profondément. Évaluée à 89 pièces, sa chair grasse exige d'être dégorgée dans l'eau claire avant d'être cuisinée au four avec des échalotes et du vin blanc.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Colin",
+            "size_min": 25.0,
+            "size_mean": 50.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un colin très endommagé, présentant des déchirures sur ses longues nageoires.",
+                    "🔴 Ce colin a dû tenter de mordre plus gros que lui et s'est fait secouer.",
+                    "🔴 Chair trop ramollie et déchiquetée, inutilisable pour faire de beaux pavés.",
+                    "🔴 Odeur forte de marée ancienne et peau grise complètement terne."
+                ],
+                "damaged": [
+                    "🟠 Un colin blessé avec une mâchoire abîmée et des écailles arrachées.",
+                    "🟠 Il s'est coincé les dents dans une ligne de fond et s'est débattu.",
+                    "🟠 Quelques blessures sur le dos, mais la chair des flancs reste bonne.",
+                    "🟠 L'œil est vitreux et les branchies ont perdu leur belle couleur rouge."
+                ],
+                "worn": [
+                    "🟡 Un colin ordinaire, fatigué après avoir chassé dans les profondeurs de l'Atlantique.",
+                    "🟡 Il a l'air d'un prédateur à la retraite qui a perdu de sa vivacité.",
+                    "🟡 La chair est un peu lâche, préférable à préparer en gratin de poisson.",
+                    "🟡 La peau a perdu ses reflets argentés et le corps manque de rigidité."
+                ],
+                "good": [
+                    "🟢 Un beau colin vigoureux à la peau gris-noir saine et aux dents intactes.",
+                    "🟢 Sa bouche est si remplie de dents pointues qu'il ferait fuir un piranha.",
+                    "🟢 Un poisson sain à la chair blanche très fine, idéal pour un rôti de merlu.",
+                    "🟢 Corps ferme et œil clair, attestant d'une fraîcheur irréprochable."
+                ],
+                "pristine": [
+                    "✨ Un colin d'une perfection absolue, resplendissant avec ses flancs argentés brillants.",
+                    "✨ Ce merlu est si parfait qu'on dirait un mannequin pour catalogue de pêche.",
+                    "✨ Une chair d'une blancheur et d'une fermeté royales, le régal des grands chefs.",
+                    "✨ Fraîcheur spectaculaire exhalant l'air marin pur, sans la moindre égratignure."
+                ]
+            },
+            "id": 110,
+            "price": 91,
+            "location": "Fonds rocheux de l'Atlantique et de la Méditerranée",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Mars - Juillet",
+            "months": [
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "fun_fact": "Le Colin (Merluccius merluccius) se pêche en Atlantique de mars à juillet entre 20h et 04h, par temps sombre et agité de préférence. Ce prédateur vorace possède une mâchoire garnie de dents acérées pour chasser les petits poissons. Vendu 91 pièces, il est indispensable en cuisine pour sa chair blanche très digeste, délicieuse pochée avec une sauce hollandaise ou un filet d'huile d'olive.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Lieu Noir",
+            "size_min": 30.0,
+            "size_mean": 55.0,
+            "size_sigma": 12.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un lieu noir gravement abîmé, présentant des morsures profondes sur les flancs.",
+                    "🔴 On dirait qu'il s'est pris pour un cascadeur et a percuté un récif.",
+                    "🔴 Chair complètement écrasée, impropre pour une cuisson en pavé.",
+                    "🔴 Odeur forte et désagréable avec perte totale du mucus protecteur."
+                ],
+                "damaged": [
+                    "🟠 Un lieu noir blessé aux nageoires caudales déchirées et écailles manquantes.",
+                    "🟠 Il s'est battu pour une proie avec un poisson plus gros que lui.",
+                    "🟠 Quelques blessures superficielles, chair consommable après parage rapide.",
+                    "🟠 L'œil est vitreux et le dos sombre a perdu son éclat d'origine."
+                ],
+                "worn": [
+                    "🟡 Un lieu noir ordinaire, fatigué par de longues nages face au courant.",
+                    "🟡 Il a l'air aussi fatigué qu'un chalutier après une semaine de tempête.",
+                    "🟡 Chair un peu molle, idéale pour être préparée en brandade ou acras.",
+                    "🟡 La coloration vert-olive est terne sous un mucus épais."
+                ],
+                "good": [
+                    "🟢 Un beau lieu noir vigoureux au corps fuselé et à la peau sombre intacte.",
+                    "🟢 Il frétille si fort qu'il essaie de battre le record du monde de saut en hauteur.",
+                    "🟢 Un poisson très sain aux filets épais, idéal pour un curry de poisson.",
+                    "🟢 Corps bien rigide et ouïes d'un rouge vif, signe de fraîcheur garantie."
+                ],
+                "pristine": [
+                    "✨ Un lieu noir d'une perfection absolue, brillant comme de l'acier poli.",
+                    "✨ Il est si étincelant qu'on dirait un sous-marin de poche tout neuf.",
+                    "✨ Une chair blanche et ferme d'une finesse incomparable pour les gourmets.",
+                    "✨ Fraîcheur éclatante exhalant une douce odeur iodée, peau parfaitement saine."
+                ]
+            },
+            "id": 111,
+            "price": 92,
+            "location": "Récifs rocheux profonds de l'Atlantique Nord",
+            "preferred_time": "06h - 15h",
+            "preferred_season": "Mai - Octobre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Lieu Noir (Pollachius virens) fréquente les récifs de mai à octobre entre 06h et 15h, aimant les eaux agitées et le ciel nuageux. Ce poisson vigoureux de la famille des morues est un nageur infatigable qui vit en bancs compacts. Vendu à 92 pièces, sa chair grise devient blanche à la cuisson, offrant une texture ferme parfaite pour les gratins et les préparations en papillote.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Eglefin",
+            "size_min": 25.0,
+            "size_mean": 45.0,
+            "size_sigma": 9.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un églefin gravement endommagé, présentant de profondes lacérations.",
+                    "🔴 On dirait que la tache noire sur son flanc a été faite au rouleau compresseur.",
+                    "🔴 Chair meurtrie et en lambeaux, impossible à cuisiner convenablement.",
+                    "🔴 Odeur d'ammoniaque prononcée et œil complètement enfoncé."
+                ],
+                "damaged": [
+                    "🟠 Un églefin blessé aux nageoires abîmées et avec des écailles manquantes.",
+                    "🟠 Il s'est frotté d'un peu trop près aux pinces d'un homard colérique.",
+                    "🟠 Quelques plaies superficielles, utilisable après avoir paré les filets.",
+                    "🟠 La tache noire operculaire est terne et l'œil est vitreux."
+                ],
+                "worn": [
+                    "🟡 Un églefin ordinaire, fatigué après son voyage dans les eaux froides du nord.",
+                    "🟡 Surnommé l'églefin fatigué, il a visiblement besoin d'un bon café bien chaud.",
+                    "🟡 Chair un peu molle, parfaite pour être cuite dans un lait aromatisé.",
+                    "🟡 La ligne latérale noire est estompée sous un mucus terne."
+                ],
+                "good": [
+                    "🟢 Un bel églefin vigoureux avec sa tache noire bien nette derrière l'ouïe.",
+                    "🟢 On dirait qu'on lui a tamponné l'épaule pour lui donner l'autorisation de nager.",
+                    "🟢 Un poisson très sain à la chair fine, idéal pour un fish and chips de qualité.",
+                    "🟢 Corps bien ferme et branchies d'un rouge éclatant, signe de fraîcheur."
+                ],
+                "pristine": [
+                    "✨ Un églefin d'une perfection absolue, avec sa marque noire étincelante.",
+                    "✨ Il est si parfait qu'on dirait que Saint-Pierre vient juste de le signer de son pouce.",
+                    "✨ Une chair d'une blancheur et d'une finesse incomparables, idéale pour le fumage.",
+                    "✨ Fraîcheur extraordinaire exhalant l'iode pur, sans la moindre égratignure."
+                ]
+            },
+            "id": 112,
+            "price": 93,
+            "location": "Fonds marins froids et profonds de l'Atlantique Nord",
+            "preferred_time": "05h - 12h",
+            "preferred_season": "Septembre - Février",
+            "months": [
+                9,
+                10,
+                11,
+                12,
+                1,
+                2
+            ],
+            "fun_fact": "L'Eglefin (Melanogrammus aeglefinus) vit en Atlantique Nord de septembre à février de 05h à 12h, préférant les temps froids et pluvieux. Il arbore une tache noire distinctive appelée marque du pouce de Saint-Pierre. Proposé à 93 pièces, sa chair très fine et délicate est la base du haddock fumé traditionnel, apportant une saveur salée et boisée exceptionnelle en cuisine.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Plie",
+            "size_min": 18.0,
+            "size_mean": 32.0,
+            "size_sigma": 6.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une plie très abîmée, présentant de profondes déchirures sur les bords.",
+                    "🔴 On dirait qu'elle a servi de paillasson à une famille de crabes.",
+                    "🔴 Chair lacérée et pleine de sable, impossible à lever en jolis filets.",
+                    "🔴 Peau décolorée et forte odeur de marée stagnante."
+                ],
+                "damaged": [
+                    "🟠 Une plie blessée avec des taches orange terne et des nageoires abîmées.",
+                    "🟠 Elle s'est frottée d'un peu trop près aux coquilles tranchantes du fond.",
+                    "🟠 Quelques marques cutanées, mais la chair reste propre sous la peau.",
+                    "🟠 Face ventrale blanche tachée de gris et œil manquant de transparence."
+                ],
+                "worn": [
+                    "🟡 Une plie ordinaire montrant des signes d'usure sur son dos marbré.",
+                    "🟡 Ses jolis points orange ont l'air d'avoir pris un coup de vieux.",
+                    "🟡 Chair un peu molle, à cuire à la poêle avec beaucoup de beurre citronné.",
+                    "🟡 Mucus épais et peau mate ayant perdu son élasticité naturelle."
+                ],
+                "good": [
+                    "🟢 Une belle plie vigoureuse aux points orange bien vifs et brillants.",
+                    "🟢 On dirait qu'elle a attrapé la rougeole des mers avec tous ses points orange.",
+                    "🟢 Poisson très sain au corps ferme, idéal cuit entier meunière.",
+                    "🟢 Face blanche impeccable et branchies rouges, gage de fraîcheur."
+                ],
+                "pristine": [
+                    "✨ Une plie d'une perfection absolue, sans aucun défaut sur sa peau lisse.",
+                    "✨ Ses taches orange sont si parfaites qu'on dirait une œuvre d'art moderne.",
+                    "✨ Une chair d'une finesse et d'une douceur exceptionnelles pour les gourmets.",
+                    "✨ Fraîcheur éblouissante exhalant la marée fraîche, yeux très vifs."
+                ]
+            },
+            "id": 113,
+            "price": 94,
+            "location": "Rivages sablonneux et fonds meubles d'Europe",
+            "preferred_time": "08h - 18h",
+            "preferred_season": "Mai - Octobre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "La Plie (Pleuronectes platessa) se pêche sur les côtes d'Europe de mai à octobre entre 08h et 18h, aimant les marées de vive-eau par temps clair. Ce poisson plat moucheté de taches orange vif change de couleur selon le substrat sableux. Vendue à 94 pièces, sa chair douce et tendre est très appréciée cuite entière à la poêle ou en filets panés croustillants pour les enfants.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Grondin Rouge",
+            "size_min": 15.0,
+            "size_mean": 28.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un grondin rouge très endommagé, avec ses nageoires pectorales déchirées.",
+                    "🔴 On dirait qu'il a tenté de courir trop vite sur ses pattes et s'est écrasé.",
+                    "🔴 Chair meurtrie et brisée, inutilisable pour une belle présentation.",
+                    "🔴 Odeur forte et désagréable de vieux poisson avec peau terne."
+                ],
+                "damaged": [
+                    "🟠 Un grondin rouge blessé ayant perdu son éclat rouge brique d'origine.",
+                    "🟠 Il s'est coincé la tête dans une roche en voulant marcher trop vite.",
+                    "🟠 Quelques écorchures sur le dos, chair exploitable après nettoyage des épines.",
+                    "🟠 L'œil est opaque et le ventre blanc présente des taches grisâtres."
+                ],
+                "worn": [
+                    "🟡 Un grondin rouge ordinaire montrant des signes d'usure sur sa cuirasse.",
+                    "🟡 Il grogne encore un peu, mais plus par fatigue que par colère.",
+                    "🟡 Chair un peu molle, convenant tout de même pour enrichir une soupe.",
+                    "🟡 La peau rouge brique est mate et le mucus protecteur est altéré."
+                ],
+                "good": [
+                    "🟢 Un beau grondin rouge vigoureux à la cuirasse intacte et au rouge éclatant.",
+                    "🟢 Il fait de grands yeux comme s'il était choqué d'avoir été capturé.",
+                    "🟢 Un poisson sain à la chair ferme, parfait pour une bouillabaisse maison.",
+                    "🟢 Corps bien rigide et nageoires bien déployées, témoignant de sa santé."
+                ],
+                "pristine": [
+                    "✨ Un grondin rouge d'une perfection absolue, resplendissant comme un rubis.",
+                    "✨ Il est si rouge et brillant qu'on dirait un petit dragon de poche aquatique.",
+                    "✨ Une chair d'une fermeté et d'une saveur exceptionnelles, le trésor de la soupe.",
+                    "✨ Fraîcheur extraordinaire aux nageoires pectorales intactes et bleutées magiques."
+                ]
+            },
+            "id": 114,
+            "price": 96,
+            "location": "Fonds sablonneux et graveleux de l'Atlantique et de la Méditerranée",
+            "preferred_time": "07h - 17h",
+            "preferred_season": "Juin - Octobre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Grondin Rouge (Chelidonichthys cuculus) vit sur les fonds sablonneux de juin à octobre de 07h et 17h, par temps calme. Ce poisson singulier grogne lorsqu'il est sorti de l'eau et utilise ses nageoires pectorales comme des pattes pour marcher sur le fond marin. Vendu à 96 pièces, sa chair ferme et parfumée est l'ingrédient vedette et indispensable d'une authentique bouillabaisse.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Goujon",
+            "size_min": 5.0,
+            "size_mean": 11.0,
+            "size_sigma": 2.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un goujon sérieusement blessé, présentant de profondes lacérations cutanées.",
+                    "🔴 On dirait que ce goujon a essayé de faire un câlin à une hélice de bateau et a perdu.",
+                    "🔴 Avec une chair aussi écrasée, impossible d'en faire une friture convenable.",
+                    "🔴 Le poisson est flasque, dégage une odeur fétide de vase et ses branchies sont grises."
+                ],
+                "damaged": [
+                    "🟠 Un goujon avec des écailles arrachées sur les flancs et une nageoire dorsale fendue.",
+                    "🟠 Ce poisson a dû perdre un duel de regard contre un caillou un peu trop pointu.",
+                    "🟠 Quelques éraflures sur les flancs obligent à le peler soigneusement avant friture.",
+                    "🟠 Les opercules sont légèrement ensanglantés et le mucus protecteur commence à sécher."
+                ],
+                "worn": [
+                    "🟡 Un goujon commun montrant une décoloration de sa robe grise et des nageoires légèrement usées.",
+                    "🟡 Il a l'air d'avoir passé la nuit à faire la fête au fond du ruisseau.",
+                    "🟡 Un goujon un peu terne mais qui fera toujours l'affaire dans un grand panier de friture.",
+                    "🟡 L'œil commence à se voiler légèrement et la fermeté de la chair est passable."
+                ],
+                "good": [
+                    "🟢 Un goujon vigoureux à la robe tachetée bien définie et aux barbillons intacts.",
+                    "🟢 Un petit aventurier des rivières qui frétille joyeusement dans vos mains.",
+                    "🟢 Un excellent poisson à la chair ferme, prêt à être roulé dans la farine et frit.",
+                    "🟢 Une peau brillante couverte d'un mucus sain, les ouïes sont d'un beau rouge vif."
+                ],
+                "pristine": [
+                    "✨ Un goujon d'une perfection absolue, aux reflets argentés et olivâtres étincelants.",
+                    "✨ Il est si fier et brillant qu'on croirait qu'il pose pour la couverture d'un magazine de pêche.",
+                    "✨ Une chair d'une finesse incomparable, digne d'une friture gastronomique servie chez les grands chefs.",
+                    "✨ Une fraîcheur extraordinaire avec une rigidité cadavérique parfaite et une odeur de rivière pure."
+                ]
+            },
+            "id": 115,
+            "price": 97,
+            "location": "Ruisseaux d'eau douce rapides et rivières claires à fond de gravier ou sableux",
+            "preferred_time": "08h - 18h",
+            "preferred_season": "Toute l'année",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Goujon (Gobio gobio), petit poisson grégaire fouillant le gravier des ruisseaux clairs, se pêche toute l'année, de préférence de 08h à 18h par temps couvert. Ses barbillons sensitifs lui servent à localiser les larves benthiques. Valant 97 pièces d'or, ce poisson frétillant et vif possède une chair très délicate, traditionnellement frite entière pour un amuse-bouche croustillant.",
+            "time_restriction": null
+        },
+        {
+            "name": "Ablette",
+            "size_min": 6.0,
+            "size_mean": 13.0,
+            "size_sigma": 2.5,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une ablette gravement écrasée, avec perte importante d'écailles argentées.",
+                    "🔴 Elle a dû essayer de faire du saute-mouton avec un canard colvert.",
+                    "🔴 Chair trop endommagée pour être cuisinée, même pour une simple friture.",
+                    "🔴 Le corps est mou, terne et dégage une odeur rance d'eau croupie."
+                ],
+                "damaged": [
+                    "🟠 Une ablette abîmée présentant des griffures sur le dos et la queue déchirée.",
+                    "🟠 Elle s'est frottée d'un peu trop près à une racine submergée en fuyant un brochet.",
+                    "🟠 Des blessures superficielles obligent à la nettoyer rapidement avant cuisson.",
+                    "🟠 Les opercules sont rouges de sang et les écailles se détachent très facilement."
+                ],
+                "worn": [
+                    "🟡 Une ablette commune au flanc argenté légèrement terni par le frottement.",
+                    "🟡 On dirait une vieille pièce de monnaie en argent oubliée au fond de la rivière.",
+                    "🟡 Une qualité ordinaire qui conviendra parfaitement pour une friture campagnarde.",
+                    "🟡 L'œil manque de vivacité et la peau a perdu son aspect glissant caractéristique."
+                ],
+                "good": [
+                    "🟢 Une ablette saine au corps fuselé et à la robe argentée bien brillante.",
+                    "🟢 Cette petite flèche argentée frétille comme si elle avait bu trop de café.",
+                    "🟢 Un poisson frais de choix, idéal pour une friture bien dorée au citron.",
+                    "🟢 La chair est bien ferme sous la pression et les branchies sont bien rouges."
+                ],
+                "pristine": [
+                    "✨ Une ablette magnifique, étincelante comme un lingot d'argent poli.",
+                    "✨ Elle brille tellement qu'on pourrait l'utiliser comme miroir de poche.",
+                    "✨ Une merveille culinaire d'une fraîcheur absolue, parfaite pour une friture de luxe.",
+                    "✨ Un état de fraîcheur parfait, le poisson est rigide et sent la fraîche rosée matinale."
+                ]
+            },
+            "id": 116,
+            "price": 98,
+            "location": "Lacs d'eau douce et rivières calmes à courant lent",
+            "preferred_time": "07h - 19h",
+            "preferred_season": "Avril - octobre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "L'Ablette (Alburnus alburnus) est un poisson grégaire brillant de la surface des lacs et rivières calmes. Pêchée d'avril à octobre, surtout de 07h à 19h sous un soleil doux, elle gobe des insectes volants. Ses écailles nacrées servaient jadis à fabriquer de fausses perles. Estimée à 98 pièces d'or, sa chair fine et délicate est parfaite marinée dans du vinaigre ou frite croustillante.",
+            "time_restriction": null
+        },
+        {
+            "name": "Poisson-chat",
+            "size_min": 12.0,
+            "size_mean": 26.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un poisson-chat mutilé, avec des épines brisées et la peau déchirée.",
+                    "🔴 Ce chat n'a clairement plus toutes ses vies, ni même ses moustaches.",
+                    "🔴 Chair trop abîmée et infectée de vase pour être consommable.",
+                    "🔴 Une odeur de pourriture et de boue pestilentielle s'en dégage, la peau est sèche."
+                ],
+                "damaged": [
+                    "🟠 Un poisson-chat blessé montrant des éraflures cutanées et des nageoires fendues.",
+                    "🟠 Il s'est bagarré avec un hameçon trop grand et a perdu un morceau de dignité.",
+                    "🟠 Les blessures sur les flancs nécessitent de retirer une bonne partie de la peau.",
+                    "🟠 Le mucus est épais et collant, et des ecchymoses sombres colorent le ventre."
+                ],
+                "worn": [
+                    "🟡 Un poisson-chat ordinaire à la livrée marron terne et aux barbillons un peu abîmés.",
+                    "🟡 Il a l'air de sortir d'une longue sieste dans la boue la plus profonde.",
+                    "🟡 Chair comestible mais qui nécessite de bonnes épices pour masquer le goût de vase.",
+                    "🟡 Les yeux sont ternes et le corps manque de la rigidité des poissons frais."
+                ],
+                "good": [
+                    "🟢 Un poisson-chat robuste à la peau marron marbrée saine et aux huit barbillons intacts.",
+                    "🟢 Il vous regarde avec ses petits yeux en agitant ses moustaches d'un air mécontent.",
+                    "🟢 Un spécimen bien charnu, idéal pour être mijoté en ragoût traditionnel.",
+                    "🟢 Peau bien humide et visqueuse, branchies roses et chair ferme sous le doigt."
+                ],
+                "pristine": [
+                    "✨ Un magnifique poisson-chat à la peau sombre et marbrée étincelante de santé.",
+                    "✨ C'est le roi de la vase, ses barbillons sont si parfaits qu'on dirait un aristocrate.",
+                    "✨ Une chair de premier choix, ferme et savoureuse, parfaite pour une friture cajun.",
+                    "✨ Fraîcheur absolue avec une odeur de terre mouillée très saine et des ouïes rouge vif."
+                ]
+            },
+            "id": 117,
+            "price": 99,
+            "location": "Lacs boueux, étangs peu profonds et rivières lentes à fond de vase",
+            "preferred_time": "19h - 04h",
+            "preferred_season": "Mars - novembre",
+            "months": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "Le Poisson-chat (Ameiurus nebulosus) est un rôdeur nocturne des étangs boueux. Pêché de mars à novembre, surtout de 19h à 04h par temps pluvieux et lourd, il fouille la vase grâce à ses huit barbillons tactiles. Ses aiguillons dorsaux venimeux exigent une manipulation prudente. Vendu 99 pièces d'or, sa chair grasse et riche est appréciée en ragoût épicé ou en friture après avoir été bien pelée.",
+            "time_restriction": "after_18h"
+        },
+        {
+            "name": "Truite de Mer",
+            "size_min": 25.0,
+            "size_mean": 50.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une truite de mer lacérée, montrant des blessures profondes dues aux prédateurs.",
+                    "🔴 Elle a confondu un filet maillant avec un hamac de relaxation.",
+                    "🔴 Chair complètement écrasée et ensanglantée, impropre à la gastronomie.",
+                    "🔴 Les yeux sont enfoncés et vitreux, et une odeur d'ammoniaque commence à poindre."
+                ],
+                "damaged": [
+                    "🟠 Une truite de mer blessée avec plusieurs nageoires fendues et des écailles manquantes.",
+                    "🟠 Elle s'est frottée d'un peu trop près aux dents d'un phoque affamé.",
+                    "🟠 Quelques plaies sur le dos obligent à parer les filets de façon rigoureuse.",
+                    "🟠 Les ouïes sont pâles et le mucus protecteur est en train de coaguler."
+                ],
+                "worn": [
+                    "🟡 Une truite de mer de remonte, montrant une coloration terne et des marques d'usure.",
+                    "🟡 Elle a fait un long voyage depuis l'océan et ça se voit sur ses cernes.",
+                    "🟡 La chair est moins ferme mais reste acceptable pour une cuisson en papillote.",
+                    "🟡 L'élasticité de la chair est faible et la peau a perdu son éclat métallique."
+                ],
+                "good": [
+                    "🟢 Une truite de mer saine au corps élancé, parée d'une magnifique robe argentée.",
+                    "🟢 Un athlète des courants côtiers qui a encore beaucoup d'énergie à revendre.",
+                    "🟢 Un poisson de premier choix à la chair rosée, idéal pour être braisé entier.",
+                    "🟢 Les yeux sont clairs et bombés, les branchies rouge vif exhalent une bonne odeur marine."
+                ],
+                "pristine": [
+                    "✨ Un spécimen de truite de mer absolument splendide, brillant d'un éclat d'argent pur.",
+                    "✨ On dirait qu'elle porte une armure de chevalier médiéval fraîchement astiquée.",
+                    "✨ Une chair exceptionnelle, ferme et grasse, digne des plus grandes tables étoilées.",
+                    "✨ Fraîcheur d'exception avec une rigidité parfaite et des écailles miroitantes intactes."
+                ]
+            },
+            "id": 118,
+            "price": 101,
+            "location": "Estuaires côtiers et rivières anadromes soumises aux marées",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Juin - septembre",
+            "months": [
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "La Truite de Mer (Salmo trutta trutta) est la forme migratrice de la truite fario. Capturée de juin à septembre, surtout de 20h à 04h par nuit sombre dans les estuaires côtiers, elle y chasse activement les sprats. Ses écailles argentées tombent facilement lors du combat. Estimée à 101 pièces d'or, sa chair rosée très fine et savoureuse est un délice cuite à l'unilatéral ou pochée au court-bouillon.",
+            "time_restriction": "after_18h"
+        },
+        {
+            "name": "Dorade Royale",
+            "size_min": 20.0,
+            "size_mean": 38.0,
+            "size_sigma": 7.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une dorade royale très abîmée, présentant des marques de morsures profondes.",
+                    "🔴 Son fameux sourcil doré a été remplacé par une balafre digne d'un pirate.",
+                    "🔴 La chair est en bouillie, inutilisable pour la gastronomie.",
+                    "🔴 Odeur suspecte de marée forte, ouïes blanchâtres et œil complètement opaque."
+                ],
+                "damaged": [
+                    "🟠 Une dorade royale endommagée avec des écailles manquantes et des nageoires déchirées.",
+                    "🟠 Elle s'est disputé un crabe avec un poulpe et a perdu son élégance.",
+                    "🟠 Quelques plaies sur les flancs obligent à nettoyer les filets avec minutie.",
+                    "🟠 Le poisson a perdu sa rigidité et le bandeau doré sur le front commence à s'effacer."
+                ],
+                "worn": [
+                    "🟡 Une dorade royale de taille moyenne, montrant des frottements et une robe un peu terne.",
+                    "🟡 Elle a l'air fatiguée d'avoir broyé des moules toute la sainte journée.",
+                    "🟡 Chair encore correcte, mais méritera une bonne marinade avant d'aller au barbecue.",
+                    "🟡 La cornée de l'œil est légèrement voilée et la chair manque un peu de tonus."
+                ],
+                "good": [
+                    "🟢 Une dorade royale vigoureuse à la silhouette trapue et au bandeau doré bien visible.",
+                    "🟢 Un beau poisson fier qui semble mécontent d'avoir interrompu son repas de crustacés.",
+                    "🟢 Un superbe poisson très frais, idéal pour une cuisson au barbecue ou au au four.",
+                    "🟢 L'œil est noir et brillant, la peau est bien tendue et les ouïes sont bien rouges."
+                ],
+                "pristine": [
+                    "✨ Une dorade royale d'exception, aux reflets argentés parfaits et au sourcil d'or éclatant.",
+                    "✨ Elle brille si fort qu'on croirait qu'elle porte des bijoux en or massif.",
+                    "✨ Une chair d'une finesse royale, ferme et parfumée, digne des plus grands restaurants.",
+                    "✨ Fraîcheur incomparable, odeur iodée très agréable et fermeté musculaire parfaite."
+                ]
+            },
+            "id": 119,
+            "price": 102,
+            "location": "Lagunes côtières et baies peu profondes de la Méditerranée",
+            "preferred_time": "06h - 10h",
+            "preferred_season": "Avril - novembre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "La Dorade Royale (Sparus aurata) se reconnaît à la bande dorée caractéristique entre ses yeux. Pêchée d'avril à novembre, surtout de 06h à 10h par mer calme, elle fréquente les fonds sableux de Méditerranée pour y broyer des coquillages. Elle peut changer de sexe au cours de sa vie. Valant 102 pièces d'or, sa chair blanche et ferme est très prisée grillée au fenouil ou cuite en croûte de sel.",
+            "time_restriction": null
+        },
+        {
+            "name": "Pageot",
+            "size_min": 12.0,
+            "size_mean": 25.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un pageot très abîmé, montrant une perte massive d'écailles et des plaies ouvertes.",
+                    "🔴 On dirait que la boîte de Pandore s'est ouverte directement sur lui.",
+                    "🔴 Chair trop meurtrie et molle pour en tirer un quelconque intérêt culinaire.",
+                    "🔴 Une odeur désagréable se dégage, les branchies ont jauni et l'œil est enfoncé."
+                ],
+                "damaged": [
+                    "🟠 Un pageot endommagé présentant des nageoires fendues et des griffures sur le dos.",
+                    "🟠 Il s'est frotté d'un peu trop près à une falaise sous-marine lors d'une tempête.",
+                    "🟠 Les blessures légères forcent à lever les filets plutôt que de le cuire entier.",
+                    "🟠 La robe rose a perdu son éclat et le mucus commence à coaguler sur les flancs."
+                ],
+                "worn": [
+                    "🟡 Un pageot ordinaire à la coloration rose terne et aux nageoires légèrement usées.",
+                    "🟡 Ce poisson rose a l'air d'avoir perdu ses couleurs à force de bronzer sous l'eau.",
+                    "🟡 Chair encore comestible mais qui manquera un peu de fermeté lors de la cuisson.",
+                    "🟡 L'œil est plat, montrant une fraîcheur moyenne bien que le poisson reste consommable."
+                ],
+                "good": [
+                    "🟢 Un pageot sain à la robe rose argentée bien nette parsemée de petits points bleus.",
+                    "🟢 Un petit poisson coquet qui semble fier de porter du rose bonbon en mer.",
+                    "🟢 Un produit très frais, idéal pour être poêlé à l'huile d'olive avec des herbes.",
+                    "🟢 La chair est bien élastique sous le doigt, les ouïes sont d'un beau rouge franc."
+                ],
+                "pristine": [
+                    "✨ Un pageot magnifique d'une perfection absolue, étincelant de nuances roses et bleues.",
+                    "✨ Il est si étincelant qu'on dirait une créature magique sortie d'un conte de fées.",
+                    "✨ Une chair blanche succulente et d'une finesse d'exception, digne d'un grand chef.",
+                    "✨ Fraîcheur optimale, poisson rigide exhalant un parfum d'iode pur et de brise marine."
+                ]
+            },
+            "id": 120,
+            "price": 103,
+            "location": "Fonds sableux et rocheux côtiers de la Méditerranée",
+            "preferred_time": "08h - 16h",
+            "preferred_season": "Juin - octobre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Pageot Commun (Pagellus erythrinus) se distingue par sa robe rose argentée parsemée de petits points bleus. Pêché de juin à octobre, surtout de 08h à 16h sous le soleil, il habite les fonds sableux méditerranéens. Il se nourrit de vers et de petits crustacés benthiques. Valant 103 pièces d'or, sa chair fine et blanche est excellente cuite entière en papillote ou simplement rôtie au citron.",
+            "time_restriction": null
+        },
+        {
+            "name": "Turbot",
+            "size_min": 30.0,
+            "size_mean": 55.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un turbot gravement mutilé, avec la face oculaire entaillée et les nageoires en lambeaux.",
+                    "🔴 On dirait qu'il a tenté de faire du skateboard sur des rochers tranchants.",
+                    "🔴 Chair écrasée et souillée, impropre à toute préparation culinaire gastronomique.",
+                    "🔴 Le poisson est flasque, dégage une odeur rance et la face blanche est grisâtre."
+                ],
+                "damaged": [
+                    "🟠 Un turbot endommagé montrant des éraflures sur sa peau rugueuse et des rayons brisés.",
+                    "🟠 Ce poisson plat a dû passer dans une machine à laver un peu trop puissante.",
+                    "🟠 Les entailles sur les bords obligent à le parer largement avant de lever les filets.",
+                    "🟠 Le mucus est collant et les ouïes commencent à prendre une teinte brune."
+                ],
+                "worn": [
+                    "🟡 Un turbot ordinaire au teint grisâtre terne et aux tubercules osseux émoussés.",
+                    "🟡 Il ressemble à un vieux tapis de bain beige oublié sur le fond de l'océan.",
+                    "🟡 Qualité moyenne, conviendra pour un bouillon ou une cuisson mijotée en sauce.",
+                    "🟡 La rigidité a disparu et l'œil est terne, bien que le poisson reste consommable."
+                ],
+                "good": [
+                    "🟢 Un turbot sain à la face oculaire bien sombre mouchetée et aux tubercules osseux intacts.",
+                    "🟢 Cet as du camouflage vous regarde de travers avec ses deux yeux du même côté.",
+                    "🟢 Un excellent poisson à la chair ferme, idéal pour être rôti entier sur l'os.",
+                    "🟢 La chair est très élastique et la face ventrale est d'un blanc pur impeccable."
+                ],
+                "pristine": [
+                    "✨ Un turbot d'une perfection rare, mimétique et vigoureux, resplendissant de santé.",
+                    "✨ C'est le roi de l'Atlantique, il est si beau qu'on hésiterait presque à le cuire.",
+                    "✨ Une chair d'une finesse incomparable, digne d'un grand restaurant étoilé.",
+                    "✨ Fraîcheur exceptionnelle, rigidité cadavérique parfaite et odeur pure de marée haute."
+                ]
+            },
+            "id": 121,
+            "price": 104,
+            "location": "Fonds sableux et rocheux profonds de l'océan Atlantique et de la mer du Nord",
+            "preferred_time": "05h - 09h",
+            "preferred_season": "Mai - octobre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Turbot (Scophthalmus maximus) est un prestigieux poisson plat benthique de l'Atlantique. Pêché de mai à octobre, surtout de 05h à 09h par mer calme, il s'enfouit dans le sable pour chasser à l'affût. Sa peau sans écailles porte des tubercules osseux durs. Estimé à 104 pièces d'or, c'est un sommet de la gastronomie marine dont la chair ferme et feuilletée est sublime pochée au champagne.",
+            "time_restriction": null
+        },
+        {
+            "name": "Vieille Commune",
+            "size_min": 20.0,
+            "size_mean": 38.0,
+            "size_sigma": 8.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Une vieille commune très abîmée, avec de profondes déchirures sur sa peau épaisse.",
+                    "🔴 Cette vieille a pris un sacré coup de jeune, mais pas de la bonne manière.",
+                    "🔴 La chair est complètement meurtrie et délitée, inutilisable même en soupe.",
+                    "🔴 Le poisson dégage une odeur d'algue pourrie, les yeux sont blancs et vitreux."
+                ],
+                "damaged": [
+                    "🟠 Une vieille commune blessée, présentant des écailles arrachées et des nageoires fendues.",
+                    "🟠 Elle s'est battue avec un crabe un peu trop revanchard dans son tas de varech.",
+                    "🟠 Quelques blessures obligent à lever les filets et à retirer la peau épaisse.",
+                    "🟠 La robe verte ou rouge a perdu de ses couleurs et le mucus protecteur a séché."
+                ],
+                "worn": [
+                    "🟡 Une vieille commune de taille moyenne, montrant des éraflures et des couleurs ternies.",
+                    "🟡 Elle porte bien son nom, elle a l'air d'avoir vécu trois siècles au fond de l'eau.",
+                    "🟡 Chair molle mais encore exploitable pour préparer une bonne bouillabaisse.",
+                    "🟡 La fermeté du corps est faible et les ouïes commencent à brunir sur les bords."
+                ],
+                "good": [
+                    "🟢 Une vieille commune robuste à la robe marbrée verte et rouge et aux dents intactes.",
+                    "🟢 Ce poisson a une tête boudeuse qui rappelle un voisin grincheux un dimanche matin.",
+                    "🟢 Un poisson frais, idéal pour être mijoté doucement en court-bouillon avec des épices.",
+                    "🟢 Les yeux sont clairs et brillants, le corps est ferme et les ouïes sont bien roses."
+                ],
+                "pristine": [
+                    "✨ Une vieille commune splendide, étincelante de motifs multicolores verts, rouges et orange.",
+                    "✨ Elle est si colorée qu'on dirait un poisson tropical égaré dans les eaux froides de l'Atlantique.",
+                    "✨ Un poisson d'une fraîcheur royale, parfait pour un filet cuit à la vapeur douce.",
+                    "✨ Fraîcheur d'exception avec une peau luisante de mucus sain et une odeur de mer pure."
+                ]
+            },
+            "id": 122,
+            "price": 106,
+            "location": "Forêts de laminaires et récifs rocheux peu profonds de l'Atlantique",
+            "preferred_time": "08h - 17h",
+            "preferred_season": "Mai - octobre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "La Vieille Commune (Labrus bergylta) est un poisson territorial coloré des forêts de varech atlantiques. Pêchée de mai à octobre, de préférence de 08h à 17h par eau claire, elle utilise ses dents robustes pour croquer les berniques. Tous les individus naissent femelles puis deviennent mâles. Estimée à 106 pièces d'or, sa chair est molle mais fait d'excellentes soupes de poisson traditionnelles.",
+            "time_restriction": null
+        },
+        {
+            "name": "Lieu Jaune",
+            "size_min": 25.0,
+            "size_mean": 50.0,
+            "size_sigma": 12.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un lieu jaune très abîmé, présentant de profondes entailles dues à un combat violent.",
+                    "🔴 Il a tenté de faire de la boxe avec une épave métallique et a perdu par KO.",
+                    "🔴 La chair délicate est trop déchiquetée pour espérer en faire un plat présentable.",
+                    "🔴 Le poisson est complètement mou, l'œil est blanc et une odeur d'ammoniaque se dégage."
+                ],
+                "damaged": [
+                    "🟠 Un lieu jaune endommagé avec des écailles arrachées et la nageoire caudale déchirée.",
+                    "🟠 Il s'est coincé la mâchoire inférieure proéminente dans une structure métallique.",
+                    "🟠 Quelques blessures superficielles forcent à lever les filets plutôt que de le cuire entier.",
+                    "🟠 Les opercules branchiaux sont ensanglantés et le mucus a presque disparu de sa peau."
+                ],
+                "worn": [
+                    "🟡 Un lieu jaune ordinaire à la robe jaune-bronze un peu terne et aux nageoires usées.",
+                    "🟡 Il ressemble à un vieux tuyau en laiton qui aurait traîné trop longtemps au fond.",
+                    "🟡 Une qualité moyenne dont la chair un peu molle conviendra mieux pour des rillettes.",
+                    "🟡 L'œil manque de éclat et la chair s'enfonce légèrement sous la pression du doigt."
+                ],
+                "good": [
+                    "🟢 Un lieu jaune vigoureux à la ligne latérale sombre bien courbée et à la robe brillante.",
+                    "🟢 Ce prédateur fier a encore l'air de vouloir mordre tout ce qui bouge.",
+                    "🟢 Un poisson frais de choix, parfait pour être cuisiné en filet avec une sauce à la crème.",
+                    "🟢 Les branchies sont bien rouges, la peau est luisante et dégage une agréable odeur d'iode."
+                ],
+                "pristine": [
+                    "✨ Un lieu jaune magnifique d'une perfection absolue, étincelant de reflets dorés et bronze.",
+                    "✨ Il est si étincelant et parfait qu'on dirait un trophée en or tout juste sorti de l'eau.",
+                    "✨ Une chair blanche feuilletée d'une finesse incomparable, digne des plus grands dîners.",
+                    "✨ Fraîcheur exceptionnelle, rigidité cadavérique parfaite et œil bombé très clair."
+                ]
+            },
+            "id": 123,
+            "price": 107,
+            "location": "Épaves sous-marines et récifs rocheux profonds de l'océan Atlantique",
+            "preferred_time": "06h - 10h",
+            "preferred_season": "Mai - septembre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "Le Lieu Jaune (Pollachius pollachius) est un redoutable prédateur des épaves et falaises de l'Atlantique. Pêché de mai à septembre, surtout de 06h à 10h par fort coefficient de marée, il jaillit de sa cachette pour gober les lançons. Il possède une mâchoire inférieure proéminente. Vendu 107 pièces d'or, sa chair feuilletée d'une grande finesse est à consommer très fraîche, rôtie au four ou pochée.",
+            "time_restriction": null
+        },
+        {
+            "name": "Tacaud",
+            "size_min": 10.0,
+            "size_mean": 23.0,
+            "size_sigma": 4.5,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un tacaud très abîmé, montrant des blessures importantes sur sa robe dorée.",
+                    "🔴 Ce tacaud a dû faire un tour de manège dans une machine à laver industrielle.",
+                    "🔴 Sa chair étant déjà très fragile, cet état la rend totalement impropre à la cuisine.",
+                    "🔴 Le poisson dégage une odeur rance, la chair est molle et les yeux sont enfoncés."
+                ],
+                "damaged": [
+                    "🟠 Un tacaud endommagé présentant des écailles manquantes et des nageoires déchirées.",
+                    "🟠 Il s'est frotté aux moules d'un pylône et a perdu quelques plumes dans la bataille.",
+                    "🟠 Les blessures sur les flancs forcent à retirer la peau délicate avant de le cuire.",
+                    "🟠 Les opercules sont légèrement rouges de sang et le mucus commence à coaguler."
+                ],
+                "worn": [
+                    "🟡 Un tacaud commun au teint cuivré terne et au barbillon mentonnier abîmé.",
+                    "🟡 Il ressemble à un vieux sou en cuivre qui a traîné trop longtemps dans le port.",
+                    "🟡 Chair encore comestible mais qui risque de s'effondrer à la cuisson si elle n'est pas manipulée avec soin.",
+                    "🟡 L'œil manque de éclat et le corps a perdu sa fermeté d'origine."
+                ],
+                "good": [
+                    "🟢 Un tacaud sain à la robe cuivrée zébrée de bandes sombres et au barbillon intact.",
+                    "🟢 Il a une bouille sympathique avec son petit barbillon qui ressemble à une barbe.",
+                    "🟢 Un poisson frais très convenable, parfait pour être frit rapidement avec du beurre.",
+                    "🟢 Les branchies sont bien rouges et le mucus protecteur enveloppe sainement le corps."
+                ],
+                "pristine": [
+                    "✨ Un tacaud splendide d'une perfection absolue, brillant de reflets de cuivre et d'or.",
+                    "✨ Il est si éclatant et zébré qu'on croirait qu'il sort d'un salon de coiffure pour poissons.",
+                    "✨ Une chair d'une tendreté exquise, parfaite pour être pochée délicatement dans du lait chaud.",
+                    "✨ Fraîcheur remarquable avec une rigidité parfaite et une bonne odeur de marée."
+                ]
+            },
+            "id": 124,
+            "price": 108,
+            "location": "Épaves côtières et structures artificielles de l'océan Atlantique",
+            "preferred_time": "08h - 18h",
+            "preferred_season": "Mars - décembre",
+            "months": [
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Tacaud (Trisopterus luscus) est un poisson grégaire de la famille de la morue. Pêché de mars à décembre, surtout de 08h à 18h par mer agitée, il forme de larges bancs près des structures immergées. Il possède un barbillon mentonnier unique. Valant 108 pièces d'or, sa chair très tendre mais fragile doit être consommée rapidement après capture, idéale frite ou pochée dans du lait.",
+            "time_restriction": null
+        },
+        {
+            "name": "Chabot",
+            "size_min": 4.0,
+            "size_mean": 8.0,
+            "size_sigma": 1.5,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un chabot très abîmé, présentant une tête écrasée et des nageoires mutilées.",
+                    "🔴 On dirait qu'une grosse pierre lui est tombée sur la tête... ah attendez, c'est possible.",
+                    "🔴 Il ne reste presque plus rien de comestible sur ce petit poisson broyé.",
+                    "🔴 Le poisson est flasque, dégage une odeur de vase rance et les yeux sont blancs."
+                ],
+                "damaged": [
+                    "🟠 Un chabot endommagé avec des écorchures sur sa peau rugueuse et sans écailles.",
+                    "🟠 Il a tenté de rivaliser de largeur avec un gros galet et a perdu le match.",
+                    "🟠 Quelques blessures forcent à bien parer le poisson avant de le frire entier.",
+                    "🟠 Le mucus a séché par endroits et les larges opercules branchiaux sont ensanglantés."
+                ],
+                "worn": [
+                    "🟡 Un chabot ordinaire à la livrée brune terne et aux nageoires pectorales usées.",
+                    "🟡 Il ressemble à un vieux morceau de écorce d'arbre rejeté par le courant.",
+                    "🟡 Sa chair blanche reste saine mais il manquera d'éclat dans l'assiette.",
+                    "🟡 L'œil manque de éclat et le corps a perdu sa fermeté typique."
+                ],
+                "good": [
+                    "🟢 Un chabot sain à la tête large caractéristique et aux nageoires pectorales intactes.",
+                    "🟢 Il vous regarde avec une moue boudeuse, posé sur vos doigts comme un petit crapaud.",
+                    "🟢 Un excellent petit poisson à la chair ferme, prêt pour une friture croustillante.",
+                    "🟢 La peau est bien visqueuse, la couleur brune camouflée est vive et les ouïes sont d'un rouge vif."
+                ],
+                "pristine": [
+                    "✨ Un chabot splendide d'une perfection absolue, aux marbrures sombres parfaites.",
+                    "✨ C'est le champion du camouflage, il est si parfait qu'on le croirait sculpté dans du jaspe.",
+                    "✨ Une chair d'une finesse exquise et rare, digne des amateurs de friture sauvage.",
+                    "✨ Fraîcheur d'exception avec une rigidité parfaite et une bonne odeur de torrent frais."
+                ]
+            },
+            "id": 125,
+            "price": 109,
+            "location": "Ruisseaux de montagne rapides à fond de galets et d'eau claire",
+            "preferred_time": "08h - 18h",
+            "preferred_season": "Toute l'année",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Chabot (Cottus gobio) est un petit poisson de fond des rivières froides et limpides. Capturé toute l'année, de préférence de 08h à 18h par temps ensoleillé, il se cache sous les pierres car il n'a pas de vessie natatoire. Il possède une tête large et aplatie. Vendu 109 pièces d'or, sa chair blanche très fine est une délicatesse culinaire rare, traditionnellement cuite entière en friture.",
+            "time_restriction": null
+        },
+        {
+            "name": "Sprat",
+            "size_min": 5.0,
+            "size_mean": 10.0,
+            "size_sigma": 1.8,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Un sprat très abîmé, complètement aplati et ayant perdu la majorité de ses écailles.",
+                    "🔴 Il a tenté de faire barrage contre un navire de pêche et s'est fait écraser.",
+                    "🔴 Chair trop abîmée, impropre même pour faire de la pâte de poisson.",
+                    "🔴 Une forte odeur d'huile rance s'en dégage et le corps est gluant et informe."
+                ],
+                "damaged": [
+                    "🟠 Un sprat endommagé avec une coupure sur le dos et la queue fendue.",
+                    "🟠 Il s'est fait bousculer par ses milliers de camarades de banc lors d'un virage serré.",
+                    "🟠 Des blessures sur les flancs forcent à retirer la tête et les viscères avant friture.",
+                    "🟠 Les écailles se détachent par poignées et l'œil est injecté de sang."
+                ],
+                "worn": [
+                    "🟡 Un sprat ordinaire aux reflets bleutés un peu ternes et aux nageoires usées.",
+                    "🟡 Il a l'air d'avoir passé un peu trop de temps dans un shaker à cocktail océanique.",
+                    "🟡 Qualité moyenne, parfait pour être fumé afin de masquer son manque de fraîcheur visuelle.",
+                    "🟡 La peau a perdu son brillant métallique et le ventre commence à ramollir."
+                ],
+                "good": [
+                    "🟢 Un sprat sain à la silhouette fuselée et aux reflets bleu-argentés brillants.",
+                    "🟢 Cette petite sardine du Nord frétille si vite qu'on a du mal à la tenir.",
+                    "🟢 Un produit très frais, idéal pour être grillé entier avec une pointe de sel.",
+                    "🟢 La chair est bien ferme sous la pression, les yeux sont bien bombés et les ouïes sont rouges."
+                ],
+                "pristine": [
+                    "✨ Un sprat d'une perfection absolue, étincelant comme une aiguille d'argent.",
+                    "✨ Il est si parfait et brillant qu'on croirait un bijou fantaisie fraîchement sorti de l'eau.",
+                    "✨ Une chair fine et grasse de premier choix, délicieuse fumée ou frite au beurre.",
+                    "✨ Fraîcheur d'exception, rigidité parfaite et bonne odeur de marée fraîche."
+                ]
+            },
+            "id": 126,
+            "price": 111,
+            "location": "Zones côtières de la mer du Nord et rivages de la mer Baltique",
+            "preferred_time": "08h - 17h",
+            "preferred_season": "Septembre - mars",
+            "months": [
+                1,
+                2,
+                3,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Sprat (Sprattus sprattus) est un petit poisson pélagique vivant en bancs serrés dans les eaux septentrionales. Pêché de septembre à mars, surtout de 08h à 17h à marée haute, il se nourrit de plancton. Il tolère de faibles salinités. Vendu 111 pièces d'or, sa chair grasse et savoureuse est très populaire cuite entière sur le grill, fumée en conserve ou préparée sous forme d'anchois.",
+            "time_restriction": null
         }
     ],
     "uncommon": [
@@ -2586,6 +3966,567 @@
             ],
             "fun_fact": "La Vandoise (Leuciscus leuciscus) est pêchée toute l'année de 16h à 09h dans les cours d'eau rapides et frais d'Europe. Ce petit cyprinidé très vif présente un comportement surprenant : il gobe les insectes à la surface de l'eau en effectuant de petits bonds caractéristiques appelés ronds de vandoise. Les pêcheurs experts sur le terrain soulignent qu'elle est extrêmement craintive et nécessite une approche très discrète. Commercialisée au prix de 240 pièces d'or, sa chair est fine mais truffée de nombreuses petites arêtes, ce qui la destine traditionnellement à la friture après cuisson complète.",
             "time_restriction": "after_22h"
+        },
+        {
+            "name": "Sandre",
+            "size_min": 30.0,
+            "size_mean": 60.0,
+            "size_sigma": 12.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'examen du spécimen de Sander lucioperca révèle des blessures cutanées profondes et une mutilation des nageoires dorsales épineuses.",
+                    "🔴 Ce sandre a dû s'entraîner pour un combat de boxe abyssale, mais il a clairement oublié sa garde.",
+                    "🔴 La chair est complètement meurtrie et délitée par le combat, la rendant inutilisable même pour une soupe de poisson.",
+                    "🔴 Un mucus grisâtre et nauséabond recouvre le corps mou, et ses yeux autrefois opaques sont maintenant vitreux et enfoncés."
+                ],
+                "damaged": [
+                    "🟠 Le spécimen montre une perte partielle de sa robe rayée gris-vert et plusieurs éraflures superficielles sur les flancs.",
+                    "🟠 Il a tenté un salto arrière au-dessus des cailloux pour impressionner une perche, et le résultat est douloureux.",
+                    "🟠 Les filets blancs du dos sont légèrement abîmés, ce qui nécessitera de parer les zones d'impact pour la cuisine.",
+                    "🟠 La fermeté musculaire est moyenne et une légère odeur d'algues stagnantes se dégage des branchies congestionnées."
+                ],
+                "worn": [
+                    "🟡 Le derme montre une décoloration normale due au séjour en eau profonde et une usure discrète des pointes des nageoires.",
+                    "🟡 Ce vieux grognard des lacs a passé un peu trop de temps à surveiller son territoire au fond de l'eau.",
+                    "🟡 Idéal pour être préparé en rillettes de poisson relevées aux herbes pour masquer la texture légèrement ramollie.",
+                    "🟡 Le mucus protecteur est aminci et les ouïes virent au rose pâle, indiquant que le poisson a perdu sa vigueur initiale."
+                ],
+                "good": [
+                    "🟢 Morphologie standard intacte, derme affichant des bandes verticales foncées bien nettes et nageoire dorsale épineuse érigée.",
+                    "🟢 Un fier prédateur des grands lacs profonds qui semble encore vous toiser du regard.",
+                    "🟢 Sa chair blanche très fine, ferme et sans arêtes est parfaite pour lever de superbes filets à dorer à la poêle.",
+                    "🟢 Le corps présente une rigidité saine, les yeux révèlent leur opacité réfléchissante naturelle et l'odeur est neutre."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'une perfection biologique remarquable, nageoires intactes et éclat métallique de la livrée gris-perle impeccable.",
+                    "✨ Le roi incontesté du lac dans sa tenue de gala ! Il brille tant qu'on dirait une œuvre d'art fraîchement sortie de l'eau.",
+                    "✨ Qualité gastronomique d'exception, digne d'un chef étoilé pour des filets pochés au champagne ou un carpaccio ultra-frais.",
+                    "✨ Rigidité cadavérique parfaite, ouïes d'un rouge sang éclatant et fraîcheur absolue garantissant des saveurs optimales."
+                ]
+            },
+            "id": 127,
+            "price": 351,
+            "location": "Lacs profonds et rivières à courant lent (Europe)",
+            "preferred_time": "18h - 06h",
+            "preferred_season": "Juin - Janvier",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                1
+            ],
+            "fun_fact": "Le Sandre, Sander lucioperca, se pêche de Juin à Janvier de 18h à 06h par temps couvert dans les grands lacs profonds d'Europe. Ce prédateur aux yeux opaques réfléchissants possède une vision nocturne exceptionnelle pour chasser. Estimé à 351 pièces, sa chair blanche très fine, ferme et sans arêtes est particulièrement appréciée en gastronomie, pochée ou rôtie au four avec un filet de citron.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Flétan de l'Atlantique",
+            "size_min": 80.0,
+            "size_mean": 150.0,
+            "size_sigma": 35.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le corps asymétrique aplati présente des lacérations importantes et une rupture de la colonne vertébrale.",
+                    "🔴 On dirait que ce flétan géant a servi de tapis de sol à un troupeau de phoques déchaînés.",
+                    "🔴 La chair épaisse a subi de fortes pressions, la rendant trop coriace et meurtrie pour être rôtie.",
+                    "🔴 Une odeur rance se dégage de la peau brune rugueuse qui se décolle sous les doigts, indiquant un état avarié."
+                ],
+                "damaged": [
+                    "🟠 Perte importante de pigmentation sur le côté droit oculaire et marques d'érosion cutanée modérée.",
+                    "🟠 Ce poisson plat a tenté de se plier en deux pour se cacher sous un galet, mais sa taille géante l'a trahi.",
+                    "🟠 La tranche centrale est entamée par des marques de morsure, mais les côtés restent exploitables en cuisine.",
+                    "🟠 La rigidité du corps est faible et le mucus oculaire s'est opacifié le long de la ligne latérale sinueuse."
+                ],
+                "worn": [
+                    "🟡 Le derme montre une usure naturelle liée aux frottements sur les fonds abyssaux et des nageoires légèrement frangées.",
+                    "🟡 Un géant fatigué qui a parcouru des centaines de kilomètres sur le sable froid de l'océan Atlantique.",
+                    "🟡 Parfait pour être préparé en brandade ou en beignets de poisson afin de compenser un léger manque de fermeté.",
+                    "🟡 La face ventrale blanche présente des taches grisâtres et la chair montre une perte d'élasticité à la pression."
+                ],
+                "good": [
+                    "🟢 Corps plat robuste bien proportionné, face oculaire brune uniforme saine et nageoires pectorales intactes.",
+                    "🟢 Un beau monstre plat des profondeurs marines qui en impose par sa forme et sa corpulence robuste.",
+                    "🟢 Sa chair blanche très dense et ferme est idéale pour tailler d'épais pavés à griller au four.",
+                    "🟢 Le spécimen affiche une bonne rigidité, une odeur de marée fraîche et des branchies d'un beau rouge sombre."
+                ],
+                "pristine": [
+                    "✨ Perfection anatomique exceptionnelle, pigmentation oculaire d'un brun profond impeccable et face aveugle d'un blanc pur.",
+                    "✨ Le seigneur absolu des abysses sablonneux ! Il est si parfait qu'on dirait une sculpture de marbre bicolore.",
+                    "✨ Qualité gastronomique suprême, la chair offre une texture incomparable pour des darnes d'exception ou des sashimis nobles.",
+                    "✨ Spécimen en rigor mortis complète, opercules fermes et mucus translucide brillant sous la lumière."
+                ]
+            },
+            "id": 128,
+            "price": 352,
+            "location": "Fonds sablonneux et profonds de l'océan Atlantique Nord",
+            "preferred_time": "06h - 18h",
+            "preferred_season": "Mai - Septembre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "Le Flétan de l'Atlantique, Hippoglossus hippoglossus, se pêche de Mai à Septembre de 06h à 18h par mer calme dans les profondeurs de l'Atlantique Nord. Ce poisson plat géant peut vivre plus de cinquante ans et grandir de façon spectaculaire. Vendu 352 pièces, sa chair blanche ferme et dense est extrêmement recherchée en cuisine, souvent rôtie ou préparée en pavés grillés accompagnés d'herbes.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Omble Chevalier",
+            "size_min": 20.0,
+            "size_mean": 40.0,
+            "size_sigma": 8.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Décollement cutané étendu et écrasement sévère des muscles abdominaux rouges caractéristiques.",
+                    "🔴 Il a voulu jouer à saute-mouton avec les turbines d'un barrage de haute montagne, et il a perdu.",
+                    "🔴 La chair fine et fragile est en bouillie, impropre à toute cuisson à l'unilatérale ou en papillote.",
+                    "🔴 Absence complète de mucus protecteur, peau terne sans éclats et forte odeur de sédiment acide décomposé."
+                ],
+                "damaged": [
+                    "🟠 Présence de lacérations sur la nageoire adipeuse et de cicatrices sur le ventre rouge-orangé.",
+                    "🟠 Il a glissé sur un rocher gelé pendant sa remontée du torrent et a perdu quelques-unes de ses jolies écailles.",
+                    "🟠 Les filets roses sont un peu entamés par les chocs, nécessitant un découpage soigné pour la cuisson.",
+                    "🟠 Chair molle manquant d'élasticité au toucher et branchies d'une teinte rose pâle anormale."
+                ],
+                "worn": [
+                    "🟡 Usure modérée des écailles de la ligne latérale et atténuation des petits points clairs sur les flancs.",
+                    "🟡 Ce poisson d'eau froide semble épuisé par son hivernage sous l'épaisse couche de glace du lac.",
+                    "🟡 Idéal à cuisiner en mousse de poisson légère ou en farce fine pour valoriser sa saveur beurrée.",
+                    "🟡 Le derme orange vif a perdu de sa vivacité et l'œil montre une opacification modérée de la cornée."
+                ],
+                "good": [
+                    "🟢 Silhouette fuselée saine, dos sombre olive, flancs parsemés de points rouges et ventre rose-orangé intact.",
+                    "🟢 Un magnifique bijou des lacs de montagne, coloré comme un coucher de soleil alpin.",
+                    "🟢 Sa chair rose-orangé très délicate est excellente pochée entière ou grillée à la poêle.",
+                    "🟢 Le poisson est ferme, dégage une douce odeur d'eau de source pure et possède des ouïes bien rouges."
+                ],
+                "pristine": [
+                    "✨ Intégrité morphologique parfaite, coloration nuptiale orange vif éclatante et liseré blanc des nageoires impeccable.",
+                    "✨ La perle des glaciers ! Il est si étincelant qu'il semble sculpté dans de la glace et du corail.",
+                    "✨ Qualité gastronomique extraordinaire, la chair grasse offre une finesse incomparable pour un tartare ou un pavé mi-cuit.",
+                    "✨ Spécimen d'une fraîcheur absolue en rigor mortis, opercules tendus et oeil limpide comme l'eau des cimes."
+                ]
+            },
+            "id": 129,
+            "price": 353,
+            "location": "Lacs alpins et subarctiques profonds et froids (Europe, Amérique du Nord)",
+            "preferred_time": "05h - 21h",
+            "preferred_season": "Juin - Septembre",
+            "months": [
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "L'Omble Chevalier, Salvelinus alpinus, se capture de Juin à Septembre de 05h à 21h par temps frais dans les lacs alpins profonds. Ce salmonidé tolère les eaux les plus froides de la planète, survivant sous la glace. Estimé à 353 pièces, sa chair délicate couleur rose-orangé possède une saveur subtile et beurrée, très appréciée cuite à la vapeur ou poêlée doucement au beurre meunière.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Roussette",
+            "size_min": 40.0,
+            "size_mean": 65.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le corps élancé de ce petit requin présente de profondes entailles et des morsures de prédateurs.",
+                    "🔴 On dirait que cette roussette a servi de jouet à mâcher pour un requin beaucoup plus gros.",
+                    "🔴 La chair sans arêtes est endommagée et trop meurtrie pour en faire une matelote convenable.",
+                    "🔴 La peau tachetée est visqueuse et dégage une forte odeur ammoniacale fétide, signe d'altération grave."
+                ],
+                "damaged": [
+                    "🟠 Éraflures cutanées importantes ayant arraché les denticules de la peau rugueuse.",
+                    "🟠 Elle s'est mêlée les nageoires dans les rochers en voulant attraper un crabe trop rapide.",
+                    "🟠 Les filets fermes ont subi des chocs, mais restent utilisables après un épluchage soigné.",
+                    "🟠 Le corps manque de tonus musculaire et les branchies montrent une décoloration rose grisâtre."
+                ],
+                "worn": [
+                    "🟡 Usure normale de la peau rugueuse et légères abrasions sur les nageoires dorsales postérieures.",
+                    "🟡 Ce petit squale a frotté sa peau de papier de verre sur un peu trop de récifs sablonneux.",
+                    "🟡 Idéal à mijoter longuement dans une sauce tomate bien épicée pour attendrir la chair ferme.",
+                    "🟡 La peau couleur sable a terni et le mucus oculaire commence à s'épaissir légèrement."
+                ],
+                "good": [
+                    "🟢 Corps cylindrique fuselé sain, derme beige clair parsemé de nombreuses petites taches brunes.",
+                    "🟢 Un mini requin de poche très fier de sa robe tachetée et de son allure de prédateur des sables.",
+                    "🟢 Sa chair blanche ferme et sans aucune arête est parfaite pour préparer la traditionnelle roussette à la crème.",
+                    "🟢 Excellente fermeté de la chair sous le doigt, ouïes saines et odeur de marée normale."
+                ],
+                "pristine": [
+                    "✨ Intégrité cutanée parfaite, taches brunes contrastées et texture rêche caractéristique du derme impeccable.",
+                    "✨ Un modèle d'élégance sableuse ! Ses petits yeux de chat brillent d'une pureté absolue.",
+                    "✨ Qualité gastronomique suprême, chair ultra-fraîche idéale pour une matelote digne d'un grand restaurant.",
+                    "✨ Rigidité cadavérique marquée, oeil limpide et mucus translucide d'une fraîcheur marine irréprochable."
+                ]
+            },
+            "id": 130,
+            "price": 354,
+            "location": "Fonds sablonneux et rocheux du plateau continental (Atlantique, Méditerranée)",
+            "preferred_time": "20h - 06h",
+            "preferred_season": "Toute l'année",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "La Roussette, Scyliorhinus canicula, se pêche toute l'année de 20h à 06h par nuit sombre sur les fonds sablonneux de l'Atlantique. Ce petit requin possède une peau rugueuse comme du papier de verre et pond des œufs protégés dans des capsules appelées bourses de sirène. Estimée à 354 pièces, sa chair ferme sans arêtes est cuisinée en matelote ou à la sauce tomate après avoir été soigneusement pelée.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Congre",
+            "size_min": 50.0,
+            "size_mean": 120.0,
+            "size_sigma": 30.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Corps serpentiforme gravement sectionné avec des lacérations musculaires exposant la colonne vertébrale.",
+                    "🔴 Ce monstre des épaves a dû confondre une ancre de bateau avec un cure-dent.",
+                    "🔴 La chair du dos est déchiquetée, limitant son utilisation à la préparation de bouillons réduits.",
+                    "🔴 Une odeur de marécage putride émane du corps flasque recouvert d'un mucus grisâtre épais."
+                ],
+                "damaged": [
+                    "🟠 Éraflures dermiques profondes le long du flanc sombre et nageoires pectorales déchirées.",
+                    "🟠 Il a essayé de forcer le passage dans une crevasse rocheuse trop étroite pour son gros gabarit.",
+                    "🟠 La partie caudale riche en arêtes est abîmée, mais la partie avant reste exploitable.",
+                    "🟠 Le corps cylindrique a perdu sa fermeté élastique et les opercules branchiaux sont ensanglantés."
+                ],
+                "worn": [
+                    "🟡 Le derme montre une décoloration grisâtre normale et des traces de frottement contre le métal des épaves.",
+                    "🟡 Ce serpent de mer a passé trop de temps à se cacher dans des recoins rouillés de cargos coulés.",
+                    "🟡 Convient pour une soupe de poisson traditionnelle où les arêtes de la queue seront filtrées.",
+                    "🟡 Le mucus protecteur a perdu de sa transparence et l'œil présente une opacification modérée."
+                ],
+                "good": [
+                    "🟢 Corps serpentiforme vigoureux, dos gris-bleu foncé, ventre clair et lèvres épaisses caractéristiques intactes.",
+                    "🟢 Une anguille géante musclée qui semble encore prête à mordre tout ce qui s'approche de sa gueule.",
+                    "🟢 Sa chair blanche très ferme et savoureuse est excellente rôtie ou ajoutée dans une bouillabaisse.",
+                    "🟢 Excellente rigidité de la partie antérieure du corps, ouïes d'un rouge foncé sain et odeur marine."
+                ],
+                "pristine": [
+                    "✨ Splendide spécimen sans aucune lésion, derme gris métallique brillant et ligne latérale de pores blancs bien nette.",
+                    "✨ Le parrain de l'épave dans toute sa splendeur métallique ! Son regard noir est captivant.",
+                    "✨ Qualité culinaire exceptionnelle, la partie médiane est d'une fraîcheur idéale pour des darnes braisées.",
+                    "✨ Rigidité cadavérique très marquée sur toute la longueur, mucus clair brillant et ouïes d'une fraîcheur totale."
+                ]
+            },
+            "id": 131,
+            "price": 356,
+            "location": "Épaves, récifs et anfractuosités rocheuses (océan Atlantique)",
+            "preferred_time": "20h - 06h",
+            "preferred_season": "Juin - Novembre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "Le Congre, Conger conger, se capture de Juin à Novembre entre 20h et 06h par nuit calme près des épaves en Atlantique. Ce prédateur massif et puissant vit caché dans les crevasses sombres. Estimé à 356 pièces, ce poisson offre une chair très ferme et savoureuse. Sa partie avant, moins riche en arêtes, est idéale pour enrichir une bouillabaisse ou préparée rôtie avec des aromates.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Orphie",
+            "size_min": 30.0,
+            "size_mean": 65.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le corps fusiforme très mince présente de multiples fractures et un bec corné brisé.",
+                    "🔴 Ce poisson-aiguille a dû se prendre pour une fléchette et a heurté un mur de béton.",
+                    "🔴 La chair fine s'écrase sous les doigts, la rendant impossible à vider et à cuire convenablement.",
+                    "🔴 Perte complète de l'éclat argenté au profit d'un gris terne et branchies sèches exhalant une odeur rance."
+                ],
+                "damaged": [
+                    "🟠 Éraflures dermiques modérées le long du dos bleu-vert et déformation légère du bec effilé.",
+                    "🟠 Il a sauté trop haut au-dessus des vagues et s'est mal réceptionné sur le sable.",
+                    "🟠 Les filets fins sont abîmés par endroits, mais la chair reste exploitable pour de la petite friture.",
+                    "🟠 Le corps manque de souplesse et le derme argenté présente des hématomes sombres sous-cutanés."
+                ],
+                "worn": [
+                    "🟡 Usure normale de la peau fine et frottements mineurs sur la nageoire dorsale située très en arrière.",
+                    "🟡 On dirait une longue aiguille à tricoter qui aurait passé un peu trop de temps dans l'eau salée.",
+                    "🟡 Idéal à couper en tronçons pour être mariné avant d'être frit bien croustillant.",
+                    "🟡 La robe bleu-vert du dos a perdu de sa vivacité et le cristallin de l'œil est légèrement opaque."
+                ],
+                "good": [
+                    "🟢 Corps fuselé très élancé, dos vert-bleu métallique, flancs argentés et bec corné complet intact.",
+                    "🟢 Une véritable flèche vivante des mers, taillée pour la vitesse en surface.",
+                    "🟢 Sa chair fine et iodée se prête très bien à la friture ou à une cuisson sur le gril après avoir été marinée dans du jus de citron.",
+                    "🟢 Corps bien rigide, opercules argentés brillants et ouïes d'un beau rouge vif sans odeur suspecte."
+                ],
+                "pristine": [
+                    "✨ Perfection anatomique remarquable, bec fin intact sans aucune fêlure et reflets argentés magnifiques.",
+                    "✨ Un sabre d'argent ultra-rapide ! On dirait qu'il sort directement d'un étui à bijoux océanique.",
+                    "✨ Qualité gastronomique suprême, idéale pour être cuisinée entière à la poêle avec du beurre noisette.",
+                    "✨ Rigidité cadavérique parfaite, œil d'une transparence cristalline et ouïes exhalant une pure odeur d'iode."
+                ]
+            },
+            "id": 132,
+            "price": 357,
+            "location": "Eaux côtières de surface, zones pélagiques (Europe)",
+            "preferred_time": "09h - 18h",
+            "preferred_season": "Mai - Septembre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "L'Orphie, Belone belone, se capture de Mai à Septembre entre 09h et 18h par grand soleil dans les eaux côtières d'Europe. Ce poisson fuselé possède un bec effilé et des arêtes d'une couleur verte surprenante due à la biliverdine. Estimée à 357 pièces, sa chair fine et iodée se prête très bien à la friture ou à une cuisson sur le gril après avoir été marinée dans du jus de citron.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Saint-Pierre",
+            "size_min": 20.0,
+            "size_mean": 38.0,
+            "size_sigma": 8.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le corps plat très haut présente de graves blessures latérales et des rayons dorsaux filamenteux sectionnés.",
+                    "🔴 La légende dit que l'apôtre Pierre a appuyé trop fort sur ce coup-là, le poisson est tout écrasé.",
+                    "🔴 La chair noble des flancs est déchirée et inutilisable pour des filets présentables.",
+                    "🔴 Les ouïes sont grisâtres et sèches, et la peau jaune-doré a laissé place à une teinte plombée terne."
+                ],
+                "damaged": [
+                    "🟠 Altération de la forme discoïde et éraflures superficielles sur les taches noires latérales.",
+                    "🟠 Il a essayé de passer à plat sous un chalut et s'est râpé les flancs contre le filet.",
+                    "🟠 Les filets fins sont abîmés d'un côté, mais l'autre flanc reste parfaitement exploitable en cuisine.",
+                    "🟠 La rigidité musculaire est faible et le mucus oculaire s'est opacifié le long de la ligne latérale."
+                ],
+                "worn": [
+                    "🟡 Le derme présente une décoloration dorée normale et une usure modérée des longs filaments de la nageoire dorsale.",
+                    "🟡 Ce poisson d'allure bizarre semble fatigué d'avoir l'air constamment étonné par la vie.",
+                    "🟡 Convient pour une cuisson entière au au four après avoir paré les épines dorsales proéminentes.",
+                    "🟡 La chair a perdu un peu de son élasticité et la tache noire caractéristique a des contours estompés."
+                ],
+                "good": [
+                    "🟢 Corps plat et haut sain, longs filaments dorsaux intacts et tache noire bien nette sur chaque flanc.",
+                    "🟢 Un spécimen extraordinaire qui semble toujours mécontent de s'être fait attraper.",
+                    "🟢 Sa chair blanche très ferme et délicate est une merveille culinaire, idéale pochée ou rôtie entière.",
+                    "🟢 Corps bien rigide, ouïes rouge brique bien fraîches et odeur agréable d'algues et de mer."
+                ],
+                "pristine": [
+                    "✨ Perfection anatomique exceptionnelle, filaments dorsaux entiers et taches latérales d'un noir profond contrasté.",
+                    "✨ L'icône de la gastronomie marine ! Son derme jaune-bronze jette des éclats métalliques parfaits.",
+                    "✨ Qualité gastronomique suprême, les filets sont d'une blancheur immaculée pour la haute cuisine.",
+                    "✨ Rigidité cadavérique parfaite, opercules fermes et oeil limpide brillant comme du cristal."
+                ]
+            },
+            "id": 133,
+            "price": 358,
+            "location": "Fonds sablonneux côtiers, récifs et épaves (Méditerranée, Atlantique)",
+            "preferred_time": "06h - 18h",
+            "preferred_season": "Juin - Novembre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "Le Saint-Pierre, Zeus faber, se pêche de Juin à Novembre de 06h à 18h par mer calme en Méditerranée. Ce prédateur possède une tache noire sur chaque flanc, assimilée selon la légende à l'empreinte des doigts de l'apôtre Pierre. Estimé à 358 pièces, c'est un poisson noble à la chair blanche exceptionnelle, très ferme et délicate, star incontestée des grandes tables de la gastronomie marine.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Baudroie",
+            "size_min": 30.0,
+            "size_mean": 70.0,
+            "size_sigma": 18.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'examen de la tête énorme révèle un écrasement de la gueule béante et un filament pêcheur arraché.",
+                    "🔴 Déjà qu'elle n'était pas gâtée par la nature, cette baudroie a carrément l'air d'avoir pris un mur.",
+                    "🔴 La queue (lotte) est écrasée et meurtrie par les chocs, ruinant la texture ferme de la chair.",
+                    "🔴 Une odeur de décomposition benthique s'échappe de la peau sans écailles molle et verdâtre."
+                ],
+                "damaged": [
+                    "🟠 La mâchoire inférieure montre des déformations et des éraflures sur le pourtour de la gueule.",
+                    "🟠 Elle a voulu avaler un poisson trop gros et s'est coincé le filament pêcheur dans les dents.",
+                    "🟠 La lotte centrale est un peu abîmée, mais reste exploitable après un épluchage minutieux.",
+                    "🟠 La fermeté musculaire est moyenne et la peau lâche montre des hématomes sous-cutanés."
+                ],
+                "worn": [
+                    "🟡 Usure normale des franges cutanées autour du corps et abrasion légère de la gueule béante.",
+                    "🟡 Elle a passé beaucoup de temps embusquée dans la vase à faire de la pub avec sa lanterne.",
+                    "🟡 Convient pour être préparée en blanquette de lotte ou en terrine pour compenser la texture molle.",
+                    "🟡 La peau couleur marbrée a terni et le filament pêcheur (illicium) a perdu sa souplesse."
+                ],
+                "good": [
+                    "🟢 Gueule béante intacte garnie de dents pointues, corps aplati sain et filament pêcheur complet.",
+                    "🟢 Le monstre le plus sympathique des abysses, avec une bouche assez grande pour avaler vos bottes.",
+                    "🟢 Sa chair blanche très ferme et serrée, semblable à du homard, est exquise rôtie ou en sauce.",
+                    "🟢 Bonne fermeté de la lotte, branchies d'une couleur rouge brique fraîche et odeur iodée."
+                ],
+                "pristine": [
+                    "✨ Morphologie parfaite, illicium intact avec son bulbe pêcheur et franges cutanées impeccables.",
+                    "✨ Une lauréate du concours de laideur la plus fraîche ! Elle brille de mille reflets vaseux précieux.",
+                    "✨ Qualité gastronomique extraordinaire, lotte parfaite prête pour un grand rôti au four au lard.",
+                    "✨ Spécimen en rigor mortis complète, peau bien hydratée et ouïes d'une fraîcheur absolue."
+                ]
+            },
+            "id": 134,
+            "price": 359,
+            "location": "Fonds vaseux et profonds du plateau continental (Atlantique)",
+            "preferred_time": "08h - 20h",
+            "preferred_season": "Toute l'année",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "La Baudroie, Lophius piscatorius, se pêche toute l'année de 08h à 20h par temps sombre sur les fonds profonds de l'Atlantique. Ce poisson plat camouflé attire ses proies avec un leurre charnu sur sa tête. Estimée à 359 pièces, sa queue (appelée lotte) fournit une chair ferme et serrée, semblable à celle de la queue de homard, exquise rôtie ou cuite en sauce armoricaine.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Anguille d'Europe",
+            "size_min": 30.0,
+            "size_mean": 60.0,
+            "size_sigma": 12.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Le corps cylindrique serpentiforme présente des coupures profondes et un écrasement crânien.",
+                    "🔴 On dirait un vieux lacet de chaussure boueux qui a croisé la route d'un broyeur à déchets.",
+                    "🔴 La chair grasse est meurtrie et gâtée, impropre pour une cuisson au gril ou un fumage.",
+                    "🔴 Une odeur de vase putride insoutenable se dégage du corps flasque recouvert d'un mucus gris épais."
+                ],
+                "damaged": [
+                    "🟠 Le derme glissant montre des éraflures cutanées et une nageoire dorsale continue déchirée.",
+                    "🟠 Elle a glissé à travers les mailles du filet en y laissant un peu de son derme lubrifié.",
+                    "🟠 La chair du dos est abîmée, nécessitant un parage pour isoler les morceaux exploitables.",
+                    "🟠 Le corps a perdu sa fermeté élastique et les ouïes montrent des traces de congestion récentes."
+                ],
+                "worn": [
+                    "🟡 Usure normale du derme glissant et traces mineures de frottement sur la peau sombre.",
+                    "🟡 Cette voyageuse a l'air épuisée par son long périple dans les boues des zones humides.",
+                    "🟡 Convient pour être mijotée en matelote avec du vin rouge pour attendrir la chair grasse.",
+                    "🟡 Le mucus protecteur a perdu son éclat et le ventre jaunâtre montre une décoloration terne."
+                ],
+                "good": [
+                    "🟢 Corps serpentiforme vigoureux, dos brun-vert, ventre jaune-blanc et derme glissant très sain.",
+                    "🟢 Si glissante qu'elle pourrait s'échapper de vos mains comme du savon liquide sous la douche.",
+                    "🟢 Sa chair riche, grasse et savoureuse est une spécialité exquise, idéale à fumer ou griller.",
+                    "🟢 Excellente élasticité du corps cylindrique, branchies fraîches et odeur normale de rivière propre."
+                ],
+                "pristine": [
+                    "✨ Intégrité morphologique parfaite, derme brillant sans aucune marque et mucus clair impeccable.",
+                    "✨ Une véritable anguille d'argent ! Son corps brille d'une souplesse métallique captivante.",
+                    "✨ Qualité gastronomique suprême, chair d'une fraîcheur idéale pour un fumage d'exception.",
+                    "✨ Rigidité cadavérique prononcée, oeil très limpide et ouïes d'un rouge sang éclatant."
+                ]
+            },
+            "id": 135,
+            "price": 361,
+            "location": "Cours d'eau lents, étangs, marais et zones humides (Europe)",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Avril - Septembre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "L'Anguille d'Europe, Anguilla anguilla, se capture d'Avril à Septembre de 20h à 04h par temps pluvieux dans les marais d'Europe. Ce poisson migrateur parcourt des milliers de kilomètres jusqu'à la mer des Sargasses pour se reproduire. Vendu 361 pièces, sa chair très riche et grasse est une spécialité recherchée en gastronomie, particulièrement délicieuse lorsqu'elle est fumée ou cuisinée en persillade.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Tilapia",
+            "size_min": 15.0,
+            "size_mean": 30.0,
+            "size_sigma": 7.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'examen de la robe révèle de graves lacérations dermiques et une desquamation importante.",
+                    "🔴 Ce tilapia a dû tenter de faire du skate sur les rochers ensoleillés du lac.",
+                    "🔴 La chair blanche est écrasée et molle, impropre pour lever des filets exploitables.",
+                    "🔴 Une odeur de vase croupie insupportable émane du poisson déshydraté et terne."
+                ],
+                "damaged": [
+                    "🟠 Écailles manquantes sur les flancs et marques d'impact sur la nageoire dorsale épineuse.",
+                    "🟠 Il a frotté son ventre d'un peu trop près contre une souche de bois tropicale.",
+                    "🟠 Les filets fins sont abîmés par les chocs, mais restent utilisables pour des boulettes de poisson.",
+                    "🟠 La chair manque un peu d'élasticité et les branchies présentent une teinte rose pâle."
+                ],
+                "worn": [
+                    "🟡 Usure normale de la robe rayée gris-jaunâtre et déformation mineure de la nageoire caudale.",
+                    "🟡 Ce tilapia a l'air un peu cuit par le soleil tropical après une journée agitée.",
+                    "🟡 Convient pour une friture rapide dans l'huile chaude pour masquer le manque de fermeté.",
+                    "🟡 La peau rayée a terni et le mucus oculaire commence à s'opacifier sous la paupière."
+                ],
+                "good": [
+                    "🟢 Silhouette ovale bien proportionnée, robe rayée gris-argenté saine et nageoires intactes.",
+                    "🟢 Un beau tilapia tropical tout fier de ses rayures verticales bien dessinées.",
+                    "🟢 Sa chair blanche au goût neutre est excellente grillée entière avec des épices ou du gingembre.",
+                    "🟢 Corps ferme, ouïes d'un rouge franc bien frais et odeur douce d'eau douce tropicale."
+                ],
+                "pristine": [
+                    "✨ Perfection morphologique irréprochable, rayures très contrastées et éclats métalliques superbes.",
+                    "✨ Le top modèle de l'aquaculture tropicale ! Il est si étincelant qu'il semble doré à l'or blanc.",
+                    "✨ Qualité culinaire exceptionnelle, chair d'une fraîcheur idéale pour une cuisson vapeur parfaite.",
+                    "✨ Rigidité cadavérique parfaite, œil cristallin et ouïes d'un rouge vif éclatant."
+                ]
+            },
+            "id": 136,
+            "price": 362,
+            "location": "Lacs et étangs d'eau douce chauds (Régions tropicales)",
+            "preferred_time": "06h - 18h",
+            "preferred_season": "Avril - Octobre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Tilapia, Oreochromis niloticus, se pêche d'Avril à Octobre de 06h à 18h par temps chaud et ensoleillé dans les lacs tropicaux. Ce poisson d'eau douce résistant est connu pour incuber ses œufs dans sa bouche afin de protéger ses petits. Vendu 362 pièces, c'est une ressource aquacole majeure. Sa chair blanche et neutre apprécie d'être grillée entière avec des épices ou cuite à la vapeur.",
+            "time_restriction": "before_22h"
         }
     ],
     "rare": [
@@ -3739,6 +5680,438 @@
             ],
             "fun_fact": "Le Vivaneau (Lutjanus campechanus) se pêche toute l'année, toute la journée, près des récifs rocheux et coralliens. Ce prédateur côtier peut vivre jusqu'à 50 ans en changeant de régime alimentaire à mesure qu'il grandit. Les marins reconnaissent immédiatement sa robe rouge orangé étincelante et ses yeux écarlates. Commercialisé au prix de 3000 pièces d'or, ce poisson est particulièrement recherché en cuisine pour sa chair blanche, ferme et savoureuse, qui excelle rôtie entière ou grillée.",
             "time_restriction": null
+        },
+        {
+            "name": "Saumon de l'Atlantique",
+            "size_min": 50.0,
+            "size_mean": 80.0,
+            "size_sigma": 12.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Spécimen de Salmo salar présentant des lacérations dermiques profondes et des nageoires caudales largement lacérées.",
+                    "🔴 Ce saumon a visiblement raté son saut au-dessus de la cascade et s'est mangé le rocher de plein fouet.",
+                    "🔴 La chair écrasée et meurtrie de ce poisson est inutilisable pour un filet, tout juste bonne pour un engrais de jardin.",
+                    "🔴 Un poisson en état de décomposition avancée, avec des ouïes blanchies et une odeur de marécage prononcée."
+                ],
+                "damaged": [
+                    "🟠 Saumon de l'Atlantique montrant des abrasions cutanées sur les flancs et quelques écailles manquantes.",
+                    "🟠 Il s'est frotté aux dents d'un ours affamé et a miraculeusement survécu, mais sa robe argentée en a pris un coup.",
+                    "🟠 Quelques blessures superficielles obligent à parer soigneusement les flancs pour récupérer des darnes acceptables.",
+                    "🟠 Poisson présentant des ecchymoses sous-cutanées légères et une perte de fermeté au niveau du dos."
+                ],
+                "worn": [
+                    "🟡 Spécimen mature montrant les signes d'une longue remontée de rivière avec une livrée légèrement terne.",
+                    "🟡 Ce saumon a nagé à contre-courant pendant des kilomètres, il a désespérément besoin d'un café et d'une sieste.",
+                    "🟡 La chair est un peu moins grasse que d'habitude à cause de l'effort de migration, mais reste convenable en papillote.",
+                    "🟡 Le mucus protecteur s'est aminci et la peau a perdu son éclat métallique argenté d'origine."
+                ],
+                "good": [
+                    "🟢 Magnifique saumon de l'Atlantique avec une livrée argentée bien conservée et des nageoires intactes.",
+                    "🟢 Un athlète des rivières si fier qu'il semble vouloir poser pour une photo de couverture de magazine de pêche.",
+                    "🟢 Idéal pour un saumon fumé maison ou un pavé rôti à l'unilatérale avec un filet de citron.",
+                    "🟢 Poisson très frais, aux yeux clairs et bombés, exhalant une odeur de rivière propre et fraîche."
+                ],
+                "pristine": [
+                    "✨ Spécimen exceptionnel de Salmo salar d'une perfection anatomique remarquable, sans aucune égratignure.",
+                    "✨ Un saumon si étincelant qu'il pourrait servir de miroir de poche aux ours de la rivière.",
+                    "✨ La chair rose saumonée est d'une finesse incomparable, parfaite pour un sashimi digne d'un chef triplement étoilé.",
+                    "✨ Fraîcheur absolue caractérisée par une rigidité cadavérique parfaite et des ouïes d'un rouge vif éclatant."
+                ]
+            },
+            "id": 137,
+            "price": 1601,
+            "location": "Océan Atlantique Nord et rivières froides d'Europe et d'Amérique du Nord",
+            "preferred_time": "05h - 10h, 17h - 22h",
+            "preferred_season": "Juin - septembre",
+            "months": [
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "Le Saumon de l'Atlantique (Salmo salar) se pêche en juin-septembre, de 05h à 10h et 17h à 22h, surtout par temps pluvieux dans l'océan Atlantique Nord et ses rivières. Ce poisson anadrome accomplit une migration remarquable pour frayer. Vendu 1601 pièces d'or, sa chair rose très estimée en fait un régal gastronomique grillé ou fumé.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Requin-Harpail",
+            "size_min": 150.0,
+            "size_mean": 350.0,
+            "size_sigma": 80.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Requin-Harpail présentant des mutilations sévères de la queue et de multiples plaies de morsures de parasites.",
+                    "🔴 On dirait qu'il a tenté un combat de catch avec un sous-marin nucléaire russe et qu'il a perdu.",
+                    "🔴 Chair gâtée par des concentrations extrêmes d'urée et d'oxyde de triméthylamine, totalement immangeable.",
+                    "🔴 Tissus ramollis, dégagement gazeux d'ammoniac insupportable et peau squameuse en lambeaux."
+                ],
+                "damaged": [
+                    "🟠 Somniosus microcephalus avec des coupures cutanées superficielles et des déchirures légères sur les nageoires.",
+                    "🟠 Il s'est coincé dans un vieux filet de pêche dans l'Arctique et boude depuis.",
+                    "🟠 Les morsures de parasites nécessitent un parage en profondeur pour éliminer les zones toxiques.",
+                    "🟠 Spécimen présentant des frottements épidermiques et une opacification prononcée des yeux."
+                ],
+                "worn": [
+                    "🟡 Requin-Harpail âgé montrant des marques d'usure naturelle dues à la vie en eau très profonde.",
+                    "🟡 Ce squale est si vieux qu'il a probablement connu l'époque des Vikings et a oublié où il a garé son drakkar.",
+                    "🟡 Pour consommer sa chair coriace, un long processus de fermentation traditionnel est requis.",
+                    "🟡 Perte partielle du mucus de protection et texture générale manquant de fermeté."
+                ],
+                "good": [
+                    "🟢 Spécimen sain de Requin-Harpail avec un corps robuste et des nageoires pectorales intactes.",
+                    "🟢 Il glisse silencieusement dans le froid abyssal comme une grosse patate de mer très calme.",
+                    "🟢 Chair propice à la préparation traditionnelle du Kæstur Hákarl après de longs mois de séchage.",
+                    "🟢 Corps ferme au toucher, épiderme sombre bien conservé et odeur caractéristique de squale des grands fonds."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'exception de Somniosus microcephalus sans aucune imperfection cutanée ni lésion parasitaire.",
+                    "✨ Un géant des glaces si propre qu'on croirait qu'il sort d'un salon de toilettage pour squales arctiques.",
+                    "✨ La chair est idéale pour obtenir un Hákarl d'une qualité exceptionnelle pour les connaisseurs.",
+                    "✨ Fraîcheur maximale des profondeurs arctiques avec des branchies parfaitement propres et une peau intacte."
+                ]
+            },
+            "id": 138,
+            "price": 1602,
+            "location": "Profondeurs bathyales et abysses des océans Arctique et Atlantique Nord",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Décembre - mars",
+            "months": [
+                12,
+                1,
+                2,
+                3
+            ],
+            "fun_fact": "Le Requin-Harpail (Somniosus microcephalus) se pêche de décembre à mars, entre 20h et 04h, par temps glacial dans les abysses arctiques. Ce géant au métabolisme lent peut vivre plus de 400 ans. Estimé à 1602 pièces d'or, sa chair est toxique à l'état frais mais appréciée séchée en Hákarl en Islande.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Ombre Commun",
+            "size_min": 15.0,
+            "size_mean": 35.0,
+            "size_sigma": 6.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Ombre Commun présentant des lacérations abdominales sévères et une nageoire dorsale brisée.",
+                    "🔴 Sa magnifique nageoire dorsale ressemble maintenant à un vieux peigne auquel il manque la moitié des dents.",
+                    "🔴 Chair trop abîmée et pleine de débris pour être cuisinée, impropre à toute préparation.",
+                    "🔴 Corps mou avec une perte totale de couleur et une forte odeur d'eau stagnante."
+                ],
+                "damaged": [
+                    "🟠 Thymallus thymallus avec des écailles arrachées sur le dos et une dorsale légèrement fendant.",
+                    "🟠 Il a voulu faire le fier avec sa crête de punk devant un brochet et l'a regretté amèrement.",
+                    "🟠 Le dos abîmé doit être paré, mais le reste du poisson reste cuisinable en friture.",
+                    "🟠 Spécimen présentant des ecchymoses musculaires et des ouïes légèrement pâles."
+                ],
+                "worn": [
+                    "🟡 Ombre Commun montrant une usure des nageoires et une livrée argentée ternie par le frai.",
+                    "🟡 La Lady des rivières a clairement perdu son maquillage après avoir lutté contre le courant toute la journée.",
+                    "🟡 Chair comestible mais moins parfumée, nécessitant des herbes aromatiques pour rehausser le goût.",
+                    "🟡 Mucus protecteur clairsemé et légère perte de fermeté au niveau des flancs."
+                ],
+                "good": [
+                    "🟢 Spécimen vigoureux d'Ombre Commun avec sa grande nageoire dorsale intacte et colorée.",
+                    "🟢 Prêt à défiler avec sa nageoire dorsale colorée comme un drapeau de festival.",
+                    "🟢 Chair très fine, délicieuse pochée au court-bouillon ou cuite doucement meunière.",
+                    "🟢 Poisson frais aux yeux vifs et brillants, dégageant une légère odeur de thym sauvage."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'exception de Thymallus thymallus d'une perfection absolue avec une dorsale magnifique aux reflets violets.",
+                    "✨ Elle est si élégante qu'on l'appellerait bien 'Votre Altesse Royale des Ruisseaux'.",
+                    "✨ Un poisson parfait à la chair délicate exhalant un parfum subtil de thym, digne de la haute cuisine.",
+                    "✨ Fraîcheur irréprochable avec une rigidité cadavérique marquée et des couleurs chatoyantes éclatantes."
+                ]
+            },
+            "id": 139,
+            "price": 1603,
+            "location": "Rivières et ruisseaux d'Europe rapides, propres et froids",
+            "preferred_time": "10h - 16h",
+            "preferred_season": "Juin - décembre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "L'Ombre Commun (Thymallus thymallus) se pêche de juin à décembre, entre 10h et 16h, par temps clair dans les rivières rapides d'Europe. Surnommé la dame des courants, ce poisson possède une dorsale en voile colorée. Vendu 1603 pièces d'or, sa chair délicate exhalant le thym est un mets culinaire raffiné.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Poisson-Castor",
+            "size_min": 30.0,
+            "size_mean": 55.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Poisson-Castor présentant des mutilations osseuses crâniennes et des lacérations profondes du tronc.",
+                    "🔴 On dirait que ce fossile vivant a confondu une turbine de barrage avec un toboggan aquatique.",
+                    "🔴 La chair est complètement molle, gorgée d'eau et impropre à toute consommation humaine.",
+                    "🔴 Spécimen en décomposition avancée, dégageant une odeur de vase fétide et de boue pourrie."
+                ],
+                "damaged": [
+                    "🟠 Amia calva montrant des éraflures cutanées importantes et des nageoires caudales endommagées.",
+                    "🟠 Il s'est bagarré avec un alligator pour défendre son bayou et s'en sort avec des cicatrices de guerre.",
+                    "🟠 Les parties abîmées doivent être largement parées avant d'envisager de lever des filets.",
+                    "🟠 Présence d'ecchymoses et perte de la texture ferme de la peau écailleuse."
+                ],
+                "worn": [
+                    "🟡 Poisson-Castor fatigué montrant des marques d'usure sur sa longue nageoire dorsale ondulante.",
+                    "🟡 Ce survivant de l'ère des dinosaures a l'air fatigué de voir les siècles passer sans changer d'apparence.",
+                    "🟡 La chair est un peu spongieuse, typique des vieux spécimens de marais, nécessite d'être cuisinée en boulettes.",
+                    "🟡 Peau terne recouverte d'un mucus épais et légèrement malodorant."
+                ],
+                "good": [
+                    "🟢 Spécimen robuste de Poisson-Castor avec des écailles ganoïdes épaisses bien alignées.",
+                    "🟢 Il vous regarde d'un air grognon, pas du tout impressionné par vos technologies modernes.",
+                    "🟢 Convient pour être cuisiné en beignets bien épicés ou en ragoût cajun traditionnel.",
+                    "🟢 Corps vigoureux, yeux clairs et ouïes d'un rouge sombre sain, typique des eaux lentes."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'une perfection anatomique muséale de Amia calva, affichant des couleurs contrastées splendides.",
+                    "✨ Un fossile vivant si impeccable qu'il a l'air de sortir tout droit du Crétacé dans un emballage plastique.",
+                    "✨ Chair très ferme et fraîche, idéale pour réaliser des croquettes de poisson à la mode de la Nouvelle-Orléans.",
+                    "✨ Fraîcheur remarquable avec une rigidité musculaire prononcée et un épiderme brillant."
+                ]
+            },
+            "id": 140,
+            "price": 1604,
+            "location": "Bayous lents, rivières marécageuses et lacs herbeux d'Amérique du Nord",
+            "preferred_time": "10h - 18h",
+            "preferred_season": "Avril - septembre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "Le Poisson-Castor (Amia calva) se capture d'avril à septembre, de 10h à 18h, par temps chaud et ensoleillé dans les bayous d'Amérique du Nord. Ce fossile vivant préhistorique respire l'air à la surface en eau peu oxygénée. Vendu 1604 pièces d'or, sa chair molle exige des épices fortes en beignets pour être appréciée.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Maskinongé",
+            "size_min": 60.0,
+            "size_mean": 95.0,
+            "size_sigma": 15.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Maskinongé présentant des morsures abdominales profondes et une mâchoire déformée.",
+                    "🔴 Ce géant des lacs a disputé un combat de catch avec un moteur hors-bord et a perdu par KO.",
+                    "🔴 Chair broyée et infectée par des parasites d'eau douce, impropre à toute consommation.",
+                    "🔴 Tissus mous en décomposition avec des ouïes grises dégageant une forte odeur ammoniacale."
+                ],
+                "damaged": [
+                    "🟠 Esox masquinongy montrant des cicatrices cutanées et des nageoires pectorales fendues.",
+                    "🟠 Il a voulu avaler un canard en plastique un peu trop gros et s'est froissé la mâchoire.",
+                    "🟠 Les blessures sur les flancs nécessitent un parage soigneux pour sauver les grands filets.",
+                    "🟠 Poisson présentant des hématomes sous-cutanés et une perte d'élasticité de la peau."
+                ],
+                "worn": [
+                    "🟡 Maskinongé âgé présentant des blessures guéries et des nageoires usées par l'âge.",
+                    "🟡 Le poisson de mille lancers a l'air d'avoir subi lui-même mille lancers sur le museau.",
+                    "🟡 La chair de ce vieux spécimen est un peu coriace et fibreuse, idéale pour un bouillon mijoté.",
+                    "🟡 Mucus protecteur aminci et coloration générale sombre manquant d'éclat."
+                ],
+                "good": [
+                    "🟢 Spécimen vigoureux de Maskinongé avec un corps fuselé robuste et des dents aiguisées intactes.",
+                    "🟢 Il vous jette un regard glacial qui suggère qu'il aimerait bien vous dévorer un doigt.",
+                    "🟢 Excellente chair blanche, très appréciée rôtie au four avec des herbes et du beurre blanc.",
+                    "🟢 Poisson très frais aux yeux clairs, exhalant une bonne odeur d'eau douce lacustre saine."
+                ],
+                "pristine": [
+                    "✨ Spécimen de Maskinongé d'une splendeur totale, sans aucune marque de combat sur sa robe tigrée.",
+                    "✨ Le roi des lacs du Nord dans toute sa splendeur, si parfait qu'il mérite sa statue en bronze.",
+                    "✨ Chair d'une fraîcheur et d'une fermeté parfaites, offrant des filets d'une qualité culinaire digne d'un grand chef.",
+                    "✨ État de fraîcheur absolu avec une rigidité cadavérique marquée et des couleurs de robe étincelantes."
+                ]
+            },
+            "id": 141,
+            "price": 1606,
+            "location": "Grands lacs oligotrophes et rivières d'Amérique du Nord",
+            "preferred_time": "05h - 09h, 17h - 21h",
+            "preferred_season": "Juin - novembre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "Le Maskinongé (Esox masquinongy) se pêche de juin à novembre, de 05h à 09h et 17h à 21h, par temps couvert et pluvieux sur les grands lacs d'Amérique du Nord. Ce prédateur furtif est le poisson de dix mille lancers. Vendu 1606 pièces d'or, sa chair ferme et blanche est excellente rôtie ou pochée au court-bouillon.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Poisson-Perroquet",
+            "size_min": 40.0,
+            "size_mean": 80.0,
+            "size_sigma": 15.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Poisson-Perroquet présentant des fractures du bec d'oiseau et des écailles colorées brisées.",
+                    "🔴 Il a tenté de croquer un corail un peu trop dur et s'est brisé le bec de manière ridicule.",
+                    "🔴 Chair écrasée et souillée, impropre à toute friture en raison du risque de toxine Ciguatera.",
+                    "🔴 Spécimen décoloré, ouïes collantes et odeur nauséabonde d'algues en décomposition."
+                ],
+                "damaged": [
+                    "🟠 Scarus guacamaia montrant des éraflures cutanées et des nageoires caudales déchirées.",
+                    "🟠 Il s'est pris le bec avec un poisson-chirurgien jaloux de son éclatante garde-robe.",
+                    "🟠 Les zones endommagées du dos doivent être parées pour isoler la chair saine.",
+                    "🟠 Présence d'ecchymoses et perte de la vivacité des couleurs arc-en-ciel."
+                ],
+                "worn": [
+                    "🟡 Poisson-Perroquet présentant des marques d'usure sur le bec et des nageoires usées par le corail.",
+                    "🟡 Il a passé la nuit dans son cocon de mucus et s'est réveillé avec une mauvaise mine.",
+                    "🟡 La chair est un peu ferme et moins savoureuse, à cuire en ragoût épicé.",
+                    "🟡 Épiderme recouvert d'un mucus sec et ternissement des reflets métalliques verts."
+                ],
+                "good": [
+                    "🟢 Spécimen robuste de Poisson-Perroquet avec des écailles colorées bien conservées et bec solide.",
+                    "🟢 On dirait un clown tropical qui a volé le maquillage de toute la barrière de corail.",
+                    "🟢 Chair tendre, excellente cuite entière au barbecue avec des épices des îles.",
+                    "🟢 Poisson très frais aux yeux clairs, exhalant une bonne odeur d'iode marin tropical."
+                ],
+                "pristine": [
+                    "✨ Spécimen de Scarus guacamaia d'une perfection colorée absolue, aux teintes vertes et orangées étincelantes.",
+                    "✨ Un poisson si coloré qu'il ferait passer un arc-en-ciel pour un vieux film en noir et blanc.",
+                    "✨ Chair d'une fraîcheur et fermeté idéales, parfaite pour un tartare mariné au citron vert et lait de coco.",
+                    "✨ Fraîcheur tropicale absolue, corps rigide et reflets métalliques d'un éclat saisissant."
+                ]
+            },
+            "id": 142,
+            "price": 1607,
+            "location": "Récifs coralliens tropicaux et mangroves de l'océan Atlantique Ouest",
+            "preferred_time": "08h - 17h",
+            "preferred_season": "Mai - août",
+            "months": [
+                5,
+                6,
+                7,
+                8
+            ],
+            "fun_fact": "Le Poisson-Perroquet (Scarus guacamaia) se pêche de mai à août, de 08h à 17h, par beau temps sur les récifs tropicaux. Ce brouteur de corail crée le sable blanc grâce à son bec broyeur. Vendu 1607 pièces d'or, sa chair parfumée est appréciée grillée, bien qu'il faille surveiller la toxine Ciguatera.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Silure Glane",
+            "size_min": 80.0,
+            "size_mean": 180.0,
+            "size_sigma": 45.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Silure Glane présentant des traumatismes cutanés sévères et des barbillons sensoriels arrachés.",
+                    "🔴 Ce géant d'eau douce a dû s'emmêler dans une hélice de péniche en faisant la sieste au fond.",
+                    "🔴 La chair molle et meurtrie est envahie par la vase, rendant le poisson impropre à la table.",
+                    "🔴 Spécimen en décomposition, peau visqueuse décollée et ouïes d'un gris terne nauséabond."
+                ],
+                "damaged": [
+                    "🟠 Silurus glanis montrant des éraflures sur sa peau nue et des nageoires pectorales entaillées.",
+                    "🟠 Il s'est disputé la suprématie d'une fosse avec un silure rival et s'en tire avec des balafres.",
+                    "🟠 Les blessures cutanées nécessitent de peler et de parer largement les flancs pour sauver la chair.",
+                    "🟠 Présence d'hématomes musculaires et perte de la fermeté de son long corps serpentiforme."
+                ],
+                "worn": [
+                    "🟡 Silure Glane âgé montrant des marques d'usure benthique et une peau terne dénuée d'éclat.",
+                    "🟡 Un vieux monstre des rivières qui a passé trop de temps couché dans la boue et qui a l'air blasé.",
+                    "🟡 La chair des gros spécimens est grasse et a un fort goût de vase, à préparer en ragoût relevé.",
+                    "🟡 Mucus protecteur épais et collant exhalant une odeur de sédiment prononcée."
+                ],
+                "good": [
+                    "🟢 Spécimen robuste de Silure Glane avec une peau nue marbrée saine et des barbillons intacts.",
+                    "🟢 Avec sa bouche géante et ses moustaches, on dirait un chat d'eau douce géant prêt à faire une bêtise.",
+                    "🟢 Les filets de spécimen moyen sont fermes, parfaits pour être frits ou cuisinés en matelote au vin rouge.",
+                    "🟢 Poisson vif aux yeux clairs, corps musclé et ouïes d'un rouge foncé sain typique des prédateurs benthiques."
+                ],
+                "pristine": [
+                    "✨ Spécimen de Silurus glanis d'une perfection anatomique remarquable, à la peau marbrée sans aucune rayure.",
+                    "✨ Le seigneur des fosses d'eau douce, si parfait qu'il ferait reculer les monstres du Loch Ness.",
+                    "✨ Chair d'une fraîcheur absolue et d'une fermeté idéale, parfaite pour des grillades de filets marinés d'exception.",
+                    "✨ Fraîcheur exceptionnelle, corps extrêmement ferme et mucus limpide exhalant une odeur d'eau vive."
+                ]
+            },
+            "id": 143,
+            "price": 1608,
+            "location": "Rivières profondes, cours d'eau lents et grands lacs d'Europe",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Mai - octobre",
+            "months": [
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "fun_fact": "Le Silure Glane (Silurus glanis) se pêche de mai à octobre, entre 20h et 04h, par temps pluvieux ou orageux dans les cours d'eau d'Europe. Ce titan d'eau douce chasse grâce à ses barbillons sensoriels. Vendu 1608 pièces d'or, sa chair blanche est bonne matelotée mais grasse chez les grands spécimens.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Ombrine Bronzée",
+            "size_min": 20.0,
+            "size_mean": 45.0,
+            "size_sigma": 10.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Ombrine Bronzée présentant des lacérations abdominales sévères et un barbillon mentonnier coupé.",
+                    "🔴 Elle s'est frottée d'un peu trop près au grappin d'une ancre et a perdu son élégance côtière.",
+                    "🔴 La chair est écrasée et souillée de sable, la rendant inutilisable pour les préparations culinaires.",
+                    "🔴 Spécimen en décomposition avancée, yeux vitreux enfoncés et ouïes dégageant une odeur rance."
+                ],
+                "damaged": [
+                    "🟠 Umbrina cirrosa montrant des éraflures cutanées sur les flancs et quelques écailles arrachées.",
+                    "🟠 Elle a tenté d'échapper aux griffes d'un cormoran et s'en tire avec une cicatrice sur le dos.",
+                    "🟠 Les éraflures obligent à parer les filets pour enlever les zones meurtries par le combat.",
+                    "🟠 Présence d'ecchymoses sous-cutanées et légère perte de fermeté de la chair abdominale."
+                ],
+                "worn": [
+                    "🟡 Ombrine Bronzée présentant une livrée dorée ternie par le frai et des nageoires légèrement usées.",
+                    "🟡 Cette ombrine a passé trop de temps à fouiller le sable pour manger des vers, elle a le teint terne.",
+                    "🟡 La chair reste comestible mais a perdu de sa délicatesse, idéale à mijoter avec des tomates.",
+                    "🟡 Mucus protecteur aminci et perte de l'éclat bronze de la robe rayée caractéristique."
+                ],
+                "good": [
+                    "🟢 Spécimen sain d'Ombrine Bronzée avec des écailles brillantes et barbillon mentonnier intact.",
+                    "🟢 Elle arbore fièrement son petit barbillon comme une barbiche de philosophe grec des mers.",
+                    "🟢 Chair blanche excellente et très estimée, parfaite rôtie au au four avec des herbes de Provence.",
+                    "🟢 Poisson frais aux yeux vifs et clairs, corps ferme exhalant une bonne odeur iodée de bord de mer."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'une perfection anatomique absolue de Umbrina cirrosa, affichant une robe dorée zébrée splendide.",
+                    "✨ Une reine de sable si parfaite qu'elle mériterait de figurer en couverture d'un guide de plongée VIP.",
+                    "✨ La chair blanche est d'une finesse incomparable, digne d'un carpaccio raffiné préparé par un grand chef.",
+                    "✨ Fraîcheur côtière absolue, rigidité cadavérique parfaite et branchies d'un rouge vif éclatant de santé."
+                ]
+            },
+            "id": 144,
+            "price": 1609,
+            "location": "Eaux côtières et fonds sableux ou rocheux de la mer Méditerranée et de la mer Noire",
+            "preferred_time": "06h - 11h, 17h - 22h",
+            "preferred_season": "Juin - août",
+            "months": [
+                6,
+                7,
+                8
+            ],
+            "fun_fact": "L'Ombrine Bronzée (Umbrina cirrosa) se pêche de juin à août, de 06h à 11h et 17h à 22h, par mer calme sur les fonds sableux méditerranéens. Ce poisson utilise son barbillon mentonnier pour débusquer ses proies. Vendu 1609 pièces d'or, sa chair blanche très fine en fait un régal recherché en cuisine.",
+            "time_restriction": "before_22h"
         }
     ],
     "veryrare": [
@@ -4073,6 +6446,222 @@
             ],
             "fun_fact": "Le Ranchu (Carassius auratus) se pêche toute l'année de 09h à 16h dans les bassins d'eau douce d'ornement. Ce poisson unique, surnommé le roi des poissons rouges au Japon, se distingue par l'absence totale de nageoire dorsale et un corps globuleux. Les spécialistes remarquent que sa tête développe avec l'âge une excroissance charnue appelée wen ressemblant à une framboise. Commercialisé à 4500 pièces d'or pour sa grande valeur d'ornement, ce poisson n'a aucune vocation culinaire.",
             "time_restriction": "before_22h"
+        },
+        {
+            "name": "Esturgeon Noir d'Amérique",
+            "size_min": 100.0,
+            "size_mean": 180.0,
+            "size_sigma": 35.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Esturgeon Noir d'Amérique présentant des blessures profondes sur les écussons osseux et le rostre brisé.",
+                    "🔴 Ce géant préhistorique a perdu une bataille contre l'hélice d'un cargo et ressemble à un vieux fossile écrasé.",
+                    "🔴 Chair complètement écrasée et contaminée par la vase, œufs de caviar écrasés inutilisables.",
+                    "🔴 Spécimen en décomposition avancée, ouïes blanchâtres gluantes et odeur fétide de vase pourrie."
+                ],
+                "damaged": [
+                    "🟠 Acipenser oxyrinchus montrant des éraflures cutanées importantes entre ses plaques osseuses.",
+                    "🟠 Il s'est frotté aux enrochements de la rivière en remontant le courant et a égratigné sa cuirasse.",
+                    "🟠 Les plaies exigent un parage soigné pour isoler les filets blancs fermes de ce poisson cuirassé.",
+                    "🟠 Présence d'hématomes musculaires et perte de la fermeté de l'épais derme cuirassé."
+                ],
+                "worn": [
+                    "🟡 Esturgeon Noir d'Amérique montrant des signes d'âge avancé avec des écussons émoussés et usés.",
+                    "🟡 Cet ancêtre a parcouru des milliers de milles marins et a clairement besoin d'une retraite bien méritée.",
+                    "🟡 La chair est un peu coriace et nécessite d'être pochée ou cuite en ragoût mijoté avec soin.",
+                    "🟡 Mucus protecteur jauni et coloration générale terne manquant de la brillance noire d'origine."
+                ],
+                "good": [
+                    "🟢 Spécimen robuste d'Esturgeon Noir d'Amérique avec des écussons osseux proéminents et rostre intact.",
+                    "🟢 Avec son allure de dinosaure en armure, il vous regarde d'un œil sceptique et pas du tout amusé.",
+                    "🟢 Excellente chair blanche très ferme, superbe rôtie en brochettes ou préparée en darne grillée.",
+                    "🟢 Poisson très frais, corps musclé et vigoureux, ouïes d'un rouge foncé sain typique des migrateurs."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'une perfection anatomique muséale de Acipenser oxyrinchus, aux plaques osseuses d'une symétrie parfaite.",
+                    "✨ Un chevalier des rivières dans son armure noire étincelante, si beau qu'il mériterait d'être anobli.",
+                    "✨ Chair d'une fraîcheur absolue et caviar noir intact de qualité exceptionnelle, le summum de la gastronomie.",
+                    "✨ Fraîcheur exceptionnelle, corps extrêmement rigide et plaques osseuses impeccables sans aucune trace d'usure."
+                ]
+            },
+            "id": 145,
+            "price": 4101,
+            "location": "Rivières côtières et estuaires nord-américains de l'océan Atlantique",
+            "preferred_time": "06h - 12h, 18h - 00h",
+            "preferred_season": "Avril - septembre",
+            "months": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ],
+            "fun_fact": "L'Esturgeon Noir d'Amérique (Acipenser oxyrinchus) se pêche d'avril à septembre, de 06h à 12h et 18h à 00h, par temps pluvieux dans les rivières côtières. Ce géant cuirassé remonte les fleuves pour frayer. Vendu 4101 pièces d'or, sa chair ferme et ses œufs fournissent un caviar estimé en haute gastronomie.",
+            "time_restriction": null
+        },
+        {
+            "name": "Poisson-Spatule",
+            "size_min": 60.0,
+            "size_mean": 120.0,
+            "size_sigma": 20.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Poisson-Spatule présentant une fracture complète de son rostre en spatule et des blessures corporelles profondes.",
+                    "🔴 Sa spatule ressemble maintenant à une vieille cuillère en bois tordue après un combat avec une turbine.",
+                    "🔴 Chair gorgée d'eau et endommagée, œufs endommagés inutilisables pour le caviar de spatule.",
+                    "🔴 Spécimen en décomposition avancée, ouïes décolorées et forte odeur de marécage stagnante."
+                ],
+                "damaged": [
+                    "🟠 Polyodon spathula montrant des éraflures cutanées sur la spatule et des nageoires fendues.",
+                    "🟠 Il s'est pris le bec dans des branches immergées en cherchant du plancton et boude dans son coin.",
+                    "🟠 Les éraflures nécessitent de parer la chair pour enlever les parties meurtries avant cuisson.",
+                    "🟠 Présence d'ecchymoses sous-cutanées et légère perte de rigidité du rostre osseux."
+                ],
+                "worn": [
+                    "🟡 Poisson-Spatule présentant des marques d'usure sur la peau et une spatule émoussée par le sable.",
+                    "🟡 Ce chercheur de plancton a l'air fatigué de balayer la rivière avec son nez toute la journée.",
+                    "🟡 La chair est un peu grasse et a un léger goût de vase, à préparer marinée ou fumée.",
+                    "🟡 Mucus protecteur épais et perte de la coloration grisâtre uniforme de la peau."
+                ],
+                "good": [
+                    "🟢 Spécimen robuste de Poisson-Spatule avec un rostre en forme de spatule intact et des opercules sains.",
+                    "🟢 On dirait qu'il s'est greffé un chausse-pied sur le nez pour essayer de se faire remarquer.",
+                    "🟢 Chair ferme et charnue, excellente préparée en filets grillés ou fumée au bois de pommier.",
+                    "🟢 Poisson très frais aux yeux clairs, corps musclé et ouïes d'un rouge vif sain typique des filtreurs."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'une perfection anatomique remarquable de Polyodon spathula, à la spatule rectiligne parfaite.",
+                    "✨ Le champion de cuisine de la rivière, équipé d'une spatule naturelle digne d'un chef étoilé.",
+                    "✨ Chair d'une fraîcheur absolue et caviar de spatule intact d'une qualité culinaire exceptionnelle.",
+                    "✨ Fraîcheur exceptionnelle des grands fleuves, corps rigide et spatule intacte d'une pureté totale."
+                ]
+            },
+            "id": 146,
+            "price": 4102,
+            "location": "Rivières profondes et grands réservoirs du bassin du Mississippi",
+            "preferred_time": "07h - 12h, 16h - 20h",
+            "preferred_season": "Mars - mai",
+            "months": [
+                3,
+                4,
+                5
+            ],
+            "fun_fact": "Le Poisson-Spatule (Polyodon spathula) se capture de mars à mai, de 07h à 12h et 16h à 20h, après la pluie dans le bassin du Mississippi. Ce poisson préhistorique filtre le plancton grâce à son rostre sensible. Vendu 4102 pièces d'or, sa chair ferme et son caviar de qualité sont très prisés au menu.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Poisson-Lanterne",
+            "size_min": 4.0,
+            "size_mean": 8.0,
+            "size_sigma": 1.5,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Poisson-Lanterne présentant des déchirures cutanées sévères et une destruction complète des photophores ventraux.",
+                    "🔴 Ce petit luminaire des abysses a eu un court-circuit et a fini complètement écrasé.",
+                    "🔴 Chair liquéfiée et impropre à toute friture, inutilisable en raison de la perte complète de structure.",
+                    "🔴 Spécimen en décomposition, photophores éteints et ouïes d'une pâleur extrême dégageant une odeur rance."
+                ],
+                "damaged": [
+                    "🟠 Myctophum punctatum montrant des frottements épidermiques et des photophores partiellement endommagés.",
+                    "🟠 Il s'est frotté à une méduse urticante qui n'a pas apprécié qu'il l'éclaire en pleine nuit.",
+                    "🟠 Les blessures cutanées mineures exigent de rincer abondamment le poisson avant de le faire frire.",
+                    "🟠 Présence d'hématomes sous-cutanés légers et perte partielle de la lueur bioluminescente."
+                ],
+                "worn": [
+                    "🟡 Poisson-Lanterne présentant des marques d'usure sur les nageoires et une peau terne zébrée.",
+                    "🟡 Sa batterie est faible et ses petites ampoules bioluminescentes clignotent faiblement.",
+                    "🟡 Poisson comestible mais à la chair un peu molle, idéal pour préparer une friture croustillante.",
+                    "🟡 Épiderme recouvert d'un mucus sec et diminution de la réaction lumineuse des photophores."
+                ],
+                "good": [
+                    "🟢 Spécimen sain de Poisson-Lanterne avec des photophores ventraux intacts et nageoires bien conservées.",
+                    "🟢 Prêt à servir de veilleuse pour votre table de chevet, tant qu'il reste dans son bocal d'eau froide.",
+                    "🟢 Chair très fine et délicate, excellente frite entière à la poêle avec un filet d'huile d'olive.",
+                    "🟢 Poisson très frais aux yeux clairs, brillant d'une lueur verdâtre sous les photophores actifs."
+                ],
+                "pristine": [
+                    "✨ Spécimen d'exception de Myctophum punctatum d'une perfection anatomique totale, aux photophores étincelants.",
+                    "✨ Une véritable guirlande de Noël des profondeurs, brillant de mille feux bioluminescents.",
+                    "✨ Chair d'une fraîcheur absolue et d'une finesse incomparable, parfaite pour une friture gastronomique d'exception.",
+                    "✨ Fraîcheur abyssale exceptionnelle, corps rigide et éclats bioluminescents d'une pureté et intensité remarquables."
+                ]
+            },
+            "id": 147,
+            "price": 4103,
+            "location": "Zone mésopélagique et profondeurs bathyales de l'océan Atlantique Nord et de la mer Méditerranée",
+            "preferred_time": "20h - 04h",
+            "preferred_season": "Octobre - février",
+            "months": [
+                10,
+                11,
+                12,
+                1,
+                2
+            ],
+            "fun_fact": "Le Poisson-Lanterne (Myctophum punctatum) se capture d'octobre à février, de 20h à 04h, par nuit sombre dans les eaux bathyales. Ce migrateur vertical luit dans le noir grâce à ses photophores ventraux. Vendu 4103 pièces d'or, sa chair très fine et délicate est un délice croustillant frit à la poêle.",
+            "time_restriction": "after_22h"
+        },
+        {
+            "name": "Poisson-Viper",
+            "size_min": 15.0,
+            "size_mean": 28.0,
+            "size_sigma": 5.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 Poisson-Viper présentant des crocs maxillaires brisés et des lacérations cutanées abyssales profondes.",
+                    "🔴 Ce monstre de cauchemar a visiblement perdu son combat contre la pression et ressemble à un lacet écrasé.",
+                    "🔴 Chair liquéfiée par la décompression et impropre à toute friture, inutilisable en cuisine.",
+                    "🔴 Spécimen en décomposition avancée, yeux exorbités opaques et ouïes d'un gris terne malodorant."
+                ],
+                "damaged": [
+                    "🟠 Chauliodus sloani montrant des éraflures cutanées et des crocs transparents partiellement cassés.",
+                    "🟠 Il a tenté de mordre un poisson-lanterne un peu trop énergique et s'est fêlé une dent.",
+                    "🟠 Les blessures sur le dos exigent de parer le spécimen pour récupérer des filets maigres cuisinables.",
+                    "🟠 Présence d'hématomes musculaires et perte partielle de l'éclat de son corps squameux sombre."
+                ],
+                "worn": [
+                    "🟡 Poisson-Viper présentant des marques d'usure benthique et des nageoires dorsales abîmées.",
+                    "🟡 Ce cauchemar des abysses a l'air fatigué de devoir faire peur aux scientifiques toute la journée.",
+                    "🟡 La chair est un peu pauvre en graisse et un peu fibreuse, à cuire doucement pochée dans un bouillon épicé.",
+                    "🟡 Mucus desséché et perte de la brillance métallique de ses flancs sombres."
+                ],
+                "good": [
+                    "🟢 Spécimen sain de Poisson-Viper avec de longs crocs translucides acérés et photophores intacts.",
+                    "🟢 Il affiche un sourire tellement terrifiant qu'il pourrait faire faire des cauchemars à un requin blanc.",
+                    "🟢 Chair fine au goût discret, excellente préparée en friture croustillante après avoir retiré les dents.",
+                    "🟢 Poisson très frais aux yeux clairs, corps ferme et ouïes d'un rouge foncé sain typique des grands fonds."
+                ],
+                "pristine": [
+                    "✨ Spécimen de Chauliodus sloani d'une perfection anatomique totale, aux dents immenses et étincelantes.",
+                    "✨ Le vampire ultime des grands fonds marins, si parfait qu'il ferait fuir le comte Dracula lui-même.",
+                    "✨ Chair d'une fraîcheur absolue et d'une finesse incomparable, parfaite pour une friture gastronomique croustillante.",
+                    "✨ Fraîcheur abyssale absolue, corps très rigide et dents translucides d'un éclat et d'une netteté parfaits."
+                ]
+            },
+            "id": 148,
+            "price": 4104,
+            "location": "Profondeurs abyssales et eaux mésopélagiques des océans tempérés et tropicaux",
+            "preferred_time": "21h - 04h",
+            "preferred_season": "Octobre - mars",
+            "months": [
+                10,
+                11,
+                12,
+                1,
+                2,
+                3
+            ],
+            "fun_fact": "Le Poisson-Viper (Chauliodus sloani) se capture d'octobre à mars, de 21h à 04h, par nuit sombre dans les grandes profondeurs et abysses marins. Ce prédateur féroce possède de longs crocs translucides pour empaler ses proies. Vendu 4104 pièces d'or, sa chair fine et délicate est appréciée frite après retrait des dents.",
+            "time_restriction": "after_22h"
         }
     ],
     "epic": [
@@ -4835,6 +7424,183 @@
                 8
             ],
             "fun_fact": "La Tête-de-serpent (Channa micropeltes) est pêchée de juin à août de 09h à 16h dans les étangs d'eau douce. Ce prédateur féroce respire de l'air et peut survivre plusieurs jours hors de l'eau en rampant d'un bassin à un autre. Les biologistes observent que la femelle garde agressivement ses jeunes à la coloration rouge vif. Commercialisé pour 5500 pièces d'or, ce poisson robuste possède une chair blanche ferme et très savoureuse, traditionnellement cuite à la vapeur avec du gingembre frais en Asie.",
+            "time_restriction": "before_22h"
+        },
+        {
+            "name": "Régalec",
+            "size_min": 200.0,
+            "size_mean": 500.0,
+            "size_sigma": 100.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'analyse du spécimen de Regalecus glesne révèle des lacérations profondes le long du derme argenté et des fractures osseuses majeures.",
+                    "🔴 Ce roi des harengs a dû croiser la route d'un sous-marin pressé, ou alors il a confondu sa couronne de nageoire dorsale avec un ventilateur.",
+                    "🔴 Sa chair gélatineuse et meurtrie, imprégnée d'eau de mer stagnante, est absolument impropre au séchage ou à toute grillade.",
+                    "🔴 Une desquamation massive de la livrée argentée et des yeux complètement vitreux indiquent un début avancé de décomposition benthique."
+                ],
+                "damaged": [
+                    "🟠 Le corps rubané montre des altérations modérées des rayons de la crête dorsale rouge et des éraflures cutanées latérales.",
+                    "🟠 Il a essayé de faire un nœud marin avec son corps de huit mètres de long, mais il s'est emmêlé les nageoires en cours de route.",
+                    "🟠 Les tissus mous sont abîmés à mi-corps, nécessitant un parage rigoureux pour sauver les rares filets exploitables de ce poisson sans écailles.",
+                    "🟠 Présence d'hématomes cutanés et de branchies décolorées, signalant un traumatisme récent lors de sa capture dans les courants."
+                ],
+                "worn": [
+                    "🟡 Le spécimen présente une usure normale de la livrée argentée et une déformation légère des longs rayons pelviens en forme de rames.",
+                    "🟡 Il a l'air fatigué de nager à la verticale comme un poteau téléphonique toute la journée, ses reflets bleutés mériteraient un bon coup de polish.",
+                    "🟡 Sa chair très riche en eau est flasque et manque de fermeté, ce qui limite son utilisation en cuisine à un simple bouillon aromatique léger.",
+                    "🟡 Un mucus cutané asséché et des opercules fatigués indiquent que ce géant a passé trop de temps dans les eaux chaudes de surface."
+                ],
+                "good": [
+                    "🟢 Corps rubané parfaitement intact, livrée argentée typique avec des stries sombres et crête dorsale rouge vif bien dressée.",
+                    "🟢 Ce ruban de mer géant est si long qu'il pourrait servir de corde à sauter pour les sirènes du coin.",
+                    "🟢 Chair blanche, tendre et très fraîche, idéale à préparer en papillote avec un filet d'huile de citron pour relever sa saveur subtile.",
+                    "🟢 Une fermeté musculaire remarquable pour cette espèce benthique, accompagnée d'une odeur fraîche d'iode et d'algues de profondeur."
+                ],
+                "pristine": [
+                    "✨ Examen anatomique irréprochable : crête écarlate intacte, filaments pelviens parfaits et réflectivité maximale du derme argenté.",
+                    "✨ Un véritable ruban d'argent céleste ! On dirait que la royauté des abysses a envoyé son plus beau représentant en smoking étincelant.",
+                    "✨ Qualité gastronomique exceptionnelle pour cette espèce rare, les darnes centrales sont d'une blancheur immaculée et prêtes à être pochées.",
+                    "✨ Rigidité cadavérique optimale, mucus cutané parfaitement translucide et oeil limpide brillant comme une perle des profondeurs."
+                ]
+            },
+            "id": 149,
+            "price": 8101,
+            "location": "Fonds mésopélagiques, haute mer",
+            "preferred_time": "00h - 24h",
+            "preferred_season": "Janvier - décembre",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Régalec (Regalecus glesne) se pêche toute l'année, de 00h à 24h sans restriction de météo, dans les fonds mésopélagiques de haute mer. Ce géant au corps rubané argenté de 8 mètres nage à la verticale et inspire les légendes de serpents de mer. Estimé à 8101 pièces d'or, sa chair gélatineuse et flasque a une valeur culinaire très faible. Ses longs rayons dorsaux forment une couronne rouge spectaculaire.",
+            "time_restriction": null
+        },
+        {
+            "name": "Requin-Lutin",
+            "size_min": 150.0,
+            "size_mean": 320.0,
+            "size_sigma": 50.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'examen ichtyologique révèle un déchirement complet du derme rose translucide et une fracture des mâchoires protractiles.",
+                    "🔴 Ce pauvre requin-lutin a visiblement confondu un récif rocheux avec un dentiste pour abysses. Il a perdu de son charme terrifiant.",
+                    "🔴 Sa chair molle et flasque, imprégnée d'urée et altérée par les bactéries marines, est absolument impropre à la consommation.",
+                    "🔴 Une perte totale de la coloration rose caractéristique au profit d'un gris terne et une putréfaction cutanée prononcée."
+                ],
+                "damaged": [
+                    "🟠 Le derme lâche présente des ecchymoses modérées et une déchirure partielle des nageoires pectorales et caudale.",
+                    "🟠 On dirait qu'il s'est coincé le nez dans une porte blindée sous-marine à force de poursuivre des calmars de trop près.",
+                    "🟠 Des lésions musculaires profondes sur les flancs imposent un nettoyage minutieux pour extraire quelques tranches saines.",
+                    "🟠 Altération superficielle du mucus protecteur et branchies violettes congestionnées suite à une décompression rapide."
+                ],
+                "worn": [
+                    "🟡 Le poisson montre des signes d'usure cutanée superficielle et une abrasion de la rangée de dents antérieures acérées.",
+                    "🟡 Il a l'air fatigué d'avoir la mâchoire qui pendouille en permanence. Un petit élastique l'aurait peut-être aidé à la remonter.",
+                    "🟡 Sa chair aqueuse, typique des requins de grande profondeur, offre une tenue très moyenne et un goût légèrement amer.",
+                    "🟡 Une peau un peu desséchée et des yeux ternes indiquent que ce prédateur a séjourné trop longtemps hors des abysses."
+                ],
+                "good": [
+                    "🟢 Derme rose translucide intact montrant les vaisseaux sanguins, mâchoires hautement extensibles opérationnelles et dents en aiguille complètes.",
+                    "🟢 Un spécimen effrayant qui semble tout droit sorti d'un film d'horreur de science-fiction des grands fonds.",
+                    "🟢 Chair blanche et ferme exhalant une saine odeur marine, pouvant être préparée en darnes pochées après un pelage minutieux.",
+                    "🟢 Excellent tonus musculaire et coloration rose saine pour cette espèce benthique prélevée dans de bonnes conditions."
+                ],
+                "pristine": [
+                    "✨ Intégrité anatomique parfaite : museau allongé aplati impeccable, mâchoire protractile intacte et coloration rose éclatante sans aucune lésion.",
+                    "✨ La mascotte absolue des abysses ! Son profil bizarre est si parfait qu'il ferait fureur dans un défilé de mode extraterrestre.",
+                    "✨ Spécimen de qualité gastronomique supérieure, la chair sous la peau translucide est d'une fraîcheur et d'une pureté remarquables.",
+                    "✨ Rigidité cadavérique optimale, derme flasque mais parfaitement conservé et oeil vitreux mais limpide typique de la profondeur."
+                ]
+            },
+            "id": 150,
+            "price": 8102,
+            "location": "Fosses abyssales, eaux profondes",
+            "preferred_time": "00h - 24h",
+            "preferred_season": "Janvier - décembre",
+            "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+            ],
+            "fun_fact": "Le Requin-Lutin (Mitsukurina owstoni) se pêche toute l'année, de 00h à 24h sous n'importe quel climat, dans les fosses abyssales et eaux profondes. Ce fossile vivant rose possède un museau allongé aplati et des mâchoires protractiles qui se projettent en avant pour capturer les proies. Estimé à 8102 pièces d'or, sa chair molle a une valeur culinaire très faible. Son corps rose flasque laisse transparaître ses vaisseaux sanguins.",
+            "time_restriction": null
+        },
+        {
+            "name": "Thon Rouge du Nord",
+            "size_min": 100.0,
+            "size_mean": 220.0,
+            "size_sigma": 40.0,
+            "force_pristine": null,
+            "force_state": null,
+            "descriptions": {
+                "badly damaged": [
+                    "🔴 L'examen macroscopique montre une mutilation sévère des nageoires pinnules dorsales et de larges plaies musculaires infectées.",
+                    "🔴 Ce sprinteur des mers a dû se frotter d'un peu trop près à une hélice de cargo. On dirait du sashimi pré-découpé de très mauvaise qualité.",
+                    "🔴 Sa chair rouge sombre, meurtrie par le combat et échauffée par l'acide lactique, est impropre à la préparation culinaire.",
+                    "🔴 Un derme complètement terne et râpé avec une odeur d'ammoniaque prononcée, signe d'une altération profonde des muscles."
+                ],
+                "damaged": [
+                    "🟠 Le corps fuselé robuste présente des abrasions importantes des écailles du corselet et des nageoires caudales endommagées.",
+                    "🟠 Il s'est battu comme un beau diable pour échapper à la ligne, y laissant une partie de sa silhouette aérodynamique.",
+                    "🟠 Des hématomes profonds sur le dos gâchent une partie des précieux filets de longe rouge, réduisant le rendement en cuisine.",
+                    "🟠 Présence d'hématomes et d'opercules abîmés, indiquant une lutte intense dans l'eau avant la remontée."
+                ],
+                "worn": [
+                    "🟡 Le poisson montre des marques de frottement légères sur les flancs argentés et une usure naturelle des petites pinnules.",
+                    "🟡 Il a l'air épuisé d'avoir traversé l'Atlantique à toute vitesse sans faire de pause pipi. Ses couleurs manquent d'éclat.",
+                    "🟡 La chair a perdu de sa fermeté typique et présente une teneur en eau supérieure, idéale pour des préparations cuites.",
+                    "🟡 Les yeux commencent à blanchir et le mucus protecteur est partiellement altéré, indiquant plusieurs heures depuis la capture."
+                ],
+                "good": [
+                    "🟢 Corps fuselé hydrodynamique intact, dos bleu sombre métallique brillant et ventre argenté sans aucune ligne de fracture.",
+                    "🟢 Une véritable torpille des mers, musclée comme un athlète olympique et prête à faire exploser votre balance.",
+                    "🟢 Chair rouge très ferme et riche en graisse saine, parfaite pour lever de superbes steaks de thon à snacker à la poêle.",
+                    "🟢 Une rigidité musculaire et une fraîcheur exceptionnelles, dégageant une agréable et puissante odeur d'iode marin."
+                ],
+                "pristine": [
+                    "✨ État de conservation exceptionnel : silhouette hydrodynamique parfaite, pinnules jaune vif intactes et reflets d'acier étincelants.",
+                    "✨ La Rolls-Royce de la haute mer ! Il brille tant qu'on pourrait presque voir son propre reflet sur ses flancs argentés.",
+                    "✨ Qualité sashimi absolue ! La chair est d'une blancheur nacrée sur le ventre et d'un rouge rubis profond sur les flancs, un régal royal.",
+                    "✨ Rigidité cadavérique parfaite, œil d'une clarté de cristal et branchies rouge sang très fraîches, gage de qualité suprême."
+                ]
+            },
+            "id": 151,
+            "price": 8103,
+            "location": "Eaux pélagiques de haute mer",
+            "preferred_time": "06h - 20h",
+            "preferred_season": "Juin - novembre",
+            "months": [
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ],
+            "fun_fact": "Le Thon Rouge du Nord (Thunnus thynnus) se pêche de juin à novembre de 06h à 20h sous un ciel dégagé ou pluvieux, dans les eaux pélagiques de haute mer. Ce puissant prédateur migratoire régule sa température interne, lui permettant de nager à 70 km/h. Vendu 8103 pièces d'or, sa chair rouge grasse et savoureuse est adulée au Japon pour les sushis de qualité supérieure. C'est l'un des poissons les plus combatifs et chers au monde.",
             "time_restriction": "before_22h"
         }
     ],
