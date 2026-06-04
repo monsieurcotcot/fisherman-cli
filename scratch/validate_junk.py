@@ -53,9 +53,14 @@ def validate_db(path, lang):
         # Check fun fact length
         ff = item.get("fun_fact", "")
         if idx >= 143:
-            if len(ff) < 500:
-                print(f"ERROR [ID {idx} - {name}]: Fun fact too short ({len(ff)} chars). Min 500.")
-                errors += 1
+            if idx >= 243:
+                if len(ff) < 300 or len(ff) > 500:
+                    print(f"ERROR [ID {idx} - {name}]: Fun fact length is {len(ff)} chars. Must be between 300 and 500.")
+                    errors += 1
+            else:
+                if len(ff) < 300:
+                    print(f"ERROR [ID {idx} - {name}]: Fun fact too short ({len(ff)} chars). Min 300.")
+                    errors += 1
                 
         # Check descriptions
         descs = item.get("descriptions", {})
