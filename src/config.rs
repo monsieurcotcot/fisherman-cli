@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::sync::OnceLock;
+use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -71,15 +71,17 @@ pub struct GameData {
     pub fish_data: HashMap<Rarity, Vec<FishData>>,
     pub junk_data: HashMap<Rarity, Vec<FishData>>,
     pub fail_messages: Vec<FailMessageEntry>,
+    pub cf_disappear_messages: Vec<String>,
+    pub cf_edge_messages: Vec<String>,
 }
 
-static GAME_DATA_FR: std::sync::RwLock<Option<&'static GameData>> = std::sync::RwLock::new(None);
-static GAME_DATA_EN: std::sync::RwLock<Option<&'static GameData>> = std::sync::RwLock::new(None);
+static GAME_DATA_FR: std::sync::RwLock<Option<Arc<GameData>>> = std::sync::RwLock::new(None);
+static GAME_DATA_EN: std::sync::RwLock<Option<Arc<GameData>>> = std::sync::RwLock::new(None);
 
-static FISH_NAMES_LOWER_FR: std::sync::RwLock<Option<&'static std::collections::HashSet<String>>> = std::sync::RwLock::new(None);
-static JUNK_NAMES_LOWER_FR: std::sync::RwLock<Option<&'static std::collections::HashSet<String>>> = std::sync::RwLock::new(None);
-static FISH_NAMES_LOWER_EN: std::sync::RwLock<Option<&'static std::collections::HashSet<String>>> = std::sync::RwLock::new(None);
-static JUNK_NAMES_LOWER_EN: std::sync::RwLock<Option<&'static std::collections::HashSet<String>>> = std::sync::RwLock::new(None);
+static FISH_NAMES_LOWER_FR: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
+static JUNK_NAMES_LOWER_FR: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
+static FISH_NAMES_LOWER_EN: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
+static JUNK_NAMES_LOWER_EN: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
 
 fn read_file_or_fallback(paths: &[&str], fallback: &str) -> String {
     for path in paths {
@@ -114,10 +116,26 @@ fn load_game_data_fr() -> GameData {
     let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
         .expect("Failed to parse fail_messages.json");
 
+    let disappear_content = read_file_or_fallback(
+        &["/app/data/cf_disappear_messages.json", "data/cf_disappear_messages.json"],
+        include_str!("../data/cf_disappear_messages.json"),
+    );
+    let cf_disappear_messages: Vec<String> = serde_json::from_str(&disappear_content)
+        .expect("Failed to parse cf_disappear_messages.json");
+
+    let edge_content = read_file_or_fallback(
+        &["/app/data/cf_edge_messages.json", "data/cf_edge_messages.json"],
+        include_str!("../data/cf_edge_messages.json"),
+    );
+    let cf_edge_messages: Vec<String> = serde_json::from_str(&edge_content)
+        .expect("Failed to parse cf_edge_messages.json");
+
     GameData {
         fish_data,
         junk_data,
         fail_messages,
+        cf_disappear_messages,
+        cf_edge_messages,
     }
 }
 
@@ -143,37 +161,51 @@ fn load_game_data_en() -> GameData {
     let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
         .expect("Failed to parse fail_messages_en.json");
 
+    let disappear_content = read_file_or_fallback(
+        &["/app/data/cf_disappear_messages_en.json", "data/cf_disappear_messages_en.json"],
+        include_str!("../data/cf_disappear_messages_en.json"),
+    );
+    let cf_disappear_messages: Vec<String> = serde_json::from_str(&disappear_content)
+        .expect("Failed to parse cf_disappear_messages_en.json");
+
+    let edge_content = read_file_or_fallback(
+        &["/app/data/cf_edge_messages_en.json", "data/cf_edge_messages_en.json"],
+        include_str!("../data/cf_edge_messages_en.json"),
+    );
+    let cf_edge_messages: Vec<String> = serde_json::from_str(&edge_content)
+        .expect("Failed to parse cf_edge_messages_en.json");
+
     GameData {
         fish_data,
         junk_data,
         fail_messages,
+        cf_disappear_messages,
+        cf_edge_messages,
     }
 }
 
-pub fn get_game_data_fr() -> &'static GameData {
+pub fn get_game_data_fr() -> Arc<GameData> {
     {
-        if let Some(data) = *GAME_DATA_FR.read().unwrap() {
-            return data;
+        if let Some(ref data) = *GAME_DATA_FR.read().unwrap() {
+            return Arc::clone(data);
         }
     }
-    let data = load_game_data_fr();
-    let leaked = Box::leak(Box::new(data));
+    let data = Arc::new(load_game_data_fr());
     let mut writer = GAME_DATA_FR.write().unwrap();
-    *writer = Some(leaked);
-    leaked
+    *writer = Some(Arc::clone(&data));
+    data
 }
 
-pub fn get_game_data_en() -> &'static GameData {
+pub fn get_game_data_en() -> Arc<GameData> {
     {
-        if let Some(data) = *GAME_DATA_EN.read().unwrap() {
-            return data;
+        if let Some(ref data) = *GAME_DATA_EN.read().unwrap() {
+            return Arc::clone(data);
         }
     }
-    let data = load_game_data_en();
-    let leaked = Box::leak(Box::new(data));
+    let data = Arc::new(load_game_data_en());
     let mut writer = GAME_DATA_EN.write().unwrap();
-    *writer = Some(leaked);
-    leaked
+    *writer = Some(Arc::clone(&data));
+    data
 }
 
 pub fn reload_all_game_data() -> Result<(), String> {
@@ -188,13 +220,13 @@ pub fn reload_all_game_data() -> Result<(), String> {
         return Err("Failed to reload English data - check JSON syntax".to_string());
     }
 
-    // 2. Leak static references
-    let fr_leaked = Box::leak(Box::new(new_fr.unwrap()));
-    let en_leaked = Box::leak(Box::new(new_en.unwrap()));
+    // 2. Wrap in Arc
+    let fr_arc = Arc::new(new_fr.unwrap());
+    let en_arc = Arc::new(new_en.unwrap());
 
     // 3. Write locks swap
-    *GAME_DATA_FR.write().unwrap() = Some(fr_leaked);
-    *GAME_DATA_EN.write().unwrap() = Some(en_leaked);
+    *GAME_DATA_FR.write().unwrap() = Some(fr_arc);
+    *GAME_DATA_EN.write().unwrap() = Some(en_arc);
 
     // 4. Invalidate lowercase cache sets
     *FISH_NAMES_LOWER_FR.write().unwrap() = None;
@@ -207,7 +239,7 @@ pub fn reload_all_game_data() -> Result<(), String> {
 }
 
 // Get game data by language
-pub fn get_game_data(use_english: bool) -> &'static GameData {
+pub fn get_game_data(use_english: bool) -> Arc<GameData> {
     if use_english {
         get_game_data_en()
     } else {
@@ -224,93 +256,80 @@ pub fn get_junk_data() -> HashMap<Rarity, Vec<FishData>> {
     get_game_data_fr().junk_data.clone()
 }
 
-pub fn get_fail_attempt_reasons_old() -> Vec<&'static FailMessageEntry> {
-    get_game_data_fr().fail_messages.iter().collect()
+pub fn get_fail_attempt_reasons_old() -> Vec<FailMessageEntry> {
+    get_game_data_fr().fail_messages.clone()
 }
 
-// Direct static reference methods to avoid cloning completely
-pub fn get_fish_ref(use_english: bool) -> &'static HashMap<Rarity, Vec<FishData>> {
-    if use_english {
-        &get_game_data_en().fish_data
-    } else {
-        &get_game_data_fr().fish_data
-    }
-}
-
-pub fn get_junk_ref(use_english: bool) -> &'static HashMap<Rarity, Vec<FishData>> {
-    if use_english {
-        &get_game_data_en().junk_data
-    } else {
-        &get_game_data_fr().junk_data
-    }
-}
-
-pub fn get_fail_attempt_reasons(use_english: bool) -> Vec<&'static FailMessageEntry> {
+pub fn get_fail_attempt_reasons(use_english: bool) -> Vec<FailMessageEntry> {
     let data = if use_english { get_game_data_en() } else { get_game_data_fr() };
-    data.fail_messages.iter().collect()
+    data.fail_messages.clone()
 }
 
-// Caching and thread-safe OnceLock helper getters for lowercase sets
-pub fn get_fish_names_lower(use_english: bool) -> &'static std::collections::HashSet<String> {
+// Caching and thread-safe helpers for lowercase sets
+pub fn get_fish_names_lower(use_english: bool) -> Arc<std::collections::HashSet<String>> {
     if use_english {
         {
-            if let Some(set) = *FISH_NAMES_LOWER_EN.read().unwrap() {
-                return set;
+            if let Some(ref set) = *FISH_NAMES_LOWER_EN.read().unwrap() {
+                return Arc::clone(set);
             }
         }
-        let set: std::collections::HashSet<String> = get_fish_ref(true)
+        let game_data = get_game_data_en();
+        let set: std::collections::HashSet<String> = game_data.fish_data
             .values()
             .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
             .collect();
-        let leaked = Box::leak(Box::new(set));
+        let leaked = Arc::new(set);
         let mut writer = FISH_NAMES_LOWER_EN.write().unwrap();
-        *writer = Some(leaked);
+        *writer = Some(Arc::clone(&leaked));
         leaked
     } else {
         {
-            if let Some(set) = *FISH_NAMES_LOWER_FR.read().unwrap() {
-                return set;
+            if let Some(ref set) = *FISH_NAMES_LOWER_FR.read().unwrap() {
+                return Arc::clone(set);
             }
         }
-        let set: std::collections::HashSet<String> = get_fish_ref(false)
+        let game_data = get_game_data_fr();
+        let set: std::collections::HashSet<String> = game_data.fish_data
             .values()
             .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
             .collect();
-        let leaked = Box::leak(Box::new(set));
+        let leaked = Arc::new(set);
         let mut writer = FISH_NAMES_LOWER_FR.write().unwrap();
-        *writer = Some(leaked);
+        *writer = Some(Arc::clone(&leaked));
         leaked
     }
 }
 
-pub fn get_junk_names_lower(use_english: bool) -> &'static std::collections::HashSet<String> {
+pub fn get_junk_names_lower(use_english: bool) -> Arc<std::collections::HashSet<String>> {
     if use_english {
         {
-            if let Some(set) = *JUNK_NAMES_LOWER_EN.read().unwrap() {
-                return set;
+            if let Some(ref set) = *JUNK_NAMES_LOWER_EN.read().unwrap() {
+                return Arc::clone(set);
             }
         }
-        let set: std::collections::HashSet<String> = get_junk_ref(true)
+        let game_data = get_game_data_en();
+        let set: std::collections::HashSet<String> = game_data.junk_data
             .values()
             .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
             .collect();
-        let leaked = Box::leak(Box::new(set));
+        let leaked = Arc::new(set);
         let mut writer = JUNK_NAMES_LOWER_EN.write().unwrap();
-        *writer = Some(leaked);
+        *writer = Some(Arc::clone(&leaked));
         leaked
     } else {
         {
-            if let Some(set) = *JUNK_NAMES_LOWER_FR.read().unwrap() {
-                return set;
+            if let Some(ref set) = *JUNK_NAMES_LOWER_FR.read().unwrap() {
+                return Arc::clone(set);
             }
         }
-        let set: std::collections::HashSet<String> = get_junk_ref(false)
+        let game_data = get_game_data_fr();
+        let set: std::collections::HashSet<String> = game_data.junk_data
             .values()
             .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
             .collect();
-        let leaked = Box::leak(Box::new(set));
+        let leaked = Arc::new(set);
         let mut writer = JUNK_NAMES_LOWER_FR.write().unwrap();
-        *writer = Some(leaked);
+        *writer = Some(Arc::clone(&leaked));
         leaked
     }
 }

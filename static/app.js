@@ -13,8 +13,10 @@ let flatFishList = [];
 let staticJunkData = {};
 let flatJunkList = [];
 let currentMuseumTab = 'fish'; // 'fish' or 'junk'
+let currentGlobalMuseumTab = 'fish'; // 'fish' or 'junk'
 let allCatches = [];
 let museumDiscoveries = [];
+let globalMuseumDiscoveries = [];
 let currentRarity = 'all';
 let currentType = 'all';
 let currentPage = 1;
@@ -30,7 +32,11 @@ const stateRanks = {
 
 // Charger les données au démarrage
 fetchLeaderboard();
+fetchBananaKing();
 fetchBananaKings();
+fetchGlobalMuseum();
+fetchEcoChampion();
+fetchEcoChampions();
 
 loadFishData().then(() => {
     const path = window.location.pathname;
@@ -38,6 +44,8 @@ loadFishData().then(() => {
         const username = path.split('/').pop();
         document.getElementById('usernameInput').value = username;
         fetchStats(username);
+    } else {
+        document.getElementById('globalMuseumPane').style.display = 'block';
     }
 });
 
@@ -74,6 +82,7 @@ async function loadFishData() {
         if (document.getElementById('museumPane').style.display === 'block') {
             renderMuseum();
         }
+        renderGlobalMuseum();
     } catch (err) {
         console.error("Failed to load catalog data:", err);
     }
@@ -275,14 +284,18 @@ async function fetchStats(u) {
             document.getElementById('error').style.display = 'block';
             document.getElementById('statsDisplay').style.display = 'none';
             document.getElementById('museumPane').style.display = 'none';
+            document.getElementById('globalMuseumPane').style.display = 'block';
             document.getElementById('commandGuideBox').style.display = 'block';
+            document.getElementById('ecoChampionBox').style.display = 'block';
             document.getElementById('bananaKingsBox').style.display = 'block';
             document.getElementById('leaderboardBox').style.display = 'block';
         } else {
             document.getElementById('error').style.display = 'none';
             document.getElementById('statsDisplay').style.display = 'block';
             document.getElementById('museumPane').style.display = 'block';
+            document.getElementById('globalMuseumPane').style.display = 'none';
             document.getElementById('commandGuideBox').style.display = 'none';
+            document.getElementById('ecoChampionBox').style.display = 'none';
             document.getElementById('bananaKingsBox').style.display = 'none';
             document.getElementById('leaderboardBox').style.display = 'none';
             document.getElementById('res-username').innerText = data.username;
@@ -653,7 +666,7 @@ function showFishDetails(fish, color) {
     document.getElementById('modal-name').style.color = color;
     
     // Rétablir la mise en page normale du modal
-    document.getElementById('modal-id-row').style.display = fish.is_junk ? 'none' : 'block';
+    document.getElementById('modal-id-row').style.display = 'block';
     document.getElementById('modal-id').textContent = fish.id || '?';
     
     document.getElementById('modal-rarity').textContent = fish.rarity;
@@ -1145,6 +1158,9 @@ function renderMedals(data) {
         }
 
         const item = document.createElement('div');
+        item.onclick = () => {
+            showMedalDetails(m, currentTier, nextTier);
+        };
         
         if (!currentTier) {
             item.className = 'medal-item locked';
@@ -1190,3 +1206,518 @@ function renderMedals(data) {
         medalsList.appendChild(item);
     });
 }
+
+async function fetchGlobalMuseum() {
+    try {
+        const response = await fetch('/api/global_museum');
+        const data = await response.json();
+        globalMuseumDiscoveries = data.museum || [];
+        renderGlobalMuseum();
+    } catch (err) {
+        console.error("Failed to fetch global museum:", err);
+    }
+}
+
+function switchGlobalMuseumTab(tab) {
+    currentGlobalMuseumTab = tab;
+    const btnFish = document.getElementById('btnGlobalMuseumFish');
+    const btnJunk = document.getElementById('btnGlobalMuseumJunk');
+    
+    if (tab === 'fish') {
+        btnFish.classList.add('active');
+        btnJunk.classList.remove('active');
+    } else {
+        btnFish.classList.remove('active');
+        btnJunk.classList.add('active');
+    }
+    renderGlobalMuseum();
+}
+
+function renderGlobalMuseum() {
+    const grid = document.getElementById('globalMuseumGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    let discoveredCount = 0;
+    const activeList = currentGlobalMuseumTab === 'fish' ? flatFishList : flatJunkList;
+    const totalCount = activeList.length;
+
+    activeList.forEach(item => {
+        const record = globalMuseumDiscoveries.find(d => d.fish_name.toLowerCase() === item.name.toLowerCase());
+        const isUnlocked = !!record;
+
+        const slot = document.createElement('div');
+        slot.className = 'museum-slot';
+
+        // Badge ID style Pokédex
+        const idStr = item.id ? `#${String(item.id).padStart(3, '0')}` : '#???';
+        const idBadge = document.createElement('span');
+        idBadge.className = 'id-badge';
+        idBadge.textContent = idStr;
+        slot.appendChild(idBadge);
+
+        const icon = document.createElement('span');
+        icon.className = 'icon';
+        
+        const nameLower = item.name.toLowerCase();
+        
+        if (currentGlobalMuseumTab === 'junk') {
+            if (nameLower.includes('botte') || nameLower.includes('chaussure')) {
+                icon.textContent = '🥾';
+            } else if (nameLower.includes('canette') || nameLower.includes('soda')) {
+                icon.textContent = '🥫';
+            } else if (nameLower.includes('pneu')) {
+                icon.textContent = '⭕';
+            } else if (nameLower.includes('plastique') || nameLower.includes('sac')) {
+                icon.textContent = '🛍️';
+            } else if (nameLower.includes('algue')) {
+                icon.textContent = '🌿';
+            } else if (nameLower.includes('trésor') || nameLower.includes('coffre')) {
+                icon.textContent = '🏴‍☠️';
+            } else {
+                icon.textContent = '🗑️';
+            }
+        } else {
+            if (nameLower.includes('banana')) {
+                icon.textContent = '🍌';
+            } else if (nameLower.includes('grenouille') || nameLower.includes('têtard')) {
+                icon.textContent = '🐸';
+            } else if (nameLower.includes('requin')) {
+                icon.textContent = '🦈';
+            } else if (nameLower.includes('anguille')) {
+                icon.textContent = '🐍';
+            } else if (nameLower.includes('calmar')) {
+                icon.textContent = '🦑';
+            } else if (nameLower.includes('piranha')) {
+                icon.textContent = '🐡';
+            } else if (nameLower.includes('thon') || nameLower.includes('saumon') || nameLower.includes('espadon')) {
+                icon.textContent = '🍣';
+            } else {
+                icon.textContent = '🐟';
+            }
+        }
+
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'name-label';
+        nameLabel.textContent = item.name;
+
+        const rarityColors = {
+            'common': '#efeff1',
+            'uncommon': '#1fa363',
+            'rare': '#00e6ff',
+            'veryrare': '#9146ff',
+            'epic': '#ff4ce2',
+            'legendary': '#ffb444',
+            'mythical': '#ff4f4f',
+            'divin': '#ffffff'
+        };
+        const color = rarityColors[item.rarity.toLowerCase().replace(/\s/g, '')] || '#efeff1';
+
+        if (isUnlocked) {
+            discoveredCount++;
+            slot.classList.add('unlocked');
+            slot.style.borderColor = '#ffd700'; // Gold border for records!
+            slot.style.boxShadow = '0 0 6px rgba(255, 215, 0, 0.25)';
+            if (item.rarity.toLowerCase() === 'divin') {
+                slot.style.boxShadow = "0 0 10px #fff, 0 0 5px #ffd700";
+            }
+
+            slot.appendChild(icon);
+            slot.appendChild(nameLabel);
+
+            // Record Crown Badge
+            const badge = document.createElement('div');
+            badge.className = 'badge';
+            badge.style.backgroundColor = '#ffd700';
+            badge.style.color = '#18181b';
+            badge.style.fontSize = '0.55rem';
+            badge.style.display = 'flex';
+            badge.style.alignItems = 'center';
+            badge.style.justifyContent = 'center';
+            badge.textContent = '👑';
+            slot.appendChild(badge);
+
+            slot.onclick = () => {
+                showGlobalMuseumDetails({
+                    name: item.name,
+                    rarity: item.rarity,
+                    color: color,
+                    maxSize: record.max_size,
+                    maxWeight: record.max_weight,
+                    bestState: record.best_state,
+                    description: record.description || item.fun_fact || "Un record communautaire enregistré au Panthéon.",
+                    username: record.username,
+                    unlockedAt: record.unlocked_at,
+                    isUnlocked: true
+                });
+            };
+        } else {
+            slot.classList.add('locked');
+            
+            const lockIcon = document.createElement('span');
+            lockIcon.className = 'lock-icon';
+            lockIcon.textContent = '🔒';
+            slot.appendChild(lockIcon);
+
+            icon.textContent = '❓';
+            slot.appendChild(icon);
+            slot.appendChild(nameLabel);
+
+            slot.onclick = () => {
+                showGlobalMuseumDetails({
+                    name: item.name,
+                    rarity: item.rarity,
+                    color: color,
+                    maxSize: null,
+                    maxWeight: null,
+                    bestState: null,
+                    description: "Cette espèce mystérieuse n'a pas encore été découverte par la communauté. Soyez le premier à l'ajouter au Panthéon !",
+                    username: null,
+                    unlockedAt: null,
+                    isUnlocked: false
+                });
+            };
+        }
+
+        grid.appendChild(slot);
+    });
+
+    // Mettre à jour la barre de progression globale
+    document.getElementById('global-discovered-count').textContent = discoveredCount;
+    document.getElementById('global-total-count').textContent = totalCount;
+    
+    const percentage = totalCount > 0 ? Math.round((discoveredCount / totalCount) * 100) : 0;
+    document.getElementById('global-discovered-percentage').textContent = `${percentage}%`;
+    document.getElementById('global-progress-fill').style.width = `${percentage}%`;
+}
+
+function showGlobalMuseumDetails(pb) {
+    let staticInfo = flatFishList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+    if (!staticInfo) {
+        staticInfo = flatJunkList.find(f => f.name.toLowerCase() === pb.name.toLowerCase());
+    }
+    const idStr = (staticInfo && staticInfo.id) ? ` (#${String(staticInfo.id).padStart(3, '0')})` : '';
+    const isUnlocked = pb.isUnlocked;
+
+    document.getElementById('modal-name').textContent = (isUnlocked ? "Record : " : "Mystère : ") + pb.name + idStr;
+    document.getElementById('modal-name').style.color = isUnlocked ? pb.color : '#8b8b9c';
+    document.getElementById('modal-id-row').style.display = 'none';
+    document.getElementById('modal-rarity').textContent = pb.rarity;
+    document.getElementById('modal-rarity').style.color = pb.color;
+    
+    if (isUnlocked) {
+        document.getElementById('modal-size-label').textContent = "Taille Record:";
+        document.getElementById('modal-weight-label').textContent = "Poids Record:";
+        document.getElementById('modal-state-label').textContent = "Meilleur État:";
+
+        document.getElementById('modal-size-row').style.display = 'block';
+        document.getElementById('modal-weight-row').style.display = 'block';
+        document.getElementById('modal-state-row').style.display = 'block';
+        
+        document.getElementById('modal-size').textContent = pb.maxSize;
+        document.getElementById('modal-weight').textContent = formatWeight(pb.maxWeight);
+        document.getElementById('modal-state').textContent = pb.bestState;
+    } else {
+        document.getElementById('modal-size-row').style.display = 'none';
+        document.getElementById('modal-weight-row').style.display = 'none';
+        document.getElementById('modal-state-row').style.display = 'none';
+    }
+    
+    document.getElementById('modal-desc').textContent = pb.description;
+
+    // Chercher les métadonnées statiques pour enrichir
+    const gpMeta = document.getElementById('modal-gameplay-meta');
+    const ffContainer = document.getElementById('modal-fun-fact-container');
+    
+    if (staticInfo) {
+        gpMeta.style.display = 'block';
+        document.getElementById('modal-location').textContent = staticInfo.location || '-';
+        document.getElementById('modal-price').textContent = staticInfo.price || '-';
+        document.getElementById('modal-time').textContent = staticInfo.preferred_time || 'Toute la journée';
+        document.getElementById('modal-season').textContent = staticInfo.preferred_season || "Toute l'année";
+        
+        if (staticInfo.fun_fact) {
+            ffContainer.style.display = 'block';
+            document.getElementById('modal-fun-fact').textContent = staticInfo.fun_fact;
+        } else {
+            ffContainer.style.display = 'none';
+        }
+    } else {
+        gpMeta.style.display = 'none';
+        ffContainer.style.display = 'none';
+    }
+
+    // Remplacer les métadonnées par les statistiques du Musée Global
+    if (isUnlocked) {
+        const formattedDate = pb.unlockedAt ? new Date(pb.unlockedAt).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }) : '-';
+
+        document.getElementById('modal-meta-row').innerHTML = `
+            <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px; line-height: 1.4;">
+                👑 Record détenu par : <strong style="color: #ffd700;">@${pb.username}</strong><br>
+                📅 Pêché le : <strong>${formattedDate}</strong>
+            </p>
+        `;
+    } else {
+        document.getElementById('modal-meta-row').innerHTML = `
+            <p style="font-size: 0.8rem; color: #adadb8; margin-top: 10px;">
+                ❌ Cette espèce n'a jamais été pêchée sur cette chaîne.
+            </p>
+        `;
+    }
+
+    document.getElementById('fishModal').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+async function fetchBananaKing() {
+    try {
+        const response = await fetch('/api/top_banana');
+        const data = await response.json();
+        const container = document.getElementById('bananaKingContent');
+        if (!container) return;
+
+        if (data.error) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; text-align: center; margin: 0;">Aucun Roi Banane pour le moment.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 5px 0;">
+                <span style="font-size: 1.15rem; font-weight: bold; color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.25);">
+                    <a href="/player/${data.username}" style="color: inherit; text-decoration: none;">👑 @${data.username}</a>
+                </span>
+                <span style="font-size: 0.85rem; color: #efeff1;">
+                    Niveau : <strong style="color: #ffd700;">Niv. ${data.level}</strong>
+                </span>
+                <span style="font-size: 0.76rem; color: #adadb8; font-style: italic; margin-top: 4px; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 4px; width: 80%; text-align: center;">
+                    🎁 Bonus : Salaire <strong style="color: #ffd700;">+5000 🪙</strong> & <strong style="color: #ffd700;">Immunité Cooldown</strong> !
+                </span>
+            </div>
+        `;
+    } catch (err) {
+        console.error("Failed to fetch banana king:", err);
+        const container = document.getElementById('bananaKingContent');
+        if (container) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #ff4f4f; text-align: center; margin: 0;">Erreur lors du chargement.</p>';
+        }
+    }
+}
+
+async function fetchEcoChampion() {
+    try {
+        const response = await fetch('/api/top_eco');
+        const data = await response.json();
+        const container = document.getElementById('ecoChampionContent');
+        if (!container) return;
+
+        if (data.error) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; text-align: center; margin: 0;">Aucun Bobo Écolo pour le moment.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 5px 0;">
+                <span style="font-size: 1.15rem; font-weight: bold; color: #4caf50; text-shadow: 0 0 8px rgba(76, 175, 80, 0.25);">
+                    <a href="/player/${data.username}" style="color: inherit; text-decoration: none;">@${data.username}</a>
+                </span>
+                <span style="font-size: 0.85rem; color: #efeff1;">
+                    Notoriété : <strong style="color: #4caf50;">${data.eco_notoriety} 🌳</strong> (Niv. ${data.level})
+                </span>
+                <span style="font-size: 0.76rem; color: #adadb8; font-style: italic; margin-top: 4px; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 4px; width: 80%; text-align: center;">
+                    🎁 Bonus : Cooldown réduit de <strong style="color: #4caf50;">-10s</strong> !
+                </span>
+            </div>
+        `;
+    } catch (err) {
+        console.error("Failed to fetch eco champion:", err);
+        const container = document.getElementById('ecoChampionContent');
+        if (container) {
+            container.innerHTML = '<p style="font-size: 0.8rem; color: #ff4f4f; text-align: center; margin: 0;">Erreur lors du chargement.</p>';
+        }
+    }
+}
+
+async function fetchEcoChampions() {
+    try {
+        const response = await fetch('/api/eco_champions');
+        const data = await response.json();
+        const list = document.getElementById('ecoChampionsList');
+        if (!list) return;
+        list.innerHTML = '';
+        
+        if (!data.history || data.history.length === 0) {
+            list.innerHTML = '<p style="font-size: 0.8rem; color: #adadb8; text-align: center; padding: 10px; margin: 0;">Aucun Bobo Écolo n\'a encore été sacré ! 🌳</p>';
+            return;
+        }
+        
+        data.history.forEach(champ => {
+            const item = document.createElement('div');
+            item.style.display = 'flex';
+            item.style.flexDirection = 'column';
+            item.style.padding = '8px 12px';
+            item.style.background = champ.dethroned_at ? 'rgba(38, 38, 44, 0.4)' : 'rgba(76, 175, 80, 0.08)';
+            item.style.border = champ.dethroned_at ? '1px solid rgba(58, 58, 61, 0.4)' : '1px solid rgba(76, 175, 80, 0.5)';
+            item.style.borderRadius = '8px';
+            item.style.boxShadow = champ.dethroned_at ? 'none' : '0 0 10px rgba(76, 175, 80, 0.15)';
+            item.style.transition = 'all 0.3s ease';
+            
+            const header = document.createElement('div');
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+            
+            const nameLink = document.createElement('a');
+            nameLink.textContent = `🌳 @${champ.username}`;
+            nameLink.href = `/player/${champ.username}`;
+            nameLink.style.color = champ.dethroned_at ? '#bf94ff' : '#4caf50';
+            nameLink.style.textDecoration = 'none';
+            nameLink.style.fontWeight = 'bold';
+            nameLink.style.cursor = 'pointer';
+            
+            const badge = document.createElement('span');
+            badge.style.fontSize = '0.7rem';
+            badge.style.padding = '2px 6px';
+            badge.style.borderRadius = '4px';
+            badge.style.fontWeight = 'bold';
+            if (champ.dethroned_at) {
+                badge.textContent = 'DÉTRÔNÉ';
+                badge.style.background = 'rgba(255, 79, 79, 0.1)';
+                badge.style.color = '#ff4f4f';
+            } else {
+                badge.textContent = 'ACTUEL';
+                badge.style.background = 'rgba(76, 175, 80, 0.15)';
+                badge.style.color = '#4caf50';
+                badge.style.animation = 'shine 1.5s infinite alternate';
+            }
+            
+            header.appendChild(nameLink);
+            header.appendChild(badge);
+            
+            const details = document.createElement('div');
+            details.style.fontSize = '0.75rem';
+            details.style.color = '#adadb8';
+            details.style.marginTop = '4px';
+            details.style.display = 'flex';
+            details.style.flexDirection = 'column';
+            details.style.gap = '2px';
+            
+            const dateCrowned = new Date(champ.crowned_at);
+            const crownedStr = dateCrowned.toLocaleDateString('fr-FR', {
+                day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+            });
+            
+            const crownedEl = document.createElement('span');
+            crownedEl.innerHTML = `Sacré : <strong style="color: #efeff1;">${crownedStr}</strong>`;
+            details.appendChild(crownedEl);
+            
+            if (champ.dethroned_at) {
+                const dateDethroned = new Date(champ.dethroned_at);
+                const dethronedStr = dateDethroned.toLocaleDateString('fr-FR', {
+                    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                });
+                
+                const durationMs = dateDethroned - dateCrowned;
+                const durationMins = Math.round(durationMs / 60000);
+                let durationStr = `${durationMins} min`;
+                if (durationMins >= 1440) {
+                    durationStr = `${(durationMins / 1440).toFixed(1)} jours`;
+                } else if (durationMins >= 60) {
+                    durationStr = `${(durationMins / 60).toFixed(1)} h`;
+                }
+                
+                const dethronedEl = document.createElement('span');
+                dethronedEl.innerHTML = `Détrôné : <strong style="color: #efeff1;">${dethronedStr}</strong> <span style="color: #8f8f98; font-size: 0.7rem; margin-left: 5px;">(Règne : ${durationStr})</span>`;
+                details.appendChild(dethronedEl);
+            } else {
+                const activeEl = document.createElement('span');
+                activeEl.innerHTML = `<span style="color: #00ff00; font-weight: bold;">Règne en cours... 🌟</span>`;
+                details.appendChild(activeEl);
+            }
+            
+            item.appendChild(header);
+            item.appendChild(details);
+            list.appendChild(item);
+        });
+    } catch (err) {
+        console.error(err);
+        document.getElementById('ecoChampionsList').innerHTML = '<p style="font-size: 0.8rem; color: #ff4f4f; text-align: center; padding: 10px; margin: 0;">Erreur lors du chargement de l\'historique.</p>';
+    }
+}
+
+function showMedalDetails(m, currentTier, nextTier) {
+    // Hide fish-specific fields
+    document.getElementById('modal-id-row').style.display = 'none';
+    document.getElementById('modal-size-row').style.display = 'none';
+    document.getElementById('modal-weight-row').style.display = 'none';
+    document.getElementById('modal-state-row').style.display = 'none';
+    document.getElementById('modal-gameplay-meta').style.display = 'none';
+    document.getElementById('modal-fun-fact-container').style.display = 'none';
+
+    const formatValue = (v) => {
+        if (m.isGold) {
+            return v.toLocaleString('fr-FR') + ' po';
+        }
+        if (m.isPercent) {
+            return v + '%';
+        }
+        return v.toLocaleString('fr-FR');
+    };
+
+    let glowColor = '#efeff1';
+    let tierName = 'Verrouillé';
+    if (currentTier) {
+        tierName = currentTier.name;
+        if (tierName === 'Bronze') glowColor = '#cd7f32';
+        else if (tierName === 'Argent') glowColor = '#bdc3c7';
+        else if (tierName === 'Or') glowColor = '#ffd700';
+        else if (tierName === 'Platine') glowColor = '#1abc9c';
+        else if (tierName === 'Diamant') glowColor = '#3498db';
+        else if (tierName === 'Obsidienne') glowColor = '#ffffff';
+    }
+
+    document.getElementById('modal-name').innerHTML = `${m.icon} ${m.name}`;
+    document.getElementById('modal-name').style.color = glowColor;
+
+    document.getElementById('modal-rarity').textContent = `Palier : ${tierName}`;
+    document.getElementById('modal-rarity').style.color = glowColor;
+
+    let descHtml = `<p style="font-size: 0.95rem; line-height: 1.5; color: #efeff1; margin: 10px 0;">${m.desc}</p>`;
+    descHtml += `<div style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; line-height: 1.6;">`;
+    descHtml += `📈 Statistique actuelle : <strong style="color: #ffd700;">${formatValue(m.val)}</strong><br>`;
+
+    if (nextTier) {
+        const progressPercent = Math.min(100, Math.round((m.val / nextTier.val) * 100));
+        descHtml += `🎯 Prochain palier (<strong>${nextTier.name}</strong>) : <strong>${formatValue(nextTier.val)}</strong><br>`;
+        descHtml += `<div style="margin-top: 10px; display: flex; align-items: center; gap: 8px;">`;
+        descHtml += `  <div style="background: rgba(255,255,255,0.1); border-radius: 4px; height: 10px; flex-grow: 1; overflow: hidden; width: 100%;">`;
+        descHtml += `    <div style="background: ${glowColor}; width: ${progressPercent}%; height: 100%; transition: width 0.3s ease;"></div>`;
+        descHtml += `  </div>`;
+        descHtml += `  <span style="font-size: 0.8rem; color: #adadb8; font-weight: bold;">${progressPercent}%</span>`;
+        descHtml += `</div>`;
+    } else if (currentTier) {
+        descHtml += `<span style="color: #ffd700; font-weight: bold; display: block; margin-top: 6px;">🏆 Palier maximum atteint ! Félicitations !</span>`;
+    } else {
+        const firstTierVal = m.tiers[0].val;
+        descHtml += `<span style="color: #ff4f4f; font-weight: bold; display: block; margin-top: 6px;">🔒 Vous n'avez pas encore débloqué le premier palier (Bronze : ${formatValue(firstTierVal)}).</span>`;
+    }
+    descHtml += `</div>`;
+
+    document.getElementById('modal-desc').innerHTML = descHtml;
+    
+    // Clear meta-row
+    document.getElementById('modal-meta-row').innerHTML = '';
+
+    document.getElementById('fishModal').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+
+

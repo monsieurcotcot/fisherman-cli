@@ -217,6 +217,12 @@ async fn main() -> Result<(), MyError> {
         }
     }
 
+    // Correction et couronnement automatique du Champion Écolo actif au démarrage
+    if let Ok(mut eco_tx) = pool.begin().await {
+        let _ = repo.update_eco_champion_status_direct(&mut eco_tx).await;
+        let _ = eco_tx.commit().await;
+    }
+
     let client_id = env::var("TWITCH_CLIENT_ID").expect("TWITCH_CLIENT_ID must be set");
     let client_secret = env::var("TWITCH_CLIENT_SECRET").expect("TWITCH_CLIENT_SECRET must be set");
     let channel = env::var("TWITCH_CHANNEL").expect("TWITCH_CHANNEL must be set");
@@ -318,6 +324,10 @@ async fn main() -> Result<(), MyError> {
         .route("/api/fish_data", get(api::get_fish_data_api))
         .route("/api/junk_data", get(api::get_junk_data_api))
         .route("/api/banana_kings", get(api::get_banana_kings))
+        .route("/api/eco_champions", get(api::get_eco_champions))
+        .route("/api/global_museum", get(api::get_global_museum))
+        .route("/api/top_eco", get(api::get_top_eco))
+        .route("/api/top_banana", get(api::get_top_banana))
         .route("/api/admin/login", axum::routing::post(api::admin_login))
         .route("/api/admin/json", get(api::get_admin_json).post(api::save_admin_json))
         .fallback_service(ServeFile::new("static/index.html"))

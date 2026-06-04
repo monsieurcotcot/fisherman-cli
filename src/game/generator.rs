@@ -1,7 +1,7 @@
 use rand::seq::SliceRandom;
 use rand::Rng;
 use rand_distr::{Distribution, Normal};
-use crate::config::{get_fish_ref, get_junk_ref, Rarity, FishData};
+use crate::config::{get_game_data, Rarity, FishData};
 use crate::models::Fish;
 
 pub fn generate_fish(use_english: bool) -> Option<Fish> {
@@ -29,7 +29,8 @@ fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
         choice -= weight;
     }
     
-    let all_data = if is_junk { get_junk_ref(use_english) } else { get_fish_ref(use_english) };
+    let game_data = get_game_data(use_english);
+    let all_data = if is_junk { &game_data.junk_data } else { &game_data.fish_data };
     let item_list = all_data.get(&selected_rarity)?;
     
     let item_data: &FishData = if is_junk {
@@ -99,7 +100,7 @@ fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
         let mut s = normal.sample(&mut rng);
         if s < item_data.size_min { s = item_data.size_min; }
         s = (s * 100.0).round() / 100.0;
-        let mut w = 0.01 * s.powi(3);
+        let mut w: f64 = 0.01 * s.powi(3);
         w = (w * 100.0).round() / 100.0;
         if w < 0.01 { w = 0.01; }
         (s, w)

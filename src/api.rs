@@ -199,6 +199,44 @@ pub async fn get_banana_kings(State(state): State<Arc<AppState>>) -> impl IntoRe
     }
 }
 
+pub async fn get_eco_champions(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    match state.repo.get_eco_champions_history().await {
+        Ok(history) => Json(serde_json::json!({ "history": history })).into_response(),
+        Err(_) => Json(serde_json::json!({ "error": "Error fetching eco champions history" })).into_response()
+    }
+}
+
+pub async fn get_global_museum(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    match state.repo.get_global_museum().await {
+        Ok(discoveries) => Json(serde_json::json!({ "museum": discoveries })).into_response(),
+        Err(_) => Json(serde_json::json!({ "error": "Error fetching global museum" })).into_response()
+    }
+}
+
+pub async fn get_top_eco(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    match state.repo.get_top_eco_player().await {
+        Ok(Some(player)) => Json(serde_json::json!({
+            "username": player.username,
+            "eco_notoriety": player.eco_notoriety,
+            "level": player.level
+        })).into_response(),
+        Ok(None) => Json(serde_json::json!({ "error": "No players found" })).into_response(),
+        Err(_) => Json(serde_json::json!({ "error": "Error" })).into_response()
+    }
+}
+
+pub async fn get_top_banana(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    match state.repo.get_active_banana_king_details().await {
+        Ok(Some(player)) => Json(serde_json::json!({
+            "username": player.username,
+            "level": player.level
+        })).into_response(),
+        Ok(None) => Json(serde_json::json!({ "error": "No active Banana King" })).into_response(),
+        Err(_) => Json(serde_json::json!({ "error": "Error" })).into_response()
+    }
+}
+
+
 use std::sync::RwLock as StdRwLock;
 use std::collections::HashMap as StdHashMap;
 use chrono::{DateTime, Duration};
@@ -374,6 +412,10 @@ pub async fn get_admin_json(
         ("fish_data", _) => "data/fish_data.json",
         ("junk_data", "en") => "data/junk_data_en.json",
         ("junk_data", _) => "data/junk_data.json",
+        ("cf_disappear_messages", "en") => "data/cf_disappear_messages_en.json",
+        ("cf_disappear_messages", _) => "data/cf_disappear_messages.json",
+        ("cf_edge_messages", "en") => "data/cf_edge_messages_en.json",
+        ("cf_edge_messages", _) => "data/cf_edge_messages.json",
         _ => "data/fish_data.json",
     };
 
@@ -385,6 +427,8 @@ pub async fn get_admin_json(
             "fail_messages" => "data/fail_messages.json",
             "fish_data" => "data/fish_data.json",
             "junk_data" => "data/junk_data.json",
+            "cf_disappear_messages" => "data/cf_disappear_messages.json",
+            "cf_edge_messages" => "data/cf_edge_messages.json",
             _ => return (axum::http::StatusCode::BAD_REQUEST, "Fichier inconnu").into_response(),
         }
     };
@@ -416,13 +460,18 @@ pub async fn save_admin_json(
     // 2. Validate JSON syntax and structure
     match payload.file.as_str() {
         "fail_messages" => {
-            if serde_json::from_str::<Vec<String>>(&payload.content).is_err() {
-                return (axum::http::StatusCode::BAD_REQUEST, "Format JSON invalide (doit être un tableau de chaînes de caractères)").into_response();
+            if let Err(err) = serde_json::from_str::<Vec<crate::config::FailMessageEntry>>(&payload.content) {
+                return (axum::http::StatusCode::BAD_REQUEST, format!("Format JSON invalide (doit être un tableau de messages d'échecs valides) : {}", err)).into_response();
             }
         }
         "fish_data" | "junk_data" => {
-            if serde_json::from_str::<HashMap<crate::config::Rarity, Vec<crate::config::FishData>>>(&payload.content).is_err() {
-                return (axum::http::StatusCode::BAD_REQUEST, "Format JSON invalide (structure du catalogue de poissons incorrecte)").into_response();
+            if let Err(err) = serde_json::from_str::<HashMap<crate::config::Rarity, Vec<crate::config::FishData>>>(&payload.content) {
+                return (axum::http::StatusCode::BAD_REQUEST, format!("Format JSON invalide (structure du catalogue de poissons incorrecte) : {}", err)).into_response();
+            }
+        }
+        "cf_disappear_messages" | "cf_edge_messages" => {
+            if let Err(err) = serde_json::from_str::<Vec<String>>(&payload.content) {
+                return (axum::http::StatusCode::BAD_REQUEST, format!("Format JSON invalide (doit être un tableau de chaînes) : {}", err)).into_response();
             }
         }
         _ => return (axum::http::StatusCode::BAD_REQUEST, "Fichier inconnu").into_response(),
@@ -436,6 +485,10 @@ pub async fn save_admin_json(
         ("fish_data", _) => "data/fish_data.json",
         ("junk_data", "en") => "data/junk_data_en.json",
         ("junk_data", _) => "data/junk_data.json",
+        ("cf_disappear_messages", "en") => "data/cf_disappear_messages_en.json",
+        ("cf_disappear_messages", _) => "data/cf_disappear_messages.json",
+        ("cf_edge_messages", "en") => "data/cf_edge_messages_en.json",
+        ("cf_edge_messages", _) => "data/cf_edge_messages.json",
         _ => "data/fish_data.json",
     };
 

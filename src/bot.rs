@@ -9,13 +9,17 @@ use twitch_irc::SecureTCPTransport;
 
 use crate::{AppState, PendingSale, PendingTrade};
 use crate::game::{generate_fish, generate_junk};
-use crate::config::{get_fail_attempt_reasons, FailMessageEntry};
+use crate::config::{get_fail_attempt_reasons, FailMessageEntry, Rarity};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum SellArg {
     ConfirmYes,
     ConfirmNo,
     ById(i64),
+    All {
+        rarity: Option<Rarity>,
+        state: Option<String>,
+    },
     ByName {
         name: String,
         state: Option<String>,
@@ -145,6 +149,86 @@ pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
     }
     if lower == "non" || lower == "no" || lower == "n" {
         return Some(SellArg::ConfirmNo);
+    }
+    if lower == "all" || lower == "tout" || lower.starts_with("all ") || lower.starts_with("tout ") {
+        let remainder = if lower.starts_with("all") {
+            args_str[3..].trim()
+        } else {
+            args_str[4..].trim()
+        };
+
+        if remainder.is_empty() {
+            return Some(SellArg::All { rarity: None, state: None });
+        }
+
+        let remainder_lower = remainder.to_lowercase();
+        let tokens: Vec<&str> = remainder_lower.split_whitespace().collect();
+
+        let mut parsed_rarity = None;
+
+        let get_rarity = |tok: &str| -> Option<Rarity> {
+            match tok {
+                "common" | "commun" => Some(Rarity::Common),
+                "uncommon" | "peu commun" | "peu-commun" => Some(Rarity::Uncommon),
+                "rare" => Some(Rarity::Rare),
+                "veryrare" | "very-rare" | "very rare" | "très rare" | "tres rare" | "très-rare" | "tres-rare" => Some(Rarity::VeryRare),
+                "epic" | "épique" | "epique" => Some(Rarity::Epic),
+                "legendary" | "légendaire" | "legendaire" => Some(Rarity::Legendary),
+                "mythical" | "mythique" => Some(Rarity::Mythical),
+                "divin" | "divine" => Some(Rarity::Divin),
+                _ => None,
+            }
+        };
+
+        let mut checked_state = None;
+        let mut cleaned_tokens = tokens.clone();
+
+        if remainder_lower.contains("badly damaged") || remainder_lower.contains("très endommagé") || remainder_lower.contains("tres endommage") {
+            checked_state = Some("badly damaged".to_string());
+            cleaned_tokens.retain(|&t| t != "badly" && t != "damaged" && t != "très" && t != "tres" && t != "endommagé" && t != "endommage");
+        } else if remainder_lower.contains("bon état") || remainder_lower.contains("bon etat") {
+            checked_state = Some("good".to_string());
+            cleaned_tokens.retain(|&t| t != "bon" && t != "état" && t != "etat");
+        }
+
+        if checked_state.is_none() {
+            for &tok in &tokens {
+                match tok {
+                    "damaged" | "endommagé" | "endommage" => {
+                        checked_state = Some("damaged".to_string());
+                    }
+                    "worn" | "usé" | "use" => {
+                        checked_state = Some("worn".to_string());
+                    }
+                    "good" | "bon" => {
+                        checked_state = Some("good".to_string());
+                    }
+                    "pristine" | "parfait" => {
+                        checked_state = Some("pristine".to_string());
+                    }
+                    _ => {}
+                }
+            }
+            if checked_state.is_some() {
+                cleaned_tokens.retain(|&t| t != "damaged" && t != "endommagé" && t != "endommage" && t != "worn" && t != "usé" && t != "use" && t != "good" && t != "bon" && t != "pristine" && t != "parfait");
+            }
+        }
+
+        let cleaned_str = cleaned_tokens.join(" ");
+        if cleaned_str.contains("peu commun") || cleaned_str.contains("peu-commun") {
+            parsed_rarity = Some(Rarity::Uncommon);
+        } else if cleaned_str.contains("very rare") || cleaned_str.contains("very-rare") || cleaned_str.contains("très rare") || cleaned_str.contains("tres rare") || cleaned_str.contains("très-rare") || cleaned_str.contains("tres-rare") {
+            parsed_rarity = Some(Rarity::VeryRare);
+        } else {
+            for tok in cleaned_tokens {
+                if let Some(r) = get_rarity(tok) {
+                    parsed_rarity = Some(r);
+                    break;
+                }
+            }
+        }
+
+        return Some(SellArg::All { rarity: parsed_rarity, state: checked_state });
     }
 
     if args_str.starts_with('#') {
@@ -513,16 +597,46 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                                 // Capped multiplier at 10 days
                                 let consecutive_capped = consecutive.min(10);
-                                let reward_gold = 200 + 50 * consecutive_capped as i64 + 10 * total as i64;
+                                let mut reward_gold = 200 + 50 * consecutive_capped as i64 + 10 * total as i64;
+
+                                let is_king = state_task_daily.repo.is_banana_king(player.id.unwrap()).await.unwrap_or(false);
+                                if is_king {
+                                    reward_gold += 5000;
+                                }
 
                                 if let Ok(_) = state_task_daily.repo.claim_daily_reward(player.id.unwrap(), consecutive, total, reward_gold).await {
-                                    let _ = client_msg_daily.say(
-                                        channel_login_daily,
-                                        format!(
-                                            "🎁 @{} vient de se connecter ! Il reçoit son bonus quotidien de {} po 🪙 (Série : {} jours d'affilée 🔥, Cumul : {} jours total) !",
-                                            username_daily, reward_gold, consecutive, total
-                                        )
-                                    ).await;
+                                    let use_english = match &player.language {
+                                        Some(l) => l == "en",
+                                        None => state_task_daily.use_english,
+                                    };
+
+                                    let msg = if use_english {
+                                        if is_king {
+                                            format!(
+                                                "🎁 @{} just logged in! They receive their daily bonus of {} gold 🪙 (including 5000 gold Banana King salary 👑) (Streak: {} days 🔥, Cumulative: {} days total)!",
+                                                username_daily, reward_gold, consecutive, total
+                                            )
+                                        } else {
+                                            format!(
+                                                "🎁 @{} just logged in! They receive their daily bonus of {} gold 🪙 (Streak: {} days 🔥, Cumulative: {} days total)!",
+                                                username_daily, reward_gold, consecutive, total
+                                            )
+                                        }
+                                    } else {
+                                        if is_king {
+                                            format!(
+                                                "🎁 @{} vient de se connecter ! Il reçoit son bonus quotidien de {} po 🪙 (dont 5000 po de salaire de Roi Banane 👑) (Série : {} jours d'affilée 🔥, Cumul : {} jours total) !",
+                                                username_daily, reward_gold, consecutive, total
+                                            )
+                                        } else {
+                                            format!(
+                                                "🎁 @{} vient de se connecter ! Il reçoit son bonus quotidien de {} po 🪙 (Série : {} jours d'affilée 🔥, Cumul : {} jours total) !",
+                                                username_daily, reward_gold, consecutive, total
+                                            )
+                                        }
+                                    };
+
+                                    let _ = client_msg_daily.say(channel_login_daily, msg).await;
                                 }
                             }
 
@@ -543,7 +657,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let sub = text.split_whitespace().skip(2).collect::<Vec<&str>>().join(" ");
                     let reply = match sub.as_str() {
                         "sell" | "vendre" | "vends" | "vend" => {
-                            "💰 Vente : !fish sell <nom/id_poisson> [état] [qté]. Ex : '!fish sell bar pristine 1' ou '!fish sell #42'. Si l'état est omis, vend les plus abîmés en premier. Confirme par '!fish sell oui' (durée 1m).".to_string()
+                            "💰 Vente: !fish sell <nom/id> [état] [qté], ou '!fish sell all [rareté] [état]'. Ex: '!fish sell #42', '!fish sell all', '!fish sell all rare', '!fish sell all pristine', '!fish sell all common worn'. Confirme par '!fish sell oui' (durée 1m).".to_string()
                         },
                         "recycle" | "recycler" => {
                             "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu (papier/carton), jaune (plastiques/métaux), vert (verre), marron (organique), gris (e-waste/ampoules), decharge (autres).".to_string()
@@ -1138,40 +1252,181 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             return;
                         }
 
-                        // Tirage aléatoire (49% de chances de gagner)
+                        // Tirage aléatoire :
+                        // 47% de chances de gagner normalement (win)
+                        // 47% de chances de perdre normalement (lose)
+                        // 5% de chances de perte insolite (disappear)
+                        // 1% de chances de tomber sur la tranche (edge, gain x3)
                         use rand::Rng;
-                        let win = rand::thread_rng().gen_range(0.0..100.0) <= 49.0;
+                        let roll = rand::thread_rng().gen_range(0.0..100.0);
 
-                        // Mettre à jour l'or en DB de manière atomique
-                        match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, win).await {
-                            Ok(updated_player) => {
-                                let new_gold = updated_player.gold;
-                                if win {
-                                    let mut msg_text = format!(
-                                        "🪙 @{} lance une pièce... GAGNÉ ! 🔴 (+{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
-                                        username, wager_amount, new_gold
-                                    );
-                                    if updated_player.coinflip_current_win_streak >= 3 {
-                                        msg_text.push_str(&format!(" 🔥 SÉRIE DE {} VICTOIRES D'AFFILÉE ! 🟥", updated_player.coinflip_current_win_streak));
+                        enum CoinflipOutcome {
+                            Win,
+                            Lose,
+                            Disappear,
+                            Edge,
+                        }
+
+                        let outcome = if roll <= 47.0 {
+                            CoinflipOutcome::Win
+                        } else if roll <= 94.0 {
+                            CoinflipOutcome::Lose
+                        } else if roll <= 99.0 {
+                            CoinflipOutcome::Disappear
+                        } else {
+                            CoinflipOutcome::Edge
+                        };
+
+                        let use_english = match player.language.as_deref() {
+                            Some("en") => true,
+                            Some("fr") => false,
+                            _ => raw_msg.trim().to_lowercase().starts_with("!fish"),
+                        };
+
+                        match outcome {
+                            CoinflipOutcome::Win => {
+                                match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, true).await {
+                                    Ok(updated_player) => {
+                                        let new_gold = updated_player.gold;
+                                        let mut msg_text = if use_english {
+                                            format!(
+                                                "🪙 @{} flips a coin... WON! 🔴 (+{} gold)! You now have {} gold 🪙 !",
+                                                username, wager_amount, new_gold
+                                            )
+                                        } else {
+                                            format!(
+                                                "🪙 @{} lance une pièce... GAGNÉ ! 🔴 (+{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                                username, wager_amount, new_gold
+                                            )
+                                        };
+                                        if updated_player.coinflip_current_win_streak >= 3 {
+                                            if use_english {
+                                                msg_text.push_str(&format!(" 🔥 STREAK OF {} CONSECUTIVE WINS! 🟥", updated_player.coinflip_current_win_streak));
+                                            } else {
+                                                msg_text.push_str(&format!(" 🔥 SÉRIE DE {} VICTOIRES D'AFFILÉE ! 🟥", updated_player.coinflip_current_win_streak));
+                                            }
+                                        }
+                                        let _ = client_msg.say(channel_login, msg_text).await;
                                     }
-                                    let _ = client_msg.say(channel_login, msg_text).await;
-                                } else {
-                                    let mut msg_text = format!(
-                                        "🪙 @{} lance une pièce... PERDU ! ⚪ (-{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
-                                        username, wager_amount, new_gold
-                                    );
-                                    if updated_player.coinflip_current_loss_streak >= 3 {
-                                        msg_text.push_str(&format!(" 💀 SÉRIE DE {} DÉFAITES D'AFFILÉE... ⬜", updated_player.coinflip_current_loss_streak));
+                                    Err(e) => {
+                                        tracing::error!("Failed to update player gold in coinflip win: {:?}", e);
+                                        let _ = client_msg.say(channel_login, if use_english {
+                                            format!("⚠️ @{}, a technical error occurred while updating your gold.", username)
+                                        } else {
+                                            format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
+                                        }).await;
                                     }
-                                    let _ = client_msg.say(channel_login, msg_text).await;
                                 }
                             }
-                            Err(e) => {
-                                tracing::error!("Failed to update player gold in coinflip: {:?}", e);
-                                let _ = client_msg.say(
-                                    channel_login,
-                                    format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
-                                ).await;
+                            CoinflipOutcome::Lose => {
+                                match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, false).await {
+                                    Ok(updated_player) => {
+                                        let new_gold = updated_player.gold;
+                                        let mut msg_text = if use_english {
+                                            format!(
+                                                "🪙 @{} flips a coin... LOST! ⚪ (-{} gold)! You now have {} gold 🪙 !",
+                                                username, wager_amount, new_gold
+                                            )
+                                        } else {
+                                            format!(
+                                                "🪙 @{} lance une pièce... PERDU ! ⚪ (-{} po) ! Tu as maintenant {} pièces d'or 🪙 !",
+                                                username, wager_amount, new_gold
+                                            )
+                                        };
+                                        if updated_player.coinflip_current_loss_streak >= 3 {
+                                            if use_english {
+                                                msg_text.push_str(&format!(" 💀 STREAK OF {} CONSECUTIVE LOSSES... ⬜", updated_player.coinflip_current_loss_streak));
+                                            } else {
+                                                msg_text.push_str(&format!(" 💀 SÉRIE DE {} DÉFAITES D'AFFILÉE... ⬜", updated_player.coinflip_current_loss_streak));
+                                            }
+                                        }
+                                        let _ = client_msg.say(channel_login, msg_text).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to update player gold in coinflip lose: {:?}", e);
+                                        let _ = client_msg.say(channel_login, if use_english {
+                                            format!("⚠️ @{}, a technical error occurred while updating your gold.", username)
+                                        } else {
+                                            format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
+                                        }).await;
+                                    }
+                                }
+                            }
+                            CoinflipOutcome::Disappear => {
+                                let game_data = if use_english {
+                                    crate::config::get_game_data_en()
+                                } else {
+                                    crate::config::get_game_data_fr()
+                                };
+                                let templates = &game_data.cf_disappear_messages;
+                                let chosen_template = if !templates.is_empty() {
+                                    let idx = rand::thread_rng().gen_range(0..templates.len());
+                                    &templates[idx]
+                                } else {
+                                    if use_english {
+                                        "🪙 @{username} flips the coin... but it disappeared!"
+                                    } else {
+                                        "🪙 @{username} lance la pièce... mais elle a disparu !"
+                                    }
+                                };
+
+                                match state_task.repo.record_coinflip_result(player.id.unwrap(), wager_amount, false).await {
+                                    Ok(updated_player) => {
+                                        let new_gold = updated_player.gold;
+                                        let msg_text = chosen_template
+                                            .replace("{username}", &username)
+                                            .replace("{wager}", &wager_amount.to_string())
+                                            .replace("{gold}", &new_gold.to_string());
+                                        let _ = client_msg.say(channel_login, msg_text).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to update player gold in coinflip disappear: {:?}", e);
+                                        let _ = client_msg.say(channel_login, if use_english {
+                                            format!("⚠️ @{}, a technical error occurred while updating your gold.", username)
+                                        } else {
+                                            format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
+                                        }).await;
+                                    }
+                                }
+                            }
+                            CoinflipOutcome::Edge => {
+                                let game_data = if use_english {
+                                    crate::config::get_game_data_en()
+                                } else {
+                                    crate::config::get_game_data_fr()
+                                };
+                                let templates = &game_data.cf_edge_messages;
+                                let chosen_template = if !templates.is_empty() {
+                                    let idx = rand::thread_rng().gen_range(0..templates.len());
+                                    &templates[idx]
+                                } else {
+                                    if use_english {
+                                        "🪙 @{username} flips the coin... and it lands on its edge! Triple! (+{gold_earned} gold)! You have {gold} gold."
+                                    } else {
+                                        "🪙 @{username} lance la pièce... et elle s'arrête sur la tranche ! Triplé ! (+{gold_earned} po)! Tu as {gold} po."
+                                    }
+                                };
+
+                                match state_task.repo.record_coinflip_edge_result(player.id.unwrap(), wager_amount).await {
+                                    Ok(updated_player) => {
+                                        let new_gold = updated_player.gold;
+                                        let gold_earned = wager_amount * 2;
+                                        let msg_text = chosen_template
+                                            .replace("{username}", &username)
+                                            .replace("{wager}", &wager_amount.to_string())
+                                            .replace("{gold_earned}", &gold_earned.to_string())
+                                            .replace("{gold}", &new_gold.to_string());
+                                        let _ = client_msg.say(channel_login, msg_text).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to update player gold in coinflip edge: {:?}", e);
+                                        let _ = client_msg.say(channel_login, if use_english {
+                                            format!("⚠️ @{}, a technical error occurred while updating your gold.", username)
+                                        } else {
+                                            format!("⚠️ @{}, une erreur technique est survenue lors de la mise à jour de tes pièces d'or.", username)
+                                        }).await;
+                                    }
+                                }
                             }
                         }
                     });
@@ -1213,7 +1468,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         let parsed = parse_sell_args(arg);
                         if parsed.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish sell [poisson] [état] [qté], ou !fish sell #[id_capture]", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish sell [poisson] [état] [qté], !fish sell #[id_capture], ou !fish sell all [rareté] [état]", username)).await;
                             return;
                         }
 
@@ -1267,6 +1522,93 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         } else {
                                             let _ = client_msg.say(channel_login, format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, id)).await;
                                         }
+                                    }
+                                }
+                            }
+                            SellArg::All { rarity, state } => {
+                                if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                        let sellable: Vec<_> = catches.into_iter()
+                                            .filter(|c| {
+                                                let name_lower = c.name.to_lowercase();
+                                                let is_non_fish = name_lower.contains("banana")
+                                                    || name_lower.contains("carte postale")
+                                                    || name_lower.contains("gemme")
+                                                    || c.is_junk;
+
+                                                if is_non_fish {
+                                                    return false;
+                                                }
+
+                                                if let Some(r) = rarity {
+                                                    if c.rarity != r {
+                                                        return false;
+                                                    }
+                                                }
+
+                                                if let Some(ref s) = state {
+                                                    if c.state.to_lowercase() != s.to_lowercase() {
+                                                        return false;
+                                                    }
+                                                }
+
+                                                true
+                                            })
+                                            .collect();
+
+                                        if sellable.is_empty() {
+                                            let filter_err = match (rarity, &state) {
+                                                (Some(r), Some(s)) => format!(" avec la rareté {:?} et l'état {}", r, s),
+                                                (Some(r), None) => format!(" avec la rareté {:?}", r),
+                                                (None, Some(s)) => format!(" avec l'état {}", s),
+                                                (None, None) => "".to_string(),
+                                            };
+                                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, tu n'as aucun poisson vendable{} dans ton inventaire.", username, filter_err)).await;
+                                            return;
+                                        }
+
+                                        let mut total_price = 0;
+                                        let mut selected_ids = Vec::new();
+                                        let mut selected_names = Vec::new();
+
+                                        for c in &sellable {
+                                            let base = get_base_price(&c.name);
+                                            let mult = get_stored_state_multiplier(&c.state);
+                                            let price = ((base as f64 * mult).round() as i64).max(1);
+                                            total_price += price;
+                                            selected_ids.push(c.id.unwrap());
+                                            selected_names.push(c.name.clone());
+                                        }
+
+                                        let pending = PendingSale {
+                                            player_id: player.id.unwrap(),
+                                            catch_ids: selected_ids,
+                                            catch_names: selected_names,
+                                            gold_earned: total_price,
+                                            created_at: Utc::now(),
+                                        };
+                                        state_task.pending_sales.write().await.insert(username.clone(), pending);
+
+                                        let rarity_str = rarity.map(|r| match r {
+                                            Rarity::Common => "commun",
+                                            Rarity::Uncommon => "peu commun",
+                                            Rarity::Rare => "rare",
+                                            Rarity::VeryRare => "très rare",
+                                            Rarity::Epic => "épique",
+                                            Rarity::Legendary => "légendaire",
+                                            Rarity::Mythical => "mythique",
+                                            Rarity::Divin => "divin",
+                                        });
+
+                                        let filter_desc = match (rarity_str, &state) {
+                                            (Some(r), Some(s)) => format!("de rareté {} et en état {}", r, s),
+                                            (Some(r), None) => format!("de rareté {}", r),
+                                            (None, Some(s)) => format!("en état {}", s),
+                                            (None, None) => "".to_string(),
+                                        };
+                                        let filter_space = if filter_desc.is_empty() { "".to_string() } else { format!(" {} ", filter_desc) };
+
+                                        let _ = client_msg.say(channel_login, format!("💰 @{}, tu es sur le point de vendre TOUS tes poissons{} ({} objets, hors déchets, bananes, cartes postales et gemmes) pour un total de {} pièces d'or 🪙. Tape !fish sell oui pour valider (1 min max) !", username, filter_space, sellable.len(), total_price)).await;
                                     }
                                 }
                             }
@@ -1385,15 +1727,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         return;
                                     }
 
-                                    let junk_ref = crate::config::get_junk_ref(use_english);
-                                    let mut correct_bin = "decharge";
+                                    let game_data = crate::config::get_game_data(use_english);
+                                    let junk_ref = &game_data.junk_data;
+                                    let mut correct_bin = "decharge".to_string();
                                     let mut bonus = 10;
                                     let mut malus = 20;
 
                                     let mut found_config = false;
                                     for list in junk_ref.values() {
                                         if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
-                                            correct_bin = config_item.bin.as_deref().unwrap_or("decharge");
+                                            correct_bin = config_item.bin.clone().unwrap_or_else(|| "decharge".to_string());
                                             bonus = config_item.recycling_notoriety_bonus.unwrap_or(10);
                                             malus = config_item.recycling_notoriety_malus.unwrap_or(20);
                                             found_config = true;
@@ -1402,10 +1745,11 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
 
                                     if !found_config {
-                                        let junk_ref_fr = crate::config::get_junk_ref(false);
+                                        let game_data_fr = crate::config::get_game_data(false);
+                                        let junk_ref_fr = &game_data_fr.junk_data;
                                         for list in junk_ref_fr.values() {
                                             if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
-                                                correct_bin = config_item.bin.as_deref().unwrap_or("decharge");
+                                                correct_bin = config_item.bin.clone().unwrap_or_else(|| "decharge".to_string());
                                                 bonus = config_item.recycling_notoriety_bonus.unwrap_or(10);
                                                 malus = config_item.recycling_notoriety_malus.unwrap_or(20);
                                                 break;
@@ -2064,6 +2408,18 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let is_admin = username == "monsieurcotcot";
                             let is_bypass_user = username == "monsieurcotcot" || username == "ze_fisherman" || username == "ze_tester";
                             
+                            let top_eco_username = match state_task.repo.get_top_eco_player().await {
+                                Ok(Some(p)) => Some(p.username.to_lowercase()),
+                                _ => None,
+                            };
+                            let is_top_eco = top_eco_username.as_ref() == Some(&player.username.to_lowercase());
+                            let base_cooldown = player.get_current_cooldown();
+                            let current_cooldown = if is_top_eco {
+                                (base_cooldown - 10).max(0)
+                            } else {
+                                base_cooldown
+                            };
+
                             // Détermination de la langue de retour :
                             // 1. Préférence utilisateur en base si définie.
                             // 2. Sinon, anglais par défaut pour les commandes !fish, français pour !peche/!pêche.
@@ -2124,7 +2480,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 return;
                             }
 
-                            if player.can_fish() || is_test || is_admin {
+                            let can_fish = match player.last_fishing_time {
+                                Some(last_time) => {
+                                    let now = Utc::now();
+                                    let diff = now.signed_duration_since(last_time).num_seconds();
+                                    diff >= current_cooldown
+                                }
+                                None => true,
+                            };
+
+                            if can_fish || is_test || is_admin {
                                 let level_factor = (player.level as f64 - 1.0) / 199.0;
                                 let success_rate = 0.35 + (level_factor * 0.20);
                                 let junk_rate = 0.05;
@@ -2247,18 +2612,33 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 } else {
                                     let reasons = get_fail_attempt_reasons(use_english);
                                     let default_entry = FailMessageEntry::Simple("Pas de chance !".to_string());
-                                    let entry = reasons.choose(&mut rand::thread_rng()).copied().unwrap_or(&default_entry);
+                                    let entry = reasons.choose(&mut rand::thread_rng()).cloned().unwrap_or(default_entry);
 
-                                    let (text, gold_pen, cooldown_pen) = match entry {
+                                    let is_king = state_task.repo.is_banana_king(player.id.unwrap()).await.unwrap_or(false);
+
+                                    let (text, gold_pen, mut cooldown_pen) = match &entry {
                                         FailMessageEntry::Simple(t) => (t.clone(), 0, 0),
                                         FailMessageEntry::Detailed(det) => {
                                             (det.text.clone(), det.gold_penalty.unwrap_or(0), det.cooldown_penalty.unwrap_or(0))
                                         }
                                     };
 
+                                    let original_cooldown_pen = cooldown_pen;
+                                    if is_king {
+                                        cooldown_pen = 0;
+                                    }
+
                                     let formatted_text = text.replace("#viewer_name#", &username);
                                     let leveled_up = player.add_xp(5);
                                     let mut resp = formatted_text;
+
+                                    if is_king && original_cooldown_pen > 0 {
+                                        if use_english {
+                                            resp.push_str(" 👑 (Banana King Immunity: Cooldown penalty bypassed!)");
+                                        } else {
+                                            resp.push_str(" 👑 (Immunité du Roi Banane : Malus de cooldown annulé !)");
+                                        }
+                                    }
 
                                     if leveled_up {
                                         if use_english {
@@ -2277,7 +2657,14 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
                                 }
                             } else {
-                                let rem = player.get_remaining_cooldown();
+                                let rem = match player.last_fishing_time {
+                                    Some(last_time) => {
+                                        let now = Utc::now();
+                                        let diff = now.signed_duration_since(last_time).num_seconds();
+                                        if diff >= current_cooldown { 0 } else { current_cooldown - diff }
+                                    }
+                                    None => 0,
+                                };
                                 if let Some(id) = player.id { let _ = state_task.repo.add_cooldown_penalty(id).await; }
                                 let msg_str = if use_english {
                                     format!("⏳ @{}, wait another {}s! (+20s and -20 gold penalty) ⚠️", username, rem + 20)
@@ -2437,6 +2824,11 @@ mod tests {
         assert_eq!(parse_sell_args("non"), Some(SellArg::ConfirmNo));
         assert_eq!(parse_sell_args("NO"), Some(SellArg::ConfirmNo));
         assert_eq!(parse_sell_args("n"), Some(SellArg::ConfirmNo));
+        assert_eq!(parse_sell_args("all"), Some(SellArg::All { rarity: None, state: None }));
+        assert_eq!(parse_sell_args("TOUT"), Some(SellArg::All { rarity: None, state: None }));
+        assert_eq!(parse_sell_args("all common"), Some(SellArg::All { rarity: Some(Rarity::Common), state: None }));
+        assert_eq!(parse_sell_args("all badly damaged"), Some(SellArg::All { rarity: None, state: Some("badly damaged".to_string()) }));
+        assert_eq!(parse_sell_args("all rare pristine"), Some(SellArg::All { rarity: Some(Rarity::Rare), state: Some("pristine".to_string()) }));
     }
 
     #[test]

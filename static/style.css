@@ -924,19 +924,26 @@ button:hover {
     user-select: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
+    cursor: pointer;
+}
+
+.medal-item:hover {
+    transform: scale(1.18) rotate(6deg);
+    z-index: 10;
 }
 
 .medal-item:hover:not(.locked) {
-    transform: scale(1.18) rotate(6deg);
     box-shadow: 0 0 25px currentColor;
-    z-index: 10;
+}
+
+.medal-item:hover.locked {
+    box-shadow: 0 0 15px rgba(162, 130, 110, 0.4);
 }
 
 .medal-item.locked {
     background: rgba(74, 58, 48, 0.35);
     border: 2px dashed rgba(162, 130, 110, 0.65);
     color: rgba(255, 255, 255, 0.55);
-    cursor: not-allowed;
     opacity: 0.9;
 }
 

@@ -3,10 +3,20 @@ FROM rust:latest AS builder
 
 WORKDIR /app
 
-# Copie de tout le projet
+# 1. Copie des fichiers de configuration de compilation
+COPY Cargo.toml Cargo.lock build.rs ./
+
+# 2. Création d'un projet dummy et compilation des dépendances
+RUN mkdir src && echo "fn main() {}" > src/main.rs
+RUN cargo build --release
+
+# 3. Suppression des sources dummy et du binaire temporaire pour forcer la recompilation
+RUN rm -rf src/ target/release/fisherman-rust* target/release/deps/fisherman_rust*
+
+# 4. Copie de l'intégralité du projet pour la compilation finale
 COPY . .
 
-# Compilation
+# 5. Compilation de notre application réelle
 RUN cargo build --release
 
 # Image finale légère
