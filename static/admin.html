@@ -360,6 +360,11 @@
                 </select>
             </div>
 
+            <div style="display: flex; gap: 8px; align-items: center; margin-left: 10px;">
+                <input type="checkbox" id="wrapCheck" onchange="toggleWordWrap()" style="cursor: pointer; width: 16px; height: 16px; accent-color: var(--primary);">
+                <label for="wrapCheck" style="font-size: 0.85rem; cursor: pointer; user-select: none; display: flex; align-items: center; gap: 4px;">↩️ Retour auto</label>
+            </div>
+
             <button onclick="saveJsonFile()" class="btn btn-primary" style="width: auto; margin-left: auto; padding: 10px 24px;">💾 Sauvegarder &amp; Hot-Reload</button>
         </div>
 
@@ -421,6 +426,12 @@
                 validateJsonInput();
             });
 
+            // Restore word wrap preference
+            const savedWrap = localStorage.getItem('editor_word_wrap');
+            const shouldWrap = savedWrap === 'true';
+            document.getElementById('wrapCheck').checked = shouldWrap;
+            editor.session.setUseWrapMode(shouldWrap);
+
             // Resize observer to handle card resizing
             const card = document.getElementById('dashboardCard');
             if (window.ResizeObserver) {
@@ -431,6 +442,13 @@
                 });
                 resizeObserver.observe(card);
             }
+        }
+
+        function toggleWordWrap() {
+            if (!editor) return;
+            const isChecked = document.getElementById('wrapCheck').checked;
+            editor.session.setUseWrapMode(isChecked);
+            localStorage.setItem('editor_word_wrap', isChecked ? 'true' : 'false');
         }
 
         function showDashboard() {
