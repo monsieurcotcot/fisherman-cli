@@ -546,10 +546,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     let today = chrono::Utc::now().date_naive();
                     
                     // 1. Check RAM cache first
-                    let already_claimed = {
-                        let cache = state_task_daily.daily_reward_cache.read().await;
-                        cache.get(&username_daily) == Some(&today)
-                    };
+                    let already_claimed = state_task_daily.daily_reward_cache.get(&username_daily)
+                        .as_deref() == Some(&today);
 
                     if !already_claimed {
                         // 2. Query/Create player in DB
@@ -641,8 +639,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
 
                             // 3. Populate RAM cache
-                            let mut cache = state_task_daily.daily_reward_cache.write().await;
-                            cache.insert(username_daily, today);
+                            state_task_daily.daily_reward_cache.insert(username_daily, today);
                         }
                     }
                 });
@@ -2195,8 +2192,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             let target = args[2].to_lowercase();
                             if let Ok(_) = state_task.repo.reset_player(&target).await {
                                 // Clear RAM cache for the target to allow claiming daily reward / resetting rate limit
-                                state_task.daily_reward_cache.write().await.remove(&target);
-                                state_task.rate_limiter.write().await.remove(&target);
+                                state_task.daily_reward_cache.remove(&target);
+                                state_task.rate_limiter.remove(&target);
                                 state_task.pending_sales.write().await.remove(&target);
                                 state_task.pending_trades.write().await.retain(|t| match t {
                                     PendingTrade::Direct { seller_username, buyer_username, .. } => {
@@ -2223,8 +2220,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.reset_player_all(&username).await {
                                     // Clear RAM cache for the user to allow claiming daily reward again
-                                    state_task.daily_reward_cache.write().await.remove(&username);
-                                    state_task.rate_limiter.write().await.remove(&username);
+                                    state_task.daily_reward_cache.remove(&username);
+                                    state_task.rate_limiter.remove(&username);
                                     state_task.pending_sales.write().await.remove(&username);
                                     state_task.pending_trades.write().await.retain(|t| match t {
                                         PendingTrade::Direct { seller_username, buyer_username, .. } => {
@@ -2250,8 +2247,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.reset_player(&username).await {
                                     // Clear RAM cache for the user to allow claiming daily reward again
-                                    state_task.daily_reward_cache.write().await.remove(&username);
-                                    state_task.rate_limiter.write().await.remove(&username);
+                                    state_task.daily_reward_cache.remove(&username);
+                                    state_task.rate_limiter.remove(&username);
                                     state_task.pending_sales.write().await.remove(&username);
                                     state_task.pending_trades.write().await.retain(|t| match t {
                                         PendingTrade::Direct { seller_username, buyer_username, .. } => {
@@ -2353,8 +2350,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     }
                                 }
                                 // Clear RAM caches after full restore to avoid stale caches
-                                state_task.daily_reward_cache.write().await.clear();
-                                state_task.rate_limiter.write().await.clear();
+                                state_task.daily_reward_cache.clear();
+                                state_task.rate_limiter.clear();
                                 state_task.pending_sales.write().await.clear();
                                 state_task.pending_trades.write().await.clear();
                                 state_task.pending_resets.write().await.clear();
@@ -2381,8 +2378,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             if Utc::now().signed_duration_since(*time).num_minutes() < 2 {
                                 if let Ok(_) = state_task.repo.purge_all_data().await {
                                     // Clear all RAM caches to allow first-time daily rewards and remove stale states
-                                    state_task.daily_reward_cache.write().await.clear();
-                                    state_task.rate_limiter.write().await.clear();
+                                    state_task.daily_reward_cache.clear();
+                                    state_task.rate_limiter.clear();
                                     state_task.pending_sales.write().await.clear();
                                     state_task.pending_trades.write().await.clear();
                                     state_task.pending_resets.write().await.clear();

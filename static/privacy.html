@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité - Ze_Fisherman</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0e0e10;
+            color: #efeff1;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background: rgba(24, 24, 27, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(145, 70, 255, 0.1);
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #9146ff;
+            font-size: 2rem;
+            margin-top: 0;
+            text-shadow: 0 0 10px rgba(145, 70, 255, 0.3);
+            border-bottom: 2px solid rgba(145, 70, 255, 0.2);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #bf94ff;
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        p, li {
+            line-height: 1.6;
+            color: #adadb8;
+            font-size: 0.95rem;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #9146ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover {
+            color: #bf94ff;
+            text-decoration: underline;
+        }
+        code {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ffd700;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎣 Politique de Confidentialité</h1>
+        
+        <p>Cette page détaille la manière dont vos données sont collectées, stockées et utilisées par le jeu de pêche RPG <strong>Ze_Fisherman</strong> (intégré sur la chaîne Twitch de l'animateur).</p>
+
+        <h2>1. Données Collectées</h2>
+        <p>Dans le but unique de gérer le gameplay et le système de progression du RPG, nous collectons les données publiques suivantes liées à votre compte Twitch :</p>
+        <ul>
+            <li>Votre nom d'utilisateur Twitch (identifiant public).</li>
+            <li>Votre identifiant utilisateur interne Twitch (requis pour le suivi robuste).</li>
+            <li>Votre image de profil (avatar) Twitch (utilisée uniquement pour l'affichage visuel sur ce site).</li>
+            <li>Vos statistiques en jeu : niveau, points d'expérience (XP), pièces d'or accumulées, quantité de poissons attrapés, quantité de déchets recyclés et historique des tentatives.</li>
+            <li>Votre inventaire de jeu (poissons et déchets virtuels possédés).</li>
+        </ul>
+
+        <h2>2. Utilisation des Données</h2>
+        <p>Vos données sont exclusivement utilisées pour :</p>
+        <ul>
+            <li>Faire fonctionner le bot de chat Twitch (gestion des commandes, calcul des probabilités de pêche).</li>
+            <li>Afficher votre progression et votre profil sur le tableau de bord web public (Statistiques, Vitrine des bananes, Champion Écolo, etc.).</li>
+            <li>Établir les classements compétitifs des joueurs (Top 10, Bobo Écolo).</li>
+        </ul>
+        <p><strong>Aucune revente, partage ou utilisation à des fins publicitaires de vos données n'est effectuée.</strong></p>
+
+        <h2>3. Utilisation des Cookies</h2>
+        <p>Ce site web utilise uniquement des cookies et mécanismes de stockage technique locaux indispensables au bon fonctionnement du service :</p>
+        <ul>
+            <li><code>localStorage</code> / <code>sessionStorage</code> : Utilisé pour retenir localement votre choix de consentement aux cookies et vos préférences d'affichage (comme le nom d'utilisateur recherché).</li>
+            <li>Cookies Twitch : Si vous utilisez la connexion Twitch pour accéder à la console d'administration, Twitch peut déposer des cookies techniques nécessaires à la sécurisation de l'authentification OAuth2.</li>
+        </ul>
+
+        <h2>4. Sécurité & Stockage</h2>
+        <p>Les données sont stockées de manière sécurisée dans une base de données SQLite locale hébergée sur l'infrastructure privée du propriétaire du bot. Des sauvegardes de sécurité chiffrées sont effectuées périodiquement pour éviter toute perte accidentelle de progression.</p>
+
+        <h2>5. Vos Droits & Suppression des Données</h2>
+        <p>Conformément au RGPD et aux politiques de protection de la vie privée, vous disposez d'un droit d'accès et de suppression de vos données :</p>
+        <ul>
+            <li>Vous pouvez réinitialiser et supprimer l'intégralité de vos statistiques et de votre inventaire de manière autonome en tapant la commande <code>!fish reset all</code> dans le chat Twitch de la chaîne, puis en confirmant avec <code>!fish yes all</code> sous 2 minutes.</li>
+            <li>Vous pouvez également contacter directement l'administrateur de la chaîne pour demander la suppression manuelle de vos données de la base.</li>
+        </ul>
+
+        <a href="/" class="back-link">← Retourner aux statistiques</a>
+    </div>
+</body>
+</html>

@@ -12,27 +12,26 @@ use chrono::Utc;
 use crate::{AppState, start_bot};
 
 pub async fn check_rate_limit(state: &AppState, ip: &str) -> bool {
-    let mut limiter = state.rate_limiter.write().await;
     let now = Utc::now();
     
-    let entry = limiter.entry(ip.to_string()).or_insert((0, None));
+    let mut entry = state.rate_limiter.entry(ip.to_string()).or_insert((0, None));
     
     // 1. Verifier si l'IP est actuellement bannie
-    if let Some(ban_time) = entry.1 {
+    if let Some(ban_time) = entry.value().1 {
         if now.signed_duration_since(ban_time).num_minutes() < 15 {
             return false; // Toujours banni
         } else {
-            entry.1 = None; // Fin du ban
-            entry.0 = 0;
+            entry.value_mut().1 = None; // Fin du ban
+            entry.value_mut().0 = 0;
         }
     }
     
     // 2. Incremeter les tentatives
-    entry.0 += 1;
+    entry.value_mut().0 += 1;
     
     // 3. Bannir si trop de tentatives (ex: 5 essais infructueux)
-    if entry.0 > 10 {
-        entry.1 = Some(now);
+    if entry.value().0 > 10 {
+        entry.value_mut().1 = Some(now);
         tracing::warn!("[SECURITY] IP BANNIE (15 min) suite a un spam/bruteforce : {}", ip);
         return false;
     }

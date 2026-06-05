@@ -83,156 +83,175 @@ static JUNK_NAMES_LOWER_FR: std::sync::RwLock<Option<Arc<std::collections::HashS
 static FISH_NAMES_LOWER_EN: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
 static JUNK_NAMES_LOWER_EN: std::sync::RwLock<Option<Arc<std::collections::HashSet<String>>>> = std::sync::RwLock::new(None);
 
-fn read_file_or_fallback(paths: &[&str], fallback: &str) -> String {
+pub type MyError = Box<dyn std::error::Error + Send + Sync>;
+
+fn parse_json_from_file_or_embedded<T: serde::de::DeserializeOwned>(
+    paths: &[&str],
+    embedded: &str,
+) -> Result<T, MyError> {
     for path in paths {
         if let Ok(content) = std::fs::read_to_string(path) {
-            tracing::info!("Loaded dynamic file from {}", path);
-            return content;
+            match serde_json::from_str(&content) {
+                Ok(val) => {
+                    tracing::info!("Loaded dynamic file from {}", path);
+                    return Ok(val);
+                }
+                Err(e) => {
+                    tracing::error!("Failed to parse dynamic file {}: {}. Falling back...", path, e);
+                }
+            }
         }
     }
-    tracing::info!("Falling back to embedded content");
-    fallback.to_string()
+    // Fallback directly to the compiled-in JSON embedded content
+    let val = serde_json::from_str(embedded)?;
+    Ok(val)
 }
 
-fn load_game_data_fr() -> GameData {
-    let fish_content = read_file_or_fallback(
+fn load_game_data_fr() -> Result<GameData, MyError> {
+    let fish_data = parse_json_from_file_or_embedded(
         &["/app/data/fish_data.json", "data/fish_data.json"],
         include_str!("../data/fish_data.json"),
-    );
-    let fish_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&fish_content)
-        .expect("Failed to parse fish_data.json");
+    )?;
 
-    let junk_content = read_file_or_fallback(
+    let junk_data = parse_json_from_file_or_embedded(
         &["/app/data/junk_data.json", "data/junk_data.json"],
         include_str!("../data/junk_data.json"),
-    );
-    let junk_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&junk_content)
-        .expect("Failed to parse junk_data.json");
+    )?;
 
-    let fail_content = read_file_or_fallback(
+    let fail_messages = parse_json_from_file_or_embedded(
         &["/app/data/fail_messages.json", "data/fail_messages.json"],
         include_str!("../data/fail_messages.json"),
-    );
-    let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
-        .expect("Failed to parse fail_messages.json");
+    )?;
 
-    let disappear_content = read_file_or_fallback(
+    let cf_disappear_messages = parse_json_from_file_or_embedded(
         &["/app/data/cf_disappear_messages.json", "data/cf_disappear_messages.json"],
         include_str!("../data/cf_disappear_messages.json"),
-    );
-    let cf_disappear_messages: Vec<String> = serde_json::from_str(&disappear_content)
-        .expect("Failed to parse cf_disappear_messages.json");
+    )?;
 
-    let edge_content = read_file_or_fallback(
+    let cf_edge_messages = parse_json_from_file_or_embedded(
         &["/app/data/cf_edge_messages.json", "data/cf_edge_messages.json"],
         include_str!("../data/cf_edge_messages.json"),
-    );
-    let cf_edge_messages: Vec<String> = serde_json::from_str(&edge_content)
-        .expect("Failed to parse cf_edge_messages.json");
+    )?;
 
-    GameData {
+    Ok(GameData {
         fish_data,
         junk_data,
         fail_messages,
         cf_disappear_messages,
         cf_edge_messages,
-    }
+    })
 }
 
-fn load_game_data_en() -> GameData {
-    let fish_content = read_file_or_fallback(
+fn load_game_data_en() -> Result<GameData, MyError> {
+    let fish_data = parse_json_from_file_or_embedded(
         &["/app/data/fish_data_en.json", "data/fish_data_en.json"],
         include_str!("../data/fish_data.json"), // Fallback embedding FR if EN file missing
-    );
-    let fish_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&fish_content)
-        .expect("Failed to parse fish_data_en.json");
+    )?;
 
-    let junk_content = read_file_or_fallback(
+    let junk_data = parse_json_from_file_or_embedded(
         &["/app/data/junk_data_en.json", "data/junk_data_en.json"],
         include_str!("../data/junk_data.json"), // Fallback embedding FR if EN file missing
-    );
-    let junk_data: HashMap<Rarity, Vec<FishData>> = serde_json::from_str(&junk_content)
-        .expect("Failed to parse junk_data_en.json");
+    )?;
 
-    let fail_content = read_file_or_fallback(
+    let fail_messages = parse_json_from_file_or_embedded(
         &["/app/data/fail_messages_en.json", "data/fail_messages_en.json"],
         include_str!("../data/fail_messages.json"), // Fallback embedding FR if EN file missing
-    );
-    let fail_messages: Vec<FailMessageEntry> = serde_json::from_str(&fail_content)
-        .expect("Failed to parse fail_messages_en.json");
+    )?;
 
-    let disappear_content = read_file_or_fallback(
+    let cf_disappear_messages = parse_json_from_file_or_embedded(
         &["/app/data/cf_disappear_messages_en.json", "data/cf_disappear_messages_en.json"],
         include_str!("../data/cf_disappear_messages_en.json"),
-    );
-    let cf_disappear_messages: Vec<String> = serde_json::from_str(&disappear_content)
-        .expect("Failed to parse cf_disappear_messages_en.json");
+    )?;
 
-    let edge_content = read_file_or_fallback(
+    let cf_edge_messages = parse_json_from_file_or_embedded(
         &["/app/data/cf_edge_messages_en.json", "data/cf_edge_messages_en.json"],
         include_str!("../data/cf_edge_messages_en.json"),
-    );
-    let cf_edge_messages: Vec<String> = serde_json::from_str(&edge_content)
-        .expect("Failed to parse cf_edge_messages_en.json");
+    )?;
 
-    GameData {
+    Ok(GameData {
         fish_data,
         junk_data,
         fail_messages,
         cf_disappear_messages,
         cf_edge_messages,
-    }
+    })
 }
 
 pub fn get_game_data_fr() -> Arc<GameData> {
-    {
-        if let Some(ref data) = *GAME_DATA_FR.read().unwrap() {
+    if let Ok(reader) = GAME_DATA_FR.read() {
+        if let Some(ref data) = *reader {
             return Arc::clone(data);
         }
     }
-    let data = Arc::new(load_game_data_fr());
-    let mut writer = GAME_DATA_FR.write().unwrap();
-    *writer = Some(Arc::clone(&data));
+    // Fallback if not initialized or poisoned
+    let data = Arc::new(load_game_data_fr().unwrap_or_else(|_| GameData {
+        fish_data: HashMap::new(),
+        junk_data: HashMap::new(),
+        fail_messages: Vec::new(),
+        cf_disappear_messages: Vec::new(),
+        cf_edge_messages: Vec::new(),
+    }));
+    if let Ok(mut writer) = GAME_DATA_FR.write() {
+        *writer = Some(Arc::clone(&data));
+    }
     data
 }
 
 pub fn get_game_data_en() -> Arc<GameData> {
-    {
-        if let Some(ref data) = *GAME_DATA_EN.read().unwrap() {
+    if let Ok(reader) = GAME_DATA_EN.read() {
+        if let Some(ref data) = *reader {
             return Arc::clone(data);
         }
     }
-    let data = Arc::new(load_game_data_en());
-    let mut writer = GAME_DATA_EN.write().unwrap();
-    *writer = Some(Arc::clone(&data));
+    // Fallback if not initialized or poisoned
+    let data = Arc::new(load_game_data_en().unwrap_or_else(|_| GameData {
+        fish_data: HashMap::new(),
+        junk_data: HashMap::new(),
+        fail_messages: Vec::new(),
+        cf_disappear_messages: Vec::new(),
+        cf_edge_messages: Vec::new(),
+    }));
+    if let Ok(mut writer) = GAME_DATA_EN.write() {
+        *writer = Some(Arc::clone(&data));
+    }
     data
 }
 
-pub fn reload_all_game_data() -> Result<(), String> {
+pub fn reload_all_game_data() -> Result<(), MyError> {
     // 1. Safe parsing of both FR and EN configs from disk
-    let new_fr = std::panic::catch_unwind(|| load_game_data_fr());
-    if new_fr.is_err() {
-        return Err("Failed to reload French data - check JSON syntax".to_string());
-    }
-
-    let new_en = std::panic::catch_unwind(|| load_game_data_en());
-    if new_en.is_err() {
-        return Err("Failed to reload English data - check JSON syntax".to_string());
-    }
+    let new_fr = load_game_data_fr()?;
+    let new_en = load_game_data_en()?;
 
     // 2. Wrap in Arc
-    let fr_arc = Arc::new(new_fr.unwrap());
-    let en_arc = Arc::new(new_en.unwrap());
+    let fr_arc = Arc::new(new_fr);
+    let en_arc = Arc::new(new_en);
 
     // 3. Write locks swap
-    *GAME_DATA_FR.write().unwrap() = Some(fr_arc);
-    *GAME_DATA_EN.write().unwrap() = Some(en_arc);
+    if let Ok(mut writer) = GAME_DATA_FR.write() {
+        *writer = Some(fr_arc);
+    } else {
+        return Err("GAME_DATA_FR RwLock is poisoned".into());
+    }
+
+    if let Ok(mut writer) = GAME_DATA_EN.write() {
+        *writer = Some(en_arc);
+    } else {
+        return Err("GAME_DATA_EN RwLock is poisoned".into());
+    }
 
     // 4. Invalidate lowercase cache sets
-    *FISH_NAMES_LOWER_FR.write().unwrap() = None;
-    *JUNK_NAMES_LOWER_FR.write().unwrap() = None;
-    *FISH_NAMES_LOWER_EN.write().unwrap() = None;
-    *JUNK_NAMES_LOWER_EN.write().unwrap() = None;
+    if let Ok(mut writer) = FISH_NAMES_LOWER_FR.write() {
+        *writer = None;
+    }
+    if let Ok(mut writer) = JUNK_NAMES_LOWER_FR.write() {
+        *writer = None;
+    }
+    if let Ok(mut writer) = FISH_NAMES_LOWER_EN.write() {
+        *writer = None;
+    }
+    if let Ok(mut writer) = JUNK_NAMES_LOWER_EN.write() {
+        *writer = None;
+    }
 
     tracing::info!("✅ Game data successfully reloaded dynamically!");
     Ok(())
@@ -268,8 +287,8 @@ pub fn get_fail_attempt_reasons(use_english: bool) -> Vec<FailMessageEntry> {
 // Caching and thread-safe helpers for lowercase sets
 pub fn get_fish_names_lower(use_english: bool) -> Arc<std::collections::HashSet<String>> {
     if use_english {
-        {
-            if let Some(ref set) = *FISH_NAMES_LOWER_EN.read().unwrap() {
+        if let Ok(reader) = FISH_NAMES_LOWER_EN.read() {
+            if let Some(ref set) = *reader {
                 return Arc::clone(set);
             }
         }
@@ -279,12 +298,13 @@ pub fn get_fish_names_lower(use_english: bool) -> Arc<std::collections::HashSet<
             .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
             .collect();
         let leaked = Arc::new(set);
-        let mut writer = FISH_NAMES_LOWER_EN.write().unwrap();
-        *writer = Some(Arc::clone(&leaked));
+        if let Ok(mut writer) = FISH_NAMES_LOWER_EN.write() {
+            *writer = Some(Arc::clone(&leaked));
+        }
         leaked
     } else {
-        {
-            if let Some(ref set) = *FISH_NAMES_LOWER_FR.read().unwrap() {
+        if let Ok(reader) = FISH_NAMES_LOWER_FR.read() {
+            if let Some(ref set) = *reader {
                 return Arc::clone(set);
             }
         }
@@ -294,16 +314,17 @@ pub fn get_fish_names_lower(use_english: bool) -> Arc<std::collections::HashSet<
             .flat_map(|v| v.iter().map(|f| f.name.to_lowercase()))
             .collect();
         let leaked = Arc::new(set);
-        let mut writer = FISH_NAMES_LOWER_FR.write().unwrap();
-        *writer = Some(Arc::clone(&leaked));
+        if let Ok(mut writer) = FISH_NAMES_LOWER_FR.write() {
+            *writer = Some(Arc::clone(&leaked));
+        }
         leaked
     }
 }
 
 pub fn get_junk_names_lower(use_english: bool) -> Arc<std::collections::HashSet<String>> {
     if use_english {
-        {
-            if let Some(ref set) = *JUNK_NAMES_LOWER_EN.read().unwrap() {
+        if let Ok(reader) = JUNK_NAMES_LOWER_EN.read() {
+            if let Some(ref set) = *reader {
                 return Arc::clone(set);
             }
         }
@@ -313,12 +334,13 @@ pub fn get_junk_names_lower(use_english: bool) -> Arc<std::collections::HashSet<
             .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
             .collect();
         let leaked = Arc::new(set);
-        let mut writer = JUNK_NAMES_LOWER_EN.write().unwrap();
-        *writer = Some(Arc::clone(&leaked));
+        if let Ok(mut writer) = JUNK_NAMES_LOWER_EN.write() {
+            *writer = Some(Arc::clone(&leaked));
+        }
         leaked
     } else {
-        {
-            if let Some(ref set) = *JUNK_NAMES_LOWER_FR.read().unwrap() {
+        if let Ok(reader) = JUNK_NAMES_LOWER_FR.read() {
+            if let Some(ref set) = *reader {
                 return Arc::clone(set);
             }
         }
@@ -328,8 +350,34 @@ pub fn get_junk_names_lower(use_english: bool) -> Arc<std::collections::HashSet<
             .flat_map(|v| v.iter().map(|j| j.name.to_lowercase()))
             .collect();
         let leaked = Arc::new(set);
-        let mut writer = JUNK_NAMES_LOWER_FR.write().unwrap();
-        *writer = Some(Arc::clone(&leaked));
+        if let Ok(mut writer) = JUNK_NAMES_LOWER_FR.write() {
+            *writer = Some(Arc::clone(&leaked));
+        }
         leaked
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_load_embedded_game_data() {
+        // Test that the default statically-embedded content parses successfully without error
+        let fr_data = load_game_data_fr();
+        assert!(fr_data.is_ok(), "Embedded French game data must parse successfully");
+        
+        let en_data = load_game_data_en();
+        assert!(en_data.is_ok(), "Embedded English game data must parse successfully");
+    }
+
+    #[test]
+    fn test_parse_json_from_file_or_embedded_invalid_json() {
+        // Test that invalid JSON content correctly returns an error instead of panicking
+        let invalid_json = "{ invalid json }";
+        let result: Result<HashMap<Rarity, Vec<FishData>>, MyError> = 
+            parse_json_from_file_or_embedded(&["non_existent_file.json"], invalid_json);
+        
+        assert!(result.is_err(), "Invalid JSON must return an error and not panic");
     }
 }
