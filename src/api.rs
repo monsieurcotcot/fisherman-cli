@@ -238,6 +238,23 @@ pub async fn get_top_banana(State(state): State<Arc<AppState>>) -> impl IntoResp
     }
 }
 
+pub async fn trigger_maintenance(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    let channel = state.channel.clone();
+    let client_opt = {
+        let lock = state.twitch_client.read().await;
+        lock.clone()
+    };
+    if let Some(client) = client_opt {
+        tracing::info!("⚠️ Notification de maintenance forcée envoyée à #{}", channel);
+        let msg = "⚠️ Le bot est en cours de redémarrage/mise à jour. Merci de patienter avant de relancer vos commandes ! ⏳".to_string();
+        let _ = client.say(channel.to_lowercase(), msg).await;
+        (axum::http::StatusCode::OK, "✅ Message de maintenance envoyé avec succès sur Twitch !").into_response()
+    } else {
+        (axum::http::StatusCode::SERVICE_UNAVAILABLE, "❌ Le client Twitch n'est pas initialisé.").into_response()
+    }
+}
+
+
 
 use std::sync::RwLock as StdRwLock;
 use std::collections::HashMap as StdHashMap;

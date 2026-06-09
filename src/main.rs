@@ -329,6 +329,7 @@ async fn main() -> Result<(), MyError> {
         .route("/api/global_museum", get(api::get_global_museum))
         .route("/api/top_eco", get(api::get_top_eco))
         .route("/api/top_banana", get(api::get_top_banana))
+        .route("/api/maintenance", axum::routing::post(api::trigger_maintenance))
         .route("/api/admin/login", axum::routing::post(api::admin_login))
         .route("/api/admin/json", get(api::get_admin_json).post(api::save_admin_json))
         .fallback_service(ServeFile::new("static/index.html"))

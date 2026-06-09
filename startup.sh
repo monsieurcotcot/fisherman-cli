@@ -79,6 +79,9 @@ if [ ! -f data/fisherman.db ]; then
     chmod 644 data/fisherman.db
 fi
 
+echo -e "\n${YELLOW}📢 Notification des utilisateurs Twitch...${NC}"
+curl -s -X POST http://localhost:3000/api/maintenance > /dev/null || true
+
 echo -e "\n${BLUE}🚀 Lancement du conteneur Docker...${NC}"
 docker compose down --remove-orphans
 FIX_UID=$(id -u) FIX_GID=$(id -g) docker compose up --build -d
