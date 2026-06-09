@@ -110,4 +110,45 @@ Faire évoluer le gameplay avec une économie plus engageante (coût de pêche, 
         *   Reconstruction complète du conteneur sans cache (`docker compose build --no-cache`) pour intégrer ces correctifs de code.
         *   Nettoyage et réinitialisation de `fisherman.db` sur l'hôte.
 
+---
 
+## 📅 Juin 2026 - Version 1.2.6 (Ferraille, Recyclage & Événement Déchets Quotidien)
+
+### 🚀 Objectif
+Introduire un système de recyclage des déchets pour récupérer de la ferraille revendable, et augmenter l'engagement lors des streams en créant un événement quotidien automatique qui booste le taux d'apparition des déchets en fonction de l'activité du stream précédent.
+
+### 🛠️ Changements Majeurs
+
+1.  **Système de Ferraille & Recyclage** :
+    *   **Recyclage des Déchets** : Analyse de la méthode de recyclage de chaque déchet (poubelle noire, bleue, marron ou décharge). Possibilité de démonter certains déchets pour en extraire des pièces métalliques (ferraille en kg).
+    *   **Économie de la Ferraille** : Ajout d'une colonne `scrap_metal` (ferraille possédée) et `total_sold_scrap_metal` dans la table `players`.
+    *   **Commande `!fish sell ferrailles`** : Permet de vendre sa ferraille accumulée à un prix dynamique fluctuant à chaque stream.
+
+2.  **Événement Déchets Quotidien (Daily Junk Event)** :
+    *   **Objectif dynamique par jour de stream** : À chaque nouveau jour de stream, un objectif de déchets à pêcher est défini (entre 30 et 150).
+    *   **Ajustement basé sur l'activité** : Le maximum de cet objectif est calculé dynamiquement sur la base de l'activité du stream précédent : `max_déchets = (lancers_précédents / 10).clamp(30, 150)`. L'objectif du jour est tiré aléatoirement entre 30 et ce maximum.
+    *   **Taux de drop quadruplé** : Tant que l'objectif de déchets n'est pas atteint pour la journée en cours, le taux d'apparition des déchets passe de 5 % à **20 % (quadruplé)**. Dès que l'objectif est rempli, il revient à la normale (5 %).
+    *   **Notification et Progression** : Ajout d'un suffixe de progression dans le chat Twitch lors de la capture d'un déchet durant l'événement (ex: `(Événement Déchets : 12/69)`).
+    *   **Persistence SQL** : Création de la table `daily_stream_stats` pour suivre les statistiques quotidiennes de l'événement (`live_date`, `total_attempts`, `junk_target`, `junk_caught`).
+
+### ⚠️ Incidents & Résolutions (RNG non-Send sous Tokio)
+*   **Problème** : Erreur de compilation Cargo `future cannot be sent between threads safely` car le type de retour du futur créé par le bloc asynchrone n'était pas `Send`.
+*   **Cause** : Le générateur de nombres aléatoires `rand::thread_rng()` (de type `ThreadRng`, non-`Send`) était gardé en mémoire locale à travers un point d'attente `.await` lors de l'insertion SQL dans la méthode `get_or_update_daily_junk_event`.
+*   **Solution** : Encapsulation de l'instanciation et de l'utilisation de `rand::thread_rng()` dans un bloc imbriqué `{ ... }` autonome pour s'assurer que le générateur soit détruit avant le premier point `.await`.
+
+---
+
+## 📅 Juin 2026 - Version 1.2.7 (Badge Unique Premier Millionnaire)
+
+### 🚀 Objectif
+Ajouter un badge unique et exclusif de "Premier Millionnaire" attribué de manière permanente et immuable au premier joueur atteignant 1 000 000 pièces d'or.
+
+### 🛠️ Changements Majeurs
+1. **Badge Unique & Persistance** :
+   * Ajout de la colonne `millionaire_at` (timestamp UTC) dans la table `players`.
+   * Migration automatique pour marquer `dozerker` comme le premier millionnaire actuel.
+   * Logique atomique et exempte de race condition : validation au sein d'une transaction SQL pour vérifier qu'aucun autre joueur n'a déjà ce titre (`millionaire_at IS NOT NULL`) avant de l'attribuer.
+2. **Interface web (HTML/JS)** :
+   * Ajout du badge avec un dégradé doré stylé et un emoji 🪙.
+   * Toggle automatique de visibilité dans le profil du joueur.
+   * Incrémentation des paramètres de version `?v=1.2.7` dans les tags script/link pour forcer le rafraîchissement du cache Cloudflare et du navigateur.

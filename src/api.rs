@@ -148,6 +148,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "xp": p.xp,
                 "xp_next": p.xp_for_next_level(),
                 "is_vip": p.is_vip(),
+                "is_first_millionaire": p.is_first_millionaire,
                 "catches": catches,
                 "trophies": trophies,
                 "museum": museum,
@@ -169,7 +170,9 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "coinflip_max_loss_streak": p.coinflip_max_loss_streak,
                 "gold_given_total": p.gold_given_total,
                 "max_gold_held": p.max_gold_held,
-                "eco_notoriety": p.eco_notoriety
+                "eco_notoriety": p.eco_notoriety,
+                "scrap_metal": p.scrap_metal,
+                "total_sold_scrap_metal": p.total_sold_scrap_metal
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),

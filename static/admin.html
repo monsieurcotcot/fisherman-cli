@@ -61,7 +61,7 @@
             width: 95%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
             align-self: stretch;
             height: 90vh;
             resize: both;
@@ -69,6 +69,7 @@
             min-width: 800px;
             min-height: 500px;
             transition: none;
+            padding: 1.25rem 1.5rem;
         }
 
         h1 {
@@ -198,38 +199,76 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding-bottom: 10px;
+            flex-wrap: nowrap;
+            gap: 12px;
         }
 
         .admin-title-group {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            align-items: baseline;
+            gap: 8px;
         }
 
         .admin-title-group h2 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-main);
         }
 
         .twitch-buttons {
             display: flex;
-            gap: 12px;
+            gap: 8px;
+            flex-shrink: 0;
         }
 
         .editor-controls {
             display: flex;
             gap: 12px;
             align-items: center;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        .editor-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .editor-controls > div {
+            flex-shrink: 0;
         }
 
         .editor-controls select {
             width: auto;
-            min-width: 150px;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0 10px !important; /* Évite le rognage vertical du texte */
+            font-size: 0.85rem !important;
+            height: 32px !important;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .editor-controls label {
+            white-space: nowrap !important;
+        }
+
+        #fileSelect {
+            min-width: 320px !important;
+        }
+
+        /* Compact buttons */
+        .btn-sm {
+            padding: 6px 12px !important;
+            font-size: 0.85rem !important;
+            width: auto !important;
+            height: 32px !important;
+            border-radius: 6px !important;
+            white-space: nowrap !important;
         }
 
         /* Editor Area */
@@ -291,18 +330,153 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .glass-card.wide {
-                height: auto;
+        /* Mobile Tabs Navigation */
+        .mobile-tabs-nav {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 4px;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease-in-out;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(145, 70, 255, 0.4);
+        }
+
+        /* Responsive & Mobile Optimizations */
+        @media (max-width: 800px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
             }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .glass-card.wide {
+                min-width: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0;
+                padding: 1.25rem;
+                resize: none !important;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
             .admin-header {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 12px;
+                text-align: center;
             }
+
+            .admin-title-group h2 {
+                font-size: 1.3rem;
+            }
+
             .twitch-buttons {
-                flex-direction: column;
+                flex-direction: row;
+                width: 100%;
+                gap: 6px;
             }
+
+            .twitch-buttons .btn {
+                width: auto !important;
+                flex: 1;
+                padding: 8px 6px !important;
+                font-size: 0.75rem !important;
+                white-space: nowrap !important;
+            }
+
+            .editor-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .editor-controls > div {
+                width: 100%;
+                justify-content: space-between;
+                margin-left: 0 !important;
+            }
+
+            .editor-controls select, #fileSelect {
+                flex-grow: 1;
+                width: 100% !important;
+                min-width: 0 !important;
+                padding: 0 10px !important;
+            }
+
+            .editor-controls button {
+                width: auto !important;
+                margin-left: 0 !important;
+                padding: 8px 12px !important;
+                flex-grow: 1;
+            }
+
+            /* Tab switching logic */
+            .mobile-tabs-nav {
+                display: flex;
+            }
+
+            .editor-layout {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .editor-layout.show-editor .editor-sidebar {
+                display: none !important;
+            }
+
+            .editor-layout.show-tree .editor-main {
+                display: none !important;
+            }
+
+            .editor-main, .editor-sidebar, #jsonEditor, #treeView {
+                min-height: 280px !important;
+                height: 280px !important;
+            }
+
+            .editor-sidebar {
+                max-width: 100% !important;
+                min-width: 100% !important;
+                padding: 10px;
+            }
+        }
+
+        /* Correction du décalage de sélection dans Ace Editor causé par le sélecteur universel * */
+        .ace_editor, .ace_editor * {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
+        }
+
+        #treeView, #treeView * {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
         }
     </style>
 </head>
@@ -329,20 +503,20 @@
         <div class="admin-header">
             <div class="admin-title-group">
                 <h2>🎣 Ze_Fisherman Admin Panel</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Modification dynamique des catalogues et des messages d'échec.</p>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin: 0;">Modification des catalogues &amp; messages.</p>
             </div>
             <div class="twitch-buttons">
-                <button onclick="authTwitch('bot')" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem; width: auto;">🤖 Liaison Bot</button>
-                <button onclick="authTwitch('streamer')" class="btn btn-accent" style="padding: 8px 16px; font-size: 0.88rem; width: auto; color: #000;">👑 Liaison Streameur</button>
-                <button onclick="handleLogout()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.88rem; width: auto;">Déconnexion</button>
+                <button onclick="authTwitch('bot')" class="btn btn-primary btn-sm">🤖 Liaison Bot</button>
+                <button onclick="authTwitch('streamer')" class="btn btn-accent btn-sm" style="color: #000;">👑 Liaison Streameur</button>
+                <button onclick="handleLogout()" class="btn btn-secondary btn-sm">Déconnexion</button>
             </div>
         </div>
 
         <div id="dashboardAlert" class="alert"></div>
 
         <div class="editor-controls">
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <label style="font-size: 0.85rem;">Fichier :</label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Fichier :</label>
                 <select id="fileSelect" onchange="loadJsonFile()">
                     <option value="fish_data">🐟 Catalogue des Poissons (fish_data)</option>
                     <option value="junk_data">🗑️ Catalogue des Déchets (junk_data)</option>
@@ -352,20 +526,21 @@
                 </select>
             </div>
 
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <label style="font-size: 0.85rem;">Langue :</label>
+            <div style="display: flex; gap: 6px; align-items: center;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Langue :</label>
                 <select id="langSelect" onchange="loadJsonFile()">
-                    <option value="fr">🇫🇷 Français (fr)</option>
-                    <option value="en">🇬🇧 Anglais (en)</option>
+                    <option value="fr">🇫🇷 fr</option>
+                    <option value="en">🇬🇧 en</option>
                 </select>
             </div>
 
-            <div style="display: flex; gap: 8px; align-items: center; margin-left: 10px;">
-                <input type="checkbox" id="wrapCheck" onchange="toggleWordWrap()" style="cursor: pointer; width: 16px; height: 16px; accent-color: var(--primary);">
-                <label for="wrapCheck" style="font-size: 0.85rem; cursor: pointer; user-select: none; display: flex; align-items: center; gap: 4px;">↩️ Retour auto</label>
+            <div class="editor-controls-row">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <input type="checkbox" id="wrapCheck" onchange="toggleWordWrap()" style="cursor: pointer; width: 14px; height: 14px; accent-color: var(--primary);">
+                    <label for="wrapCheck" style="font-size: 0.85rem; cursor: pointer; user-select: none;">↩️ Retour auto</label>
+                </div>
+                <button onclick="saveJsonFile()" class="btn btn-primary btn-sm" style="margin-left: auto;">💾 Sauvegarder &amp; Hot-Reload</button>
             </div>
-
-            <button onclick="saveJsonFile()" class="btn btn-primary" style="width: auto; margin-left: auto; padding: 10px 24px;">💾 Sauvegarder &amp; Hot-Reload</button>
         </div>
 
         <div class="editor-container">
@@ -373,7 +548,11 @@
                 <span>Éditeur de code JSON :</span>
                 <span id="validationStatus" style="color: var(--text-muted); font-size: 0.8rem;">Modifications non enregistrées</span>
             </label>
-            <div class="editor-layout">
+            <div class="mobile-tabs-nav">
+                <button type="button" class="tab-btn active" onclick="switchMobileTab('editor')">📝 Éditeur</button>
+                <button type="button" class="tab-btn" onclick="switchMobileTab('tree')">🌱 Structure</button>
+            </div>
+            <div class="editor-layout show-editor">
                 <div class="editor-main" style="height: 100%; min-height: 450px;">
                     <div id="jsonEditor" style="flex-grow: 1; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; width: 100%; height: 100%; min-height: 450px;"></div>
                 </div>
@@ -426,9 +605,9 @@
                 validateJsonInput();
             });
 
-            // Restore word wrap preference
+            // Restore word wrap preference (default to true on mobile / new visitors)
             const savedWrap = localStorage.getItem('editor_word_wrap');
-            const shouldWrap = savedWrap === 'true';
+            const shouldWrap = savedWrap === null ? true : (savedWrap === 'true');
             document.getElementById('wrapCheck').checked = shouldWrap;
             editor.session.setUseWrapMode(shouldWrap);
 
@@ -685,6 +864,25 @@
                         "&scope=chat:read+chat:edit+channel:manage:vips" +
                         "&state=" + type;
             window.location.href = url;
+        }
+
+        function switchMobileTab(tabName) {
+            const layout = document.querySelector('.editor-layout');
+            const buttons = document.querySelectorAll('.tab-btn');
+            if (tabName === 'editor') {
+                layout.classList.add('show-editor');
+                layout.classList.remove('show-tree');
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+                if (editor) {
+                    editor.resize();
+                }
+            } else {
+                layout.classList.remove('show-editor');
+                layout.classList.add('show-tree');
+                buttons[0].classList.remove('active');
+                buttons[1].classList.add('active');
+            }
         }
     </script>
 </body>

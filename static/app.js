@@ -309,6 +309,12 @@ async function fetchStats(u) {
             document.getElementById('res-success').textContent = data.success;
             document.getElementById('res-failed').textContent = data.failed;
             document.getElementById('res-stat-gold').textContent = data.gold || 0;
+            
+            const scrapMetal = data.scrap_metal !== undefined ? Number(data.scrap_metal) : 0.0;
+            const totalSoldScrap = data.total_sold_scrap_metal !== undefined ? Number(data.total_sold_scrap_metal) : 0.0;
+            document.getElementById('res-stat-scrap-val').textContent = scrapMetal.toFixed(2);
+            document.getElementById('res-stat-scrap-sold').textContent = totalSoldScrap.toFixed(2);
+            document.getElementById('res-stat-scrap').textContent = scrapMetal.toFixed(2);
 
             const ecoNotoriety = data.eco_notoriety !== undefined ? data.eco_notoriety : 1000;
             document.getElementById('res-eco-value').textContent = ecoNotoriety;
@@ -407,9 +413,11 @@ async function fetchStats(u) {
             const hasBanana1 = data.has_banana_1;
             const hasBanana2 = data.has_banana_2;
             const isBananaKing = data.is_banana_king;
+            const isFirstMillionaire = data.is_first_millionaire;
 
             document.getElementById('res-crown').style.display = isBananaKing ? 'block' : 'none';
             document.getElementById('res-banana-king-badge').style.display = isBananaKing ? 'inline' : 'none';
+            document.getElementById('res-millionaire-badge').style.display = isFirstMillionaire ? 'inline' : 'none';
 
             // Divine Banana Showcase
             const bananaShowcase = document.getElementById('bananaShowcase');
@@ -1322,20 +1330,31 @@ function renderGlobalMuseum() {
                 slot.style.boxShadow = "0 0 10px #fff, 0 0 5px #ffd700";
             }
 
+            // Prepend crown to the ID badge so we clearly see it is a record
+            idBadge.textContent = `👑 ${idStr}`;
+
             slot.appendChild(icon);
             slot.appendChild(nameLabel);
 
-            // Record Crown Badge
-            const badge = document.createElement('div');
-            badge.className = 'badge';
-            badge.style.backgroundColor = '#ffd700';
-            badge.style.color = '#18181b';
-            badge.style.fontSize = '0.55rem';
-            badge.style.display = 'flex';
-            badge.style.alignItems = 'center';
-            badge.style.justifyContent = 'center';
-            badge.textContent = '👑';
-            slot.appendChild(badge);
+            // State Badge (comme dans le musée standard)
+            const stateColors = {
+                'badly damaged': '#ff4f4f',
+                'damaged': '#ff8235',
+                'worn': '#ffd700',
+                'good': '#1fa363',
+                'pristine': '#ffffff'
+            };
+            const stateColor = stateColors[record.best_state.toLowerCase()] || '#efeff1';
+
+            const stateBadge = document.createElement('div');
+            stateBadge.className = 'badge';
+            if (record.best_state.toLowerCase() === 'pristine') {
+                stateBadge.classList.add('pristine-star');
+                stateBadge.textContent = '⭐';
+            } else {
+                stateBadge.style.backgroundColor = stateColor;
+            }
+            slot.appendChild(stateBadge);
 
             slot.onclick = () => {
                 showGlobalMuseumDetails({

@@ -7,7 +7,7 @@ use twitch_irc::TwitchIRCClient;
 use twitch_irc::message::ServerMessage;
 use twitch_irc::SecureTCPTransport;
 
-use crate::{AppState, PendingSale, PendingTrade};
+use crate::{AppState, PendingSale, PendingTrade, PendingGive};
 use crate::game::{generate_fish, generate_junk};
 use crate::config::{get_fail_attempt_reasons, FailMessageEntry, Rarity};
 
@@ -25,6 +25,15 @@ pub enum SellArg {
         state: Option<String>,
         quantity: i64,
     },
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub enum GiveArg {
+    ConfirmYes,
+    ConfirmNo,
+    Gold { amount: i64, recipient: String },
+    ById { catch_id: i64, recipient: String },
+    ByName { name: String, recipient: String },
 }
 
 /// Extrait l'état (éventuellement composé) et la quantité des tokens de commande.
@@ -335,29 +344,77 @@ pub fn parse_trade_args(args_str: &str) -> Option<TradeArg> {
     None
 }
 
-pub fn parse_give_args(args_str: &str) -> Option<(i64, String)> {
+pub fn parse_give_args(args_str: &str) -> Option<GiveArg> {
     let args_str = args_str.trim();
     if args_str.is_empty() {
         return None;
     }
+
+    let lower = args_str.to_lowercase();
+    if lower == "oui" || lower == "yes" || lower == "y" {
+        return Some(GiveArg::ConfirmYes);
+    }
+    if lower == "non" || lower == "no" || lower == "n" {
+        return Some(GiveArg::ConfirmNo);
+    }
+
     let tokens: Vec<&str> = args_str.split_whitespace().collect();
-    if tokens.len() != 2 {
+    if tokens.len() < 2 {
         return None;
     }
 
-    // Try format: <amount> <recipient>
-    if let Ok(amount) = tokens[0].parse::<i64>() {
-        let recipient = tokens[1].trim_start_matches('@').to_lowercase();
-        return Some((amount, recipient));
-    }
-
-    // Try format: <recipient> <amount>
-    if let Ok(amount) = tokens[1].parse::<i64>() {
+    // Identify recipient and item
+    if tokens[0].starts_with('@') {
         let recipient = tokens[0].trim_start_matches('@').to_lowercase();
-        return Some((amount, recipient));
+        let item = tokens[1..].join(" ");
+        return parse_item_give(recipient, &item);
     }
 
-    None
+    if tokens.last().unwrap().starts_with('@') {
+        let recipient = tokens.last().unwrap().trim_start_matches('@').to_lowercase();
+        let item = tokens[..tokens.len() - 1].join(" ");
+        return parse_item_give(recipient, &item);
+    }
+
+    let first = tokens[0];
+    if first.starts_with('#') || first.parse::<i64>().is_ok() {
+        let recipient = tokens[1..].join(" ").to_lowercase();
+        let item = first;
+        return parse_item_give(recipient, item);
+    }
+
+    let last = *tokens.last().unwrap();
+    if last.starts_with('#') || last.parse::<i64>().is_ok() {
+        let recipient = tokens[..tokens.len() - 1].join(" ").to_lowercase();
+        let item = last;
+        return parse_item_give(recipient, item);
+    }
+
+    if tokens.len() > 2 {
+        let recipient_first = tokens[0].to_lowercase();
+        let item_first = tokens[1..].join(" ");
+        return Some(GiveArg::ByName { name: item_first, recipient: recipient_first });
+    }
+
+    let recipient = tokens[0].to_lowercase();
+    let name = tokens[1].to_string();
+    Some(GiveArg::ByName { name, recipient })
+}
+
+fn parse_item_give(recipient: String, item: &str) -> Option<GiveArg> {
+    let item = item.trim();
+    if item.is_empty() {
+        return None;
+    }
+    if let Ok(amount) = item.parse::<i64>() {
+        return Some(GiveArg::Gold { amount, recipient });
+    }
+    if item.starts_with('#') {
+        if let Ok(catch_id) = item[1..].parse::<i64>() {
+            return Some(GiveArg::ById { catch_id, recipient });
+        }
+    }
+    Some(GiveArg::ByName { name: item.to_string(), recipient })
 }
 
 pub fn get_base_price(name: &str) -> i64 {
@@ -524,6 +581,12 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
     let handle = tokio::spawn(async move {
         let _ = client.join(channel_name.to_lowercase());
         let channel_pulse = channel_name.to_lowercase();
+        let client_hello = client.clone();
+        let channel_hello = channel_name.to_lowercase();
+        tokio::spawn(async move {
+            tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
+            let _ = client_hello.say(channel_hello, "✅ Le bot est en ligne ! Bon jeu et bonne pêche ! 🎣".to_string()).await;
+        });
         tokio::spawn(async move {
             loop {
                 tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
@@ -645,7 +708,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | recycle #id poubelle | trade #id | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, recycle, trade, coinflip ou lang".to_string();
+                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | recycle #id poubelle | trade #id | give <objet/montant> @destinataire | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, recycle, trade, give, coinflip ou lang".to_string();
                     if username == "monsieurcotcot" {
                         help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
                     }
@@ -662,13 +725,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         "trade" | "echange" | "échanger" | "echanger" => {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
                         },
+                        "give" | "gift" | "don" | "donner" => {
+                            "🎁 Dons : '!fish give [montant] @destinataire' (pour envoyer de l'or) ou '!fish give [nom/#id] @destinataire' (pour offrir un objet). Valide les dons d'objets avec '!fish give oui' sous 60s.".to_string()
+                        },
                         "coinflip" | "cf" => {
                             "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Tentez de doubler vos pièces d'or sur un coup de pile ou face ! Mise minimale : 10 po 🪙.".to_string()
                         },
                         "lang" | "language" | "langue" => {
                             "🌐 Langue : '!fish lang fr' pour passer en Français, '!fish lang en' pour l'Anglais, ou '!fish lang reset' pour la langue automatique par défaut (anglais sur !fish, français sur !peche).".to_string()
                         },
-                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help recycle' ou '!fish help trade' ou '!fish help coinflip' pour plus de détails.")
+                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help recycle' ou '!fish help trade' ou '!fish help give' ou '!fish help coinflip' pour plus de détails.")
                     };
                     let _ = client.say(msg.channel_login.clone(), reply).await;
                 } else if text == "!fish lang fr" || text == "!peche lang fr" || text == "!pêche lang fr" {
@@ -2089,6 +2155,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                         }
                     });
                 } else if text.starts_with("!fish give") || text.starts_with("!peche give") || text.starts_with("!pêche give") ||
+                           text.starts_with("!fish gift") || text.starts_with("!peche gift") || text.starts_with("!pêche gift") ||
                            text.starts_with("!fish don")  || text.starts_with("!peche don")  || text.starts_with("!pêche don")  ||
                            text.starts_with("!fish donner") || text.starts_with("!peche donner") || text.starts_with("!pêche donner") {
                     let state_task = Arc::clone(&state_clone);
@@ -2098,83 +2165,341 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     
                     tokio::spawn(async move {
                         let text_trim = raw_msg.trim().to_lowercase();
-                        let arg = if text_trim.starts_with("!fish give") {
-                            raw_msg["!fish give".len()..].trim()
-                        } else if text_trim.starts_with("!peche give") {
-                            raw_msg["!peche give".len()..].trim()
-                        } else if text_trim.starts_with("!pêche give") {
-                            raw_msg["!pêche give".len()..].trim()
-                        } else if text_trim.starts_with("!fish don") {
-                            raw_msg["!fish don".len()..].trim()
-                        } else if text_trim.starts_with("!peche don") {
-                            raw_msg["!peche don".len()..].trim()
-                        } else if text_trim.starts_with("!pêche don") {
-                            raw_msg["!pêche don".len()..].trim()
-                        } else if text_trim.starts_with("!fish donner") {
-                            raw_msg["!fish donner".len()..].trim()
-                        } else if text_trim.starts_with("!peche donner") {
-                            raw_msg["!peche donner".len()..].trim()
-                        } else if text_trim.starts_with("!pêche donner") {
-                            raw_msg["!pêche donner".len()..].trim()
-                        } else {
-                            ""
-                        };
+                        let mut arg = "";
+                        let prefixes = [
+                            "!fish give", "!peche give", "!pêche give",
+                            "!fish gift", "!peche gift", "!pêche gift",
+                            "!fish donner", "!peche donner", "!pêche donner",
+                            "!fish don", "!peche don", "!pêche don",
+                        ];
+                        for p in &prefixes {
+                            if text_trim.starts_with(p) {
+                                arg = raw_msg[p.len()..].trim();
+                                break;
+                            }
+                        }
 
                         let parsed = parse_give_args(arg);
                         if parsed.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish give [montant] @[destinataire]", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish give [montant/objet] @[destinataire]", username)).await;
                             return;
                         }
 
-                        let (amount, recipient) = parsed.unwrap();
-
-                        if recipient == username {
-                            let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas te donner de l'or à toi-même.", username)).await;
-                            return;
-                        }
-
-                        if amount <= 0 {
-                            let _ = client_msg.say(channel_login, format!("❌ @{}, le montant doit être supérieur à 0.", username)).await;
-                            return;
-                        }
-
-                        // Retrieve giver player info
-                        let giver = match state_task.repo.get_or_create_player(&username).await {
-                            Ok(g) => g,
-                            Err(e) => {
-                                tracing::error!("Failed to retrieve giver player: {:?}", e);
-                                return;
+                        match parsed.unwrap() {
+                            GiveArg::ConfirmYes => {
+                                let mut gives = state_task.pending_gives.write().await;
+                                if let Some(pending) = gives.get(&username) {
+                                    if Utc::now().signed_duration_since(pending.created_at).num_seconds() <= 60 {
+                                        let pending_clone = pending.clone();
+                                        drop(gives); // drop lock before db call
+                                        
+                                        match state_task.repo.execute_catch_transfer(
+                                            pending_clone.catch_id,
+                                            pending_clone.giver_id,
+                                            pending_clone.receiver_id,
+                                        ).await {
+                                            Ok(_) => {
+                                                let _ = client_msg.say(
+                                                    channel_login,
+                                                    format!(
+                                                        "🎁 @{}, tu as donné '{}' (#{}) à @{} ! 🤝",
+                                                        username,
+                                                        pending_clone.catch_name,
+                                                        pending_clone.catch_id,
+                                                        pending_clone.receiver_username
+                                                    )
+                                                ).await;
+                                            }
+                                            Err(e) => {
+                                                tracing::error!("Failed to execute catch transfer: {:?}", e);
+                                                let _ = client_msg.say(
+                                                    channel_login,
+                                                    format!("❌ @{}, impossible de donner cet objet. Une erreur est survenue.", username)
+                                                ).await;
+                                            }
+                                        }
+                                        state_task.pending_gives.write().await.remove(&username);
+                                    } else {
+                                        gives.remove(&username);
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("⚠️ @{}, proposition de don expirée (1 min).", username)
+                                        ).await;
+                                    }
+                                } else {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!("⚠️ @{}, aucune proposition de don en attente.", username)
+                                    ).await;
+                                }
                             }
-                        };
-
-                        if giver.gold < amount {
-                            let _ = client_msg.say(channel_login, format!("❌ @{}, tu n'as pas assez de pièces d'or (requis: {} po, tu as {} po).", username, amount, giver.gold)).await;
-                            return;
-                        }
-
-                        // Retrieve recipient player info
-                        let receiver = match state_task.repo.get_player(&recipient).await {
-                            Ok(Some(r)) => r,
-                            Ok(None) => {
-                                let _ = client_msg.say(channel_login, format!("❌ @{}, le joueur @{} n'a pas encore de compte de pêche.", username, recipient)).await;
-                                return;
+                            GiveArg::ConfirmNo => {
+                                let mut gives = state_task.pending_gives.write().await;
+                                if gives.remove(&username).is_some() {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!("🎁 @{}, proposition de don annulée.", username)
+                                    ).await;
+                                } else {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!("⚠️ @{}, aucune proposition de don en attente.", username)
+                                    ).await;
+                                }
                             }
-                            Err(e) => {
-                                tracing::error!("Failed to retrieve recipient player: {:?}", e);
-                                return;
-                            }
-                        };
+                            GiveArg::Gold { amount, recipient } => {
+                                if recipient == username {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas te donner de l'or à toi-même.", username)).await;
+                                    return;
+                                }
 
-                        let giver_id = giver.id.unwrap_or(0);
-                        let receiver_id = receiver.id.unwrap_or(0);
+                                if amount <= 0 {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, le montant doit être supérieur à 0.", username)).await;
+                                    return;
+                                }
 
-                        match state_task.repo.execute_gold_transfer(giver_id, receiver_id, amount).await {
-                            Ok(_) => {
-                                let _ = client_msg.say(channel_login, format!("🪙 @{} a donné {} pièces d'or à @{} ! 🤝", username, amount, recipient)).await;
+                                // Retrieve giver player info
+                                let giver = match state_task.repo.get_or_create_player(&username).await {
+                                    Ok(g) => g,
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve giver player: {:?}", e);
+                                        return;
+                                    }
+                                };
+
+                                if giver.gold < amount {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!(
+                                            "❌ @{}, tu n'as pas assez de pièces d'or (requis: {} po, tu as {} po).",
+                                            username, amount, giver.gold
+                                        )
+                                    ).await;
+                                    return;
+                                }
+
+                                // Retrieve recipient player info
+                                let receiver = match state_task.repo.get_player(&recipient).await {
+                                    Ok(Some(r)) => r,
+                                    Ok(None) => {
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, le joueur @{} n'a pas encore de compte de pêche.", username, recipient)
+                                        ).await;
+                                        return;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve recipient player: {:?}", e);
+                                        return;
+                                    }
+                                };
+
+                                let giver_id = giver.id.unwrap_or(0);
+                                let receiver_id = receiver.id.unwrap_or(0);
+
+                                match state_task.repo.execute_gold_transfer(giver_id, receiver_id, amount).await {
+                                    Ok(_) => {
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("🪙 @{} a donné {} pièces d'or à @{} ! 🤝", username, amount, recipient)
+                                        ).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to execute gold transfer: {:?}", e);
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, une erreur est survenue lors du transfert de pièces d'or.", username)
+                                        ).await;
+                                    }
+                                }
                             }
-                            Err(e) => {
-                                tracing::error!("Failed to execute gold transfer: {:?}", e);
-                                let _ = client_msg.say(channel_login, format!("❌ @{}, une erreur est survenue lors du transfert de pièces d'or.", username)).await;
+                            GiveArg::ById { catch_id, recipient } => {
+                                if recipient == username {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas donner un objet à toi-même.", username)).await;
+                                    return;
+                                }
+
+                                // Retrieve giver player info
+                                let giver = match state_task.repo.get_or_create_player(&username).await {
+                                    Ok(g) => g,
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve giver player: {:?}", e);
+                                        return;
+                                    }
+                                };
+
+                                // Retrieve recipient player info
+                                let receiver = match state_task.repo.get_player(&recipient).await {
+                                    Ok(Some(r)) => r,
+                                    Ok(None) => {
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, le joueur @{} n'a pas encore de compte de pêche.", username, recipient)
+                                        ).await;
+                                        return;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve recipient player: {:?}", e);
+                                        return;
+                                    }
+                                };
+
+                                let giver_id = giver.id.unwrap_or(0);
+                                let receiver_id = receiver.id.unwrap_or(0);
+
+                                // Check catch ownership
+                                match state_task.repo.get_catch_by_id(catch_id).await {
+                                    Ok(Some((fish, owner_name))) => {
+                                        if owner_name.to_lowercase() != username {
+                                            let _ = client_msg.say(
+                                                channel_login,
+                                                format!("❌ @{}, tu ne possèdes pas la capture #{}.", username, catch_id)
+                                            ).await;
+                                            return;
+                                        }
+
+                                        // Register pending give
+                                        let pending = PendingGive {
+                                            giver_id,
+                                            giver_username: username.clone(),
+                                            receiver_id,
+                                            receiver_username: recipient.clone(),
+                                            catch_id,
+                                            catch_name: fish.name.clone(),
+                                            created_at: Utc::now(),
+                                        };
+                                        state_task.pending_gives.write().await.insert(username.clone(), pending);
+
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!(
+                                                "🎁 @{}, tu es sur le point de donner '{}' (#{}) à @{}. Tape !fish give oui pour valider (1 min max) !",
+                                                username, fish.name, catch_id, recipient
+                                            )
+                                        ).await;
+                                    }
+                                    Ok(None) => {
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, la capture #{} est introuvable.", username, catch_id)
+                                        ).await;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to check catch ownership: {:?}", e);
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, impossible de vérifier la capture #{}.", username, catch_id)
+                                        ).await;
+                                    }
+                                }
+                            }
+                            GiveArg::ByName { name, recipient } => {
+                                // Retrieve giver player info
+                                let giver = match state_task.repo.get_or_create_player(&username).await {
+                                    Ok(g) => g,
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve giver player: {:?}", e);
+                                        return;
+                                    }
+                                };
+                                let giver_id = giver.id.unwrap_or(0);
+
+                                // Get giver's inventory to help resolve name/recipient ambiguity
+                                let catches = match state_task.repo.get_player_catches(giver_id).await {
+                                    Ok(c) => c,
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve player catches: {:?}", e);
+                                        return;
+                                    }
+                                };
+
+                                // Resolve recipient and name using combinations
+                                let (chosen_recipient, chosen_item_name) = if raw_msg.contains('@') {
+                                    (recipient, name)
+                                } else {
+                                    // Ambiguity resolution helper
+                                    let recip_a = recipient.clone();
+                                    let item_a = name.clone();
+                                    
+                                    // Try B combo
+                                    let full_str = format!("{} {}", recipient, name);
+                                    let tokens: Vec<&str> = full_str.split_whitespace().collect();
+                                    let (recip_b, item_b) = if tokens.len() == 2 {
+                                        (tokens[1].to_lowercase(), tokens[0].to_string())
+                                    } else {
+                                        (tokens.last().unwrap().to_lowercase(), tokens[..tokens.len()-1].join(" "))
+                                    };
+
+                                    let player_a = state_task.repo.get_player(&recip_a).await.ok().flatten();
+                                    let player_b = state_task.repo.get_player(&recip_b).await.ok().flatten();
+
+                                    let has_item_a = catches.iter().any(|c| c.name.to_lowercase() == item_a.to_lowercase());
+                                    let has_item_b = catches.iter().any(|c| c.name.to_lowercase() == item_b.to_lowercase());
+
+                                    if player_b.is_some() && has_item_b && !(player_a.is_some() && has_item_a) {
+                                        (recip_b, item_b)
+                                    } else if player_a.is_some() && has_item_a && !(player_b.is_some() && has_item_b) {
+                                        (recip_a, item_a)
+                                    } else if player_b.is_some() && player_a.is_none() {
+                                        (recip_b, item_b)
+                                    } else if player_a.is_some() && player_b.is_none() {
+                                        (recip_a, item_a)
+                                    } else {
+                                        (recip_a, item_a)
+                                    }
+                                };
+
+                                if chosen_recipient == username {
+                                    let _ = client_msg.say(channel_login, format!("❌ @{}, tu ne peux pas donner un objet à toi-même.", username)).await;
+                                    return;
+                                }
+
+                                // Retrieve recipient player info
+                                let receiver = match state_task.repo.get_player(&chosen_recipient).await {
+                                    Ok(Some(r)) => r,
+                                    Ok(None) => {
+                                        let _ = client_msg.say(
+                                            channel_login,
+                                            format!("❌ @{}, le joueur @{} n'a pas encore de compte de pêche.", username, chosen_recipient)
+                                        ).await;
+                                        return;
+                                    }
+                                    Err(e) => {
+                                        tracing::error!("Failed to retrieve recipient player: {:?}", e);
+                                        return;
+                                    }
+                                };
+                                let receiver_id = receiver.id.unwrap_or(0);
+
+                                // Find the catch in giver's inventory
+                                if let Some(c) = catches.iter().find(|c| c.name.to_lowercase() == chosen_item_name.to_lowercase()) {
+                                    let catch_id = c.id.unwrap();
+                                    
+                                    // Register pending give
+                                    let pending = PendingGive {
+                                        giver_id,
+                                        giver_username: username.clone(),
+                                        receiver_id,
+                                        receiver_username: chosen_recipient.clone(),
+                                        catch_id,
+                                        catch_name: c.name.clone(),
+                                        created_at: Utc::now(),
+                                    };
+                                    state_task.pending_gives.write().await.insert(username.clone(), pending);
+
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!(
+                                            "🎁 @{}, tu es sur le point de donner '{}' (#{}) à @{}. Tape !fish give oui pour valider (1 min max) !",
+                                            username, c.name, catch_id, chosen_recipient
+                                        )
+                                    ).await;
+                                } else {
+                                    let _ = client_msg.say(
+                                        channel_login,
+                                        format!("❌ @{}, tu ne possèdes aucun '{}' dans ton inventaire.", username, chosen_item_name)
+                                    ).await;
+                                }
                             }
                         }
                     });
@@ -2307,6 +2632,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 vip_until: p.vip_until,
                                 gold: Some(p.gold),
                                 eco_notoriety: Some(p.eco_notoriety),
+                                millionaire_at: p.millionaire_at,
                             }).collect();
                             
                             if let Ok(json) = serde_json::to_string_pretty(&backups) {
@@ -2487,13 +2813,25 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             };
 
                             if can_fish || is_test || is_admin {
+                                let today = Utc::now().date_naive();
+                                let (junk_caught, junk_target) = state_task.repo
+                                    .get_or_update_daily_junk_event(today)
+                                    .await
+                                    .unwrap_or((0, 0));
+
+                                let repo_attempts = state_task.repo.clone();
+                                tokio::spawn(async move {
+                                    let _ = repo_attempts.increment_daily_attempts(today).await;
+                                });
+
+                                let is_event_active = junk_caught < junk_target;
                                 let level_factor = (player.level as f64 - 1.0) / 199.0;
                                 let success_rate = 0.35 + (level_factor * 0.20);
-                                let junk_rate = 0.05;
+                                let junk_rate = if is_event_active { 0.20 } else { 0.05 };
                                 let roll = rand::random::<f64>();
 
                                 if is_test || roll < success_rate {
-                                    let mut fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
+                                    let fish = if is_test { crate::models::Fish::new("Gemme VIP (TEST)".to_string(), crate::config::Rarity::Legendary, 1.0, 100.0, "pristine".to_string(), "Gemme de test.".to_string()) } 
                                                    else { match generate_fish(use_english) { Some(f) => f, None => return } };
 
                                     let leveled_up = player.add_xp(25);
@@ -2518,11 +2856,29 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                         });
                                     }
                                      
+                                     let catch_id_opt = match state_task.repo.save_attempt(&player, true, Some(fish.clone())).await {
+                                         Ok(id) => id,
+                                         Err(e) => {
+                                             tracing::error!("Failed to save catch: {}", e);
+                                             None
+                                         }
+                                     };
+
                                      let mut resp = if use_english {
                                          format!("🐟 @{} caught a {} ({} cm)! {}", username, fish.name, fish.size, fish.description)
                                      } else {
                                          format!("🐟 @{} a pêché un(e) {} ({} cm) ! {}", username, fish.name, fish.size, fish.description)
                                      };
+
+                                     if use_english {
+                                         resp.push_str(&format!(" (Rarity: {:?})", fish.rarity));
+                                     } else {
+                                         resp.push_str(&format!(" (Rareté: {:?})", fish.rarity));
+                                     }
+
+                                     if let Some(id) = catch_id_opt {
+                                         resp.push_str(&format!(" (ID: #{})", id));
+                                     }
 
                                      if fish.name == "Gemme VIP" || is_test { 
                                          let d = if is_test { "1 MIN" } else { match fish.state.as_str() { "pristine" => "4H", "good" => "80 MIN", "worn" => "60 MIN", "damaged" => "40 MIN", _ => "20 MIN" } };
@@ -2566,27 +2922,57 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                              resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
                                          }
                                      }
+                                     resp.push_str(&format!(" ⏳{}s", current_cooldown));
                                      let _ = client_msg.say(channel_login.clone(), resp).await;
 
-                                    let state_bg = state_task.clone();
-                                    let ch_bg = channel_login.clone();
-                                    tokio::spawn(async move {
-                                        if let Some(t) = state_bg.auth.load_tokens() { fish.stream_title = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await; }
-                                        let _ = state_bg.repo.save_attempt(&player, true, Some(fish)).await;
-                                    });
+                                     if let Some(catch_id) = catch_id_opt {
+                                         let state_bg = state_task.clone();
+                                         let ch_bg = channel_login.clone();
+                                         tokio::spawn(async move {
+                                             if let Some(t) = state_bg.auth.load_tokens() {
+                                                 if let Some(title) = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await {
+                                                     let _ = state_bg.repo.update_catch_stream_title(catch_id, &title).await;
+                                                 }
+                                             }
+                                         });
+                                     }
                                 } else if roll < success_rate + junk_rate {
-                                    if let Some(mut junk) = generate_junk(use_english) {
+                                    if let Some(junk) = generate_junk(use_english) {
+                                        let catch_id_opt = match state_task.repo.save_attempt(&player, true, Some(junk.clone())).await {
+                                            Ok(id) => id,
+                                            Err(e) => {
+                                                tracing::error!("Failed to save junk catch: {}", e);
+                                                None
+                                            }
+                                        };
+
                                         let leveled_up = player.add_xp(5);
+                                        let (new_caught, target) = state_task.repo
+                                            .increment_daily_junk_caught(today)
+                                            .await
+                                            .unwrap_or((junk_caught + 1, junk_target));
+
                                         let mut resp = if use_english {
                                             format!("🗑️ @{} reeled in some trash: {}! {}", username, junk.name, junk.description)
                                         } else {
                                             format!("🗑️ @{} a remonté un déchet : {} ! {}", username, junk.name, junk.description)
                                         };
-                                        if junk.rarity != crate::config::Rarity::Common {
+
+                                        if use_english {
+                                            resp.push_str(&format!(" (Rarity: {:?})", junk.rarity));
+                                        } else {
+                                            resp.push_str(&format!(" (Rareté: {:?})", junk.rarity));
+                                        }
+
+                                        if let Some(id) = catch_id_opt {
+                                            resp.push_str(&format!(" (ID: #{})", id));
+                                        }
+
+                                        if is_event_active {
                                             if use_english {
-                                                resp.push_str(&format!(" (Rarity: {:?})", junk.rarity));
+                                                resp.push_str(&format!(" (Junk Event: {}/{})", new_caught, target));
                                             } else {
-                                                resp.push_str(&format!(" (Rareté: {:?})", junk.rarity));
+                                                resp.push_str(&format!(" (Événement Déchets : {}/{})", new_caught, target));
                                             }
                                         }
 
@@ -2597,14 +2983,20 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                                 resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
                                             }
                                         }
+                                        resp.push_str(&format!(" ⏳{}s", current_cooldown));
                                         let _ = client_msg.say(channel_login.clone(), resp).await;
 
-                                        let state_bg = state_task.clone();
-                                        let ch_bg = channel_login.clone();
-                                        tokio::spawn(async move {
-                                            if let Some(t) = state_bg.auth.load_tokens() { junk.stream_title = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await; }
-                                            let _ = state_bg.repo.save_attempt(&player, true, Some(junk)).await;
-                                        });
+                                        if let Some(catch_id) = catch_id_opt {
+                                            let state_bg = state_task.clone();
+                                            let ch_bg = channel_login.clone();
+                                            tokio::spawn(async move {
+                                                if let Some(t) = state_bg.auth.load_tokens() {
+                                                    if let Some(title) = state_bg.auth.get_stream_info(&ch_bg, &t.access_token).await {
+                                                        let _ = state_bg.repo.update_catch_stream_title(catch_id, &title).await;
+                                                    }
+                                                }
+                                            });
+                                        }
                                     }
                                 } else {
                                     let reasons = get_fail_attempt_reasons(use_english);
@@ -2644,6 +3036,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             resp.push_str(&format!(" ✨ LEVEL UP ! Niv. {} !", player.level));
                                         }
                                     }
+                                    resp.push_str(&format!(" ⏳{}s", current_cooldown + cooldown_pen));
                                     let _ = client_msg.say(channel_login, resp).await;
                                     let _ = state_task.repo.save_attempt(&player, false, None).await;
 
@@ -2944,13 +3337,19 @@ mod tests {
 
     #[test]
     fn test_parse_give_args() {
-        assert_eq!(parse_give_args("100 @monsieurcotcot"), Some((100, "monsieurcotcot".to_string())));
-        assert_eq!(parse_give_args("@MonsieurCotCot 250"), Some((250, "monsieurcotcot".to_string())));
-        assert_eq!(parse_give_args("50 monsieurcotcot"), Some((50, "monsieurcotcot".to_string())));
-        assert_eq!(parse_give_args("monsieurcotcot 500"), Some((500, "monsieurcotcot".to_string())));
+        assert_eq!(parse_give_args("100 @monsieurcotcot"), Some(GiveArg::Gold { amount: 100, recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("@MonsieurCotCot 250"), Some(GiveArg::Gold { amount: 250, recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("50 monsieurcotcot"), Some(GiveArg::Gold { amount: 50, recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("monsieurcotcot 500"), Some(GiveArg::Gold { amount: 500, recipient: "monsieurcotcot".to_string() }));
         assert_eq!(parse_give_args("100"), None);
-        assert_eq!(parse_give_args("abc @monsieurcotcot"), None);
+        assert_eq!(parse_give_args("abc @monsieurcotcot"), Some(GiveArg::ByName { name: "abc".to_string(), recipient: "monsieurcotcot".to_string() }));
         assert_eq!(parse_give_args(""), None);
+
+        assert_eq!(parse_give_args("#42 @monsieurcotcot"), Some(GiveArg::ById { catch_id: 42, recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("@monsieurcotcot #42"), Some(GiveArg::ById { catch_id: 42, recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("Sardine @monsieurcotcot"), Some(GiveArg::ByName { name: "Sardine".to_string(), recipient: "monsieurcotcot".to_string() }));
+        assert_eq!(parse_give_args("oui"), Some(GiveArg::ConfirmYes));
+        assert_eq!(parse_give_args("non"), Some(GiveArg::ConfirmNo));
     }
 
     #[test]

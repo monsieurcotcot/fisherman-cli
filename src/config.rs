@@ -50,6 +50,7 @@ pub struct FishData {
     pub bin: Option<String>,
     pub recycling_notoriety_bonus: Option<i64>,
     pub recycling_notoriety_malus: Option<i64>,
+    pub scrap_metal_kg: Option<f64>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

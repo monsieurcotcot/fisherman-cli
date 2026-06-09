@@ -49,3 +49,7 @@ fix.py
 agy-command.txt
 AGENT_CHAT.md
 
+# Scratch and local temporary files
+/scratch/
+
+

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fisherman Game - Stats</title>
-    <link rel="stylesheet" href="/static/style.css?v=1.1.7">
+    <link rel="stylesheet" href="/static/style.css?v=1.2.7">
 </head>
 <body>
     <canvas id="matrix-bg"></canvas>
@@ -31,6 +31,7 @@
                             <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
                                 <span id="res-vip" class="level-badge" style="background: #ffb444; color: #18181b; display: none;">VIP</span>
                                 <span id="res-banana-king-badge" class="level-badge" style="background: linear-gradient(135deg, #ffd700, #ffb444); color: #18181b; display: none;">Roi des Bananes</span>
+                                <span id="res-millionaire-badge" class="level-badge" style="background: linear-gradient(135deg, #ffe066, #f59f00); color: #18181b; font-weight: bold; box-shadow: 0 0 8px rgba(245, 159, 0, 0.6); display: none;">🪙 Premier Millionnaire</span>
                                 <span class="level-badge">Niv. <span id="res-level"></span></span>
                             </div>
                         </div>
@@ -53,6 +54,7 @@
                         <div class="stat-item"><span>Succès:</span> <strong id="res-success" style="color: #00ff00;"></strong></div>
                         <div class="stat-item"><span>Échecs:</span> <strong id="res-failed" style="color: #ff4f4f;"></strong></div>
                         <div class="stat-item" style="margin-top: 5px;"><span>Pièces d'Or:</span> <strong style="color: #ffd700; display: inline-flex; align-items: center; gap: 3px;">🪙 <span id="res-stat-gold">0</span> po</strong></div>
+                        <div class="stat-item" style="margin-top: 5px;"><span>Ferraille:</span> <strong style="color: #c0c0c0; display: inline-flex; align-items: center; gap: 3px;">🔩 <span id="res-stat-scrap-val">0.00</span> kg <span style="font-size: 0.75rem; color: #888; font-weight: normal; margin-left: 5px;">(Vendu: <span id="res-stat-scrap-sold">0.00</span> kg)</span></strong></div>
                         <div class="stat-item" style="margin-top: 5px; display: flex; align-items: center; justify-content: space-between;">
                             <span>Notoriété Écolo:</span>
                             <div style="display: flex; align-items: center; gap: 8px; flex-grow: 1; max-width: 140px; margin-left: 10px;">
@@ -62,9 +64,10 @@
                                 <strong id="res-eco-value" style="font-size: 0.85rem; color: #4caf50;">1000</strong>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 8px; margin-top: 12px; padding: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; justify-content: space-around; font-size: 0.85rem;">
+                        <div style="display: flex; gap: 8px; margin-top: 12px; padding: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; justify-content: space-around; font-size: 0.85rem; flex-wrap: wrap;">
                             <span title="Poissons" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-fish">0</strong> 🐟</span>
                             <span title="Déchets" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-junk">0</strong> 🗑️</span>
+                            <span title="Ferraille" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-scrap">0.00</strong> 🔩</span>
                             <span title="Bananes" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-banana">0</strong> 🍌</span>
                             <span title="Gemmes" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-gem">0</strong> 💎</span>
                             <span title="Cartes Postales" style="display: flex; align-items: center; gap: 3px;"><strong id="res-stat-postcard">0</strong> 📜</span>
@@ -229,9 +232,11 @@
                         4. Le destinataire finalise par <code style="color: #00ff00;">!fish trade oui</code>.
                     </div>
                     <div>
-                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🎁 Don de Pièces d'Or</strong>
-                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish give @destinataire [montant]</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish give [montant] @destinataire</code> : Offrez une partie de votre or à un autre joueur !<br>
-                        • <em>Raccourcis :</em> <code style="color: #ffd700;">!fish gift</code> ou variante sans l'arobase. Le montant doit être supérieur à 0 🪙.
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🎁 Don de Pièces d'Or ou Objets</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish give @destinataire [montant/nom/#[id]]</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish give [montant/nom/#[id]] @destinataire</code> : Offrez de l'or ou une capture (poisson/déchet) à un autre joueur !<br>
+                        • <em>Raccourcis :</em> <code style="color: #ffd700;">!fish gift</code>, <code style="color: #ffd700;">!fish don</code>, <code style="color: #ffd700;">!fish donner</code> ou variante sans l'arobase.<br>
+                        • <em>Dons d'or :</em> Transfert immédiat sans confirmation (montant > 0 🪙).<br>
+                        • <em>Dons d'objets :</em> Par exemple <code style="color: #ffd700;">!fish give Sardine @destinataire</code> ou <code style="color: #ffd700;">!fish give #42 @destinataire</code>. Demande de confirmation à valider par <code style="color: #00ff00;">!fish give oui</code> sous 60s. Si vous indiquez un nom de poisson/déchet et en possédez plusieurs exemplaires, <strong>le plus récemment pêché</strong> sera sélectionné (privilégiez l'ID unique <code>#id</code> pour cibler un objet spécifique).
                     </div>
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🪙 Jeux de Hasard</strong>
@@ -241,8 +246,13 @@
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">♻️ Recyclage des Déchets</strong>
                         <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish recycle #[id_unique] [poubelle]</code> ou <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish recycler #[id_unique] [poubelle]</code> : Recyclez vos déchets dans la bonne poubelle pour de la Notoriété Écolo (+10) ! En cas d'erreur de tri : -20.<br>
-                        • <em>Poubelles :</em> <code style="color: #00e6ff;">bleu</code> (papier/carton), <code style="color: #ffd700;">jaune</code> (plastique/métal), <code style="color: #00ff00;">vert</code> (verre), <code style="color: #ffaa00;">marron</code> (organique), <code style="color: #d1d1d6;">gris</code> (e-déchets/ampoules), <code style="color: #ff4f4f;">decharge</code> (autres).<br>
+                        • <em>Poubelles :</em> <code style="color: #00e6ff;">bleu</code> (papier/carton), <code style="color: #ffd700;">jaune</code> (plastique/métal), <code style="color: #00ff00;">vert</code> (verre), <code style="color: #ffaa00;">marron</code> (organique), <code style="color: #d1d1d6;">gris</code> (e-déchets/ampoules), <code style="color: #a0a0a0;">noir</code> (petits déchets/souillés), <code style="color: #ff4f4f;">decharge</code> (autres).<br>
                         • <em>Exemple :</em> <code style="color: #ffd700;">!fish recycle #42 jaune</code>
+                    </div>
+                    <div>
+                        <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🔩 Ferraille & Démontage</strong>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish démonter #[id_unique]</code> : Démonte un déchet métallique pour en récupérer de la ferraille (en kg).<br>
+                        <code style="background: rgba(255,255,255,0.08); padding: 2px 4px; border-radius: 4px; color: #ffd700;">!fish sell ferraille [qté]</code> : Vend de la ferraille accumulée au ferrailleur. Le prix commence à 30 po/kg et augmente jusqu'à 100 po/kg au fur et à mesure que vous lui vendez de la ferraille (1 kg = 100 pièces d'or max !). Si la quantité est omise, vend tout.
                     </div>
                     <div>
                         <strong style="color: #9146ff; display: block; margin-bottom: 2px;">🌐 Choix de la Langue</strong>
@@ -311,7 +321,7 @@
             </div>
 
             <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #3a3a3d; font-size: 0.8rem; color: #adadb8;">
-                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">V1.1.1</span></p>
+                <p>© 2026 MonsieurCotCot. Tous droits réservés. <span style="background: rgba(145, 70, 255, 0.2); color: #bf94ff; border: 1px solid rgba(145, 70, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 8px; font-weight: bold;">V1.2.7</span></p>
                 <div style="display: flex; justify-content: center; gap: 15px; margin-top: 0.5rem; flex-wrap: wrap;">
                     <a href="https://twitch.tv/MonsieurCotCot" target="_blank" style="color: #9146ff; text-decoration: none;">Twitch</a>
                     <a href="https://discord.gg/kVS2thqeZw" target="_blank" style="color: #5865F2; text-decoration: none; font-weight: bold;">Discord</a>
@@ -415,6 +425,6 @@
     </a>
 
     <!-- Script principal de l'application -->
-    <script src="/static/app.js?v=1.1.9" defer></script>
+    <script src="/static/app.js?v=1.2.7" defer></script>
 </body>
 </html>

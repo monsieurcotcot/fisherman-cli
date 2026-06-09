@@ -70,6 +70,17 @@ pub enum PendingTrade {
     },
 }
 
+#[derive(Debug, Clone)]
+pub struct PendingGive {
+    pub giver_id: i64,
+    pub giver_username: String,
+    pub receiver_id: i64,
+    pub receiver_username: String,
+    pub catch_id: i64,
+    pub catch_name: String,
+    pub created_at: DateTime<Utc>,
+}
+
 pub struct AppState {
     pub repo: Arc<Repository>,
     pub auth: Arc<AuthManager>,
@@ -83,6 +94,7 @@ pub struct AppState {
     pub rate_limiter: dashmap::DashMap<String, (u32, Option<DateTime<Utc>>)>,
     pub pending_sales: RwLock<HashMap<String, PendingSale>>,
     pub pending_trades: RwLock<Vec<PendingTrade>>,
+    pub pending_gives: RwLock<HashMap<String, PendingGive>>,
     pub daily_reward_cache: dashmap::DashMap<String, chrono::NaiveDate>,
     pub offline_attempts: RwLock<HashMap<String, u32>>,
     pub offline_bypassed: RwLock<std::collections::HashSet<String>>,
@@ -123,6 +135,7 @@ async fn main() -> Result<(), MyError> {
                 vip_until: p.vip_until,
                 gold: Some(p.gold),
                 eco_notoriety: Some(p.eco_notoriety),
+                millionaire_at: p.millionaire_at,
             }).collect();
             if let Ok(json) = serde_json::to_string_pretty(&backups) {
                 let _ = tokio::fs::write("data/players_backup.json", json).await;
@@ -203,20 +216,7 @@ async fn main() -> Result<(), MyError> {
                 let _ = tx.commit().await;
             }
         }
-    } else {
-        // Dethrone any active King since no single player currently holds both latest bananas
-        let has_active: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM banana_kings_history WHERE dethroned_at IS NULL")
-            .fetch_one(&pool)
-            .await
-            .unwrap_or_default();
-        if has_active > 0 {
-            tracing::info!("🍌 [Banana King] Aucun joueur ne possède les deux dernières bananes. Détrônement de l'ancien Roi.");
-            let _ = sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
-                .execute(&pool)
-                .await;
-        }
     }
-
     // Correction et couronnement automatique du Champion Écolo actif au démarrage
     if let Ok(mut eco_tx) = pool.begin().await {
         let _ = repo.update_eco_champion_status_direct(&mut eco_tx).await;
@@ -244,6 +244,7 @@ async fn main() -> Result<(), MyError> {
         rate_limiter: dashmap::DashMap::new(),
         pending_sales: RwLock::new(HashMap::new()),
         pending_trades: RwLock::new(Vec::new()),
+        pending_gives: RwLock::new(HashMap::new()),
         daily_reward_cache: dashmap::DashMap::new(),
         offline_attempts: RwLock::new(HashMap::new()),
         offline_bypassed: RwLock::new(std::collections::HashSet::new()),
@@ -336,11 +337,50 @@ async fn main() -> Result<(), MyError> {
         .layer(SetResponseHeaderLayer::if_not_present(X_FRAME_OPTIONS, HeaderValue::from_static("DENY")))
         .layer(SetResponseHeaderLayer::if_not_present(STRICT_TRANSPORT_SECURITY, HeaderValue::from_static("max-age=31536000; includeSubDomains")))
         .layer(SetResponseHeaderLayer::if_not_present(X_CONTENT_TYPE_OPTIONS, HeaderValue::from_static("nosniff")))
-        .with_state(state);
+        .with_state(state.clone());
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
     let listener = tokio::net::TcpListener::bind(addr).await?;
-    axum::serve(listener, app.into_make_service_with_connect_info::<SocketAddr>()).await?;
+    axum::serve(listener, app.into_make_service_with_connect_info::<SocketAddr>())
+        .with_graceful_shutdown(shutdown_signal(state))
+        .await?;
 
     Ok(())
+}
+
+async fn shutdown_signal(state: Arc<AppState>) {
+    let ctrl_c = async {
+        tokio::signal::ctrl_c()
+            .await
+            .expect("failed to install Ctrl+C handler");
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+            .expect("failed to install signal handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => {},
+        _ = terminate => {},
+    }
+
+    tracing::info!("⚠️ Signal de fermeture reçu. Envoi de la notification au chat Twitch...");
+    let channel = state.channel.clone();
+    let client_opt = {
+        let lock = state.twitch_client.read().await;
+        lock.clone()
+    };
+    if let Some(client) = client_opt {
+        tracing::info!("⚠️ Notification de déconnexion envoyée à #{}", channel);
+        let msg = "⚠️ Le bot est en cours de redémarrage/mise à jour. Merci de patienter avant de relancer vos commandes ! ⏳".to_string();
+        let _ = client.say(channel.to_lowercase(), msg).await;
+        tokio::time::sleep(tokio::time::Duration::from_millis(1000)).await;
+    }
 }

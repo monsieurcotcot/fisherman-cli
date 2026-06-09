@@ -35,6 +35,10 @@ pub struct Player {
     pub max_gold_held: i64,
     pub language: Option<String>,
     pub eco_notoriety: i64,
+    pub scrap_metal: f64,
+    pub total_sold_scrap_metal: f64,
+    pub is_first_millionaire: bool,
+    pub millionaire_at: Option<DateTime<Utc>>,
 }
 
 impl Player {
@@ -72,6 +76,10 @@ impl Player {
             max_gold_held: 0,
             language: None,
             eco_notoriety: 1000,
+            scrap_metal: 0.0,
+            total_sold_scrap_metal: 0.0,
+            is_first_millionaire: false,
+            millionaire_at: None,
         }
     }
 

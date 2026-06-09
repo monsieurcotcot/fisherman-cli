@@ -16,6 +16,8 @@ pub struct PlayerBackup {
     pub gold: Option<i64>,
     #[serde(default)]
     pub eco_notoriety: Option<i64>,
+    #[serde(default)]
+    pub millionaire_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -105,6 +107,10 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         }).collect();
 
         Ok(players)
@@ -120,8 +126,8 @@ impl Repository {
     pub async fn restore_player(&self, backup: &PlayerBackup) -> Result<i64, sqlx::Error> {
         let gold_val = backup.gold.unwrap_or(0);
         let eco_val = backup.eco_notoriety.unwrap_or(1000);
-        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until, gold, eco_notoriety) \
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) \
+        let id = sqlx::query("INSERT INTO players (username, total_attempts, successful_attempts, failed_attempts, level, xp, vip_until, gold, eco_notoriety, millionaire_at) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) \
             ON CONFLICT(username) DO UPDATE SET \
             total_attempts = excluded.total_attempts, \
             successful_attempts = excluded.successful_attempts, \
@@ -130,7 +136,8 @@ impl Repository {
             xp = excluded.xp, \
             vip_until = excluded.vip_until, \
             gold = excluded.gold, \
-            eco_notoriety = excluded.eco_notoriety")
+            eco_notoriety = excluded.eco_notoriety, \
+            millionaire_at = COALESCE(players.millionaire_at, excluded.millionaire_at)")
             .bind(&backup.username.to_lowercase())
             .bind(backup.total_attempts)
             .bind(backup.successful_attempts)
@@ -140,6 +147,7 @@ impl Repository {
             .bind(backup.vip_until)
             .bind(gold_val)
             .bind(eco_val)
+            .bind(backup.millionaire_at)
             .execute(&self.pool)
             .await?
             .last_insert_rowid();
@@ -202,6 +210,10 @@ impl Repository {
                 max_gold_held: r.get("max_gold_held"),
                 language: r.get("language"),
                 eco_notoriety: r.get("eco_notoriety"),
+                scrap_metal: r.get("scrap_metal"),
+                total_sold_scrap_metal: r.get("total_sold_scrap_metal"),
+                is_first_millionaire: r.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+                millionaire_at: r.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
             }))
         } else {
             Ok(None)
@@ -248,11 +260,24 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         }).collect())
     }
 
     pub async fn remove_vip_status(&self, player_id: i64) -> Result<(), sqlx::Error> {
         sqlx::query("UPDATE players SET vip_until = NULL WHERE id = ?")
+            .bind(player_id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn set_vip_status(&self, player_id: i64, until: DateTime<Utc>) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE players SET vip_until = ? WHERE id = ?")
+            .bind(until)
             .bind(player_id)
             .execute(&self.pool)
             .await?;
@@ -305,6 +330,10 @@ impl Repository {
                 max_gold_held: row.get("max_gold_held"),
                 language: row.get("language"),
                 eco_notoriety: row.get("eco_notoriety"),
+                scrap_metal: row.get("scrap_metal"),
+                total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+                is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+                millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
             }),
             None => {
                 let id = sqlx::query("INSERT INTO players (username) VALUES (?)")
@@ -363,6 +392,10 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         }).collect();
 
         Ok(players)
@@ -414,6 +447,10 @@ impl Repository {
                 max_gold_held: row.get("max_gold_held"),
                 language: row.get("language"),
                 eco_notoriety: row.get("eco_notoriety"),
+                scrap_metal: row.get("scrap_metal"),
+                total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+                is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+                millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
             })),
             None => Ok(None)
         }
@@ -466,6 +503,10 @@ impl Repository {
                 max_gold_held: row.get("max_gold_held"),
                 language: row.get("language"),
                 eco_notoriety: row.get("eco_notoriety"),
+                scrap_metal: row.get("scrap_metal"),
+                total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+                is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+                millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
             })),
             None => Ok(None)
         }
@@ -493,6 +534,7 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
+        Self::check_and_update_millionaire_status(&mut tx, player_id).await?;
         tx.commit().await?;
         Ok(())
     }
@@ -622,6 +664,7 @@ impl Repository {
             .bind(player_id)
             .fetch_one(&mut *tx)
             .await?;
+        Self::check_and_update_millionaire_status(&mut tx, player_id).await?;
         tx.commit().await?;
         Ok(new_gold)
     }
@@ -706,8 +749,13 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         };
 
+        Self::check_and_update_millionaire_status(&mut tx, player_id).await?;
         tx.commit().await?;
         Ok(player)
     }
@@ -776,8 +824,13 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         };
 
+        Self::check_and_update_millionaire_status(&mut tx, player_id).await?;
         tx.commit().await?;
         Ok(player)
     }
@@ -828,6 +881,10 @@ impl Repository {
             max_gold_held: row.get("max_gold_held"),
             language: row.get("language"),
             eco_notoriety: row.get("eco_notoriety"),
+            scrap_metal: row.get("scrap_metal"),
+            total_sold_scrap_metal: row.get("total_sold_scrap_metal"),
+            is_first_millionaire: row.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: row.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         }).collect();
 
         Ok(players)
@@ -861,6 +918,67 @@ impl Repository {
             .execute(&self.pool)
             .await?;
         Ok(())
+    }
+
+    pub async fn get_or_update_daily_junk_event(&self, date: chrono::NaiveDate) -> Result<(i32, i32), sqlx::Error> {
+        let date_str = date.to_string();
+        
+        let row: Option<(i32, i32)> = sqlx::query_as("SELECT junk_caught, junk_target FROM daily_stream_stats WHERE live_date = ?")
+            .bind(&date_str)
+            .fetch_optional(&self.pool)
+            .await?;
+            
+        if let Some(r) = row {
+            return Ok(r);
+        }
+        
+        let prev_attempts: i64 = sqlx::query_scalar("SELECT total_attempts FROM daily_stream_stats WHERE live_date < ? ORDER BY live_date DESC LIMIT 1")
+            .bind(&date_str)
+            .fetch_optional(&self.pool)
+            .await?
+            .unwrap_or(1500);
+            
+        let max_junk = (prev_attempts / 10).clamp(30, 150);
+        let target = {
+            use rand::Rng;
+            let mut rng = rand::thread_rng();
+            rng.gen_range(30..=max_junk) as i32
+        };
+        
+        sqlx::query("INSERT OR IGNORE INTO daily_stream_stats (live_date, total_attempts, junk_target, junk_caught) VALUES (?, 0, ?, 0)")
+            .bind(&date_str)
+            .bind(target)
+            .execute(&self.pool)
+            .await?;
+            
+        let final_row: (i32, i32) = sqlx::query_as("SELECT junk_caught, junk_target FROM daily_stream_stats WHERE live_date = ?")
+            .bind(&date_str)
+            .fetch_one(&self.pool)
+            .await?;
+            
+        Ok(final_row)
+    }
+
+    pub async fn increment_daily_attempts(&self, date: chrono::NaiveDate) -> Result<(), sqlx::Error> {
+        let date_str = date.to_string();
+        sqlx::query("UPDATE daily_stream_stats SET total_attempts = total_attempts + 1 WHERE live_date = ?")
+            .bind(&date_str)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn increment_daily_junk_caught(&self, date: chrono::NaiveDate) -> Result<(i32, i32), sqlx::Error> {
+        let date_str = date.to_string();
+        sqlx::query("UPDATE daily_stream_stats SET junk_caught = junk_caught + 1 WHERE live_date = ?")
+            .bind(&date_str)
+            .execute(&self.pool)
+            .await?;
+        let row: (i32, i32) = sqlx::query_as("SELECT junk_caught, junk_target FROM daily_stream_stats WHERE live_date = ?")
+            .bind(&date_str)
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(row)
     }
 
     pub async fn count_stream_days_between(&self, start: chrono::NaiveDate, end: chrono::NaiveDate) -> Result<i64, sqlx::Error> {
@@ -991,9 +1109,10 @@ impl Repository {
 
     pub async fn get_global_museum(&self) -> Result<Vec<MuseumDiscovery>, sqlx::Error> {
         let rows = sqlx::query(
-            "SELECT m.id, m.player_id, m.username, m.fish_name, m.rarity, m.max_size, m.max_weight, m.best_state, m.description, m.total_caught, \
+            "SELECT m.id, m.player_id, p.username, m.fish_name, m.rarity, m.max_size, m.max_weight, m.best_state, m.description, m.total_caught, \
              strftime('%Y-%m-%dT%H:%M:%SZ', m.unlocked_at) as unlocked_at \
              FROM museum_discoveries m \
+             JOIN players p ON m.player_id = p.id \
              INNER JOIN ( \
                  SELECT fish_name, MAX(max_weight) as max_w \
                  FROM museum_discoveries \
@@ -1093,7 +1212,7 @@ impl Repository {
         Ok(())
     }
 
-    pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<(), sqlx::Error> {
+    pub async fn save_attempt(&self, player: &Player, success: bool, fish: Option<Fish>) -> Result<Option<i64>, sqlx::Error> {
         let mut tx = self.pool.begin().await?;
 
         sqlx::query("UPDATE players SET total_attempts = total_attempts + 1, successful_attempts = successful_attempts + ?, failed_attempts = failed_attempts + ?, last_fishing_time = ?, level = ?, xp = ?, vip_until = ?, gold = MAX(0, gold - 10) WHERE id = ?")
@@ -1107,11 +1226,12 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
+        let mut catch_id = None;
         if let Some(f) = fish {
             let is_banana = f.name == "Pristine Banana 1" || f.name == "Pristine Banana 2";
             
             // Bananas are now always inserted as new rows (no unique skip)
-            sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+            let res = sqlx::query("INSERT INTO catches (player_id, fish_name, rarity, size, weight, state, description, stream_title, is_junk, caught_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
                 .bind(player.id)
                 .bind(&f.name)
                 .bind(serde_json::to_string(&f.rarity).unwrap_or_default())
@@ -1125,6 +1245,8 @@ impl Repository {
                 .execute(&mut *tx)
                 .await?;
 
+            catch_id = Some(res.last_insert_rowid());
+
             self.record_museum_discovery(&mut *tx, player.id.unwrap(), &f).await?;
 
             if is_banana {
@@ -1134,8 +1256,18 @@ impl Repository {
 
         Self::check_and_update_eco_champion_status(&mut tx).await?;
         tx.commit().await?;
+        Ok(catch_id)
+    }
+
+    pub async fn update_catch_stream_title(&self, catch_id: i64, stream_title: &str) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE catches SET stream_title = ? WHERE id = ?")
+            .bind(stream_title)
+            .bind(catch_id)
+            .execute(&self.pool)
+            .await?;
         Ok(())
     }
+
 
     pub async fn check_and_execute_banana_theft(
         &self,
@@ -1232,10 +1364,33 @@ impl Repository {
                         .await?;
                 }
             }
-            _ => {
-                // No player owns both latest bananas.
-                // Dethrone any active King if one exists.
-                sqlx::query("UPDATE banana_kings_history SET dethroned_at = CURRENT_TIMESTAMP WHERE dethroned_at IS NULL")
+            _ => {}
+        }
+        Ok(())
+    }
+
+    async fn check_and_update_millionaire_status(
+        tx: &mut sqlx::Transaction<'_, sqlx::Sqlite>,
+        player_id: i64,
+    ) -> Result<(), sqlx::Error> {
+        let row = sqlx::query("SELECT gold, millionaire_at FROM players WHERE id = ?")
+            .bind(player_id)
+            .fetch_one(&mut **tx)
+            .await?;
+
+        let gold: i64 = row.get("gold");
+        let millionaire_at: Option<DateTime<Utc>> = row.get("millionaire_at");
+
+        if gold >= 1_000_000 && millionaire_at.is_none() {
+            let existing_count: i64 = sqlx::query_scalar(
+                "SELECT COUNT(*) FROM players WHERE millionaire_at IS NOT NULL"
+            )
+            .fetch_one(&mut **tx)
+            .await?;
+
+            if existing_count == 0 {
+                sqlx::query("UPDATE players SET millionaire_at = CURRENT_TIMESTAMP WHERE id = ?")
+                    .bind(player_id)
                     .execute(&mut **tx)
                     .await?;
             }
@@ -1296,6 +1451,10 @@ impl Repository {
             max_gold_held: r.get("max_gold_held"),
             language: r.get("language"),
             eco_notoriety: r.get("eco_notoriety"),
+            scrap_metal: r.get("scrap_metal"),
+            total_sold_scrap_metal: r.get("total_sold_scrap_metal"),
+            is_first_millionaire: r.get::<Option<DateTime<Utc>>, _>("millionaire_at").is_some(),
+            millionaire_at: r.get::<Option<DateTime<Utc>>, _>("millionaire_at"),
         };
 
         let mut success_count = 0;
@@ -1391,6 +1550,7 @@ impl Repository {
             .await?;
 
         Self::check_and_update_banana_king_status(&mut tx, seller_id).await?;
+        Self::check_and_update_millionaire_status(&mut tx, seller_id).await?;
 
         tx.commit().await?;
         Ok(())
@@ -1457,6 +1617,7 @@ impl Repository {
             .execute(&mut *tx)
             .await?;
 
+        Self::check_and_update_millionaire_status(&mut tx, receiver_id).await?;
         tx.commit().await?;
         Ok(())
     }
@@ -1507,6 +1668,7 @@ impl Repository {
         Self::check_and_update_banana_king_status(&mut tx, seller_id).await?;
         Self::check_and_update_banana_king_status(&mut tx, buyer_id).await?;
 
+        Self::check_and_update_millionaire_status(&mut tx, seller_id).await?;
         tx.commit().await?;
         Ok(())
     }
@@ -1544,6 +1706,33 @@ impl Repository {
         // 2. Update Banana King status for both players
         Self::check_and_update_banana_king_status(&mut tx, player_id_a).await?;
         Self::check_and_update_banana_king_status(&mut tx, player_id_b).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn execute_catch_transfer(
+        &self,
+        catch_id: i64,
+        giver_id: i64,
+        receiver_id: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        let rows = sqlx::query("UPDATE catches SET player_id = ? WHERE id = ? AND player_id = ?")
+            .bind(receiver_id)
+            .bind(catch_id)
+            .bind(giver_id)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+
+        if rows == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        Self::check_and_update_banana_king_status(&mut tx, giver_id).await?;
+        Self::check_and_update_banana_king_status(&mut tx, receiver_id).await?;
 
         tx.commit().await?;
         Ok(())
@@ -1672,7 +1861,7 @@ impl Repository {
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
                 profile_image_url TEXT,
-                gold INTEGER DEFAULT 0,
+                gold INTEGER DEFAULT 0 CHECK(gold >= 0),
                 last_daily_reward_at DATETIME,
                 consecutive_days INTEGER DEFAULT 0,
                 total_days INTEGER DEFAULT 0,
@@ -1689,7 +1878,8 @@ impl Repository {
                 gold_given_total INTEGER DEFAULT 0,
                 max_gold_held INTEGER DEFAULT 0,
                 language TEXT DEFAULT NULL,
-                eco_notoriety INTEGER DEFAULT 1000
+                eco_notoriety INTEGER DEFAULT 1000,
+                millionaire_at DATETIME DEFAULT NULL
             )"
         ).execute(&mut *tx).await?;
 
@@ -1818,13 +2008,65 @@ impl Repository {
         tx.commit().await?;
         Ok(())
     }
+
+    pub async fn execute_dismantle(
+        &self,
+        player_id: i64,
+        catch_id: i64,
+        scrap_metal_added: f64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        let rows_affected = sqlx::query("DELETE FROM catches WHERE id = ? AND player_id = ?")
+            .bind(catch_id)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?
+            .rows_affected();
+        if rows_affected == 0 {
+            return Err(sqlx::Error::RowNotFound);
+        }
+
+        sqlx::query("UPDATE players SET scrap_metal = scrap_metal + ? WHERE id = ?")
+            .bind(scrap_metal_added)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
+
+    pub async fn execute_scrap_metal_sale(
+        &self,
+        player_id: i64,
+        scrap_metal_sold: f64,
+        gold_earned: i64,
+    ) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        sqlx::query("UPDATE players SET scrap_metal = MAX(0.0, scrap_metal - ?), total_sold_scrap_metal = total_sold_scrap_metal + ?, gold = gold + ?, max_gold_held = MAX(max_gold_held, gold + ?) WHERE id = ?")
+            .bind(scrap_metal_sold)
+            .bind(scrap_metal_sold)
+            .bind(gold_earned)
+            .bind(gold_earned)
+            .bind(player_id)
+            .execute(&mut *tx)
+            .await?;
+
+        Self::check_and_update_banana_king_status(&mut tx, player_id).await?;
+        Self::check_and_update_millionaire_status(&mut tx, player_id).await?;
+
+        tx.commit().await?;
+        Ok(())
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use sqlx::sqlite::SqlitePoolOptions;
-    use crate::models::{Fish, Player};
+    use crate::models::Fish;
     use crate::config::Rarity;
 
     async fn setup_db() -> sqlx::SqlitePool {
@@ -1846,7 +2088,7 @@ mod tests {
                 xp INTEGER DEFAULT 0,
                 vip_until DATETIME,
                 profile_image_url TEXT,
-                gold INTEGER DEFAULT 0,
+                gold INTEGER DEFAULT 0 CHECK(gold >= 0),
                 last_daily_reward_at DATETIME,
                 consecutive_days INTEGER DEFAULT 0,
                 total_days INTEGER DEFAULT 0,
@@ -1863,7 +2105,10 @@ mod tests {
                 gold_given_total INTEGER DEFAULT 0,
                 max_gold_held INTEGER DEFAULT 0,
                 language TEXT DEFAULT NULL,
-                eco_notoriety INTEGER DEFAULT 1000
+                eco_notoriety INTEGER DEFAULT 1000,
+                scrap_metal REAL DEFAULT 0.0,
+                total_sold_scrap_metal REAL DEFAULT 0.0,
+                millionaire_at DATETIME DEFAULT NULL
             )"
         ).execute(&pool).await.unwrap();
 
@@ -1923,6 +2168,15 @@ mod tests {
         sqlx::query(
             "CREATE TABLE stream_live_dates (
                 live_date TEXT PRIMARY KEY
+            )"
+        ).execute(&pool).await.unwrap();
+
+        sqlx::query(
+            "CREATE TABLE daily_stream_stats (
+                live_date TEXT PRIMARY KEY,
+                total_attempts INTEGER DEFAULT 0,
+                junk_target INTEGER DEFAULT 0,
+                junk_caught INTEGER DEFAULT 0
             )"
         ).execute(&pool).await.unwrap();
 
@@ -2002,13 +2256,14 @@ mod tests {
         let b1_b = Fish::new("Pristine Banana 1".to_string(), Rarity::Divin, 21.0, 155.0, "pristine".to_string(), "Banana 1".to_string());
         repo.save_attempt(&p_b, true, Some(b1_b)).await.unwrap();
 
-        // Player A should now be dethroned because Player B has the latest Banana 1 catch!
+        // Under new rules, Player A remains King until Player B gets both bananas!
         let hist_2 = repo.get_banana_kings_history().await.unwrap();
         assert_eq!(hist_2.len(), 1);
         assert_eq!(hist_2[0].username, "player_a");
-        assert!(hist_2[0].dethroned_at.is_some());
+        assert!(hist_2[0].dethroned_at.is_none());
         let active_king_2 = repo.get_active_banana_king_details().await.unwrap();
-        assert!(active_king_2.is_none());
+        assert!(active_king_2.is_some());
+        assert_eq!(active_king_2.unwrap().username, "player_a");
 
         // Verify Player A still has their original catches in database, but Player B has their new catch
         let catches_a_after = repo.get_player_catches(p_a.id.unwrap()).await.unwrap();
@@ -2063,6 +2318,7 @@ mod tests {
             vip_until: None,
             gold: Some(0),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let fish = Fish::new("Brochet".to_string(), Rarity::Common, 12.5, 2.4, "state".to_string(), "desc".to_string());
@@ -2100,6 +2356,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // 1. Soft Reset Player A
@@ -2118,6 +2375,7 @@ mod tests {
             vip_until: None,
             gold: Some(200),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // Hard Reset Player B
@@ -2142,6 +2400,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // 1. Add 50 gold
@@ -2178,6 +2437,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let initial_player = repo.get_player("player_penalty_test").await.unwrap().unwrap();
@@ -2212,6 +2472,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let p_id_b = repo.restore_player(&crate::db::PlayerBackup {
@@ -2224,6 +2485,7 @@ mod tests {
             vip_until: None,
             gold: Some(50),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // 1. Transfert valide de 40 gold de A vers B
@@ -2258,6 +2520,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // Restore Player B with 100 gold
@@ -2271,6 +2534,7 @@ mod tests {
             vip_until: None,
             gold: Some(100),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // 1. Player A wins a coinflip of 50 gold
@@ -2356,6 +2620,30 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn test_daily_junk_event() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let d1 = chrono::NaiveDate::from_ymd_opt(2026, 6, 8).unwrap();
+        let d2 = chrono::NaiveDate::from_ymd_opt(2026, 6, 9).unwrap();
+
+        let (caught, target) = repo.get_or_update_daily_junk_event(d1).await.unwrap();
+        assert_eq!(caught, 0);
+        assert!(target >= 30 && target <= 150);
+
+        repo.increment_daily_attempts(d1).await.unwrap();
+        repo.increment_daily_attempts(d1).await.unwrap();
+
+        let (caught2, target2) = repo.get_or_update_daily_junk_event(d2).await.unwrap();
+        assert_eq!(caught2, 0);
+        assert_eq!(target2, 30);
+
+        let (caught_after, target_after) = repo.increment_daily_junk_caught(d2).await.unwrap();
+        assert_eq!(caught_after, 1);
+        assert_eq!(target_after, 30);
+    }
+
+    #[tokio::test]
     async fn test_gold_sale_vulnerability_fix() {
         let pool = setup_db().await;
         let repo = Repository::new(pool);
@@ -2371,6 +2659,7 @@ mod tests {
             vip_until: None,
             gold: Some(20),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let fish = Fish::new("Daurade".to_string(), Rarity::Common, 10.0, 1.0, "worn".to_string(), "Fish desc".to_string());
@@ -2415,6 +2704,7 @@ mod tests {
             vip_until: None,
             gold: Some(0),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let buyer_id = repo.restore_player(&crate::db::PlayerBackup {
@@ -2427,6 +2717,7 @@ mod tests {
             vip_until: None,
             gold: Some(50), // Buyer has only 50 gold!
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         // 2. Save a catch to seller
@@ -2472,6 +2763,7 @@ mod tests {
             vip_until: None,
             gold: Some(0),
             eco_notoriety: Some(1000),
+            millionaire_at: None,
         }).await.unwrap();
 
         let junk = Fish::new_junk("Sac Plastique Vert".to_string(), Rarity::Common, 0.5, 0.1, "worn".to_string(), "Junk desc".to_string());
@@ -2488,5 +2780,56 @@ mod tests {
 
         let player = repo.get_player("recycler_tester").await.unwrap().unwrap();
         assert_eq!(player.eco_notoriety, 980);
+    }
+
+    #[tokio::test]
+    async fn test_first_millionaire_status() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        // Restore two players
+        let p1_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_one".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(0),
+            eco_notoriety: Some(1000),
+            millionaire_at: None,
+        }).await.unwrap();
+
+        let p2_id = repo.restore_player(&crate::db::PlayerBackup {
+            username: "player_two".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(0),
+            eco_notoriety: Some(1000),
+            millionaire_at: None,
+        }).await.unwrap();
+
+        // 1. Give player 1 999,999 gold. Not yet first millionaire.
+        repo.update_player_gold(p1_id, 999_999).await.unwrap();
+        let player1 = repo.get_player("player_one").await.unwrap().unwrap();
+        assert_eq!(player1.gold, 999_999);
+        assert!(!player1.is_first_millionaire);
+
+        // 2. Give player 1 1 more gold (reaches 1,000,000). Becomes first millionaire!
+        repo.update_player_gold(p1_id, 1).await.unwrap();
+        let player1 = repo.get_player("player_one").await.unwrap().unwrap();
+        assert_eq!(player1.gold, 1_000_000);
+        assert!(player1.is_first_millionaire);
+
+        // 3. Give player 2 1,500,000 gold. Should NOT become first millionaire since player 1 already claimed it.
+        repo.update_player_gold(p2_id, 1_500_000).await.unwrap();
+        let player2 = repo.get_player("player_two").await.unwrap().unwrap();
+        assert_eq!(player2.gold, 1_500_000);
+        assert!(!player2.is_first_millionaire);
     }
 }
