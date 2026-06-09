@@ -1593,6 +1593,10 @@ impl Repository {
         receiver_id: i64,
         amount: i64,
     ) -> Result<(), sqlx::Error> {
+        if amount <= 0 {
+            return Err(sqlx::Error::Protocol("Transfer amount must be strictly positive".to_string()));
+        }
+
         let mut tx = self.pool.begin().await?;
 
         // 1. Déduction avec vérification atomique de solde suffisant
@@ -2502,6 +2506,17 @@ mod tests {
         let player_b_after = repo.get_player("player_b").await.unwrap().unwrap();
         assert_eq!(player_a_after.gold, 60); // Inchangé
         assert_eq!(player_b_after.gold, 90); // Inchangé
+
+        // 3. Transfert invalide avec montant négatif ou nul
+        let res_neg = repo.execute_gold_transfer(p_id_a, p_id_b, -10).await;
+        assert!(res_neg.is_err());
+        let res_zero = repo.execute_gold_transfer(p_id_a, p_id_b, 0).await;
+        assert!(res_zero.is_err());
+
+        let player_a_final = repo.get_player("player_a").await.unwrap().unwrap();
+        let player_b_final = repo.get_player("player_b").await.unwrap().unwrap();
+        assert_eq!(player_a_final.gold, 60); // Inchangé
+        assert_eq!(player_b_final.gold, 90); // Inchangé
     }
 
     #[tokio::test]

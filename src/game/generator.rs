@@ -12,6 +12,36 @@ pub fn generate_junk(use_english: bool) -> Option<Fish> {
     generate_item(true, use_english)
 }
 
+pub fn calculate_fish_weights(fish: &FishData, current_hour: u32, current_month: i32) -> i32 {
+    // Pondération horaire (Stream 20h - 00h, après 22h la logique s'inverse)
+    // Considère après 22h entre 22h et 4h du matin (prolongation live)
+    let is_after_22h = current_hour >= 22 || current_hour < 4;
+    
+    // A. Pondération saisonnière : 5 si en saison (ou sans restriction), 1 si hors-saison (20% de probabilité)
+    let s_weight = match &fish.months {
+        Some(months) if !months.is_empty() => {
+            if months.contains(&current_month) { 5 } else { 1 }
+        }
+        _ => 5,
+    };
+    
+    // B. Pondération horaire
+    let t_weight = match &fish.time_restriction {
+        Some(restriction) => {
+            if restriction == "before_22h" {
+                if is_after_22h { 1 } else { 5 }
+            } else if restriction == "after_22h" {
+                if is_after_22h { 5 } else { 1 }
+            } else {
+                5
+            }
+        }
+        None => 5,
+    };
+    
+    s_weight * t_weight
+}
+
 fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
     let mut rng = rand::thread_rng();
     
@@ -43,36 +73,10 @@ fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
         let current_month = now.month() as i32;
         let current_hour = now.hour();
         
-        // Pondération horaire (Stream 20h - 00h, après 22h la logique s'inverse)
-        // Considère après 22h entre 22h et 4h du matin (prolongation live)
-        let is_after_22h = current_hour >= 22 || current_hour < 4;
-        
         let mut weighted_pool = Vec::new();
         for fish in item_list {
-            // A. Pondération saisonnière : 5 si en saison (ou sans restriction), 1 si hors-saison (20% de probabilité)
-            let s_weight = match &fish.months {
-                Some(months) if !months.is_empty() => {
-                    if months.contains(&current_month) { 5 } else { 1 }
-                }
-                _ => 5,
-            };
-            
-            // B. Pondération horaire
-            let t_weight = match &fish.time_restriction {
-                Some(restriction) => {
-                    if restriction == "before_22h" {
-                        if is_after_22h { 1 } else { 5 }
-                    } else if restriction == "after_22h" {
-                        if is_after_22h { 5 } else { 1 }
-                    } else {
-                        5
-                    }
-                }
-                None => 5,
-            };
-            
-            // Le poids combiné est le produit des deux pondérations
-            weighted_pool.push((fish, s_weight * t_weight));
+            let weight = calculate_fish_weights(fish, current_hour, current_month);
+            weighted_pool.push((fish, weight));
         }
         
         let total_pool_weight: i32 = weighted_pool.iter().map(|(_, w)| w).sum();
@@ -164,6 +168,74 @@ fn generate_item(is_junk: bool, use_english: bool) -> Option<Fish> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
+
+    fn mock_fish_data(time_restriction: Option<String>, months: Option<Vec<i32>>) -> FishData {
+        FishData {
+            name: "Test Fish".to_string(),
+            size_min: 1.0,
+            size_mean: 10.0,
+            size_sigma: 2.0,
+            force_pristine: None,
+            force_state: None,
+            descriptions: HashMap::new(),
+            id: Some(1),
+            price: Some(10),
+            location: None,
+            preferred_time: None,
+            preferred_season: None,
+            months,
+            fun_fact: None,
+            time_restriction,
+            bin: None,
+            recycling_notoriety_bonus: None,
+            recycling_notoriety_malus: None,
+            scrap_metal_kg: None,
+        }
+    }
+
+    #[test]
+    fn test_calculate_fish_weights_time_restrictions() {
+        // A. Fish active BEFORE 22h
+        let fish_day = mock_fish_data(Some("before_22h".to_string()), None);
+        
+        // 1. Check at 20h (Daytime/Evening -> active)
+        // Should have full weight: s_weight (5) * t_weight (5) = 25
+        assert_eq!(calculate_fish_weights(&fish_day, 20, 6), 25);
+        
+        // 2. Check at 23h (Late night -> inactive)
+        // Should have reduced weight: s_weight (5) * t_weight (1) = 5
+        assert_eq!(calculate_fish_weights(&fish_day, 23, 6), 5);
+        
+        // 3. Check at 3h (Early morning -> inactive)
+        // Should have reduced weight: s_weight (5) * t_weight (1) = 5
+        assert_eq!(calculate_fish_weights(&fish_day, 3, 6), 5);
+
+        // B. Fish active AFTER 22h
+        let fish_night = mock_fish_data(Some("after_22h".to_string()), None);
+        
+        // 1. Check at 20h (Daytime/Evening -> inactive)
+        // Should have reduced weight: s_weight (5) * t_weight (1) = 5
+        assert_eq!(calculate_fish_weights(&fish_night, 20, 6), 5);
+        
+        // 2. Check at 23h (Late night -> active)
+        // Should have full weight: s_weight (5) * t_weight (5) = 25
+        assert_eq!(calculate_fish_weights(&fish_night, 23, 6), 25);
+    }
+
+    #[test]
+    fn test_calculate_fish_weights_seasonal_restrictions() {
+        // Summer fish (June, July, August)
+        let summer_fish = mock_fish_data(None, Some(vec![6, 7, 8]));
+        
+        // 1. Check in July (Month 7 -> In season)
+        // Should have full weight: s_weight (5) * t_weight (5) = 25
+        assert_eq!(calculate_fish_weights(&summer_fish, 12, 7), 25);
+        
+        // 2. Check in December (Month 12 -> Out of season)
+        // Should have reduced weight: s_weight (1) * t_weight (5) = 5
+        assert_eq!(calculate_fish_weights(&summer_fish, 12, 12), 5);
+    }
 
     #[test]
     fn test_generate_fish() {
