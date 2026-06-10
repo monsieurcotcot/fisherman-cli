@@ -341,6 +341,7 @@ async fn main() -> Result<(), MyError> {
         .route("/api/obs/stream", get(api::obs_stream))
         .route("/api/admin/sounds", get(api::list_sounds))
         .route("/api/admin/sounds/upload", axum::routing::post(api::upload_sound))
+        .route("/api/admin/players", get(api::list_players))
         .fallback_service(ServeFile::new("static/index.html"))
         .layer(CorsLayer::permissive())
         .layer(SetResponseHeaderLayer::if_not_present(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.jtvnw.net https://*.twitch.tv; connect-src 'self';")))

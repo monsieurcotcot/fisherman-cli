@@ -755,6 +755,7 @@ pub async fn list_sounds(
 
 pub async fn upload_sound(
     headers: HeaderMap,
+    Query(params): Query<HashMap<String, String>>,
     mut multipart: Multipart,
 ) -> impl IntoResponse {
     let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
@@ -763,6 +764,7 @@ pub async fn upload_sound(
         return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
     }
 
+    let target_username = params.get("username").cloned();
     let mut file_saved = false;
     let mut error_msg = String::new();
 
@@ -771,16 +773,23 @@ pub async fn upload_sound(
         let file_name = field.file_name().unwrap_or_default().to_string();
 
         if name == "file" && file_name.ends_with(".mp3") {
+            let base_name = if let Some(ref user) = target_username {
+                user.clone()
+            } else {
+                file_name.strip_suffix(".mp3").unwrap_or(&file_name).to_string()
+            };
+
             // Limit file name to alphanumeric/lowercase characters for safety
-            let sanitized_name: String = file_name.chars()
-                .filter(|c| c.is_ascii_alphanumeric() || *c == '.' || *c == '_' || *c == '-')
+            let sanitized_base: String = base_name.chars()
+                .filter(|c| c.is_ascii_alphanumeric() || *c == '_' || *c == '-')
                 .collect();
 
-            let sanitized_name = sanitized_name.to_lowercase();
-            if !sanitized_name.ends_with(".mp3") {
-                error_msg = "Format de fichier invalide. Seul le .mp3 est autorisé.".to_string();
+            if sanitized_base.is_empty() {
+                error_msg = "Nom de fichier ou d'utilisateur invalide".to_string();
                 break;
             }
+
+            let sanitized_name = format!("{}.mp3", sanitized_base.to_lowercase());
 
             if let Ok(data) = field.bytes().await {
                 // Limit file size (5MB)
@@ -809,6 +818,29 @@ pub async fn upload_sound(
             error_msg = "Aucun fichier valide trouvé".to_string();
         }
         (axum::http::StatusCode::BAD_REQUEST, error_msg).into_response()
+    }
+}
+
+pub async fn list_players(
+    headers: HeaderMap,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    match state.repo.get_all_players().await {
+        Ok(players) => {
+            let mut usernames: Vec<String> = players.into_iter().map(|p| p.username).collect();
+            usernames.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+            Json(usernames).into_response()
+        }
+        Err(e) => {
+            tracing::error!("Failed to get all players: {}", e);
+            (axum::http::StatusCode::INTERNAL_SERVER_ERROR, "Failed to get players").into_response()
+        }
     }
 }
 

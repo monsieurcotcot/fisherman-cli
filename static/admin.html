@@ -582,13 +582,20 @@
                 <div class="glass-card" style="max-width: 100%; background: rgba(0,0,0,0.2); padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 10px; min-height: unset; height: auto;">
                     <h3 style="color: var(--accent-streamer); margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">📤 Importer un fichier MP3</h3>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">
-                        Nommez le fichier exactement comme le pseudo du viewer Twitch (ex: <code>monsieurcotcot.mp3</code>). Format max : 5 Mo.
+                        Associez un fichier MP3 à un viewer/pêcheur enregistré. Format max : 5 Mo.
                     </p>
                     <form id="uploadSoundForm" onsubmit="handleSoundUpload(event)" style="display: flex; flex-direction: column; gap: 12px;">
                         <div class="form-group" style="margin-bottom: 0;">
+                            <label for="playerUploadSelect" style="font-size: 0.85rem; margin-bottom: 6px; display: block;">Lier au viewer :</label>
+                            <select id="playerUploadSelect" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); margin-bottom: 10px;">
+                                <option value="">-- Chargement des viewers... --</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="soundFileInput" style="font-size: 0.85rem; margin-bottom: 6px; display: block;">Sélectionner le fichier (.mp3) :</label>
                             <input type="file" id="soundFileInput" accept=".mp3" required style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; width: 100%; color: var(--text-main);">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm" id="uploadSoundBtn">📤 Uploader</button>
+                        <button type="submit" class="btn btn-primary btn-sm" id="uploadSoundBtn">📤 Uploader &amp; Lier</button>
                     </form>
                     <div id="uploadStatus" style="margin-top: 5px; font-size: 0.9rem;"></div>
                 </div>
@@ -602,9 +609,15 @@
                             <option value="">-- Chargement des fichiers... --</option>
                         </select>
                     </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button onclick="playSelectedSound()" class="btn btn-accent btn-sm" style="color: #000; flex-grow: 1;">▶️ Écouter le son</button>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button onclick="playSelectedSound()" class="btn btn-accent btn-sm" style="color: #000; flex-grow: 1;">▶️ Écouter</button>
                         <button onclick="loadSoundsList()" class="btn btn-secondary btn-sm" style="flex-grow: 1;">🔄 Actualiser</button>
+                    </div>
+
+                    <h3 style="color: var(--accent-streamer); margin-top: 10px; margin-bottom: 5px; font-size: 1rem; display: flex; align-items: center; gap: 6px;">👥 Statut par pêcheur</h3>
+                    <input type="text" id="viewerSearchInput" oninput="filterViewerSounds()" placeholder="🔍 Rechercher un viewer..." style="width: 100%; padding: 8px 12px; border-radius: 6px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); font-size: 0.85rem; margin-bottom: 8px; outline: none;">
+                    <div id="viewerSoundsStatusList" style="max-height: 250px; overflow-y: auto; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 8px;">
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Chargement en cours...</div>
                     </div>
                 </div>
 
@@ -948,37 +961,164 @@
             }
         }
 
+        let globalPlayers = [];
+        let globalSounds = [];
+
         async function loadSoundsList() {
             const token = sessionStorage.getItem('admin_token');
             if (!token) return;
 
             const select = document.getElementById('soundSelect');
+            const playerSelect = document.getElementById('playerUploadSelect');
+            const statusList = document.getElementById('viewerSoundsStatusList');
+
             select.innerHTML = '<option value="">-- Chargement des fichiers... --</option>';
+            playerSelect.innerHTML = '<option value="">-- Chargement des viewers... --</option>';
+            statusList.innerHTML = '<div style="font-size: 0.85rem; color: var(--text-muted);">Chargement en cours...</div>';
 
             try {
-                const res = await fetch('/api/admin/sounds', {
+                // Fetch sounds list
+                const soundsRes = await fetch('/api/admin/sounds', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                if (res.ok) {
-                    const files = await res.json();
-                    if (files.length === 0) {
+                
+                // Fetch players list
+                const playersRes = await fetch('/api/admin/players', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (soundsRes.ok && playersRes.ok) {
+                    globalSounds = await soundsRes.json();
+                    globalPlayers = await playersRes.json();
+
+                    // Populate Sound Select
+                    if (globalSounds.length === 0) {
                         select.innerHTML = '<option value="">Aucun fichier MP3 disponible</option>';
                     } else {
                         select.innerHTML = '';
-                        files.forEach(file => {
+                        globalSounds.forEach(file => {
                             const opt = document.createElement('option');
                             opt.value = file;
                             opt.textContent = file;
                             select.appendChild(opt);
                         });
                     }
+
+                    // Populate Player Select
+                    playerSelect.innerHTML = '<option value="">-- Choisir un viewer --</option>';
+                    globalPlayers.forEach(username => {
+                        const opt = document.createElement('option');
+                        opt.value = username;
+                        opt.textContent = username;
+                        playerSelect.appendChild(opt);
+                    });
+
+                    // Render status list
+                    renderViewerSounds();
                 } else {
-                    select.innerHTML = '<option value="">Erreur de chargement des fichiers</option>';
+                    select.innerHTML = '<option value="">Erreur de chargement</option>';
+                    playerSelect.innerHTML = '<option value="">Erreur de chargement</option>';
+                    statusList.innerHTML = '<div style="font-size: 0.85rem; color: var(--danger);">Erreur lors de la récupération des données.</div>';
                 }
             } catch (e) {
-                console.error("Error loading sounds list:", e);
+                console.error("Error loading sounds and players:", e);
                 select.innerHTML = '<option value="">Erreur réseau</option>';
+                playerSelect.innerHTML = '<option value="">Erreur réseau</option>';
+                statusList.innerHTML = '<div style="font-size: 0.85rem; color: var(--danger);">Erreur réseau.</div>';
             }
+        }
+
+        function renderViewerSounds(filterQuery = '') {
+            const statusList = document.getElementById('viewerSoundsStatusList');
+            statusList.innerHTML = '';
+
+            const query = filterQuery.toLowerCase().trim();
+            const filteredPlayers = globalPlayers.filter(username => username.toLowerCase().includes(query));
+
+            if (filteredPlayers.length === 0) {
+                statusList.innerHTML = '<div style="font-size: 0.85rem; color: var(--text-muted);">Aucun pêcheur correspondant.</div>';
+                return;
+            }
+
+            filteredPlayers.forEach(username => {
+                const soundFileName = `${username.toLowerCase()}.mp3`;
+                const hasSound = globalSounds.includes(soundFileName);
+
+                const item = document.createElement('div');
+                item.style.display = 'flex';
+                item.style.justify = 'space-between';
+                item.style.alignItems = 'center';
+                item.style.padding = '8px 10px';
+                item.style.background = 'rgba(255, 255, 255, 0.02)';
+                item.style.borderRadius = '6px';
+                item.style.border = '1px solid rgba(255, 255, 255, 0.03)';
+                item.style.transition = 'background 0.2s';
+                
+                // Allow clicking the name to select in the upload dropdown
+                const nameSpan = document.createElement('span');
+                nameSpan.style.fontWeight = '500';
+                nameSpan.style.fontSize = '0.9rem';
+                nameSpan.style.color = 'var(--text-main)';
+                nameSpan.style.cursor = 'pointer';
+                nameSpan.textContent = `@${username}`;
+                nameSpan.title = 'Cliquez pour sélectionner ce viewer dans l\'importateur';
+                nameSpan.onclick = () => selectPlayerForUpload(username);
+
+                const rightContainer = document.createElement('div');
+                rightContainer.style.display = 'flex';
+                rightContainer.style.alignItems = 'center';
+                rightContainer.style.gap = '8px';
+
+                if (hasSound) {
+                    const badge = document.createElement('span');
+                    badge.style.color = '#00e676';
+                    badge.style.fontSize = '0.8rem';
+                    badge.style.fontWeight = '600';
+                    badge.textContent = '🔊 Configuré';
+
+                    const playBtn = document.createElement('button');
+                    playBtn.className = 'btn btn-secondary btn-sm';
+                    playBtn.style.padding = '2px 8px';
+                    playBtn.style.fontSize = '0.75rem';
+                    playBtn.style.width = 'auto';
+                    playBtn.textContent = '▶️ Écouter';
+                    playBtn.onclick = () => playSingleSound(username);
+
+                    rightContainer.appendChild(badge);
+                    rightContainer.appendChild(playBtn);
+                } else {
+                    const badge = document.createElement('span');
+                    badge.style.color = 'var(--text-muted)';
+                    badge.style.fontSize = '0.8rem';
+                    badge.textContent = '❌ Aucun son';
+                    rightContainer.appendChild(badge);
+                }
+
+                item.appendChild(nameSpan);
+                item.appendChild(rightContainer);
+                statusList.appendChild(item);
+            });
+        }
+
+        function filterViewerSounds() {
+            const query = document.getElementById('viewerSearchInput').value;
+            renderViewerSounds(query);
+        }
+
+        function selectPlayerForUpload(username) {
+            const playerSelect = document.getElementById('playerUploadSelect');
+            playerSelect.value = username;
+            
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.innerHTML = `<span style="color: var(--primary);">Viewer <strong>@${username}</strong> sélectionné pour l'import.</span>`;
+        }
+
+        function playSingleSound(username) {
+            const audio = new Audio(`/static/sounds/${username.toLowerCase()}.mp3`);
+            audio.play().catch(err => {
+                console.error("Impossible de jouer le son:", err);
+                alert(`Impossible de lire le fichier pour @${username} : il se peut que le format soit invalide.`);
+            });
         }
 
         async function handleSoundUpload(event) {
@@ -988,7 +1128,14 @@
 
             const statusDiv = document.getElementById('uploadStatus');
             const fileInput = document.getElementById('soundFileInput');
+            const playerSelect = document.getElementById('playerUploadSelect');
             const uploadBtn = document.getElementById('uploadSoundBtn');
+
+            const selectedPlayer = playerSelect.value;
+            if (!selectedPlayer) {
+                statusDiv.innerHTML = '<span style="color: var(--danger);">Veuillez sélectionner un viewer dans la liste.</span>';
+                return;
+            }
 
             if (fileInput.files.length === 0) {
                 statusDiv.innerHTML = '<span style="color: var(--danger);">Veuillez sélectionner un fichier.</span>';
@@ -1008,14 +1155,15 @@
             formData.append('file', file);
 
             try {
-                const res = await fetch('/api/admin/sounds/upload', {
+                const url = `/api/admin/sounds/upload?username=${encodeURIComponent(selectedPlayer)}`;
+                const res = await fetch(url, {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
 
                 if (res.ok) {
-                    statusDiv.innerHTML = '<span style="color: var(--success);">✅ Importé avec succès !</span>';
+                    statusDiv.innerHTML = `<span style="color: var(--success);">✅ Son associé avec succès à @${selectedPlayer} !</span>`;
                     fileInput.value = '';
                     await loadSoundsList();
                 } else {
