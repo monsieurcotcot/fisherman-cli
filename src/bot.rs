@@ -119,11 +119,12 @@ fn extract_state_and_quantity(tokens: &mut Vec<&str>) -> (Option<String>, i64) {
 
 pub fn normalize_bin_name(name: &str) -> Option<&'static str> {
     match name.to_lowercase().as_str() {
-        "bleu" | "blue" => Some("bleu"),
+        "bleu" | "bleue" | "blue" => Some("bleu"),
         "jaune" | "yellow" => Some("jaune"),
-        "vert" | "green" => Some("vert"),
+        "vert" | "verte" | "green" => Some("vert"),
         "marron" | "brown" => Some("marron"),
-        "gris" | "gray" | "grey" => Some("gris"),
+        "gris" | "grise" | "gray" | "grey" => Some("gris"),
+        "noir" | "noire" | "black" => Some("noir"),
         "decharge" | "décharge" | "landfill" | "scrapyard" | "dump" | "scrap" => Some("decharge"),
         _ => None,
     }
@@ -720,7 +721,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             "💰 Vente: !fish sell <nom/id> [état] [qté], ou '!fish sell all [rareté] [état]'. Ex: '!fish sell #42', '!fish sell all', '!fish sell all rare', '!fish sell all pristine', '!fish sell all common worn'. Confirme par '!fish sell oui' (durée 1m).".to_string()
                         },
                         "recycle" | "recycler" => {
-                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu (papier/carton), jaune (plastiques/métaux), vert (verre), marron (organique), gris (e-waste/ampoules), decharge (autres).".to_string()
+                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu (papier/carton), jaune (plastiques/métaux), vert (verre), marron (organique), gris (e-waste/ampoules), noir(e) (tout-venant), decharge (autres).".to_string()
                         },
                         "trade" | "echange" | "échanger" | "echanger" => {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
@@ -1762,14 +1763,14 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         let parsed = parse_recycle_args(arg);
                         if parsed.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish recycle #[id_capture] [poubelle] (ex : !fish recycle #42 jaune). Poubelles : bleu, jaune, vert, marron, gris, decharge.", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish recycle #[id_capture] [poubelle] (ex : !fish recycle #42 jaune). Poubelles : bleu, jaune, vert, marron, gris, noir(e), decharge.", username)).await;
                             return;
                         }
 
                         let (catch_id, bin_name) = parsed.unwrap();
                         let normalized_bin = normalize_bin_name(&bin_name);
                         if normalized_bin.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, poubelle '{}' inconnue. Poubelles valides : bleu, jaune, vert, marron, gris, decharge.", username, bin_name)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, poubelle '{}' inconnue. Poubelles valides : bleu, jaune, vert, marron, gris, noir(e), decharge.", username, bin_name)).await;
                             return;
                         }
                         let normalized_bin = normalized_bin.unwrap();
@@ -3379,16 +3380,22 @@ mod tests {
     #[test]
     fn test_recycle_helpers() {
         assert_eq!(normalize_bin_name("bleu"), Some("bleu"));
+        assert_eq!(normalize_bin_name("bleue"), Some("bleu"));
         assert_eq!(normalize_bin_name("BLUE"), Some("bleu"));
         assert_eq!(normalize_bin_name("jaune"), Some("jaune"));
         assert_eq!(normalize_bin_name("yellow"), Some("jaune"));
         assert_eq!(normalize_bin_name("vert"), Some("vert"));
+        assert_eq!(normalize_bin_name("verte"), Some("vert"));
         assert_eq!(normalize_bin_name("green"), Some("vert"));
         assert_eq!(normalize_bin_name("marron"), Some("marron"));
         assert_eq!(normalize_bin_name("brown"), Some("marron"));
         assert_eq!(normalize_bin_name("gris"), Some("gris"));
+        assert_eq!(normalize_bin_name("grise"), Some("gris"));
         assert_eq!(normalize_bin_name("grey"), Some("gris"));
         assert_eq!(normalize_bin_name("gray"), Some("gris"));
+        assert_eq!(normalize_bin_name("noir"), Some("noir"));
+        assert_eq!(normalize_bin_name("noire"), Some("noir"));
+        assert_eq!(normalize_bin_name("black"), Some("noir"));
         assert_eq!(normalize_bin_name("decharge"), Some("decharge"));
         assert_eq!(normalize_bin_name("décharge"), Some("decharge"));
         assert_eq!(normalize_bin_name("dump"), Some("decharge"));

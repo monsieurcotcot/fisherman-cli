@@ -458,26 +458,39 @@ pub async fn get_admin_json(
     }
 }
 
-async fn sync_english_file_parameters(file_type: &str, fr_content: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let en_path = match file_type {
-        "fish_data" => "data/fish_data_en.json",
-        "junk_data" => "data/junk_data_en.json",
-        "fail_messages" => "data/fail_messages_en.json",
-        _ => return Ok(()),
+async fn sync_lang_parameters(file_type: &str, saved_lang: &str, saved_content: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    let (target_path, src_val) = match saved_lang {
+        "en" => {
+            let target = match file_type {
+                "fish_data" => "data/fish_data.json",
+                "junk_data" => "data/junk_data.json",
+                "fail_messages" => "data/fail_messages.json",
+                _ => return Ok(()),
+            };
+            (target, serde_json::from_str::<serde_json::Value>(saved_content)?)
+        }
+        _ => {
+            let target = match file_type {
+                "fish_data" => "data/fish_data_en.json",
+                "junk_data" => "data/junk_data_en.json",
+                "fail_messages" => "data/fail_messages_en.json",
+                _ => return Ok(()),
+            };
+            (target, serde_json::from_str::<serde_json::Value>(saved_content)?)
+        }
     };
 
-    if !std::path::Path::new(en_path).exists() {
-        tokio::fs::write(en_path, fr_content).await?;
+    if !std::path::Path::new(target_path).exists() {
+        tokio::fs::write(target_path, saved_content).await?;
         return Ok(());
     }
 
-    let fr_val: serde_json::Value = serde_json::from_str(fr_content)?;
-    let en_content = tokio::fs::read_to_string(en_path).await?;
-    let mut en_val: serde_json::Value = serde_json::from_str(&en_content)?;
+    let target_content = tokio::fs::read_to_string(target_path).await?;
+    let mut target_val: serde_json::Value = serde_json::from_str(&target_content)?;
 
     match file_type {
         "fish_data" | "junk_data" => {
-            if let (Some(fr_obj), Some(en_obj)) = (fr_val.as_object(), en_val.as_object_mut()) {
+            if let (Some(fr_obj), Some(en_obj)) = (src_val.as_object(), target_val.as_object_mut()) {
                 for (rarity, fr_list_val) in fr_obj {
                     if let Some(fr_list) = fr_list_val.as_array() {
                         let mut new_en_list = Vec::new();
@@ -516,7 +529,7 @@ async fn sync_english_file_parameters(file_type: &str, fr_content: &str) -> Resu
             }
         }
         "fail_messages" => {
-            if let (Some(fr_arr), Some(en_arr)) = (fr_val.as_array(), en_val.as_array_mut()) {
+            if let (Some(fr_arr), Some(en_arr)) = (src_val.as_array(), target_val.as_array_mut()) {
                 let mut new_en_arr = Vec::new();
                 for (i, fr_item) in fr_arr.iter().enumerate() {
                     let old_en_item = en_arr.get(i);
@@ -556,14 +569,14 @@ async fn sync_english_file_parameters(file_type: &str, fr_content: &str) -> Resu
                     }
                     new_en_arr.push(new_en_item);
                 }
-                en_val = serde_json::Value::Array(new_en_arr);
+                target_val = serde_json::Value::Array(new_en_arr);
             }
         }
         _ => {}
     }
 
-    let updated_en_content = serde_json::to_string_pretty(&en_val)?;
-    tokio::fs::write(en_path, updated_en_content).await?;
+    let updated_target_content = serde_json::to_string_pretty(&target_val)?;
+    tokio::fs::write(target_path, updated_target_content).await?;
     Ok(())
 }
 
@@ -630,11 +643,9 @@ pub async fn save_admin_json(
         return (axum::http::StatusCode::INTERNAL_SERVER_ERROR, format!("Échec de l'écriture: {}", e)).into_response();
     }
 
-    // Synchroniser automatiquement les paramètres de jeu avec le fichier anglais si on a édité le français
-    if payload.lang != "en" {
-        if let Err(sync_err) = sync_english_file_parameters(&payload.file, &payload.content).await {
-            tracing::error!("Failed to sync English file parameters during save: {}", sync_err);
-        }
+    // Synchroniser automatiquement les paramètres de jeu avec l'autre fichier de langue
+    if let Err(sync_err) = sync_lang_parameters(&payload.file, &payload.lang, &payload.content).await {
+        tracing::error!("Failed to sync language file parameters during save: {}", sync_err);
     }
 
     // 5. Trigger static hot-reload of game configuration!
