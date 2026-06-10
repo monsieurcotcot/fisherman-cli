@@ -138,6 +138,28 @@ Introduire un système de recyclage des déchets pour récupérer de la ferraill
 
 ---
 
+## 📅 Juin 2026 - Version 1.2.8 (Sécurité API Twitch, Normalisation des Poubelles & Synchronisation Trilingue)
+
+### 🚀 Objectif
+Fiabiliser les tâches de fond de gestion des rôles Twitch (VIP), améliorer l'ergonomie de la commande de recyclage en autorisant les variantes de genre pour les couleurs de poubelles, et assurer la cohérence automatique des bases de données de déchets française et anglaise.
+
+### 🛠️ Changements Majeurs
+
+1. **Sécurisation du Retrait des VIPs** :
+   * Remplacement des jetons d'accès du bot par les jetons du diffuseur (`streamer_tokens.json`) pour l'appel Helix de suppression de VIP (`remove_vip`), évitant ainsi les erreurs `401 Unauthorized`.
+   * Intégration d'un système de rafraîchissement automatique des jetons du diffuseur si expirés avant l'appel API.
+
+2. **Support de la Poubelle Noire et Flexibilité Orthographique** :
+   * Ajout de la poubelle `"noir"` (et ses variantes `"noire"`, `"black"`) dans le système de recyclage.
+   * Amélioration de la fonction `normalize_bin_name` pour supporter et normaliser automatiquement les versions féminines des couleurs (`bleue`, `verte`, `grise`, `noire`).
+   * Mise à jour des textes d'aide de la commande `!fish recycle` pour afficher clairement les options autorisées : `bleu(e), jaune, vert(e), marron, gris(e), noir(e), decharge`.
+
+3. **Synchronisation Bidirectionnelle & Traduction Anglaise** :
+   * Traduction complète des descriptions de déchets en anglais (`junk_data_en.json`).
+   * Implémentation d'une synchronisation automatique bidirectionnelle au chargement de l'API pour copier les paramètres techniques (prix de revente, type de poubelle, poids, etc.) d'un fichier à l'autre tout en préservant les traductions textuelles spécifiques.
+
+---
+
 ## 📅 Juin 2026 - Version 1.2.7 (Badge Unique Premier Millionnaire)
 
 ### 🚀 Objectif
