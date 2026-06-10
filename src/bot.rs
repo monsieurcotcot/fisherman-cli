@@ -721,7 +721,7 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             "💰 Vente: !fish sell <nom/id> [état] [qté], ou '!fish sell all [rareté] [état]'. Ex: '!fish sell #42', '!fish sell all', '!fish sell all rare', '!fish sell all pristine', '!fish sell all common worn'. Confirme par '!fish sell oui' (durée 1m).".to_string()
                         },
                         "recycle" | "recycler" => {
-                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu (papier/carton), jaune (plastiques/métaux), vert (verre), marron (organique), gris (e-waste/ampoules), noir(e) (tout-venant), decharge (autres).".to_string()
+                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu(e) (papier/carton), jaune (plastiques/métaux), vert(e) (verre), marron (organique), gris(e) (e-waste/ampoules), noir(e) (tout-venant), decharge (autres).".to_string()
                         },
                         "trade" | "echange" | "échanger" | "echanger" => {
                             "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
@@ -1763,14 +1763,14 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
 
                         let parsed = parse_recycle_args(arg);
                         if parsed.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish recycle #[id_capture] [poubelle] (ex : !fish recycle #42 jaune). Poubelles : bleu, jaune, vert, marron, gris, noir(e), decharge.", username)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish recycle #[id_capture] [poubelle] (ex : !fish recycle #42 jaune). Poubelles : bleu(e), jaune, vert(e), marron, gris(e), noir(e), decharge.", username)).await;
                             return;
                         }
 
                         let (catch_id, bin_name) = parsed.unwrap();
                         let normalized_bin = normalize_bin_name(&bin_name);
                         if normalized_bin.is_none() {
-                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, poubelle '{}' inconnue. Poubelles valides : bleu, jaune, vert, marron, gris, noir(e), decharge.", username, bin_name)).await;
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, poubelle '{}' inconnue. Poubelles valides : bleu(e), jaune, vert(e), marron, gris(e), noir(e), decharge.", username, bin_name)).await;
                             return;
                         }
                         let normalized_bin = normalized_bin.unwrap();
