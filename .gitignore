@@ -15,6 +15,7 @@
 !/data/junk_data.json
 !/data/junk_data_en.json
 !/data/fail_messages.json
+!/data/permanent_vips.json
 *.db
 *.db-journal
 tokens.json

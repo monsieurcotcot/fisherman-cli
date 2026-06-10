@@ -84,6 +84,9 @@ impl Player {
     }
 
     pub fn is_vip(&self) -> bool {
+        if crate::config::is_permanent_vip(&self.username) {
+            return true;
+        }
         match self.vip_until {
             Some(until) => until > Utc::now(),
             None => false,

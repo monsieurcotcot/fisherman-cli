@@ -358,6 +358,20 @@ pub fn get_junk_names_lower(use_english: bool) -> Arc<std::collections::HashSet<
     }
 }
 
+pub fn is_permanent_vip(username: &str) -> bool {
+    let name_lower = username.to_lowercase();
+    let paths = &["/app/data/permanent_vips.json", "data/permanent_vips.json"];
+    for path in paths {
+        if let Ok(content) = std::fs::read_to_string(path) {
+            if let Ok(list) = serde_json::from_str::<Vec<String>>(&content) {
+                return list.iter().any(|v| v.to_lowercase() == name_lower);
+            }
+        }
+    }
+    false
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -380,5 +394,13 @@ mod tests {
             parse_json_from_file_or_embedded(&["non_existent_file.json"], invalid_json);
         
         assert!(result.is_err(), "Invalid JSON must return an error and not panic");
+    }
+
+    #[test]
+    fn test_is_permanent_vip() {
+        // nigntube is in permanent_vips.json and should be resolved as permanent VIP case-insensitively
+        assert!(is_permanent_vip("nigntube"));
+        assert!(is_permanent_vip("NIGNTUBE"));
+        assert!(!is_permanent_vip("non_existent_random_user"));
     }
 }

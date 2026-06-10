@@ -10,6 +10,11 @@ pub fn start_vip_cleanup_task(state: Arc<AppState>) {
             if let Ok(expired_vips) = state.repo.get_expired_vips().await {
                 for player in expired_vips {
                     tracing::info!("⏳ [VIP] Expiration pour @{}", player.username);
+                    if crate::config::is_permanent_vip(&player.username) {
+                        let _ = state.repo.remove_vip_status(player.id.unwrap()).await;
+                        tracing::info!("ℹ️ [VIP] @{} est un VIP permanent. Suppression de son expiration en base sans appel API Twitch.", player.username);
+                        continue;
+                    }
                     if let Some(mut tokens) = state.auth.load_streamer_tokens() {
                         if tokens.expires_at < chrono::Utc::now() {
                             if let Ok(new_tokens) = state.auth.refresh_tokens(&tokens.refresh_token).await {
