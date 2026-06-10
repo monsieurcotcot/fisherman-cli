@@ -10,7 +10,13 @@ pub fn start_vip_cleanup_task(state: Arc<AppState>) {
             if let Ok(expired_vips) = state.repo.get_expired_vips().await {
                 for player in expired_vips {
                     tracing::info!("⏳ [VIP] Expiration pour @{}", player.username);
-                    if let Some(tokens) = state.auth.load_tokens() {
+                    if let Some(mut tokens) = state.auth.load_streamer_tokens() {
+                        if tokens.expires_at < chrono::Utc::now() {
+                            if let Ok(new_tokens) = state.auth.refresh_tokens(&tokens.refresh_token).await {
+                                let _ = state.auth.save_streamer_tokens(&new_tokens);
+                                tokens = new_tokens;
+                            }
+                        }
                         if let Ok(broadcaster_id) = state.auth.get_user_id(&tokens.access_token, &state.channel).await {
                             if let Ok(user_id) = state.auth.get_user_id(&tokens.access_token, &player.username).await {
                                 match state.auth.remove_vip(&tokens.access_token, &broadcaster_id, &user_id).await {
