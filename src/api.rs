@@ -458,6 +458,115 @@ pub async fn get_admin_json(
     }
 }
 
+async fn sync_english_file_parameters(file_type: &str, fr_content: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    let en_path = match file_type {
+        "fish_data" => "data/fish_data_en.json",
+        "junk_data" => "data/junk_data_en.json",
+        "fail_messages" => "data/fail_messages_en.json",
+        _ => return Ok(()),
+    };
+
+    if !std::path::Path::new(en_path).exists() {
+        tokio::fs::write(en_path, fr_content).await?;
+        return Ok(());
+    }
+
+    let fr_val: serde_json::Value = serde_json::from_str(fr_content)?;
+    let en_content = tokio::fs::read_to_string(en_path).await?;
+    let mut en_val: serde_json::Value = serde_json::from_str(&en_content)?;
+
+    match file_type {
+        "fish_data" | "junk_data" => {
+            if let (Some(fr_obj), Some(en_obj)) = (fr_val.as_object(), en_val.as_object_mut()) {
+                for (rarity, fr_list_val) in fr_obj {
+                    if let Some(fr_list) = fr_list_val.as_array() {
+                        let mut new_en_list = Vec::new();
+                        let empty_vec = Vec::new();
+                        let old_en_list = en_obj.get(rarity)
+                            .and_then(|v| v.as_array())
+                            .unwrap_or(&empty_vec);
+
+                        for fr_item in fr_list {
+                            let fr_id = fr_item.get("id").and_then(|v| v.as_i64());
+                            let old_en_item = if let Some(target_id) = fr_id {
+                                old_en_list.iter().find(|item| {
+                                    item.get("id").and_then(|v| v.as_i64()) == Some(target_id)
+                                })
+                            } else {
+                                None
+                            };
+
+                            let mut new_en_item = fr_item.clone();
+                            if let Some(new_en_obj) = new_en_item.as_object_mut() {
+                                if let Some(old_item) = old_en_item {
+                                    if let Some(en_item_obj) = old_item.as_object() {
+                                        for text_field in &["name", "description", "descriptions", "fun_fact", "location", "preferred_time", "preferred_season"] {
+                                            if let Some(val) = en_item_obj.get(*text_field) {
+                                                new_en_obj.insert(text_field.to_string(), val.clone());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            new_en_list.push(new_en_item);
+                        }
+                        en_obj.insert(rarity.clone(), serde_json::Value::Array(new_en_list));
+                    }
+                }
+            }
+        }
+        "fail_messages" => {
+            if let (Some(fr_arr), Some(en_arr)) = (fr_val.as_array(), en_val.as_array_mut()) {
+                let mut new_en_arr = Vec::new();
+                for (i, fr_item) in fr_arr.iter().enumerate() {
+                    let old_en_item = en_arr.get(i);
+                    let mut new_en_item = fr_item.clone();
+                    
+                    if let Some(fr_obj) = fr_item.as_object() {
+                        let gold_p = fr_obj.get("gold_penalty").cloned();
+                        let cooldown_p = fr_obj.get("cooldown_penalty").cloned();
+                        
+                        let text_val = if let Some(old_item) = old_en_item {
+                            if let Some(old_obj) = old_item.as_object() {
+                                old_obj.get("text").cloned()
+                            } else {
+                                Some(old_item.clone())
+                            }
+                        } else {
+                            fr_obj.get("text").cloned()
+                        };
+
+                        if let Some(t) = text_val {
+                            let mut map = serde_json::Map::new();
+                            map.insert("text".to_string(), t);
+                            if let Some(gp) = gold_p { map.insert("gold_penalty".to_string(), gp); }
+                            if let Some(cp) = cooldown_p { map.insert("cooldown_penalty".to_string(), cp); }
+                            new_en_item = serde_json::Value::Object(map);
+                        }
+                    } else {
+                        if let Some(old_item) = old_en_item {
+                            if let Some(old_obj) = old_item.as_object() {
+                                if let Some(t) = old_obj.get("text") {
+                                    new_en_item = t.clone();
+                                }
+                            } else {
+                                new_en_item = old_item.clone();
+                            }
+                        }
+                    }
+                    new_en_arr.push(new_en_item);
+                }
+                en_val = serde_json::Value::Array(new_en_arr);
+            }
+        }
+        _ => {}
+    }
+
+    let updated_en_content = serde_json::to_string_pretty(&en_val)?;
+    tokio::fs::write(en_path, updated_en_content).await?;
+    Ok(())
+}
+
 #[derive(serde::Deserialize)]
 pub struct SaveJsonPayload {
     pub file: String, // "fail_messages", "fish_data", "junk_data"
@@ -519,6 +628,13 @@ pub async fn save_admin_json(
     // 4. Save to disk
     if let Err(e) = tokio::fs::write(path, &payload.content).await {
         return (axum::http::StatusCode::INTERNAL_SERVER_ERROR, format!("Échec de l'écriture: {}", e)).into_response();
+    }
+
+    // Synchroniser automatiquement les paramètres de jeu avec le fichier anglais si on a édité le français
+    if payload.lang != "en" {
+        if let Err(sync_err) = sync_english_file_parameters(&payload.file, &payload.content).await {
+            tracing::error!("Failed to sync English file parameters during save: {}", sync_err);
+        }
     }
 
     // 5. Trigger static hot-reload of game configuration!
