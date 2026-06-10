@@ -2064,6 +2064,35 @@ impl Repository {
         tx.commit().await?;
         Ok(())
     }
+
+    pub async fn get_banana_owners(&self) -> Result<Vec<String>, sqlx::Error> {
+        let b1_owner: Option<String> = sqlx::query_scalar(
+            "SELECT p.username FROM catches c \
+             JOIN players p ON c.player_id = p.id \
+             WHERE c.fish_name = 'Pristine Banana 1' \
+             ORDER BY c.id DESC LIMIT 1"
+        )
+        .fetch_optional(&self.pool)
+        .await?;
+
+        let b2_owner: Option<String> = sqlx::query_scalar(
+            "SELECT p.username FROM catches c \
+             JOIN players p ON c.player_id = p.id \
+             WHERE c.fish_name = 'Pristine Banana 2' \
+             ORDER BY c.id DESC LIMIT 1"
+        )
+        .fetch_optional(&self.pool)
+        .await?;
+
+        let mut list = Vec::new();
+        if let Some(username) = b1_owner {
+            list.push(username.to_lowercase());
+        }
+        if let Some(username) = b2_owner {
+            list.push(username.to_lowercase());
+        }
+        Ok(list)
+    }
 }
 
 #[cfg(test)]
@@ -2846,5 +2875,57 @@ mod tests {
         let player2 = repo.get_player("player_two").await.unwrap().unwrap();
         assert_eq!(player2.gold, 1_500_000);
         assert!(!player2.is_first_millionaire);
+    }
+
+    #[tokio::test]
+    async fn test_get_banana_owners() {
+        let pool = setup_db().await;
+        let repo = Repository::new(pool);
+
+        let p1_id = repo.restore_player(&PlayerBackup {
+            username: "player1".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(10),
+            eco_notoriety: Some(1000),
+            millionaire_at: None,
+        }).await.unwrap();
+
+        let p2_id = repo.restore_player(&PlayerBackup {
+            username: "player2".to_string(),
+            total_attempts: 1,
+            successful_attempts: 1,
+            failed_attempts: 0,
+            level: 1,
+            xp: 0,
+            vip_until: None,
+            gold: Some(10),
+            eco_notoriety: Some(1000),
+            millionaire_at: None,
+        }).await.unwrap();
+
+        // Initially, no owners
+        let owners = repo.get_banana_owners().await.unwrap();
+        assert!(owners.is_empty());
+
+        // Player 1 catches Pristine Banana 1
+        let f1 = Fish::new("Pristine Banana 1".to_string(), Rarity::Divin, 10.0, 100.0, "pristine".to_string(), "Banana 1".to_string());
+        repo.save_catch_only(p1_id, f1, Some("player1")).await.unwrap();
+
+        let owners = repo.get_banana_owners().await.unwrap();
+        assert_eq!(owners, vec!["player1".to_string()]);
+
+        // Player 2 catches Pristine Banana 2
+        let f2 = Fish::new("Pristine Banana 2".to_string(), Rarity::Divin, 10.0, 100.0, "pristine".to_string(), "Banana 2".to_string());
+        repo.save_catch_only(p2_id, f2, Some("player2")).await.unwrap();
+
+        let owners = repo.get_banana_owners().await.unwrap();
+        assert_eq!(owners.len(), 2);
+        assert!(owners.contains(&"player1".to_string()));
+        assert!(owners.contains(&"player2".to_string()));
     }
 }

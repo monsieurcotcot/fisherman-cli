@@ -677,3 +677,138 @@ pub async fn save_admin_json(
 
     (axum::http::StatusCode::OK, "Fichier sauvegardé et rechargé avec succès").into_response()
 }
+
+use axum::response::sse::{Event, KeepAlive, Sse};
+use axum::extract::Multipart;
+use tokio_stream::wrappers::BroadcastStream;
+use tokio_stream::StreamExt as _;
+
+pub async fn obs_alerts(
+    Query(params): Query<HashMap<String, String>>,
+) -> impl IntoResponse {
+    let required_token = std::env::var("OBS_TOKEN")
+        .or_else(|_| std::env::var("ADMIN_TOKEN"))
+        .unwrap_or_else(|_| "change-me".to_string());
+
+    if params.get("token") != Some(&required_token) {
+        return (axum::http::StatusCode::FORBIDDEN, "Non autorisé").into_response();
+    }
+
+    match tokio::fs::read_to_string("static/obs.html").await {
+        Ok(html) => Html(html).into_response(),
+        Err(_) => (axum::http::StatusCode::INTERNAL_SERVER_ERROR, "Erreur chargement obs.html").into_response(),
+    }
+}
+
+pub async fn obs_stream(
+    Query(params): Query<HashMap<String, String>>,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let required_token = std::env::var("OBS_TOKEN")
+        .or_else(|_| std::env::var("ADMIN_TOKEN"))
+        .unwrap_or_else(|_| "change-me".to_string());
+
+    if params.get("token") != Some(&required_token) {
+        return (axum::http::StatusCode::FORBIDDEN, "Non autorisé").into_response();
+    }
+
+    let rx = state.obs_broadcaster.subscribe();
+    let stream = BroadcastStream::new(rx)
+        .filter_map(|res| match res {
+            Ok(username) => {
+                let event = Event::default().data(serde_json::json!({
+                    "type": "banana",
+                    "username": username,
+                }).to_string());
+                Some(Ok::<Event, std::convert::Infallible>(event))
+            }
+            Err(_) => None, // Ignore lags
+        });
+
+    Sse::new(stream)
+        .keep_alive(KeepAlive::default())
+        .into_response()
+}
+
+pub async fn list_sounds(
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    let mut files = Vec::new();
+    if let Ok(mut entries) = tokio::fs::read_dir("static/sounds").await {
+        while let Ok(Some(entry)) = entries.next_entry().await {
+            if let Some(name) = entry.file_name().to_str() {
+                if name.ends_with(".mp3") {
+                    files.push(name.to_string());
+                }
+            }
+        }
+    }
+    files.sort();
+    Json(files).into_response()
+}
+
+pub async fn upload_sound(
+    headers: HeaderMap,
+    mut multipart: Multipart,
+) -> impl IntoResponse {
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    let mut file_saved = false;
+    let mut error_msg = String::new();
+
+    while let Ok(Some(field)) = multipart.next_field().await {
+        let name = field.name().unwrap_or_default().to_string();
+        let file_name = field.file_name().unwrap_or_default().to_string();
+
+        if name == "file" && file_name.ends_with(".mp3") {
+            // Limit file name to alphanumeric/lowercase characters for safety
+            let sanitized_name: String = file_name.chars()
+                .filter(|c| c.is_ascii_alphanumeric() || *c == '.' || *c == '_' || *c == '-')
+                .collect();
+
+            let sanitized_name = sanitized_name.to_lowercase();
+            if !sanitized_name.ends_with(".mp3") {
+                error_msg = "Format de fichier invalide. Seul le .mp3 est autorisé.".to_string();
+                break;
+            }
+
+            if let Ok(data) = field.bytes().await {
+                // Limit file size (5MB)
+                if data.len() > 5 * 1024 * 1024 {
+                    error_msg = "Fichier trop lourd (maximum 5 Mo)".to_string();
+                    break;
+                }
+
+                let path = format!("static/sounds/{}", sanitized_name);
+                if let Err(e) = tokio::fs::write(&path, data).await {
+                    error_msg = format!("Échec de l'écriture sur le disque : {}", e);
+                    break;
+                }
+                file_saved = true;
+            } else {
+                error_msg = "Échec de lecture des données du fichier".to_string();
+                break;
+            }
+        }
+    }
+
+    if file_saved {
+        (axum::http::StatusCode::OK, "Fichier MP3 téléchargé avec succès").into_response()
+    } else {
+        if error_msg.is_empty() {
+            error_msg = "Aucun fichier valide trouvé".to_string();
+        }
+        (axum::http::StatusCode::BAD_REQUEST, error_msg).into_response()
+    }
+}
+

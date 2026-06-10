@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>OBS Alerts Overlay</title>
+    <style>
+        body {
+            background-color: transparent;
+            color: #fff;
+            font-family: 'Outfit', 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+        #alert-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.65);
+            border: 2px solid #FFE135;
+            padding: 20px 40px;
+            border-radius: 15px;
+            max-width: 600px;
+        }
+        #alert-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFE135;
+            margin: 0;
+        }
+        #alert-subtext {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div id="alert-container">
+        <p id="alert-text">🍌 ALERT BANANE 🍌</p>
+        <p id="alert-subtext">@username active sa commande banane !</p>
+    </div>
+
+    <script>
+        // Récupérer le token depuis les paramètres d'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (!token) {
+            console.error("Token d'accès manquant.");
+            document.body.innerHTML = "<div style='color: red; font-size: 20px; font-family: sans-serif;'>Erreur: Token d'accès manquant (?token=...)</div>";
+        } else {
+            // Connexion au flux SSE
+            const eventSource = new EventSource(`/api/obs/stream?token=${token}`);
+            
+            eventSource.onopen = () => {
+                console.log("Connecté au flux d'alertes OBS.");
+            };
+            
+            eventSource.onerror = (err) => {
+                console.error("Erreur de connexion SSE, reconnexion...", err);
+            };
+            
+            eventSource.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    if (data.type === "banana") {
+                        playBananaAlert(data.username);
+                    }
+                } catch (e) {
+                    console.error("Erreur de parsing des données reçues:", e);
+                }
+            };
+        }
+
+        function playBananaAlert(username) {
+            // 1. Jouer le son MP3
+            const audio = new Audio(`/static/sounds/${username}.mp3`);
+            audio.play().catch(err => {
+                console.error("Impossible de jouer le son:", err);
+            });
+
+            // 2. Afficher l'alerte
+            const container = document.getElementById("alert-container");
+            const subtext = document.getElementById("alert-subtext");
+            
+            subtext.innerText = `@${username} active sa commande banane !`;
+            container.style.display = "flex";
+
+            // Masquer après 5 secondes
+            setTimeout(() => {
+                container.style.display = "none";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

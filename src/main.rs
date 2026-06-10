@@ -99,6 +99,7 @@ pub struct AppState {
     pub offline_attempts: dashmap::DashMap<String, u32>,
     pub offline_bypassed: dashmap::DashSet<String>,
     pub stream_live_cache: RwLock<Option<(bool, DateTime<Utc>)>>,
+    pub obs_broadcaster: tokio::sync::broadcast::Sender<String>,
 }
 
 use bot::start_bot;
@@ -231,6 +232,9 @@ async fn main() -> Result<(), MyError> {
 
     let auth_manager = Arc::new(AuthManager::new(client_id, client_secret, redirect_uri));
     
+    let (obs_broadcaster, _) = tokio::sync::broadcast::channel(32);
+    let _ = std::fs::create_dir_all("static/sounds");
+
     let state = Arc::new(AppState {
         repo: Arc::clone(&repo),
         auth: Arc::clone(&auth_manager),
@@ -249,6 +253,7 @@ async fn main() -> Result<(), MyError> {
         offline_attempts: dashmap::DashMap::new(),
         offline_bypassed: dashmap::DashSet::new(),
         stream_live_cache: RwLock::new(None),
+        obs_broadcaster,
     });
 
     tasks::start_vip_cleanup_task(Arc::clone(&state));
@@ -332,6 +337,10 @@ async fn main() -> Result<(), MyError> {
         .route("/api/maintenance", axum::routing::post(api::trigger_maintenance))
         .route("/api/admin/login", axum::routing::post(api::admin_login))
         .route("/api/admin/json", get(api::get_admin_json).post(api::save_admin_json))
+        .route("/obs/alerts", get(api::obs_alerts))
+        .route("/api/obs/stream", get(api::obs_stream))
+        .route("/api/admin/sounds", get(api::list_sounds))
+        .route("/api/admin/sounds/upload", axum::routing::post(api::upload_sound))
         .fallback_service(ServeFile::new("static/index.html"))
         .layer(CorsLayer::permissive())
         .layer(SetResponseHeaderLayer::if_not_present(CONTENT_SECURITY_POLICY, HeaderValue::from_static("default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.jtvnw.net https://*.twitch.tv; connect-src 'self';")))

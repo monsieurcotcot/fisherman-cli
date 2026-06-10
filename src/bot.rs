@@ -723,7 +723,50 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                     }
                 });
                 
-                if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
+                if text == "!banana" || text == "!banane" {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let username_banana = username.to_lowercase();
+                    
+                    tokio::spawn(async move {
+                        let use_english = if let Ok(Some(p)) = state_task.repo.get_player(&username_banana).await {
+                            p.language.as_deref() == Some("en")
+                        } else {
+                            false
+                        };
+
+                        match state_task.repo.get_banana_owners().await {
+                            Ok(owners) => {
+                                if owners.contains(&username_banana) {
+                                    let sound_file = format!("static/sounds/{}.mp3", username_banana);
+                                    if std::path::Path::new(&sound_file).exists() {
+                                        let _ = state_task.obs_broadcaster.send(username_banana.clone());
+                                        let msg = if use_english {
+                                            format!("🔊 Playing @{}'s custom banana command! 🍌", username_banana)
+                                        } else {
+                                            format!("🔊 Lancement de la commande vocale de @{} ! 🍌", username_banana)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    } else {
+                                        let msg = format!("⚠️ @monsieurcotcot, la commande vocale de @{} n'existe pas encore !", username_banana);
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    }
+                                } else {
+                                    let msg = if use_english {
+                                        format!("❌ @{}, you cannot use this command because you do not possess one of the last Pristine Bananas! 🍌", username_banana)
+                                    } else {
+                                        format!("❌ @{}, tu ne peux pas utiliser cette commande car tu ne possèdes pas l'une des dernières Bananes Divines ! 🍌", username_banana)
+                                    };
+                                    let _ = client_msg.say(channel_login, msg).await;
+                                }
+                            }
+                            Err(e) => {
+                                tracing::error!("Error querying banana owners: {}", e);
+                            }
+                        }
+                    });
+                } else if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
                     let channel_login = msg.channel_login.clone();

@@ -514,7 +514,14 @@
 
         <div id="dashboardAlert" class="alert"></div>
 
-        <div class="editor-controls">
+        <!-- TABS NAV -->
+        <div class="main-tabs" style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px;">
+            <button id="tabConfig" class="btn btn-primary btn-sm" onclick="switchMainTab('config')">⚙️ Configuration du Jeu</button>
+            <button id="tabSounds" class="btn btn-secondary btn-sm" onclick="switchMainTab('sounds')">🔊 Commandes Vocales !banana</button>
+        </div>
+
+        <div id="configTabContent" style="display: flex; flex-direction: column; gap: 12px; flex-grow: 1; min-height: 0;">
+            <div class="editor-controls">
             <div style="display: flex; gap: 6px; align-items: center;">
                 <label style="font-size: 0.85rem; font-weight: 600;">Fichier :</label>
                 <select id="fileSelect" onchange="loadJsonFile()">
@@ -564,6 +571,55 @@
                     <div id="treeView" style="flex-grow: 1; overflow: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.4; color: #8be9fd; white-space: pre; background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 6px; height: 100%; min-height: 450px;">
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- SOUNDS TAB CONTENT -->
+        <div id="soundsTabContent" style="display: none; flex-direction: column; gap: 15px; flex-grow: 1; min-height: 0; overflow: auto; padding: 10px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; width: 100%;">
+                
+                <!-- Upload Card -->
+                <div class="glass-card" style="max-width: 100%; background: rgba(0,0,0,0.2); padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 10px; min-height: unset; height: auto;">
+                    <h3 style="color: var(--accent-streamer); margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">📤 Importer un fichier MP3</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">
+                        Nommez le fichier exactement comme le pseudo du viewer Twitch (ex: <code>monsieurcotcot.mp3</code>). Format max : 5 Mo.
+                    </p>
+                    <form id="uploadSoundForm" onsubmit="handleSoundUpload(event)" style="display: flex; flex-direction: column; gap: 12px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="file" id="soundFileInput" accept=".mp3" required style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; width: 100%; color: var(--text-main);">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm" id="uploadSoundBtn">📤 Uploader</button>
+                    </form>
+                    <div id="uploadStatus" style="margin-top: 5px; font-size: 0.9rem;"></div>
+                </div>
+
+                <!-- List / Library Card -->
+                <div class="glass-card" style="max-width: 100%; background: rgba(0,0,0,0.2); padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 10px; min-height: unset; height: auto;">
+                    <h3 style="color: var(--accent-streamer); margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">🎵 Liste des commandes audio</h3>
+                    <div class="form-group" style="margin-bottom: 5px;">
+                        <label for="soundSelect" style="font-size: 0.85rem; margin-bottom: 6px; display: block;">Fichiers audio (.mp3) enregistrés :</label>
+                        <select id="soundSelect" style="width: 100%; padding: 10px; border-radius: 6px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main);">
+                            <option value="">-- Chargement des fichiers... --</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="playSelectedSound()" class="btn btn-accent btn-sm" style="color: #000; flex-grow: 1;">▶️ Écouter le son</button>
+                        <button onclick="loadSoundsList()" class="btn btn-secondary btn-sm" style="flex-grow: 1;">🔄 Actualiser</button>
+                    </div>
+                </div>
+
+                <!-- OBS Link Card -->
+                <div class="glass-card" style="max-width: 100%; background: rgba(0,0,0,0.2); padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 10px; min-height: unset; height: auto;">
+                    <h3 style="color: var(--accent-streamer); margin-bottom: 5px;">🔗 Intégration OBS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px;">
+                        Ajoutez ce lien comme "Source Navigateur" dans OBS.
+                    </p>
+                    <div style="display: flex; gap: 8px; align-items: center; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="text" id="obsUrlField" readonly value="" style="background: transparent; border: none; color: var(--accent-streamer); font-family: monospace; font-size: 0.82rem; flex-grow: 1; outline: none; width: 100%;">
+                        <button onclick="copyObsUrl()" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">📋 Copier</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -637,6 +693,12 @@
                 initAceEditor();
             }
             loadJsonFile();
+            switchMainTab('config');
+            loadSoundsList();
+            
+            // Construire l'URL OBS
+            const obsUrl = window.location.origin + '/obs/alerts?token=VOTRE_TOKEN_OBS';
+            document.getElementById('obsUrlField').value = obsUrl;
         }
 
         function handleLogout() {
@@ -864,6 +926,130 @@
                         "&scope=chat:read+chat:edit+channel:manage:vips" +
                         "&state=" + type;
             window.location.href = url;
+        }
+
+        function switchMainTab(tabName) {
+            const tabConfig = document.getElementById('tabConfig');
+            const tabSounds = document.getElementById('tabSounds');
+            const configContent = document.getElementById('configTabContent');
+            const soundsContent = document.getElementById('soundsTabContent');
+
+            if (tabName === 'config') {
+                tabConfig.className = 'btn btn-primary btn-sm';
+                tabSounds.className = 'btn btn-secondary btn-sm';
+                configContent.style.display = 'flex';
+                soundsContent.style.display = 'none';
+                if (editor) editor.resize();
+            } else {
+                tabConfig.className = 'btn btn-secondary btn-sm';
+                tabSounds.className = 'btn btn-primary btn-sm';
+                configContent.style.display = 'none';
+                soundsContent.style.display = 'flex';
+            }
+        }
+
+        async function loadSoundsList() {
+            const token = sessionStorage.getItem('admin_token');
+            if (!token) return;
+
+            const select = document.getElementById('soundSelect');
+            select.innerHTML = '<option value="">-- Chargement des fichiers... --</option>';
+
+            try {
+                const res = await fetch('/api/admin/sounds', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const files = await res.json();
+                    if (files.length === 0) {
+                        select.innerHTML = '<option value="">Aucun fichier MP3 disponible</option>';
+                    } else {
+                        select.innerHTML = '';
+                        files.forEach(file => {
+                            const opt = document.createElement('option');
+                            opt.value = file;
+                            opt.textContent = file;
+                            select.appendChild(opt);
+                        });
+                    }
+                } else {
+                    select.innerHTML = '<option value="">Erreur de chargement des fichiers</option>';
+                }
+            } catch (e) {
+                console.error("Error loading sounds list:", e);
+                select.innerHTML = '<option value="">Erreur réseau</option>';
+            }
+        }
+
+        async function handleSoundUpload(event) {
+            event.preventDefault();
+            const token = sessionStorage.getItem('admin_token');
+            if (!token) return;
+
+            const statusDiv = document.getElementById('uploadStatus');
+            const fileInput = document.getElementById('soundFileInput');
+            const uploadBtn = document.getElementById('uploadSoundBtn');
+
+            if (fileInput.files.length === 0) {
+                statusDiv.innerHTML = '<span style="color: var(--danger);">Veuillez sélectionner un fichier.</span>';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (!file.name.endsWith('.mp3')) {
+                statusDiv.innerHTML = '<span style="color: var(--danger);">Seuls les fichiers .mp3 sont autorisés.</span>';
+                return;
+            }
+
+            statusDiv.innerHTML = '<span style="color: var(--text-muted);">Importation en cours...</span>';
+            uploadBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch('/api/admin/sounds/upload', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+
+                if (res.ok) {
+                    statusDiv.innerHTML = '<span style="color: var(--success);">✅ Importé avec succès !</span>';
+                    fileInput.value = '';
+                    await loadSoundsList();
+                } else {
+                    const errText = await res.text();
+                    statusDiv.innerHTML = `<span style="color: var(--danger);">❌ Échec : ${errText}</span>`;
+                }
+            } catch (e) {
+                console.error("Error uploading sound:", e);
+                statusDiv.innerHTML = '<span style="color: var(--danger);">❌ Erreur réseau lors de l\'envoi.</span>';
+            } finally {
+                uploadBtn.disabled = false;
+            }
+        }
+
+        function playSelectedSound() {
+            const select = document.getElementById('soundSelect');
+            const val = select.value;
+            if (!val) {
+                alert("Veuillez sélectionner un fichier audio.");
+                return;
+            }
+            const audio = new Audio('/static/sounds/' + val);
+            audio.play().catch(e => {
+                console.error("Error playing audio:", e);
+                alert("Erreur de lecture audio : " + e.message);
+            });
+        }
+
+        function copyObsUrl() {
+            const field = document.getElementById('obsUrlField');
+            field.select();
+            field.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(field.value);
+            alert("Lien OBS copié dans le presse-papiers !");
         }
 
         function switchMobileTab(tabName) {
