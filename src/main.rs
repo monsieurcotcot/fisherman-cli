@@ -96,8 +96,8 @@ pub struct AppState {
     pub pending_trades: RwLock<Vec<PendingTrade>>,
     pub pending_gives: RwLock<HashMap<String, PendingGive>>,
     pub daily_reward_cache: dashmap::DashMap<String, chrono::NaiveDate>,
-    pub offline_attempts: RwLock<HashMap<String, u32>>,
-    pub offline_bypassed: RwLock<std::collections::HashSet<String>>,
+    pub offline_attempts: dashmap::DashMap<String, u32>,
+    pub offline_bypassed: dashmap::DashSet<String>,
     pub stream_live_cache: RwLock<Option<(bool, DateTime<Utc>)>>,
 }
 
@@ -246,8 +246,8 @@ async fn main() -> Result<(), MyError> {
         pending_trades: RwLock::new(Vec::new()),
         pending_gives: RwLock::new(HashMap::new()),
         daily_reward_cache: dashmap::DashMap::new(),
-        offline_attempts: RwLock::new(HashMap::new()),
-        offline_bypassed: RwLock::new(std::collections::HashSet::new()),
+        offline_attempts: dashmap::DashMap::new(),
+        offline_bypassed: dashmap::DashSet::new(),
         stream_live_cache: RwLock::new(None),
     });
 

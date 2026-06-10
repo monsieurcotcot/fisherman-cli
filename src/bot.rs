@@ -550,6 +550,7 @@ pub fn get_state_weight(state: &str) -> i32 {
     }
 }
 
+#[allow(dead_code)]
 pub fn get_size_multiplier(name: &str, size: f64) -> f64 {
     // Try French catalog first
     let game_data_fr = crate::config::get_game_data(false);
@@ -881,15 +882,9 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             };
 
                             // Reset attempts
-                            {
-                                let mut att = state_task.offline_attempts.write().await;
-                                att.remove(&username);
-                            }
+                            state_task.offline_attempts.remove(&username);
                             // Grant access
-                            {
-                                let mut bypassed = state_task.offline_bypassed.write().await;
-                                bypassed.insert(username.clone());
-                            }
+                            state_task.offline_bypassed.insert(username.clone());
 
                             let msg_str = if use_english {
                                 format!("🔑 @{}, access granted! You can now fish offline! 🌊", username)
@@ -2943,6 +2938,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                 // Clear RAM caches after full restore to avoid stale caches
                                 state_task.daily_reward_cache.clear();
                                 state_task.rate_limiter.clear();
+                                state_task.offline_attempts.clear();
+                                state_task.offline_bypassed.clear();
                                 state_task.pending_sales.write().await.clear();
                                 state_task.pending_trades.write().await.clear();
                                 state_task.pending_resets.write().await.clear();
@@ -2971,6 +2968,8 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                     // Clear all RAM caches to allow first-time daily rewards and remove stale states
                                     state_task.daily_reward_cache.clear();
                                     state_task.rate_limiter.clear();
+                                    state_task.offline_attempts.clear();
+                                    state_task.offline_bypassed.clear();
                                     state_task.pending_sales.write().await.clear();
                                     state_task.pending_trades.write().await.clear();
                                     state_task.pending_resets.write().await.clear();
@@ -3019,22 +3018,16 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             // Vérification du statut live du stream (sauf pour l'admin ou en mode test)
                             let is_live = is_stream_online(&state_task).await;
                             if is_live {
-                                let mut att = state_task.offline_attempts.write().await;
-                                att.remove(&username);
+                                state_task.offline_attempts.remove(&username);
                             }
-                            let is_bypassed = {
-                                let bypassed = state_task.offline_bypassed.read().await;
-                                bypassed.contains(&username)
-                            };
+                            let is_bypassed = state_task.offline_bypassed.contains(&username);
 
                             if !is_live && !is_bypassed && !is_bypass_user && !is_test {
-                                let attempts;
-                                {
-                                    let mut att = state_task.offline_attempts.write().await;
-                                    let entry = att.entry(username.clone()).or_insert(0);
-                                    *entry += 1;
-                                    attempts = *entry;
-                                }
+                                let attempts = {
+                                    let mut entry = state_task.offline_attempts.entry(username.clone()).or_insert(0);
+                                    *entry.value_mut() += 1;
+                                    *entry.value()
+                                };
 
                                 if attempts >= 3 {
                                     let msg_str = if use_english {

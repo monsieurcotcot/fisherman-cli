@@ -104,9 +104,14 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
     let u_low = username.to_lowercase();
     match state.repo.get_player(&u_low).await {
         Ok(Some(p)) => {
-            let catches = state.repo.get_player_catches(p.id.unwrap()).await.unwrap_or_default();
-            let trophies = state.repo.get_player_trophies(p.id.unwrap()).await.unwrap_or_default();
-            let museum = state.repo.get_player_museum(p.id.unwrap()).await.unwrap_or_default();
+            let player_id = match p.id {
+                Some(id) => id,
+                None => return (axum::http::StatusCode::INTERNAL_SERVER_ERROR, "Player ID missing").into_response(),
+            };
+            
+            let catches = state.repo.get_player_catches(player_id).await.unwrap_or_default();
+            let trophies = state.repo.get_player_trophies(player_id).await.unwrap_or_default();
+            let museum = state.repo.get_player_museum(player_id).await.unwrap_or_default();
             
             let mut profile_image_url = p.profile_image_url.clone();
             if profile_image_url.is_none() {
@@ -115,7 +120,7 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 // 1. Essayer avec les jetons du bot
                 if let Some(tokens) = state.auth.load_tokens() {
                     if let Ok(img) = state.auth.get_user_profile_image(&tokens.access_token, &p.username).await {
-                        let _ = state.repo.update_player_profile_image(p.id.unwrap(), &img).await;
+                        let _ = state.repo.update_player_profile_image(player_id, &img).await;
                         profile_image_url = Some(img);
                         fetched = true;
                     }
@@ -125,15 +130,15 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 if !fetched {
                     if let Some(tokens) = state.auth.load_streamer_tokens() {
                         if let Ok(img) = state.auth.get_user_profile_image(&tokens.access_token, &p.username).await {
-                            let _ = state.repo.update_player_profile_image(p.id.unwrap(), &img).await;
+                            let _ = state.repo.update_player_profile_image(player_id, &img).await;
                             profile_image_url = Some(img);
                         }
                     }
                 }
             }
-            let is_banana_king = state.repo.is_active_king(p.id.unwrap()).await.unwrap_or(false);
-            let has_banana_1 = state.repo.has_caught_banana(p.id.unwrap(), "Pristine Banana 1").await.unwrap_or(false);
-            let has_banana_2 = state.repo.has_caught_banana(p.id.unwrap(), "Pristine Banana 2").await.unwrap_or(false);
+            let is_banana_king = state.repo.is_active_king(player_id).await.unwrap_or(false);
+            let has_banana_1 = state.repo.has_caught_banana(player_id, "Pristine Banana 1").await.unwrap_or(false);
+            let has_banana_2 = state.repo.has_caught_banana(player_id, "Pristine Banana 2").await.unwrap_or(false);
 
             Json(serde_json::json!({
                 "username": p.username,
@@ -172,19 +177,37 @@ pub async fn get_player_stats(headers: HeaderMap, ConnectInfo(addr): ConnectInfo
                 "max_gold_held": p.max_gold_held,
                 "eco_notoriety": p.eco_notoriety,
                 "scrap_metal": p.scrap_metal,
-                "total_sold_scrap_metal": p.total_sold_scrap_metal
+                "total_sold_scrap_metal": p.total_sold_scrap_metal,
+                "language": p.language
             })).into_response()
         },
         _ => Json(serde_json::json!({"error": "Player not found"})).into_response(),
     }
 }
 
-pub async fn get_fish_data_api() -> impl IntoResponse {
-    Json(crate::config::get_fish_data()).into_response()
+#[derive(serde::Deserialize)]
+pub struct LangQuery {
+    pub lang: Option<String>,
 }
 
-pub async fn get_junk_data_api() -> impl IntoResponse {
-    Json(crate::config::get_junk_data()).into_response()
+pub async fn get_fish_data_api(Query(params): Query<LangQuery>) -> impl IntoResponse {
+    let use_english = params.lang.as_deref() == Some("en");
+    let data = if use_english {
+        crate::config::get_game_data_en().fish_data.clone()
+    } else {
+        crate::config::get_game_data_fr().fish_data.clone()
+    };
+    Json(data).into_response()
+}
+
+pub async fn get_junk_data_api(Query(params): Query<LangQuery>) -> impl IntoResponse {
+    let use_english = params.lang.as_deref() == Some("en");
+    let data = if use_english {
+        crate::config::get_game_data_en().junk_data.clone()
+    } else {
+        crate::config::get_game_data_fr().junk_data.clone()
+    };
+    Json(data).into_response()
 }
 
 pub async fn get_leaderboard(State(state): State<Arc<AppState>>) -> impl IntoResponse {
@@ -256,8 +279,8 @@ pub async fn trigger_maintenance(State(state): State<Arc<AppState>>) -> impl Int
 
 
 
-use std::sync::RwLock as StdRwLock;
-use std::collections::HashMap as StdHashMap;
+use std::sync::OnceLock;
+use dashmap::DashMap;
 use chrono::{DateTime, Duration};
 
 #[derive(Clone, Debug)]
@@ -267,22 +290,28 @@ pub struct FailedLoginState {
     pub is_permabanned: bool,
 }
 
-static FAILED_LOGINS: StdRwLock<Option<StdHashMap<String, FailedLoginState>>> = StdRwLock::new(None);
-static VALID_SESSIONS: StdRwLock<Option<StdHashMap<String, DateTime<Utc>>>> = StdRwLock::new(None);
+static FAILED_LOGINS: OnceLock<DashMap<String, FailedLoginState>> = OnceLock::new();
+static VALID_SESSIONS: OnceLock<DashMap<String, DateTime<Utc>>> = OnceLock::new();
+
+fn get_failed_logins() -> &'static DashMap<String, FailedLoginState> {
+    FAILED_LOGINS.get_or_init(DashMap::new)
+}
+
+fn get_valid_sessions() -> &'static DashMap<String, DateTime<Utc>> {
+    VALID_SESSIONS.get_or_init(DashMap::new)
+}
 
 pub fn check_login_ban(ip: &str) -> Result<(), String> {
-    let logins = FAILED_LOGINS.read().unwrap();
-    if let Some(map) = &*logins {
-        if let Some(state) = map.get(ip) {
-            if state.is_permabanned {
-                return Err("Banni de façon permanente".to_string());
-            }
-            if let Some(until) = state.banned_until {
-                let now = Utc::now();
-                if now < until {
-                    let diff = until.signed_duration_since(now).num_seconds();
-                    return Err(format!("Accès bloqué. Réessayez dans {} secondes", diff));
-                }
+    let logins = get_failed_logins();
+    if let Some(state) = logins.get(ip) {
+        if state.is_permabanned {
+            return Err("Banni de façon permanente".to_string());
+        }
+        if let Some(until) = state.banned_until {
+            let now = Utc::now();
+            if now < until {
+                let diff = until.signed_duration_since(now).num_seconds();
+                return Err(format!("Accès bloqué. Réessayez dans {} secondes", diff));
             }
         }
     }
@@ -290,14 +319,14 @@ pub fn check_login_ban(ip: &str) -> Result<(), String> {
 }
 
 pub fn record_failed_login(ip: &str) -> String {
-    let mut logins = FAILED_LOGINS.write().unwrap();
-    let map = logins.get_or_insert_with(StdHashMap::new);
-    let state = map.entry(ip.to_string()).or_insert(FailedLoginState {
+    let logins = get_failed_logins();
+    let mut entry = logins.entry(ip.to_string()).or_insert(FailedLoginState {
         attempt_count: 0,
         banned_until: None,
         is_permabanned: false,
     });
-
+    
+    let state = entry.value_mut();
     state.attempt_count += 1;
     
     match state.attempt_count {
@@ -328,26 +357,19 @@ pub fn record_failed_login(ip: &str) -> String {
 }
 
 pub fn record_successful_login(ip: &str) {
-    let mut logins = FAILED_LOGINS.write().unwrap();
-    if let Some(map) = &mut *logins {
-        map.remove(ip);
-    }
+    get_failed_logins().remove(ip);
 }
 
 pub fn generate_session_token() -> String {
     let token = uuid::Uuid::new_v4().to_string();
-    let mut sessions = VALID_SESSIONS.write().unwrap();
-    let map = sessions.get_or_insert_with(StdHashMap::new);
-    map.insert(token.clone(), Utc::now() + Duration::hours(2));
+    get_valid_sessions().insert(token.clone(), Utc::now() + Duration::hours(2));
     token
 }
 
 pub fn is_session_valid(token: &str) -> bool {
-    let sessions = VALID_SESSIONS.read().unwrap();
-    if let Some(map) = &*sessions {
-        if let Some(expiry) = map.get(token) {
-            return Utc::now() < *expiry;
-        }
+    let sessions = get_valid_sessions();
+    if let Some(expiry) = sessions.get(token) {
+        return Utc::now() < *expiry.value();
     }
     false
 }
