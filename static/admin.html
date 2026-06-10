@@ -1086,8 +1086,20 @@
                     playBtn.textContent = '▶️ Écouter';
                     playBtn.onclick = () => playSingleSound(username);
 
+                    // Test sound on stream (OBS overlay)
+                    const testObsBtn = document.createElement('button');
+                    testObsBtn.className = 'btn btn-accent btn-sm';
+                    testObsBtn.style.padding = '2px 8px';
+                    testObsBtn.style.fontSize = '0.75rem';
+                    testObsBtn.style.width = 'auto';
+                    testObsBtn.style.color = '#000';
+                    testObsBtn.textContent = '🖥️ Tester OBS';
+                    testObsBtn.title = 'Déclencher l\'alerte sonore sur l\'overlay de stream OBS';
+                    testObsBtn.onclick = () => testSoundOnObs(username);
+
                     rightContainer.appendChild(badge);
                     rightContainer.appendChild(playBtn);
+                    rightContainer.appendChild(testObsBtn);
                 } else {
                     const badge = document.createElement('span');
                     badge.style.color = 'var(--text-muted)';
@@ -1121,6 +1133,29 @@
                 console.error("Impossible de jouer le son:", err);
                 alert(`Impossible de lire le fichier pour @${username} : il se peut que le format soit invalide.`);
             });
+        }
+
+        async function testSoundOnObs(username) {
+            const token = sessionStorage.getItem('admin_token');
+            if (!token) return;
+
+            try {
+                const url = `/api/admin/sounds/test?username=${encodeURIComponent(username)}`;
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    console.log(`Alerte de test envoyée à OBS pour @${username}`);
+                } else {
+                    const errText = await res.text();
+                    alert(`Échec du test OBS : ${errText}`);
+                }
+            } catch (e) {
+                console.error("Error testing sound on OBS:", e);
+                alert("Erreur réseau lors du test OBS.");
+            }
         }
 
         async function handleSoundUpload(event) {

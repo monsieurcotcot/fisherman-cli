@@ -863,3 +863,23 @@ pub async fn list_players(
     }
 }
 
+pub async fn test_sound_on_obs(
+    headers: HeaderMap,
+    Query(params): Query<HashMap<String, String>>,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    let auth_header = headers.get("Authorization").and_then(|h| h.to_str().ok()).unwrap_or_default();
+    let token = auth_header.trim_start_matches("Bearer ").trim();
+    if !is_session_valid(token) {
+        return (axum::http::StatusCode::UNAUTHORIZED, "Non autorisé").into_response();
+    }
+
+    if let Some(username) = params.get("username") {
+        let username_clean = username.to_lowercase();
+        let _ = state.obs_broadcaster.send(username_clean);
+        (axum::http::StatusCode::OK, "Alerte de test envoyée à OBS").into_response()
+    } else {
+        (axum::http::StatusCode::BAD_REQUEST, "Username manquant").into_response()
+    }
+}
+
