@@ -843,10 +843,18 @@ pub async fn list_players(
     }
 
     match state.repo.get_all_players().await {
-        Ok(players) => {
-            let mut usernames: Vec<String> = players.into_iter().map(|p| p.username).collect();
-            usernames.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
-            Json(usernames).into_response()
+        Ok(mut players) => {
+            // Sort by total_attempts descending
+            players.sort_by(|a, b| b.total_attempts.cmp(&a.total_attempts));
+            
+            let result: Vec<serde_json::Value> = players.into_iter().map(|p| {
+                serde_json::json!({
+                    "username": p.username,
+                    "total_attempts": p.total_attempts
+                })
+            }).collect();
+            
+            Json(result).into_response()
         }
         Err(e) => {
             tracing::error!("Failed to get all players: {}", e);

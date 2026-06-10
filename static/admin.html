@@ -1007,10 +1007,10 @@
 
                     // Populate Player Select
                     playerSelect.innerHTML = '<option value="">-- Choisir un viewer --</option>';
-                    globalPlayers.forEach(username => {
+                    globalPlayers.forEach(p => {
                         const opt = document.createElement('option');
-                        opt.value = username;
-                        opt.textContent = username;
+                        opt.value = p.username;
+                        opt.textContent = `${p.username} (${p.total_attempts} lancers)`;
                         playerSelect.appendChild(opt);
                     });
 
@@ -1034,14 +1034,15 @@
             statusList.innerHTML = '';
 
             const query = filterQuery.toLowerCase().trim();
-            const filteredPlayers = globalPlayers.filter(username => username.toLowerCase().includes(query));
+            const filteredPlayers = globalPlayers.filter(p => p.username.toLowerCase().includes(query));
 
             if (filteredPlayers.length === 0) {
                 statusList.innerHTML = '<div style="font-size: 0.85rem; color: var(--text-muted);">Aucun pêcheur correspondant.</div>';
                 return;
             }
 
-            filteredPlayers.forEach(username => {
+            filteredPlayers.forEach(p => {
+                const username = p.username;
                 const soundFileName = `${username.toLowerCase()}.mp3`;
                 const hasSound = globalSounds.includes(soundFileName);
 
@@ -1061,7 +1062,7 @@
                 nameSpan.style.fontSize = '0.9rem';
                 nameSpan.style.color = 'var(--text-main)';
                 nameSpan.style.cursor = 'pointer';
-                nameSpan.textContent = `@${username}`;
+                nameSpan.textContent = `@${username} (${p.total_attempts} lancers)`;
                 nameSpan.title = 'Cliquez pour sélectionner ce viewer dans l\'importateur';
                 nameSpan.onclick = () => selectPlayerForUpload(username);
 
