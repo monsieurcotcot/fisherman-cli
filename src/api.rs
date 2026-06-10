@@ -54,10 +54,21 @@ pub async fn admin_panel(
         return (axum::http::StatusCode::TOO_MANY_REQUESTS, "Accès temporairement bloqué pour spam").into_response();
     }
 
-    Html(match tokio::fs::read_to_string("static/admin.html").await {
+    let html = match tokio::fs::read_to_string("static/admin.html").await {
         Ok(h) => h,
         Err(_) => "Erreur chargement admin.html".to_string()
-    }).into_response()
+    };
+
+    let mut response = Html(html).into_response();
+    response.headers_mut().insert(
+        axum::http::header::CACHE_CONTROL,
+        axum::http::HeaderValue::from_static("no-store, no-cache, must-revalidate, max-age=0"),
+    );
+    response.headers_mut().insert(
+        axum::http::header::PRAGMA,
+        axum::http::HeaderValue::from_static("no-cache"),
+    );
+    response
 }
 
 pub async fn login_redirect(
