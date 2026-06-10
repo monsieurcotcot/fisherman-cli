@@ -147,6 +147,20 @@ pub fn parse_recycle_args(args_str: &str) -> Option<(i64, String)> {
     Some((id, bin_str))
 }
 
+pub fn parse_dismantle_args(args_str: &str) -> Option<i64> {
+    let part = args_str.trim();
+    if part.is_empty() {
+        return None;
+    }
+    let id_str = if part.starts_with('#') {
+        &part[1..]
+    } else {
+        part
+    };
+    id_str.parse::<i64>().ok()
+}
+
+
 pub fn parse_sell_args(args_str: &str) -> Option<SellArg> {
     let args_str = args_str.trim();
     if args_str.is_empty() {
@@ -709,35 +723,119 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                 });
                 
                 if text == "!fish help" || text == "!pêche help" || text == "!peche help" {
-                    let mut help_msg = "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | recycle #id poubelle | trade #id | give <objet/montant> @destinataire | coinflip <montant> | lang [fr/en/reset] | Tape !fish help sell, recycle, trade, give, coinflip ou lang".to_string();
-                    if username == "monsieurcotcot" {
-                        help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
-                    }
-                    let _ = client.say(msg.channel_login.clone(), help_msg).await;
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let username_help = username.clone();
+                    let is_fish_cmd = text.starts_with("!fish");
+                    
+                    tokio::spawn(async move {
+                        let use_english = if let Ok(Some(p)) = state_task.repo.get_player(&username_help).await {
+                            match &p.language {
+                                Some(l) => l == "en",
+                                None => is_fish_cmd,
+                            }
+                        } else {
+                            is_fish_cmd
+                        };
+                        
+                        let mut help_msg = if use_english {
+                            "📖 !fish | stats | top | list <name> | info <name> | sell <name/ID> | sell ferraille [qty] | recycle #id bin | trade #id | give <item/amount> @recipient | coinflip <amount> | lang [fr/en/reset] | reset | Type !fish help sell, recycle, trade, give, coinflip, lang, reset or dismantle".to_string()
+                        } else {
+                            "📖 !fish | stats | top | list <nom> | info <nom> | sell <nom/ID> | sell ferraille [qté] | recycle #id poubelle | démonter #id | trade #id | give <objet/montant> @destinataire | coinflip <montant> | lang [fr/en/reset] | reset | Tape !fish help sell, recycle, trade, give, coinflip, lang, reset ou demonter".to_string()
+                        };
+                        
+                        if username_help == "monsieurcotcot" {
+                            help_msg.push_str(" | 🛠️ Admin: !admin backup | !admin restore | !fish reset <pseudo> | !fish simulate <pseudo> <n> | !fish purge");
+                        }
+                        let _ = client_msg.say(channel_login, help_msg).await;
+                    });
                 } else if text.starts_with("!fish help ") || text.starts_with("!peche help ") || text.starts_with("!pêche help ") {
-                    let sub = text.split_whitespace().skip(2).collect::<Vec<&str>>().join(" ");
-                    let reply = match sub.as_str() {
-                        "sell" | "vendre" | "vends" | "vend" => {
-                            "💰 Vente: !fish sell <nom/id> [état] [qté], ou '!fish sell all [rareté] [état]'. Ex: '!fish sell #42', '!fish sell all', '!fish sell all rare', '!fish sell all pristine', '!fish sell all common worn'. Confirme par '!fish sell oui' (durée 1m).".to_string()
-                        },
-                        "recycle" | "recycler" => {
-                            "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex: !fish recycle #42 jaune). Poubelles : bleu(e) (papier/carton), jaune (plastiques/métaux), vert(e) (verre), marron (organique), gris(e) (e-waste/ampoules), noir(e) (tout-venant), decharge (autres).".to_string()
-                        },
-                        "trade" | "echange" | "échanger" | "echanger" => {
-                            "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex: !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
-                        },
-                        "give" | "gift" | "don" | "donner" => {
-                            "🎁 Dons : '!fish give [montant] @destinataire' (pour envoyer de l'or) ou '!fish give [nom/#id] @destinataire' (pour offrir un objet). Valide les dons d'objets avec '!fish give oui' sous 60s.".to_string()
-                        },
-                        "coinflip" | "cf" => {
-                            "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Tentez de doubler vos pièces d'or sur un coup de pile ou face ! Mise minimale : 10 po 🪙.".to_string()
-                        },
-                        "lang" | "language" | "langue" => {
-                            "🌐 Langue : '!fish lang fr' pour passer en Français, '!fish lang en' pour l'Anglais, ou '!fish lang reset' pour la langue automatique par défaut (anglais sur !fish, français sur !peche).".to_string()
-                        },
-                        _ => format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help recycle' ou '!fish help trade' ou '!fish help give' ou '!fish help coinflip' pour plus de détails.")
-                    };
-                    let _ = client.say(msg.channel_login.clone(), reply).await;
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let username_help = username.clone();
+                    let raw_text = text.clone();
+                    let is_fish_cmd = text.starts_with("!fish");
+                    
+                    tokio::spawn(async move {
+                        let use_english = if let Ok(Some(p)) = state_task.repo.get_player(&username_help).await {
+                            match &p.language {
+                                Some(l) => l == "en",
+                                None => is_fish_cmd,
+                            }
+                        } else {
+                            is_fish_cmd
+                        };
+
+                        let sub = raw_text.split_whitespace().skip(2).collect::<Vec<&str>>().join(" ");
+                        let reply = match sub.as_str() {
+                            "sell" | "vendre" | "vends" | "vend" => {
+                                if use_english {
+                                    "💰 Selling: !fish sell <name/id> [state] [qty], or '!fish sell all [rarity] [state]'. Ex: '!fish sell #42', '!fish sell all', '!fish sell all rare pristine', '!fish sell ferraille [qty]'. Confirm with '!fish sell yes' (lasts 1m).".to_string()
+                                } else {
+                                    "💰 Vente : !fish sell <nom/id> [état] [qté], ou '!fish sell all [rareté] [état]'. Ex : '!fish sell #42', '!fish sell all', '!fish sell all rare', '!fish sell all pristine', '!fish sell all common worn', '!fish sell ferraille [qté]'. Confirme par '!fish sell oui' (durée 1m).".to_string()
+                                }
+                            },
+                            "recycle" | "recycler" => {
+                                if use_english {
+                                    "♻️ Recycling: '!fish recycle #id_capture bin' (Ex: !fish recycle #42 yellow). Bins: blue (paper/cardboard), yellow (plastic/metal), green (glass), brown (organic), gray (e-waste/bulbs), black (general), decharge (other).".to_string()
+                                } else {
+                                    "♻️ Recyclage : '!fish recycle #id_capture poubelle' (Ex : !fish recycle #42 jaune). Poubelles : bleu(e) (papier/carton), jaune (plastiques/métaux), vert(e) (verre), marron (organique), gris(e) (e-waste/ampoules), noir(e) (tout-venant), decharge (autres).".to_string()
+                                }
+                            },
+                            "démonter" | "demonter" | "dismantle" => {
+                                if use_english {
+                                    "🔩 Dismantling: '!fish dismantle #id_capture' (Ex: !fish dismantle #42). Allows you to dismantle metallic junk to recover scrap metal (kg) which can then be sold to the scrapyard.".to_string()
+                                } else {
+                                    "🔩 Démontage : '!fish démonter #id_capture' (Ex : !fish démonter #42). Permet de démonter un déchet métallique pour en récupérer de la ferraille (kg) revendable ensuite au ferrailleur.".to_string()
+                                }
+                            },
+                            "trade" | "echange" | "échanger" | "echanger" => {
+                                if use_english {
+                                    "🤝 Trading: 1) Direct Sale: '!fish trade #id_catch price @recipient' (Ex: !fish trade #15 250 @username). 2) Barter: Initiated by '!fish trade #id_A @recipient', then recipient proposes a counter-barter '!fish trade #id_B @username', followed by validations.".to_string()
+                                } else {
+                                    "🤝 Échanges : 1) Vente Directe : '!fish trade #id_catch prix @destinataire' (Ex : !fish trade #15 250 @pseudo). 2) Troc : Initié par '!fish trade #id_A @destinataire', puis le destinataire propose un contre-troc '!fish trade #id_B @pseudo', suivi des validations.".to_string()
+                                }
+                            },
+                            "give" | "gift" | "don" | "donner" => {
+                                if use_english {
+                                    "🎁 Giving: '!fish give [amount] @recipient' (to send gold) or '!fish give [name/#id] @recipient' (to gift an item). Validate item gifts with '!fish give yes' within 60s.".to_string()
+                                } else {
+                                    "🎁 Dons : '!fish give [montant] @destinataire' (pour envoyer de l'or) ou '!fish give [nom/#id] @destinataire' (pour offrir un objet). Valide les dons d'objets avec '!fish give oui' sous 60s.".to_string()
+                                }
+                            },
+                            "coinflip" | "cf" => {
+                                if use_english {
+                                    "🪙 Coinflip: '!fish coinflip <amount>' or '!fish coinflip all'. Double your gold coins on a coin toss! Min bet: 10 gold 🪙.".to_string()
+                                } else {
+                                    "🪙 Coinflip : '!fish coinflip <montant>' ou '!fish coinflip all'. Tentez de doubler vos pièces d'or sur un coup de pile ou face ! Mise minimale : 10 po 🪙.".to_string()
+                                }
+                            },
+                            "lang" | "language" | "langue" => {
+                                if use_english {
+                                    "🌐 Language: '!fish lang fr' to switch to French, '!fish lang en' for English, or '!fish lang reset' for automatic language preference (English on !fish, French on !peche).".to_string()
+                                } else {
+                                    "🌐 Langue : '!fish lang fr' pour passer en Français, '!fish lang en' pour l'Anglais, ou '!fish lang reset' pour la langue automatique par défaut (anglais sur !fish, français sur !peche).".to_string()
+                                }
+                            },
+                            "reset" => {
+                                if use_english {
+                                    "⚠️ Reset: '!fish reset' to clear your active stats. Confirm with '!fish yes' within 2 min. '!fish reset all' for a COMPLETE reset (all items and stats deleted forever). Confirm with '!fish yes all'.".to_string()
+                                } else {
+                                    "⚠️ Réinitialisation : '!fish reset' pour effacer tes stats actives. Confirme par '!fish yes' sous 2 min. '!fish reset all' pour un reset COMPLET (inventaire et stats supprimés définitivement). Confirme par '!fish yes all'.".to_string()
+                                }
+                            },
+                            _ => {
+                                if use_english {
+                                    format!("📖 Unknown command. Use '!fish help' or '!fish help sell', 'recycle', 'trade', 'give', 'coinflip', 'lang', 'reset' or 'dismantle' for more details.")
+                                } else {
+                                    format!("📖 Commande inconnue. Utilise '!fish help' ou '!fish help sell' ou '!fish help recycle' ou '!fish help trade' ou '!fish help give' ou '!fish help coinflip' ou '!fish help lang' ou '!fish help reset' ou '!fish help demonter' pour plus de détails.")
+                                }
+                            }
+                        };
+                        let _ = client_msg.say(channel_login, reply).await;
+                    });
                 } else if text == "!fish lang fr" || text == "!peche lang fr" || text == "!pêche lang fr" {
                     let state_task = Arc::clone(&state_clone);
                     let client_msg = client.clone();
@@ -1678,6 +1776,60 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                             }
                             SellArg::ByName { name, state, quantity } => {
                                 if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                                    if name.to_lowercase() == "ferraille" || name.to_lowercase() == "scrap" {
+                                        let use_english = player.language.as_deref() == Some("en") || (player.language.is_none() && text_trim.starts_with("!fish"));
+                                        
+                                        let mut scrap_qty = None;
+                                        let parts: Vec<&str> = arg.split_whitespace().collect();
+                                        for p in parts {
+                                            if let Ok(val) = p.parse::<f64>() {
+                                                if val > 0.0 {
+                                                    scrap_qty = Some(val);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        
+                                        let to_sell = match scrap_qty {
+                                            Some(qty) => qty.min(player.scrap_metal),
+                                            None => player.scrap_metal,
+                                        };
+                                        
+                                        if to_sell <= 0.0 {
+                                            let err_msg = if use_english {
+                                                format!("⚠️ @{}, you don't have any scrap metal to sell!", username)
+                                            } else {
+                                                format!("⚠️ @{}, tu n'as pas de ferraille à vendre !", username)
+                                            };
+                                            let _ = client_msg.say(channel_login, err_msg).await;
+                                            return;
+                                        }
+                                        
+                                        let price_per_kg = (30.0 + player.total_sold_scrap_metal).min(100.0);
+                                        let gold_earned = (to_sell * price_per_kg).round() as i64;
+                                        
+                                        match state_task.repo.execute_scrap_metal_sale(player.id.unwrap(), to_sell, gold_earned).await {
+                                            Ok(_) => {
+                                                let success_msg = if use_english {
+                                                    format!("🔩 @{}, you sold {:.2} kg of scrap metal for {} gold coins 🪙 (price: {:.1} gold/kg)! Total sold: {:.2} kg.", username, to_sell, gold_earned, price_per_kg, player.total_sold_scrap_metal + to_sell)
+                                                } else {
+                                                    format!("🔩 @{}, tu as vendu {:.2} kg de ferraille pour {} pièces d'or 🪙 (prix : {:.1} po/kg) ! Total vendu : {:.2} kg.", username, to_sell, gold_earned, price_per_kg, player.total_sold_scrap_metal + to_sell)
+                                                };
+                                                let _ = client_msg.say(channel_login, success_msg).await;
+                                            }
+                                            Err(e) => {
+                                                tracing::error!("Failed to execute scrap metal sale: {:?}", e);
+                                                let err_msg = if use_english {
+                                                    format!("❌ @{}, an error occurred during the sale of your scrap metal.", username)
+                                                } else {
+                                                    format!("❌ @{}, une erreur est survenue lors de la vente de ta ferraille.", username)
+                                                };
+                                                let _ = client_msg.say(channel_login, err_msg).await;
+                                            }
+                                        }
+                                        return;
+                                    }
+
                                     if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
                                         let mut matching: Vec<_> = catches.into_iter()
                                             .filter(|c| {
@@ -1845,6 +1997,118 @@ pub async fn start_bot(state: Arc<AppState>, access_token: String) {
                                             format!("❌ @{}, an error occurred while recycling catch #{}.", username, catch_id)
                                         } else {
                                             format!("❌ @{}, une erreur est survenue lors du recyclage de la capture #{}.", username, catch_id)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    }
+                                } else {
+                                    let msg = if use_english {
+                                        format!("❌ @{}, catch #{} not found in your inventory.", username, catch_id)
+                                    } else {
+                                        format!("❌ @{}, capture #{} introuvable dans ton inventaire.", username, catch_id)
+                                    };
+                                    let _ = client_msg.say(channel_login, msg).await;
+                                }
+                            }
+                        }
+                    });
+                } else if text.starts_with("!fish démonter") || text.starts_with("!fish demonter") ||
+                           text.starts_with("!peche demonter") || text.starts_with("!peche démonter") ||
+                           text.starts_with("!pêche demonter") || text.starts_with("!pêche démonter") {
+                    let state_task = Arc::clone(&state_clone);
+                    let client_msg = client.clone();
+                    let channel_login = msg.channel_login.clone();
+                    let raw_msg = msg.message_text.clone();
+                    
+                    tokio::spawn(async move {
+                        let text_trim = raw_msg.trim().to_lowercase();
+                        let arg = if text_trim.starts_with("!fish démonter") {
+                            raw_msg["!fish démonter".len()..].trim()
+                        } else if text_trim.starts_with("!fish demonter") {
+                            raw_msg["!fish demonter".len()..].trim()
+                        } else if text_trim.starts_with("!peche demonter") {
+                            raw_msg["!peche demonter".len()..].trim()
+                        } else if text_trim.starts_with("!peche démonter") {
+                            raw_msg["!peche démonter".len()..].trim()
+                        } else if text_trim.starts_with("!pêche demonter") {
+                            raw_msg["!pêche demonter".len()..].trim()
+                        } else if text_trim.starts_with("!pêche démonter") {
+                            raw_msg["!pêche démonter".len()..].trim()
+                        } else {
+                            ""
+                        };
+
+                        let parsed = parse_dismantle_args(arg);
+                        if parsed.is_none() {
+                            let _ = client_msg.say(channel_login, format!("⚠️ @{}, usage : !fish démonter #[id_capture] (ex : !fish démonter #42).", username)).await;
+                            return;
+                        }
+
+                        let catch_id = parsed.unwrap();
+
+                        if let Ok(player) = state_task.repo.get_or_create_player(&username).await {
+                            let use_english = player.language.as_deref() == Some("en") || (player.language.is_none() && text_trim.starts_with("!fish"));
+                            
+                            if let Ok(catches) = state_task.repo.get_player_catches(player.id.unwrap()).await {
+                                let target = catches.into_iter().find(|c| c.id == Some(catch_id));
+                                if let Some(c) = target {
+                                    if !c.is_junk {
+                                        let msg = if use_english {
+                                            format!("❌ @{}, you cannot dismantle '{}' (#{}) because it is not a junk item!", username, c.name, catch_id)
+                                        } else {
+                                            format!("❌ @{}, tu ne peux pas démonter '{}' (#{}) car ce n'est pas un déchet !", username, c.name, catch_id)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                        return;
+                                    }
+
+                                    let game_data = crate::config::get_game_data(use_english);
+                                    let junk_ref = &game_data.junk_data;
+                                    let mut scrap_val = None;
+                                    let mut found_config = false;
+                                    for list in junk_ref.values() {
+                                        if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
+                                            scrap_val = config_item.scrap_metal_kg;
+                                            found_config = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if !found_config {
+                                        let game_data_fr = crate::config::get_game_data(false);
+                                        let junk_ref_fr = &game_data_fr.junk_data;
+                                        for list in junk_ref_fr.values() {
+                                            if let Some(config_item) = list.iter().find(|item| item.name.to_lowercase() == c.name.to_lowercase()) {
+                                                scrap_val = config_item.scrap_metal_kg;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    let scrap_val = match scrap_val {
+                                        Some(val) if val > 0.0 => val,
+                                        _ => {
+                                            let msg = if use_english {
+                                                format!("❌ @{}, you cannot dismantle '{}' (#{}) because it does not contain metal!", username, c.name, catch_id)
+                                            } else {
+                                                format!("❌ @{}, tu ne peux pas démonter '{}' (#{}) car il ne contient pas de métal !", username, c.name, catch_id)
+                                            };
+                                            let _ = client_msg.say(channel_login, msg).await;
+                                            return;
+                                        }
+                                    };
+
+                                    if let Ok(_) = state_task.repo.execute_dismantle(player.id.unwrap(), catch_id, scrap_val).await {
+                                        let msg = if use_english {
+                                            format!("🔩 @{}, you dismantled '{}' (#{}) and recovered {:.2} kg of scrap metal!", username, c.name, catch_id, scrap_val)
+                                        } else {
+                                            format!("🔩 @{}, tu as démonté '{}' (#{}) et récupéré {:.2} kg de ferraille !", username, c.name, catch_id, scrap_val)
+                                        };
+                                        let _ = client_msg.say(channel_login, msg).await;
+                                    } else {
+                                        let msg = if use_english {
+                                            format!("❌ @{}, an error occurred while dismantling catch #{}.", username, catch_id)
+                                        } else {
+                                            format!("❌ @{}, une erreur est survenue lors du démontage de la capture #{}.", username, catch_id)
                                         };
                                         let _ = client_msg.say(channel_login, msg).await;
                                     }
@@ -3407,5 +3671,14 @@ mod tests {
         assert_eq!(parse_recycle_args("#42"), None);
         assert_eq!(parse_recycle_args("jaune"), None);
         assert_eq!(parse_recycle_args(""), None);
+    }
+
+    #[test]
+    fn test_dismantle_helpers() {
+        assert_eq!(parse_dismantle_args("42"), Some(42));
+        assert_eq!(parse_dismantle_args("#1337"), Some(1337));
+        assert_eq!(parse_dismantle_args(""), None);
+        assert_eq!(parse_dismantle_args("   "), None);
+        assert_eq!(parse_dismantle_args("#invalid"), None);
     }
 }
