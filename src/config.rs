@@ -268,14 +268,17 @@ pub fn get_game_data(use_english: bool) -> Arc<GameData> {
 }
 
 // Fallback old methods cloning French data (backward compatibility)
+#[allow(dead_code)]
 pub fn get_fish_data() -> HashMap<Rarity, Vec<FishData>> {
     get_game_data_fr().fish_data.clone()
 }
 
+#[allow(dead_code)]
 pub fn get_junk_data() -> HashMap<Rarity, Vec<FishData>> {
     get_game_data_fr().junk_data.clone()
 }
 
+#[allow(dead_code)]
 pub fn get_fail_attempt_reasons_old() -> Vec<FailMessageEntry> {
     get_game_data_fr().fail_messages.clone()
 }

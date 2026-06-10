@@ -1985,7 +1985,7 @@
                 11
             ],
             "fun_fact": "Le Poisson-chat (Ameiurus nebulosus) est un rôdeur nocturne des étangs boueux. Pêché de mars à novembre, surtout de 19h à 04h par temps pluvieux et lourd, il fouille la vase grâce à ses huit barbillons tactiles. Ses aiguillons dorsaux venimeux exigent une manipulation prudente. Vendu 90 pièces d'or, sa chair grasse et riche est appréciée en ragoût épicé ou en friture après avoir été bien pelée.",
-            "time_restriction": "after_18h"
+            "time_restriction": "after_22h"
         },
         {
             "name": "Truite de Mer",
@@ -2038,7 +2038,7 @@
                 9
             ],
             "fun_fact": "La Truite de Mer (Salmo trutta trutta) est la forme migratrice de la truite fario. Capturée de juin à septembre, surtout de 20h à 04h par nuit sombre dans les estuaires côtiers, elle y chasse activement les sprats. Ses écailles argentées tombent facilement lors du combat. Estimée à 470 pièces d'or, sa chair rosée très fine et savoureuse est un délice cuite à l'unilatéral ou pochée au court-bouillon.",
-            "time_restriction": "after_18h"
+            "time_restriction": "after_22h"
         },
         {
             "name": "Dorade Royale",

@@ -1,9 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fs;
-use std::path::Path;
 use chrono::{DateTime, Utc, Duration};
 use reqwest::Client;
-use url::Url;
 
 pub type MyError = Box<dyn std::error::Error + Send + Sync>;
 

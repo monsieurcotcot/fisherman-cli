@@ -1985,7 +1985,7 @@
                 11
             ],
             "fun_fact": "The Brown Bullhead Catfish (Ameiurus nebulosus) is a nocturnal bottom-dweller of muddy ponds. Caught from March to November, especially between 19h and 04h in rainy, overcast weather, it navigates the dark using eight sensory barbels. Watch out for its sharp, venomous spines. Priced at 90 gold coins, its rich, oily flesh is highly praised in spicy stews or deep-fried dishes.",
-            "time_restriction": "after_18h"
+            "time_restriction": "after_22h"
         },
         {
             "name": "Sea Trout",
@@ -2038,7 +2038,7 @@
                 9
             ],
             "fun_fact": "The Sea Trout (Salmo trutta trutta) is the migratory form of the brown trout. Caught from June to September, especially between 20h and 04h on dark nights in coastal estuaries, it hunts actively for small fish. Its silver scales shed easily during fights. Priced at 470 gold coins, its fine, pinkish flesh is a delicacy when pan-seared or gently poached in a seasoned court-bouillon.",
-            "time_restriction": "after_18h"
+            "time_restriction": "after_22h"
         },
         {
             "name": "Gilt-head Bream",

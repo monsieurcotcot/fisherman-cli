@@ -38,6 +38,13 @@ fetchGlobalMuseum();
 fetchEcoChampion();
 fetchEcoChampions();
 
+let currentLanguage = 'fr';
+const urlParams = new URLSearchParams(window.location.search);
+const urlLang = urlParams.get('lang');
+if (urlLang === 'en') {
+    currentLanguage = 'en';
+}
+
 loadFishData().then(() => {
     const path = window.location.pathname;
     if (path.startsWith('/player/')) {
@@ -49,9 +56,17 @@ loadFishData().then(() => {
     }
 });
 
-async function loadFishData() {
+async function loadFishData(lang) {
+    const targetLang = lang || currentLanguage;
+    if (targetLang === currentLanguage && flatFishList.length > 0) {
+        return;
+    }
+    currentLanguage = targetLang;
     try {
-        const response = await fetch('/api/fish_data');
+        const fishUrl = targetLang === 'en' ? '/api/fish_data?lang=en' : '/api/fish_data';
+        const junkUrl = targetLang === 'en' ? '/api/junk_data?lang=en' : '/api/junk_data';
+
+        const response = await fetch(fishUrl);
         staticFishData = await response.json();
         flatFishList = [];
         for (const rarity in staticFishData) {
@@ -65,7 +80,7 @@ async function loadFishData() {
         flatFishList.sort((a, b) => (a.id || 0) - (b.id || 0));
 
         // Fetch Junk Data
-        const junkResponse = await fetch('/api/junk_data');
+        const junkResponse = await fetch(junkUrl);
         staticJunkData = await junkResponse.json();
         flatJunkList = [];
         for (const rarity in staticJunkData) {
@@ -290,6 +305,11 @@ async function fetchStats(u) {
             document.getElementById('bananaKingsBox').style.display = 'block';
             document.getElementById('leaderboardBox').style.display = 'block';
         } else {
+            const playerLang = data.language === 'en' ? 'en' : 'fr';
+            if (playerLang !== currentLanguage) {
+                await loadFishData(playerLang);
+            }
+
             document.getElementById('error').style.display = 'none';
             document.getElementById('statsDisplay').style.display = 'block';
             document.getElementById('museumPane').style.display = 'block';
